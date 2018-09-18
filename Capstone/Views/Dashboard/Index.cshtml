@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@Styles.Render("~/Style/Dashboard.css")
+
+
+<div id="MainPage">
+    <nav id="LeftPanel">
+        <div class="LeftPanelBorder" id="UserInfoContainer">
+            <div id="UserInfo">
+                <label>Name of User</label><br />
+                <label>Position</label><br />
+                <label>Date</label>
+            </div>
+        </div>
+
+        <div class="LeftPanelBorder" id="ProjectListContainer">
+            <div id="ProjectList">
+                <label>Projects</label> <br />
+                <button class="ProjectButtons">Project 1</button><br />
+                <button class="ProjectButtons">Project 2</button>
+            </div>
+        </div>
+    </nav>
+    <header>
+        <button id="signout">Sign Out</button>
+
+        <h2>Home</h2>
+        <form id="projectselection">
+            <label class="radio-inline">
+                <input type="radio" name="optradio" checked>All
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio">Project 1
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio">Project 2
+            </label>
+        </form>
+    </header>
+
+
+    <div id="TasksSection">
+        <label>Tasks</label>
+        <table>
+            <tr>
+                <th>Tasks</th>
+                <th>Priority</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Project</th>
+            </tr>
+            <tr>
+                <td>Complete Capstone</td>
+                <td>Very High</td>
+                <td>September 24</td>
+                <td>Behind</td>
+                <td>College</td>
+            </tr>
+
+            <tr>
+                <td>Graduate</td>
+                <td>Extremely High</td>
+                <td>December 15</td>
+                <td>On-time</td>
+                <td>College</td>
+            </tr>
+            <tr>
+                <td>Get a job that pays $1,000,000 with lots of benefits and pension</td>
+                <td>Top</td>
+                <td>January 2019</td>
+                <td>On-time</td>
+                <td>Life</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="TaskOverviewSection">
+        <img src="https://www.patternfly.org/pattern-library/data-visualization/pie-chart/img/right-legend-pie-chart.png"/> 
+        <div id="TaskCompletionStatusContainer">
+            <label>Task Completion Status</label>
+            <div class="TaskPercentage" id="TasksCompleted">60%</div>
+            <div class="TaskPercentage" id="TasksNotCompleted">40%</div>
+        </div>
+    </div>
+
+    <div id="PersonalNotesSection">
+        <div id="PersonalNotesTable">
+            <label>Personal Notes</label>
+            <table>
+                <tr>
+                    <th>Note</th>
+                    <th>Date</th>
+                </tr>
+                <tr>
+                    <td>We don't have much time left</td>
+                    <td>September 17</td>
+                </tr>
+
+                <tr>
+                    <td>Thankfully we will make 1,000,000 a year for the rest of our lives</td>
+                    <td>September 18</td>
+                </tr>
+                <tr>
+                    <td>...will we?</td>
+                    <td>September 19</td>
+                </tr>
+            </table>
+        </div>
+        <div id="PersonalNotesButtonsContainer">
+            <button class="PersonalNotesButtons">Modify</button>
+            <button class="PersonalNotesButtons">Remove</button>
+        </div>
+    </div>
+
+    <div id="AddNoteSection">
+        <label>Notes:</label>
+        <form>
+            <textarea id="Note" name="Note" rows="4"></textarea>
+            <button id="AddPersonalNote">Add</button>
+        </form>
+    </div>
+</div>
