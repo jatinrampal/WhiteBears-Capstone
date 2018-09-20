@@ -1,5 +1,6 @@
-﻿html, body{
+﻿html, body {
     height: 100%;
+    font-family: "Avenir Next" !important;
 }
 
 #MainPage{
@@ -20,10 +21,6 @@ table {
     border-collapse: collapse;
 }
 
-tr:nth-child(even){
-    background-color: #DDDDDD;
-}
-
 #TasksSection td, th {
     border: 1px solid darkgrey;
     padding: 10px;
@@ -39,8 +36,6 @@ tr:nth-child(even){
 }
 
 #TaskOverviewSection{
-    float: left;
-    margin-left: 40px;
     text-align: center;
 }
 
@@ -50,15 +45,6 @@ tr:nth-child(even){
     margin-top: 5px;
 }
 
-#TasksCompleted {
-    background-color: lightgreen;
-    width: 60%;
-}
-
-#TasksNotCompleted{
-    background-color: lightcoral;
-    width: 40%;
-}
 
 #LeftPanel {
     background: lightgrey;
@@ -68,20 +54,30 @@ tr:nth-child(even){
     height: 100vh;
 }
 
-.ProjectButtons{
+.ProjectButtons {
     margin-top: 5px;
     margin-bottom: 5px;
+    border-color: lightgrey;
+    color: black;
+    background: lightgrey;
+    border-radius: 10px 10px 10px 10px
+}
+
+.ProjectButtons:hover {
+    background: darkgrey;
+    color: white;
 }
 
 
-header{
-    text-align: center;
+header {
+    text-align: left;
+    margin-left: 250px;
 }
 
-#signout{
-    float: right;
+.headerButtons:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
 }
-
 
 .LeftPanelBorder {
     padding: 50px;
@@ -89,19 +85,19 @@ header{
 }
 
 #UserInfoContainer {
-    height: 30%;
+    height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #ProjectListContainer {
-    height: 70%;
+    height: 60%;
 }
 
 #PersonalNotesSection{
     margin-top: 30px;
-    margin-left: 50px;
+    margin-left: 500px;
     float: left;
 }
 
@@ -117,20 +113,36 @@ header{
 }
 
 .PersonalNotesButtons {
-    margin-left: 20px;
-}
-
-#AddNoteSection {
-    margin-top: 30px;
-    margin-left: 50px;
-    float: left;
+    margin-left: 30px;
 }
 
 #Note{
     width: 300px;
 }
 
-#AddPersonalNote{
-    margin-left: 10px;
-    margin-top: 45px;
+#profilePic {
+    width: 100px;
+    border-radius: 120px 120px 120px 120px;
+}
+
+#headings {
+    text-align: left;
+}
+
+.ProgressBarContainer {
+    margin-top: 30px;
+    margin-left: 250px;
+    max-width: 500px;
+}
+
+.text-large {
+    font-size: large;
+}
+
+.text-medium{
+    font-size: medium;
+}
+
+.text-secondary{
+    color: #777;
 }

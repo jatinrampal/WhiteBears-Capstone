@@ -7,8 +7,43 @@ namespace Capstone.Models
 {
     public class Task
     {
-        private int taskId, workLoad, priority;
-        private string title, description;
-        private DateTime dueDate, startDate, completedDate;
+        private int taskId;
+        private int workload;
+        private int priority;
+        private string title;
+        private string description;
+        private DateTime dueDate;
+        private DateTime startDate;
+        private DateTime completedDate;
+
+        public int Workload {
+            get {
+                return this.workload;
+            }
+
+            set {
+                this.workload = value;
+            }
+        }
+
+        public int Priority {
+            get {
+                return this.priority;
+            }
+
+            set {
+                this.priority = value;
+            }
+        }
+
+        public string Title {
+            get {
+                return this.title;
+            }
+
+            set {
+                this.title = value;
+            }
+        }
     }
 }
