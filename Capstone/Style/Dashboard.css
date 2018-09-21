@@ -3,6 +3,7 @@
     font-family: "Avenir Next" !important;
 }
 
+
 #MainPage{
     position: relative;
     height: 100%;
@@ -37,6 +38,7 @@ table {
 
 #TaskOverviewSection{
     text-align: center;
+    float: right;
 }
 
 .TaskPercentage{
@@ -110,6 +112,7 @@ header {
 #PersonalNotesButtonsContainer {
     margin-top: 20px;
     margin-left: 100px;
+    float: right;
 }
 
 .PersonalNotesButtons {
@@ -132,7 +135,9 @@ header {
 .ProgressBarContainer {
     margin-top: 30px;
     margin-left: 250px;
-    max-width: 500px;
+    width: 300px;
+
+    float: left;
 }
 
 .text-large {
