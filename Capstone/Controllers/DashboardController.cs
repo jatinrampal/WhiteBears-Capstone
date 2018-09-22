@@ -89,7 +89,8 @@ namespace Capstone.Controllers
                     project1, project2
                 },
 
-                CurrentUser = user
+                CurrentUser = user,
+                CurrDate = DateTime.Now
             };
 
             return View(model);

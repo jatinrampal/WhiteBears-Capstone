@@ -23,6 +23,8 @@ namespace Capstone.Models
         [Required]
         private readonly string password;
 
+        private readonly string fullName;
+
         private PersonalNote[] personalNotes;
 
         public string FirstName {
@@ -34,6 +36,12 @@ namespace Capstone.Models
         public string LastName {
             get {
                 return lastName;
+            }
+        }
+
+        public string FullName {
+            get {
+                return fullName;
             }
         }
 
@@ -49,17 +57,23 @@ namespace Capstone.Models
 
 
         //Testing constructor only
-        public User(string firstName, string lastName){
+        public User(string firstName, string lastName) {
             this.firstName = firstName;
             this.lastName = lastName;
+            this. fullName = $"{firstName} {lastName}";
         }
 
-        public User(int userId, string firstName, string lastName, string username, string password){
+        public User(int userId, string firstName, string lastName, string username, string password) {
             this.userId = userId;
             this.firstName = firstName;
             this.lastName = lastName;
             this.username = username;
             this.password = password;
+            this.fullName = $"{firstName} {lastName}";
+        }
+
+        public string GetFullName() {
+            return $"{firstName} {lastName}";
         }
 
 

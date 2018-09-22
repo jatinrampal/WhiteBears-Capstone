@@ -13,9 +13,9 @@
         <div class="LeftPanelBorder" id="UserInfoContainer">
             <div id="UserInfo">
                 <img id="profilePic" src="https://image.freepik.com/free-icon/male-user-profile-picture_318-37825.jpg" /><br /><br />
-                <label>Kalen Rose</label><br />
+                <label>@Html.DisplayFor(m => m.CurrentUser.FullName)</label><br />
                 <label>CEO</label><br />
-                <label>2018-09-20</label>
+                <label>@Model.CurrDate.ToString("MM/dd/yyyy")</label>
             </div>
         </div>
 

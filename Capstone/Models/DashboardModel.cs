@@ -9,5 +9,7 @@ namespace Capstone.Models
     {
         public Project[] Projects { get; set; }
         public User CurrentUser { get; set; }
+
+        public DateTime CurrDate { get; set; }
     }
 }
