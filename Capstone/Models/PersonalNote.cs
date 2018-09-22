@@ -11,6 +11,26 @@ namespace Capstone.Models
         private string information;
         private DateTime timeStamp;
 
+        public string Information {
+            get {
+                return information;
+            }
+
+            set {
+                information = value;
+            }
+        }
+
+        public DateTime TimeStamp {
+            get {
+                return timeStamp;
+            }
+
+            set {
+                timeStamp = value;
+            }
+        }
+
         public bool AddNote(){
             //TODO
 

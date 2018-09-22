@@ -41,12 +41,12 @@
             <label class="radio-inline">
                 <input type="radio" name="optradio" checked>All
             </label>
-            <label class="radio-inline">
-                <input type="radio" name="optradio">Project 1
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="optradio">Project 2
-            </label>
+
+            @foreach (var project in Model.Projects) { 
+                <label class="radio-inline">
+                    <input type="radio" name="optradio">@project.Title
+                </label>
+            }
         </form>
     </header>
 
@@ -54,40 +54,26 @@
     <div id="TasksSection">
         <label>Tasks</label>
         <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Tasks</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Project</th>
-                </tr>
-            </thead>
+            <tr>
+                <th scope="col">Tasks</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Project</th>
+            </tr>
             <tbody>
-                @foreach (var project in Model.Projects)
-                {
-                <tr>
-                    <td>Complete Capstone</td>
-                    <td>Very High</td>
-                    <td>September 24</td>
-                    <td>Behind</td>
-                    <td>College</td>
-                </tr>
+               
+                    @foreach (var project in Model.Projects){
+                        foreach (var task in project.Tasks){
+                             <tr>
+                            <td>@task.Title</td>
+                            <td>@task.Priority</td>
+                            <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
+                            <td>@task.Status</td>
+                            <td>@project.Title</td>
+                                 </tr>
+                        }
 
-                <tr>
-                    <td>Graduate</td>
-                    <td>Extremely High</td>
-                    <td>December 15</td>
-                    <td>On-time</td>
-                    <td>College</td>
-                </tr>
-                <tr>
-                    <td>Get a job that pays $1,000,000 with lots of benefits and pension</td>
-                    <td>Top</td>
-                    <td>January 2019</td>
-                    <td>On-time</td>
-                    <td>Life</td>
-                </tr>
                 }
             </tbody>
         </table>
@@ -100,24 +86,18 @@
     <div id="PersonalNotesSection">
         <div id="PersonalNotesTable">
             <label>Personal Notes</label>
-            <table>
+            <table class="table table-hover">
                 <tr>
                     <th>Date</th>
                     <th>Note</th>
                 </tr>
-                <tr>
-                    <td>September 17</td>
-                    <td>We don't have much time left</td>
-                </tr>
-
-                <tr>
-                    <td>September 18</td>
-                    <td>Thankfully we will make 1,000,000 a year for the rest of our lives</td>
-                </tr>
-                <tr>
-                    <td>September 19</td>
-                    <td>...will we?</td>
-                </tr>
+                @foreach (var note in Model.CurrentUser.PersonalNotes)
+                {
+                    <tr>
+                        <td>@note.TimeStamp.ToString("MM/dd/yyyy")</td>
+                        <td>@note.Information</td>
+                    </tr>
+                }
             </table>
         </div>
         <div id="PersonalNotesButtonsContainer" class="btn-group">

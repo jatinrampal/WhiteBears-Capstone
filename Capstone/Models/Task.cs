@@ -69,7 +69,13 @@ namespace Capstone.Models
         }
 
         public string ProjectName {
+            get {
+                return this.projectName;
+            }
 
+            set {
+                projectName = value;
+            }
         }
     }
 }

@@ -25,6 +25,43 @@ namespace Capstone.Models
 
         private PersonalNote[] personalNotes;
 
+        public string FirstName {
+            get {
+                return firstName;
+            }
+        }
+
+        public string LastName {
+            get {
+                return lastName;
+            }
+        }
+
+        public PersonalNote[] PersonalNotes {
+            get {
+                return personalNotes;
+            }
+
+            set {
+                personalNotes = value;
+            }
+        }
+
+
+        //Testing constructor only
+        public User(string firstName, string lastName){
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+        public User(int userId, string firstName, string lastName, string username, string password){
+            this.userId = userId;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.username = username;
+            this.password = password;
+        }
+
 
         public Task[] LoadTasks(int projectId, int userId, string role){
             //TODO

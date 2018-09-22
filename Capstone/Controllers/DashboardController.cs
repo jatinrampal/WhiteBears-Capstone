@@ -31,6 +31,7 @@ namespace Capstone.Controllers
                     Priority = 4,
                     DueDate = Convert.ToDateTime("09/23/2018"),
                     Status = "Behind",
+                    ProjectName = project1.Title
                 },
 
                 new Task
@@ -39,6 +40,7 @@ namespace Capstone.Controllers
                     Priority = 5,
                     DueDate = Convert.ToDateTime("12/15/2018"),
                     Status = "On Time",
+                    ProjectName = project1.Title
                 }
             };
 
@@ -49,17 +51,45 @@ namespace Capstone.Controllers
                     Priority = 100,
                     DueDate = Convert.ToDateTime("01/01/2019"),
                     Status = "On time",
+                    ProjectName = project2.Title
                 },
             };
 
+
+            PersonalNote[] notes = new PersonalNote[]
+            {
+                new PersonalNote
+                {
+                    Information = "We don't have much time left.",
+                    TimeStamp = Convert.ToDateTime("09/17/2018")
+                },
+
+                new PersonalNote
+                {
+                    Information = "Thankfully we will make 1,000,000 a year for the rest of our lives.",
+                    TimeStamp = Convert.ToDateTime("09/18/2018")
+                },
+
+                new PersonalNote
+                {
+                    Information = "...will we?",
+                    TimeStamp = Convert.ToDateTime("09/19/2018")
+                }
+            };
+
+            User user = new User("Kalen", "Rose")
+            {
+                PersonalNotes = notes
+            };
 
             DashboardModel model = new DashboardModel
             {
                 Projects = new Project[]
                 {
                     project1, project2
-                }
+                },
 
+                CurrentUser = user
             };
 
             return View(model);

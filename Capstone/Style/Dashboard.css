@@ -13,10 +13,6 @@ button{
     padding: 7px;
 }
 
-textarea{
-    resize: none;
-}
-
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -113,6 +109,7 @@ header {
     margin-top: 20px;
     margin-left: 100px;
     float: right;
+    text-align: center;
 }
 
 .PersonalNotesButtons {
