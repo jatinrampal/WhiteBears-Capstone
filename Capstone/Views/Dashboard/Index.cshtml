@@ -1,6 +1,7 @@
-﻿
+﻿@using Capstone.Models
+@model DashboardModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Dashboard";
 }
 
 
@@ -21,8 +22,10 @@
         <div class="LeftPanelBorder" id="ProjectListContainer">
             <div id="ProjectList">
                 <label>Projects</label> <br />
-                <button class="ProjectButtons btn-secondary">Project 1</button><br />
-                <button class="ProjectButtons btn-secondary">Project 2</button>
+                @foreach (var project in Model.Projects)
+                {
+                    <button class="ProjectButtons" btn-secondary">@project.Title</button>;
+                }
             </div>
         </div>
     </nav>
@@ -61,6 +64,8 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach (var project in Model.Projects)
+                {
                 <tr>
                     <td>Complete Capstone</td>
                     <td>Very High</td>
@@ -83,6 +88,7 @@
                     <td>On-time</td>
                     <td>Life</td>
                 </tr>
+                }
             </tbody>
         </table>
     </div>

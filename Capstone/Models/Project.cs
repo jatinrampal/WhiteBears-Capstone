@@ -10,6 +10,29 @@ namespace Capstone.Models
         private int projectId;
         private string title, description, scopeStatement;
         private DateTime startDate, dueDate, completionDate;
+        private Task[] tasks;
+
+
+        public string Title {
+            get {
+                return title;
+            }
+
+            set {
+                title = value;
+            }
+        }
+
+        public Task[] Tasks {
+            get {
+                return tasks;
+            }
+
+            set {
+                tasks = value;
+            }
+        }
+
 
         public void LoadProject(){
             //TODO

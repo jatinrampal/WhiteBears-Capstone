@@ -12,6 +12,8 @@ namespace Capstone.Models
         private int priority;
         private string title;
         private string description;
+        private string status;
+        private string projectName;
         private DateTime dueDate;
         private DateTime startDate;
         private DateTime completedDate;
@@ -44,6 +46,30 @@ namespace Capstone.Models
             set {
                 this.title = value;
             }
+        }
+
+        public DateTime DueDate {
+            get {
+                return this.dueDate;
+            }
+
+            set {
+                dueDate = value;
+            }
+        }
+
+        public string Status {
+            get {
+                return this.status;
+            }
+
+            set {
+                status = value;
+            }
+        }
+
+        public string ProjectName {
+
         }
     }
 }
