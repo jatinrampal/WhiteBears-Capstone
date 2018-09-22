@@ -24,7 +24,7 @@
                 <label>Projects</label> <br />
                 @foreach (var project in Model.Projects)
                 {
-                    <button class="ProjectButtons" btn-secondary">@project.Title</button>;
+                    <button class="ProjectButtons" btn-secondary" onclick="location.href='@Url.Action("Index", "Project")'">@project.Title</button>;
                 }
             </div>
         </div>
