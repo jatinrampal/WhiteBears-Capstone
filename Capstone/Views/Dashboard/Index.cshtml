@@ -138,7 +138,7 @@
         var deleteButton = $('button[value=delete');
         var noteTextArea = $('#PersonalNoteText');
 
-        $('tr[name=PersonalNoteRow]').on('click', function () {
+        $(document).on('click', 'tr[name=PersonalNoteRow]', function () {
             clickedRow = $(this);
 
             if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
@@ -170,12 +170,17 @@
                 noteTextArea.css('display', 'block');
                 addButton.text("Save");
                 deleteButton.text("Cancel");
+                changeButtonState(deleteButton, true);
             } else {
-                $('#PersonalNotesTable table tr:last').after('<tr><td>' + @Model.CurrDate.ToString("MM/dd/yyyy") +'</td><td>' + noteTextArea.val() + '</td></tr>');
-                noteTextArea.val('');
-                noteTextArea.css('display', 'none');
-                addButton.text("Add");
-                deleteButton.text("Delete");
+                if (isNoteValid()) {
+                    $('#PersonalNotesTable > table > tbody:last').append('<tr name="PersonalNoteRow"><td>@Model.CurrDate.ToString("MM/dd/yyyy")</td><td>' + noteTextArea.val() + '</td></tr>');
+                    noteTextArea.val('');
+                    noteTextArea.css('display', 'none');
+                    addButton.text("Add");
+
+                    deleteButton.text("Delete");
+                    changeButtonState(deleteButton, false);
+                }
             }
         });
 
@@ -186,24 +191,34 @@
                 modifyButton.text("Save");
                 deleteButton.text("Cancel");
             } else {
-                $('tr.selected td:last-child').text(noteTextArea.val());
-                noteTextArea.val('');
-                noteTextArea.css('display', 'none');
-                modifyButton.text('Modify');
-                deleteButton.text("Delete");
+                if (isNoteValid()) {
+                    $('tr.selected td:last-child').text(noteTextArea.val());
+                    noteTextArea.val('');
+                    noteTextArea.css('display', 'none');
+                    modifyButton.text('Modify');
+                    deleteButton.text("Delete");
+                }
             }
         });
 
         deleteButton.on('click', function () {
-            if (modifyButton.text() === "Delete") {
-                alert(clickedRow);
+            if (deleteButton.text() === "Delete") {
                 clickedRow.remove();
+                changeButtonState(deleteButton, false);
+                changeButtonState(addButton, true);
+                changeButtonState(modifyButton, false);
             } else {
-                $('tr.selected td:last-child').text(noteTextArea.val());
                 noteTextArea.val('');
                 noteTextArea.css('display', 'none');
+
+
+                deleteButton.text('Delete');
                 modifyButton.text('Modify');
-                deleteButton.text("Delete");
+                addButton.text("Add");
+
+                changeButtonState(modifyButton, addButton.hasClass('disabled'));
+                changeButtonState(deleteButton, addButton.hasClass('disabled'))
+                changeButtonState(addButton, modifyButton.hasClass('disabled'));
             }
         })
 
@@ -212,6 +227,15 @@
                 button.removeClass('disabled');
             else
                 button.addClass('disabled')
+        }
+
+        function isNoteValid() {
+            if (noteTextArea.val().length < 3) {
+                alert("Notes must be at least 3 characters long.");
+                return false;
+            }
+
+            return true;
         }
     })
         /*
