@@ -101,6 +101,8 @@
                     }
                 </table>
             </div>
+
+            <textarea id="PersonalNoteText"></textarea><br />
             <div id="PersonalNotesButtonsContainer" class="btn-group">
                 <button type="button" class="btn btn-primary btn-lg disabled" value="modify">Modify</button>
                 <button type="button" class="btn btn-success btn-lg" value="add">Add</button>
@@ -130,26 +132,64 @@
 <script>
     
     $(document).ready(function () {
+        var clickedRow = null;
+        var addButton = $('button[value=add');
+        var modifyButton = $('button[value=modify');
+        var deleteButton = $('button[value=delete');
+        var noteTextArea = $('#PersonalNoteText');
+
         $('tr[name=PersonalNoteRow]').on('click', function () {
-            var clickedRow = $(this);
+            clickedRow = $(this);
 
             if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
                 clickedRow.css('background-color', 'white');
-                $('button[value=add').removeClass('disabled');
-                $('button[value=modify').addClass('disabled');
-                $('button[value=delete').addClass('disabled');
+
+                changeButtonState(addButton, true);
+                changeButtonState(modifyButton, false);
+                changeButtonState(deleteButton, false);
+
+                noteTextArea.css('display', 'none');
             } else {
                 $('#PersonalNotesTable table tr').css('background-color', 'white');
+                $('#PersonalNotesTable table tr').removeClass('selected');
+
                 clickedRow.css('background-color', 'lightgrey');
-                $('button[value=add').addClass('disabled');
-                $('button[value=modify').removeClass('disabled');
-                $('button[value=delete').removeClass('disabled');
+                clickedRow.addClass('selected');
+
+                changeButtonState(addButton, false);
+                changeButtonState(modifyButton, true);
+                changeButtonState(deleteButton, true);
+
+                noteTextArea.css('display', 'none');
             }
         });
 
-        $('button[value=add').on('click', function () {
-            alert();
+        addButton.on('click', function () {
+            noteTextArea.val('');
+            noteTextArea.css('display', 'block');
         });
+
+        modifyButton.on('click', function () {
+            if (modifyButton.text() === "Modify") {
+                noteTextArea.css('display', 'block');
+                noteTextArea.val($('tr.selected td:last-child').text());
+                modifyButton.text("Save");
+                changeButtonState(deleteButton, false);
+            } else {
+                $('tr.selected td:last-child').text(noteTextArea.val());
+                noteTextArea.val('');
+                noteTextArea.css('display', 'none');
+                modifyButton.text('Modify');
+                changeButtonState(deleteButton, true);
+            }
+        });
+
+        function changeButtonState(button, state) {
+            if(state)
+                button.removeClass('disabled');
+            else
+                button.addClass('disabled')
+        }
     })
         /*
         $('input[name=optradio]').on('click', function () {

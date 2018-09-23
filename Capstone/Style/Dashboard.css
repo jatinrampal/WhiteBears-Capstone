@@ -145,3 +145,10 @@ header {
 .padding-5px{
     padding: 5px;
 }
+
+#PersonalNoteText{
+    width: 100%;
+    resize: none;
+    height: 100px;
+    display: none;
+}
