@@ -24,8 +24,6 @@ table {
     max-width: 200px;
 }
 
-
-
 #TasksSection {
     float: left;
     margin-left: 50px;
@@ -95,8 +93,7 @@ header {
 
 #PersonalNotesSection{
     margin-top: 30px;
-    margin-left: 500px;
-    float: left;
+    float: right;
 }
 
 #PersonalNotesSection td, th {
@@ -108,13 +105,9 @@ header {
 #PersonalNotesButtonsContainer {
     margin-top: 20px;
     margin-left: 100px;
-    float: right;
     text-align: center;
 }
 
-.PersonalNotesButtons {
-    margin-left: 30px;
-}
 
 #Note{
     width: 300px;
@@ -132,9 +125,13 @@ header {
 .ProgressBarContainer {
     margin-top: 30px;
     margin-left: 250px;
-    width: 300px;
+    width: 400px;
 
-    float: left;
+}
+
+.ProgressBarContainers {
+    margin-top: 30px;
+    width: 300px;
 }
 
 .text-large {
@@ -143,4 +140,8 @@ header {
 
 .text-medium{
     font-size: medium;
+}
+
+.padding-5px{
+    padding: 5px;
 }

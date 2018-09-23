@@ -25,7 +25,7 @@
                 <label>Projects</label> <br />
                 @foreach (var project in Model.Projects)
                 {
-                    <button class="ProjectButtons" btn-secondary" onclick="location.href='@Url.Action("Index", "Project")'">@project.Title</button>;
+                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project")'">@project.Title</button>;
                 }
             </div>
         </div>
@@ -37,17 +37,18 @@
             <h2>Personal Dashboard</h2>
             <h3>Here's an overview of your projects</h3>
         </div>
-
         <form id="projectselection" class="text-center">
-            <label class="radio-inline">
-                <input type="radio" name="optradio" checked>All
-            </label>
-
-            @foreach (var project in Model.Projects) { 
+            <span class="padding-5px border border-dark rounded-right rounded-left ">
                 <label class="radio-inline">
-                    <input type="radio" name="optradio" value="@project.Title">@project.Title
+                    <input type="radio" name="optradio" checked>All
                 </label>
-            }
+
+                @foreach (var project in Model.Projects) {
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" value="@project.Title">@project.Title
+                    </label>
+                }
+            </span>
         </form>
     </header>
 
@@ -56,7 +57,7 @@
         <label>Tasks</label>
         <table id="tasktable" class="table table-hover">
             <tr>
-                <th scope="col">Tasks</th>
+                <th scope="col">Task</th>
                 <th scope="col">Priority</th>
                 <th scope="col">Date</th>
                 <th scope="col">Status</th>
@@ -83,52 +84,74 @@
     <div id="TaskOverviewSection">
         <img src="https://www.patternfly.org/pattern-library/data-visualization/pie-chart/img/right-legend-pie-chart.png" />
     </div>
-
     <div id="PersonalNotesSection">
-        <div id="PersonalNotesTable">
-            <label>Personal Notes</label>
-            <table class="table table-hover">
-                <tr>
-                    <th>Date</th>
-                    <th>Note</th>
-                </tr>
-                @foreach (var note in Model.CurrentUser.PersonalNotes)
-                {
+            <div id="PersonalNotesTable">
+                <label>Personal Notes</label>
+                <table class="table table-hover">
                     <tr>
-                        <td>@note.TimeStamp.ToString("MM/dd/yyyy")</td>
-                        <td>@note.Information</td>
+                        <th>Date</th>
+                        <th>Note</th>
                     </tr>
-                }
-            </table>
-        </div>
-        <div id="PersonalNotesButtonsContainer" class="btn-group">
-            <button type="button" class="btn btn-primary btn-lg">Modify</button>
-            <button type="button" class="btn btn-success btn-lg">Add</button>
-            <button type="button" class="btn btn-danger btn-lg">Delete</button>
-        </div>
+                    @foreach (var note in Model.CurrentUser.PersonalNotes)
+                    {
+                        <tr name="PersonalNoteRow">
+                            <td>@note.TimeStamp.ToString("MM/dd/yyyy")</td>
+                            <td>@note.Information</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div id="PersonalNotesButtonsContainer" class="btn-group">
+                <button type="button" class="btn btn-primary btn-lg disabled" value="modify">Modify</button>
+                <button type="button" class="btn btn-success btn-lg" value="add">Add</button>
+                <button type="button" class="btn btn-danger btn-lg disabled" value="delete">Delete</button>
+            </div>
     </div>
-    <div class="ProgressBarContainer">
-        <label>Tasks Completed</label>
-        <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" style="width: 70%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">70%</div>
+    <div class="ProgressBarContainers">
+        <div class="ProgressBarContainer">
+            <label>Tasks Completed</label>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 70%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">70%</div>
+            </div>
+            <text class="text-large">7/10</text><br />
+            <text class="text-medium text-secondary">3 tasks remaining</text>
         </div>
-        <text class="text-large">7/10</text><br />
-        <text class="text-medium text-secondary">3 tasks remaining</text>
-    </div>
 
-    <div class="ProgressBarContainer">
-        <label>Storage Used</label>
-        <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">10%</div>
+        <div class="ProgressBarContainer">
+            <label>Storage Used</label>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">10%</div>
+            </div>
+            <text class="text-large">100/1000 GB</text><br />
+            <text class="text-medium text-secondary">900GB remaining</text>
         </div>
-        <text class="text-large">100/1000 GB</text><br />
-        <text class="text-medium text-secondary">900GB remaining</text>
     </div>
 </div>
-@Html.RadioButtonFor(model => model.Projects, 1, new { onchange = "this.form.submit();" })
 <script>
-    /*
+    
     $(document).ready(function () {
+        $('tr[name=PersonalNoteRow]').on('click', function () {
+            var clickedRow = $(this);
+
+            if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
+                clickedRow.css('background-color', 'white');
+                $('button[value=add').removeClass('disabled');
+                $('button[value=modify').addClass('disabled');
+                $('button[value=delete').addClass('disabled');
+            } else {
+                $('#PersonalNotesTable table tr').css('background-color', 'white');
+                clickedRow.css('background-color', 'lightgrey');
+                $('button[value=add').addClass('disabled');
+                $('button[value=modify').removeClass('disabled');
+                $('button[value=delete').removeClass('disabled');
+            }
+        });
+
+        $('button[value=add').on('click', function () {
+            alert();
+        });
+    })
+        /*
         $('input[name=optradio]').on('click', function () {
             var radioValue = $("input[name='optradio']:checked").val();
             alert();
