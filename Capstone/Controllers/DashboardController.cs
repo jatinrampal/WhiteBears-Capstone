@@ -1,6 +1,7 @@
 ﻿using Capstone.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,29 +10,33 @@ namespace Capstone.Controllers
 {
     public class DashboardController : Controller
     {
-        // GET: Dashboard
+
+        Project[] projects = new Project[2];
+        User currUser;
         public ActionResult Index()
         {
-            Project project1 = new Project
+            projects[0] = new Project
             {
+                ProjectId = 1,
                 Title = "College",
                 Tasks = new Task[2]
             };
 
-            Project project2 = new Project
+            projects[1] = new Project
             {
+                ProjectId = 2,
                 Title = "Life",
                 Tasks = new Task[1]
             };
 
-            project1.Tasks = new Task[] {
+            projects[0].Tasks = new Task[] {
                 new Task
                 {
                     Title = "Complete Capstone",
                     Priority = 4,
                     DueDate = Convert.ToDateTime("09/23/2018"),
                     Status = "Behind",
-                    ProjectName = project1.Title
+                    ProjectName = projects[0].Title
                 },
 
                 new Task
@@ -40,18 +45,18 @@ namespace Capstone.Controllers
                     Priority = 5,
                     DueDate = Convert.ToDateTime("12/15/2018"),
                     Status = "On Time",
-                    ProjectName = project1.Title
+                    ProjectName = projects[0].Title
                 }
             };
 
-            project2.Tasks = new Task[] {
+            projects[1].Tasks = new Task[] {
                 new Task
                 {
                     Title = "Get a job that pays $1,000,000 with lots of benefits and pension",
                     Priority = 100,
                     DueDate = Convert.ToDateTime("01/01/2019"),
                     Status = "On time",
-                    ProjectName = project2.Title
+                    ProjectName = projects[1].Title
                 },
             };
 
@@ -77,7 +82,7 @@ namespace Capstone.Controllers
                 }
             };
 
-            User user = new User("Kalen", "Rose")
+            currUser = new User("Kalen", "Rose")
             {
                 PersonalNotes = notes
             };
@@ -86,14 +91,32 @@ namespace Capstone.Controllers
             {
                 Projects = new Project[]
                 {
-                    project1, project2
+                    projects[0], projects[1]
                 },
 
-                CurrentUser = user,
+                CurrentUser = currUser,
                 CurrDate = DateTime.Now
             };
 
             return View(model);
+        }
+        
+        public ActionResult UpdateProject(){
+            Project selectedProject = projects[1];
+
+            DashboardModel model = new DashboardModel
+            {
+
+                Projects = new Project[]
+                {
+                    selectedProject
+                },
+
+                CurrentUser = currUser,
+                CurrDate = Convert.ToDateTime("01/01/0001")
+            };
+            
+            return RedirectToAction("Index");
         }
     }
 }

@@ -13,6 +13,16 @@ namespace Capstone.Models
         private Task[] tasks;
 
 
+        public int ProjectId {
+            get {
+                return projectId;
+            }
+
+            set {
+                projectId = value;
+            }
+        }
+
         public string Title {
             get {
                 return title;

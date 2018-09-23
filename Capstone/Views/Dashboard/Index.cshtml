@@ -7,6 +7,7 @@
 
 @Styles.Render("~/Style/Dashboard.css")
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
 
 <div id="MainPage">
     <nav id="LeftPanel">
@@ -44,7 +45,7 @@
 
             @foreach (var project in Model.Projects) { 
                 <label class="radio-inline">
-                    <input type="radio" name="optradio">@project.Title
+                    <input type="radio" name="optradio" value="@project.Title">@project.Title
                 </label>
             }
         </form>
@@ -53,7 +54,7 @@
 
     <div id="TasksSection">
         <label>Tasks</label>
-        <table class="table table-hover">
+        <table id="tasktable" class="table table-hover">
             <tr>
                 <th scope="col">Tasks</th>
                 <th scope="col">Priority</th>
@@ -124,3 +125,20 @@
         <text class="text-medium text-secondary">900GB remaining</text>
     </div>
 </div>
+@Html.RadioButtonFor(model => model.Projects, 1, new { onchange = "this.form.submit();" })
+<script>
+    /*
+    $(document).ready(function () {
+        $('input[name=optradio]').on('click', function () {
+            var radioValue = $("input[name='optradio']:checked").val();
+            alert();
+            $('#tasktable tr').each(function (index, value) {
+                if ($(value).children(":eq(4)").text() != radioValue) {
+                    $(value).hide();
+                }
+                //alert(radioValue);
+            });
+        });
+    })
+    */
+</script>
