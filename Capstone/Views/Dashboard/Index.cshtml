@@ -130,7 +130,7 @@
     </div>
 </div>
 <script>
-    
+
     $(document).ready(function () {
         var clickedRow = null;
         var addButton = $('button[value=add');
@@ -165,8 +165,18 @@
         });
 
         addButton.on('click', function () {
-            noteTextArea.val('');
-            noteTextArea.css('display', 'block');
+            if (addButton.text() === "Add") {
+                noteTextArea.val('');
+                noteTextArea.css('display', 'block');
+                addButton.text("Save");
+                deleteButton.text("Cancel");
+            } else {
+                $('#PersonalNotesTable table tr:last').after('<tr><td>' + @Model.CurrDate.ToString("MM/dd/yyyy") +'</td><td>' + noteTextArea.val() + '</td></tr>');
+                noteTextArea.val('');
+                noteTextArea.css('display', 'none');
+                addButton.text("Add");
+                deleteButton.text("Delete");
+            }
         });
 
         modifyButton.on('click', function () {
@@ -174,15 +184,28 @@
                 noteTextArea.css('display', 'block');
                 noteTextArea.val($('tr.selected td:last-child').text());
                 modifyButton.text("Save");
-                changeButtonState(deleteButton, false);
+                deleteButton.text("Cancel");
             } else {
                 $('tr.selected td:last-child').text(noteTextArea.val());
                 noteTextArea.val('');
                 noteTextArea.css('display', 'none');
                 modifyButton.text('Modify');
-                changeButtonState(deleteButton, true);
+                deleteButton.text("Delete");
             }
         });
+
+        deleteButton.on('click', function () {
+            if (modifyButton.text() === "Delete") {
+                alert(clickedRow);
+                clickedRow.remove();
+            } else {
+                $('tr.selected td:last-child').text(noteTextArea.val());
+                noteTextArea.val('');
+                noteTextArea.css('display', 'none');
+                modifyButton.text('Modify');
+                deleteButton.text("Delete");
+            }
+        })
 
         function changeButtonState(button, state) {
             if(state)
