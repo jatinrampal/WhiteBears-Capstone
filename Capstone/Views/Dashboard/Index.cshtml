@@ -1,7 +1,7 @@
 ﻿@using Capstone.Models
 @model DashboardModel
 @{
-    ViewBag.Title = "Dashboard";
+    ViewBag.msg = "Dashboard";
 }
 
 
@@ -45,7 +45,7 @@
 
                 @foreach (var project in Model.Projects) {
                     <label class="radio-inline">
-                        <input type="radio" name="optradio" value="@project.Title">@project.Title
+                        <input type="radio" name="optradio" value="@project.ProjectId">@project.Title
                     </label>
                 }
             </span>
@@ -68,14 +68,13 @@
                     @foreach (var project in Model.Projects) {
                         foreach (var task in project.Tasks) {
                              <tr>
-                            <td>@task.Title</td>
-                            <td>@task.Priority</td>
-                            <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
-                            <td>@task.Status</td>
-                            <td>@project.Title</td>
-                                 </tr>
+                                <td>@task.Title</td>
+                                <td>@task.Priority</td>
+                                <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
+                                <td>@task.Status</td>
+                                <td>@project.Title</td>
+                             </tr>
                         }
-
                     }
             </tbody>
         </table>
@@ -285,26 +284,21 @@
         $('input[name=optradio]').on('click', function () {
             var radioValue = $("input[name='optradio']:checked").val();
 
-            $.ajax({
-                        type: "post",
-                        url: '@Url.Action("UpdateProject", "Dashboard")',
-                        dataType: "json",
-                        data: {
-                            projectId: "" + radioValue
-                        },
-                        success: function (data) {
-                        },
+            return $.ajax({
+                type: "post",
+                url: '@Url.Action("UpdateProject", "Dashboard")',
+                dataType: "html",
+                data: {
+                    projectId: "" + radioValue,
+                    sUser: "@Model.CurrentUser.Username"
+                },
+                success: function(data){
+                    $('#tasktable > tbody:last tr').html(data);
+                },
 
-                        error: function () {
-                            alert("There was an issue reloading the projects.");
-                        }
-            });
-
-            $('#tasktable tr').each(function (index, value) {
-                if ($(value).children(":eq(4)").text() != radioValue) {
-                    $(value).hide();
+                error: function () {
+                    alert(radioValue);
                 }
-                alert(radioValue);
             });
         });
     })

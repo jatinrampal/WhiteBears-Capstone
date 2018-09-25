@@ -9,7 +9,7 @@ namespace Capstone.Models
     {
         private int taskId;
         private int workload;
-        private int priority;
+        private string priority;
         private string title;
         private string description;
         private string status;
@@ -28,7 +28,7 @@ namespace Capstone.Models
             }
         }
 
-        public int Priority {
+        public string Priority {
             get {
                 return this.priority;
             }

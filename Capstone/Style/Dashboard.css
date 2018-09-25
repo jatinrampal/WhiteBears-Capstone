@@ -28,6 +28,7 @@ table {
     float: left;
     margin-left: 50px;
     margin-top: 20px;
+    min-height: 200px;
 }
 
 #TaskOverviewSection{

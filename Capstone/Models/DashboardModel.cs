@@ -28,15 +28,15 @@ namespace Capstone.Models
             return dh.RunQuery($"SELECT role FROM [User_Project] WHERE uName = '{username}';");
         }
 
-        public DataRow[] GetProjects(string username)
-        {
+        public string GetProjectName(string projectId) {
             DatabaseHelper dh = new DatabaseHelper();
-            return dh.RunQuery($"SELECT * FROM Project p " +
-                $"INNER JOIN User_Project up ON p.projectId = up.projectId " +
-                $"WHERE up.uName = '{username}';");
+
+            DataRow[] dr = dh.RunQuery($"SELECT title FROM Project WHERE projectId='{projectId}'");
+
+            return dr[0]["title"].ToString();
         }
 
-        public DataRow[] GetProject(string projectId, string username)
+        public DataRow[] GetProjects(string username)
         {
             DatabaseHelper dh = new DatabaseHelper();
             return dh.RunQuery($"SELECT * FROM Project p " +
@@ -49,7 +49,7 @@ namespace Capstone.Models
             DatabaseHelper dh = new DatabaseHelper();
             return dh.RunQuery($"SELECT * FROM Task t " +
                 $"JOIN Project p on t.projectId = p.projectId " +
-                $"WHERE p.projectId = '{projectId}';");
+                $"WHERE t.projectId = '{projectId}';");
         }
 
         public DataRow[] GetPersonalNote(string uName)
