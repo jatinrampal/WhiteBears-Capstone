@@ -1,122 +1,179 @@
 ﻿using Capstone.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WhiteBears;
 
 namespace Capstone.Controllers
 {
     public class DashboardController : Controller
     {
 
-        Project[] projects = new Project[2];
+        Project[] projects;
         User currUser;
+
+
+        private readonly SqlConnection conn;
+        public static SqlDataAdapter da;
+        private DataSet ds;
+
         public ActionResult Index()
         {
-            projects[0] = new Project
-            {
-                ProjectId = 1,
-                Title = "College",
-                Tasks = new Task[2]
-            };
+            DataRow[] drs, drs1;
 
-            projects[1] = new Project
-            {
-                ProjectId = 2,
-                Title = "Life",
-                Tasks = new Task[1]
-            };
+            DashboardModel model = new DashboardModel();
 
-            projects[0].Tasks = new Task[] {
-                new Task
-                {
-                    Title = "Complete Capstone",
-                    Priority = 4,
-                    DueDate = Convert.ToDateTime("09/23/2018"),
-                    Status = "Behind",
-                    ProjectName = projects[0].Title
-                },
+            drs = model.GetUser("Kalen");
+            drs1 = model.GetUserRole("Kalen");
 
-                new Task
-                {
-                    Title = "Graduate",
-                    Priority = 5,
-                    DueDate = Convert.ToDateTime("12/15/2018"),
-                    Status = "On Time",
-                    ProjectName = projects[0].Title
+            currUser = new User(drs[0]["firstName"].ToString(),
+                drs[0]["lastName"].ToString(),
+                drs[0]["uName"].ToString(),
+                drs[0]["password"].ToString(),
+                drs1[0]["role"].ToString());
+
+
+            drs = model.GetProjects(currUser.Username);
+            projects = new Project[drs.Count()];
+
+            int i = 0;
+            foreach (DataRow dr in drs) {
+                int currProjectId = Int32.Parse(drs[i]["projectId"].ToString());
+                string projectTitle = dr["title"].ToString();
+                drs1 = model.GetTasks(currUser.Username, currProjectId);
+
+                Task[] currProjectTasks = new Task[drs1.Count()];
+                int j = 0;
+                foreach (DataRow dr1 in drs1) {
+                    DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
+                    currProjectTasks[j++] = new Task
+                    {
+                        Title = dr1["title"].ToString(),
+                        Priority = 0,
+                        DueDate = dueDate,
+                        Status = DateTime.Now < dueDate ? "On time" : "Overdue",
+                        ProjectName = projectTitle
+                    };
                 }
-            };
 
-            projects[1].Tasks = new Task[] {
-                new Task
+                projects[i++] = new Project
                 {
-                    Title = "Get a job that pays $1,000,000 with lots of benefits and pension",
-                    Priority = 100,
-                    DueDate = Convert.ToDateTime("01/01/2019"),
-                    Status = "On time",
-                    ProjectName = projects[1].Title
-                },
-            };
+                    ProjectId = Int32.Parse(dr["projectId"].ToString()),
+                    Title = projectTitle,
+                    Tasks = currProjectTasks
+                };
+            }
 
+            currUser.PersonalNotes = GetPersonalNotes(model);
 
-            PersonalNote[] notes = new PersonalNote[]
-            {
-                new PersonalNote
-                {
-                    Information = "We don't have much time left.",
-                    TimeStamp = Convert.ToDateTime("09/17/2018")
-                },
-
-                new PersonalNote
-                {
-                    Information = "Thankfully we will make 1,000,000 a year for the rest of our lives.",
-                    TimeStamp = Convert.ToDateTime("09/18/2018")
-                },
-
-                new PersonalNote
-                {
-                    Information = "...will we?",
-                    TimeStamp = Convert.ToDateTime("09/19/2018")
-                }
-            };
-
-            currUser = new User("Kalen", "Rose")
-            {
-                PersonalNotes = notes
-            };
-
-            DashboardModel model = new DashboardModel
-            {
-                Projects = new Project[]
-                {
-                    projects[0], projects[1]
-                },
-
-                CurrentUser = currUser,
-                CurrDate = DateTime.Now
-            };
+            model.Projects = projects;
+            model.CurrentUser = currUser;
+            model.CurrDate = DateTime.Now;
 
             return View(model);
         }
-        
-        public ActionResult UpdateProject(){
-            Project selectedProject = projects[1];
 
-            DashboardModel model = new DashboardModel
+        private PersonalNote[] GetPersonalNotes(DashboardModel model){
+            DataRow[] drs = model.GetPersonalNote(currUser.Username);
+            PersonalNote[] notes = new PersonalNote[drs.Count()];
+            int i = 0;
+            foreach (DataRow dr in drs)
             {
+                notes[i++] = new PersonalNote(Int32.Parse(dr["noteId"].ToString()), dr["note"].ToString(), Convert.ToDateTime(dr["date"]));
+            }
 
-                Projects = new Project[]
+            return notes;
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProject(string projectId)
+        {
+            DataRow[] drs, drs1;
+
+            DashboardModel model = new DashboardModel();
+
+            drs = model.GetUser("Kalen");
+            drs1 = model.GetUserRole("Kalen");
+
+            currUser = new User(drs[0]["firstName"].ToString(),
+                drs[0]["lastName"].ToString(),
+                drs[0]["uName"].ToString(),
+                drs[0]["password"].ToString(),
+                drs1[0]["role"].ToString());
+
+
+            drs = model.GetProjects(currUser.Username);
+            projects = new Project[drs.Count()];
+
+            int i = 0;
+            foreach (DataRow dr in drs)
+            {
+                int currProjectId = Int32.Parse(drs[i]["projectId"].ToString());
+                string projectTitle = dr["title"].ToString();
+                drs1 = model.GetTasks(currUser.Username, currProjectId);
+
+                Task[] currProjectTasks = new Task[drs1.Count()];
+                int j = 0;
+                foreach (DataRow dr1 in drs1)
                 {
-                    selectedProject
-                },
+                    DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
+                    currProjectTasks[j++] = new Task
+                    {
+                        Title = dr1["title"].ToString(),
+                        Priority = 0,
+                        DueDate = dueDate,
+                        Status = DateTime.Now < dueDate ? "On time" : "Overdue",
+                        ProjectName = projectTitle
+                    };
+                }
 
-                CurrentUser = currUser,
-                CurrDate = Convert.ToDateTime("01/01/0001")
-            };
-            
-            return RedirectToAction("Index");
+                projects[i++] = new Project
+                {
+                    ProjectId = Int32.Parse(dr["projectId"].ToString()),
+                    Title = projectTitle,
+                    Tasks = currProjectTasks
+                };
+            }
+
+            currUser.PersonalNotes = GetPersonalNotes(model);
+
+            model.Projects = projects;
+            model.CurrentUser = currUser;
+            model.CurrDate = DateTime.Now;
+
+            return null;
+        }
+        
+
+        [HttpPost]
+        public ActionResult AddNote(string input, string username){
+            DashboardModel model = new DashboardModel();
+
+            string results = ""+model.AddPersonalNote(username, input);
+            return Json(new { success = true, message = results });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteNote(string noteId)
+        {
+            DashboardModel model = new DashboardModel();
+
+            string results = "" + model.DeletePersonalNote(Int32.Parse(noteId));
+            return Json(new { success = true, message = noteId });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateNote(string input, string noteId)
+        {
+            DashboardModel model = new DashboardModel();
+
+            string results = "" + model.UpdatePersonalNote(input, Int32.Parse(noteId));
+            return Json(new { success = true, message = noteId });
         }
     }
 }

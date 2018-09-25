@@ -7,10 +7,22 @@ namespace Capstone.Models
 {
     public class PersonalNote
     {
-        private int personalNoteId;
+        private readonly int personalNoteId;
         private string information;
         private DateTime timeStamp;
 
+        public PersonalNote(int pId, string info, DateTime dt)
+        {
+            personalNoteId = pId;
+            information = info;
+            timeStamp = dt;
+        }
+
+        public int PersonalNoteId {
+            get {
+                return personalNoteId;
+            }
+        }
         public string Information {
             get {
                 return information;

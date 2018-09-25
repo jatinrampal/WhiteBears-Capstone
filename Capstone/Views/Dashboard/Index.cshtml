@@ -15,7 +15,7 @@
             <div id="UserInfo">
                 <img id="profilePic" src="https://image.freepik.com/free-icon/male-user-profile-picture_318-37825.jpg" /><br /><br />
                 <label>@Html.DisplayFor(m => m.CurrentUser.FullName)</label><br />
-                <label>CEO</label><br />
+                <label>@Html.DisplayFor(m => m.CurrentUser.Role)</label><br />
                 <label>@Model.CurrDate.ToString("MM/dd/yyyy")</label>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <h3>Here's an overview of your projects</h3>
         </div>
         <form id="projectselection" class="text-center">
-            <span class="padding-5px border border-dark rounded-right rounded-left ">
+            <span class="padding-5px">
                 <label class="radio-inline">
                     <input type="radio" name="optradio" checked>All
                 </label>
@@ -59,14 +59,14 @@
             <tr>
                 <th scope="col">Task</th>
                 <th scope="col">Priority</th>
-                <th scope="col">Date</th>
+                <th scope="col">Due Date</th>
                 <th scope="col">Status</th>
                 <th scope="col">Project</th>
             </tr>
             <tbody>
                
-                    @foreach (var project in Model.Projects){
-                        foreach (var task in project.Tasks){
+                    @foreach (var project in Model.Projects) {
+                        foreach (var task in project.Tasks) {
                              <tr>
                             <td>@task.Title</td>
                             <td>@task.Priority</td>
@@ -76,7 +76,7 @@
                                  </tr>
                         }
 
-                }
+                    }
             </tbody>
         </table>
     </div>
@@ -94,7 +94,7 @@
                     </tr>
                     @foreach (var note in Model.CurrentUser.PersonalNotes)
                     {
-                        <tr name="PersonalNoteRow">
+                        <tr id="@note.PersonalNoteId" name="PersonalNoteRow">
                             <td>@note.TimeStamp.ToString("MM/dd/yyyy")</td>
                             <td>@note.Information</td>
                         </tr>
@@ -174,6 +174,19 @@
             } else {
                 if (isNoteValid()) {
                     $('#PersonalNotesTable > table > tbody:last').append('<tr name="PersonalNoteRow"><td>@Model.CurrDate.ToString("MM/dd/yyyy")</td><td>' + noteTextArea.val() + '</td></tr>');
+
+                    $.ajax({
+                        type: "post",
+                        url: '@Url.Action("AddNote", "Dashboard")',
+                        dataType: "json",
+                        data: {
+                            input: "" + noteTextArea.val(),
+                            username: "@Model.CurrentUser.Username"
+                        },
+                        success: function (data) {
+                        }
+                    });
+
                     noteTextArea.val('');
                     noteTextArea.css('display', 'none');
                     addButton.text("Add");
@@ -193,6 +206,23 @@
             } else {
                 if (isNoteValid()) {
                     $('tr.selected td:last-child').text(noteTextArea.val());
+
+                    $.ajax({
+                        type: "post",
+                        url: '@Url.Action("UpdateNote", "Dashboard")',
+                        dataType: "json",
+                        data: {
+                            input: "" + noteTextArea.val(),
+                            noteId: ""+clickedRow.attr('id')
+                        },
+                        success: function (data) {
+                        },
+
+                        error: function () {
+                            alert("There was an issue updating this note.");
+                        }
+                    });
+
                     noteTextArea.val('');
                     noteTextArea.css('display', 'none');
                     modifyButton.text('Modify');
@@ -203,6 +233,21 @@
 
         deleteButton.on('click', function () {
             if (deleteButton.text() === "Delete") {
+                $.ajax({
+                        type: "post",
+                        url: '@Url.Action("DeleteNote", "Dashboard")',
+                        dataType: "json",
+                        data: {
+                            noteId: ""+clickedRow.attr('id')
+                        },
+                        success: function (data) {
+                        },
+
+                        error: function () {
+                            alert("There was an issue deleting this note.");
+                        }
+                });
+
                 clickedRow.remove();
                 changeButtonState(deleteButton, false);
                 changeButtonState(addButton, true);
@@ -210,7 +255,6 @@
             } else {
                 noteTextArea.val('');
                 noteTextArea.css('display', 'none');
-
 
                 deleteButton.text('Delete');
                 modifyButton.text('Modify');
@@ -237,18 +281,34 @@
 
             return true;
         }
-    })
-        /*
+
         $('input[name=optradio]').on('click', function () {
             var radioValue = $("input[name='optradio']:checked").val();
-            alert();
+
+            $.ajax({
+                        type: "post",
+                        url: '@Url.Action("UpdateProject", "Dashboard")',
+                        dataType: "json",
+                        data: {
+                            projectId: "" + radioValue
+                        },
+                        success: function (data) {
+                        },
+
+                        error: function () {
+                            alert("There was an issue reloading the projects.");
+                        }
+            });
+
             $('#tasktable tr').each(function (index, value) {
                 if ($(value).children(":eq(4)").text() != radioValue) {
                     $(value).hide();
                 }
-                //alert(radioValue);
+                alert(radioValue);
             });
         });
     })
-    */
+
+
+
 </script>

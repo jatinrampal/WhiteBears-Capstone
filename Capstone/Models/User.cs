@@ -9,9 +9,6 @@ namespace Capstone.Models
     public class User
     {
         [Required]
-        private readonly int userId;
-
-        [Required]
         private readonly string firstName;
 
         [Required]
@@ -25,11 +22,19 @@ namespace Capstone.Models
 
         private readonly string fullName;
 
+        private string role;
+
         private PersonalNote[] personalNotes;
 
         public string FirstName {
             get {
                 return firstName;
+            }
+        }
+
+        public string Username {
+            get {
+                return username;
             }
         }
 
@@ -42,6 +47,16 @@ namespace Capstone.Models
         public string FullName {
             get {
                 return fullName;
+            }
+        }
+
+        public string Role {
+            get {
+                return role;
+            }
+
+            set {
+                role = value;
             }
         }
 
@@ -63,13 +78,13 @@ namespace Capstone.Models
             this. fullName = $"{firstName} {lastName}";
         }
 
-        public User(int userId, string firstName, string lastName, string username, string password) {
-            this.userId = userId;
+        public User(string firstName, string lastName, string username, string password, string role) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.username = username;
             this.password = password;
             this.fullName = $"{firstName} {lastName}";
+            this.role = role;
         }
 
         public string GetFullName() {
