@@ -16,10 +16,7 @@ namespace Capstone.Controllers
 
         Project[] projects;
         User currUser;
-
-        private readonly SqlConnection conn;
         public static SqlDataAdapter da;
-        private DataSet ds;
 
         public ActionResult Index()
         {
@@ -27,8 +24,8 @@ namespace Capstone.Controllers
 
             DashboardModel model = new DashboardModel();
 
-            drs = model.GetUser("Kish");
-            drs1 = model.GetUserRole("Kish");
+            drs = model.GetUser("Kalen");
+            drs1 = model.GetUserRole("Kalen");
 
             currUser = new User(drs[0]["firstName"].ToString(),
                 drs[0]["lastName"].ToString(),
@@ -36,7 +33,7 @@ namespace Capstone.Controllers
                 drs[0]["password"].ToString(),
                 drs1[0]["role"].ToString());
 
-
+            /*
             drs = model.GetProjects(currUser.Username);
             projects = new Project[drs.Count()];
 
@@ -67,14 +64,51 @@ namespace Capstone.Controllers
                     Tasks = currProjectTasks
                 };
             }
+            */
 
             currUser.PersonalNotes = GetPersonalNotes(model);
-
-            model.Projects = projects;
+            model.Projects = GetAllProjects(currUser.Username, model);
             model.CurrentUser = currUser;
             model.CurrDate = DateTime.Now;
 
             return View(model);
+        }
+
+        private Project[] GetAllProjects(string username, DashboardModel model){
+            DataRow[] drs = model.GetProjects(username);
+            projects = new Project[drs.Count()];
+
+            int i = 0;
+            foreach (DataRow dr in drs)
+            {
+                int currProjectId = Int32.Parse(drs[i]["projectId"].ToString());
+                string projectTitle = dr["title"].ToString();
+                DataRow[] drs1 = model.GetTasks(username, currProjectId);
+
+                Task[] currProjectTasks = new Task[drs1.Count()];
+                int j = 0;
+                foreach (DataRow dr1 in drs1)
+                {
+                    DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
+                    currProjectTasks[j++] = new Task
+                    {
+                        Title = dr1["title"].ToString(),
+                        Priority = dr1["priority"].ToString(),
+                        DueDate = dueDate,
+                        Status = DateTime.Now < dueDate ? "On time" : "Overdue",
+                        ProjectName = projectTitle
+                    };
+                }
+
+                projects[i++] = new Project
+                {
+                    ProjectId = Int32.Parse(dr["projectId"].ToString()),
+                    Title = projectTitle,
+                    Tasks = currProjectTasks
+                };
+            }
+
+            return projects;
         }
 
         private PersonalNote[] GetPersonalNotes(DashboardModel model){
@@ -91,28 +125,41 @@ namespace Capstone.Controllers
 
         [HttpPost]
         public ActionResult UpdateProject(string projectId, string sUser){
+            List<Task> selectedTasks = new List<Task>();
             DashboardModel model = new DashboardModel();
-            DataRow[] drs = model.GetTasks(sUser, Int32.Parse(projectId));
-            Task[] selectedTasks = new Task[drs.Count()];
+            DataRow[] drs;
+            if (projectId == "_all"){
+                Project[] projects = GetAllProjects(sUser, model);
 
-            string projectName = model.GetProjectName(projectId);
+                foreach(Project p in projects){
+                    foreach(Task t in p.Tasks){
+                        selectedTasks.Add(t);
+                    }
+                }
 
-            int i = 0;
-            foreach (DataRow dr in drs){
-                DateTime dueDate = Convert.ToDateTime(dr["dueDate"]);
-                selectedTasks[i++] = new Task
+            }else{
+                model = new DashboardModel();
+                drs = model.GetTasks(sUser, Int32.Parse(projectId));
+
+                string projectName = model.GetProjectName(projectId);
+
+                foreach (DataRow dr in drs)
                 {
-                    Title = dr["title"].ToString(),
-                    Priority = dr["priority"].ToString(),
-                    DueDate = dueDate,
-                    Status = DateTime.Now < dueDate ? "On time" : "Overdue",
-                    ProjectName = projectName
-                };
+                    DateTime dueDate = Convert.ToDateTime(dr["dueDate"]);
+                    selectedTasks.Add(new Task
+                    {
+                        Title = dr["title"].ToString(),
+                        Priority = dr["priority"].ToString(),
+                        DueDate = dueDate,
+                        Status = DateTime.Now < dueDate ? "On time" : "Overdue",
+                        ProjectName = projectName
+                    });
+                }
             }
            
             var sb = new System.Text.StringBuilder();
             foreach(Task task in selectedTasks){
-                sb.Append($"<td>{task.Title}</td><td>{task.Priority}</td><td>{task.DueDate.ToString("MM/dd/yyyy")}</td><td>{task.Status}</td><td>{task.ProjectName}</td>");
+                sb.Append($"<tr><td>{task.Title}</td><td>{task.Priority}</td><td>{task.DueDate.ToString("MM/dd/yyyy")}</td><td>{task.Status}</td><td>{task.ProjectName}</td></tr>");
             }
 
             return Content(sb.ToString());

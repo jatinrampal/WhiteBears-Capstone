@@ -16,6 +16,8 @@ button{
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 #TasksSection td, th {

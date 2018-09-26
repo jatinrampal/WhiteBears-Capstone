@@ -48,9 +48,12 @@ namespace Capstone.Models
         {
             DatabaseHelper dh = new DatabaseHelper();
             return dh.RunQuery($"SELECT * FROM Task t " +
-                $"JOIN Project p on t.projectId = p.projectId " +
-                $"WHERE t.projectId = '{projectId}';");
+                               $"JOIN Project p on t.projectId = p.projectId " +
+                               $"JOIN User_Task ut on t.taskId = ut.taskId " +
+                               $"WHERE ut.uName='{sUser}' " +
+                               $"AND p.projectId='{projectId}'");
         }
+
 
         public DataRow[] GetPersonalNote(string uName)
         {
