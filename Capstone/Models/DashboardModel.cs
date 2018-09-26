@@ -54,7 +54,6 @@ namespace Capstone.Models
                                $"AND p.projectId='{projectId}'");
         }
 
-
         public DataRow[] GetPersonalNote(string uName)
         {
             DatabaseHelper dh = new DatabaseHelper();

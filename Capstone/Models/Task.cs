@@ -18,6 +18,52 @@ namespace Capstone.Models
         private DateTime startDate;
         private DateTime completedDate;
 
+
+        public int TaskId{
+            get{
+                return taskId;
+            }
+
+            set{
+                taskId = value;
+            }
+        }
+
+        public DateTime CompletedDate{
+            get{
+                return completedDate;
+            }
+
+            set{
+                completedDate = value;
+            }
+        }
+
+
+        public DateTime StartDate
+        {
+            get
+            {
+                return startDate;
+            }
+
+            set
+            {
+                startDate = value;
+            }
+        }
+
+        public string Description{
+            get{
+                return description;
+            }
+
+            set{
+                description = value;
+            }
+        }
+
+
         public int Workload {
             get {
                 return this.workload;

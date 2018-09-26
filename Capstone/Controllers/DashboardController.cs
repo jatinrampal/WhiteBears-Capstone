@@ -33,39 +33,6 @@ namespace Capstone.Controllers
                 drs[0]["password"].ToString(),
                 drs1[0]["role"].ToString());
 
-            /*
-            drs = model.GetProjects(currUser.Username);
-            projects = new Project[drs.Count()];
-
-            int i = 0;
-            foreach (DataRow dr in drs) {
-                int currProjectId = Int32.Parse(drs[i]["projectId"].ToString());
-                string projectTitle = dr["title"].ToString();
-                drs1 = model.GetTasks(currUser.Username, currProjectId);
-
-                Task[] currProjectTasks = new Task[drs1.Count()];
-                int j = 0;
-                foreach (DataRow dr1 in drs1) {
-                    DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
-                    currProjectTasks[j++] = new Task
-                    {
-                        Title = dr1["title"].ToString(),
-                        Priority = dr1["priority"].ToString(),
-                        DueDate = dueDate,
-                        Status = DateTime.Now < dueDate ? "On time" : "Overdue",
-                        ProjectName = projectTitle
-                    };
-                }
-
-                projects[i++] = new Project
-                {
-                    ProjectId = Int32.Parse(dr["projectId"].ToString()),
-                    Title = projectTitle,
-                    Tasks = currProjectTasks
-                };
-            }
-            */
-
             currUser.PersonalNotes = GetPersonalNotes(model);
             model.Projects = GetAllProjects(currUser.Username, model);
             model.CurrentUser = currUser;
@@ -85,26 +52,32 @@ namespace Capstone.Controllers
                 string projectTitle = dr["title"].ToString();
                 DataRow[] drs1 = model.GetTasks(username, currProjectId);
 
-                Task[] currProjectTasks = new Task[drs1.Count()];
-                int j = 0;
+                List<Task> currProjectTasks = new List<Task>();
+
                 foreach (DataRow dr1 in drs1)
                 {
                     DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
-                    currProjectTasks[j++] = new Task
+                    DateTime completionDate = Convert.ToDateTime(dr1["completionDate"]);
+
+                    if (!completionDate.ToString("MM/dd/yyyy").Equals("01-01-0001"))
+                        continue;
+
+                    currProjectTasks.Add(new Task
                     {
                         Title = dr1["title"].ToString(),
                         Priority = dr1["priority"].ToString(),
                         DueDate = dueDate,
                         Status = DateTime.Now < dueDate ? "On time" : "Overdue",
-                        ProjectName = projectTitle
-                    };
+                        ProjectName = projectTitle,
+                        CompletedDate = completionDate
+                    });
                 }
 
                 projects[i++] = new Project
                 {
                     ProjectId = Int32.Parse(dr["projectId"].ToString()),
                     Title = projectTitle,
-                    Tasks = currProjectTasks
+                    Tasks = currProjectTasks.ToArray()
                 };
             }
 
@@ -133,6 +106,9 @@ namespace Capstone.Controllers
 
                 foreach(Project p in projects){
                     foreach(Task t in p.Tasks){
+
+                        if (!t.CompletedDate.ToString("MM/dd/yyyy").Equals("01-01-0001"))
+                            continue;
                         selectedTasks.Add(t);
                     }
                 }
@@ -146,13 +122,21 @@ namespace Capstone.Controllers
                 foreach (DataRow dr in drs)
                 {
                     DateTime dueDate = Convert.ToDateTime(dr["dueDate"]);
+                    DateTime completionDate = Convert.ToDateTime(dr["completionDate"]);
+
+                    if(!completionDate.ToString("MM/dd/yyyy").Equals("01-01-0001"))
+                        continue;
+                    
+                    
+
                     selectedTasks.Add(new Task
                     {
                         Title = dr["title"].ToString(),
                         Priority = dr["priority"].ToString(),
                         DueDate = dueDate,
                         Status = DateTime.Now < dueDate ? "On time" : "Overdue",
-                        ProjectName = projectName
+                        ProjectName = projectName,
+                        CompletedDate = completionDate
                     });
                 }
             }
