@@ -132,6 +132,8 @@
 <script>
 
     $(document).ready(function () {
+        loadPercentageBars("_all", "@Model.CurrentUser.Username");
+
         var clickedRow = null;
         var addButton = $('button[value=add');
         var modifyButton = $('button[value=modify');
@@ -305,48 +307,52 @@
                 }
             });
 
-            
-            $.ajax({
-                type: "post",
-                url: '@Url.Action("LoadCompletedTasks", "Dashboard")',
-                dataType: "json",
-                data: {
-                    projectId: ""+radioValue,
-                    username: "@Model.CurrentUser.Username"
-                },
-                success: function(data){
 
-                    var total = data.message.length;
-                    var notCompleted = 0;
-                    $.each(data.message, function(index, value){
-                        if(value.IsCompleted == false){
-                            notCompleted++;
-                        }
-                    })
-
-                    var completed = total-notCompleted;
-
-
-                    var percentage = (completed / total) * 100
-                    percentage = percentage.toFixed(2);
-                    if(percentage == "100.00"){
-                        percentage = 0.00;
-                    }
-
-                    $('#taskProgressBar').html(percentage);
-                    $('#taskProgressBar').css('width', percentage+'%');
-                    $('#taskProgressStatus').html(completed+'/'+total);
-                    $('#taskProgressRemaining').html(notCompleted + ' tasks remaining');
-                    
-                },
-
-    
-
-                error: function () {
-                    alert("There was an issue with updating the table");
-                }
-            });
-
+            loadPercentageBars(radioValue, "@Model.CurrentUser.Username");
         });
+
+
+       function loadPercentageBars(projectId, username){
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("LoadCompletedTasks", "Dashboard")',
+                    dataType: "json",
+                    data: {
+                        projectId: ""+projectId,
+                        username: username
+                    },
+                    success: function(data){
+
+                        var total = data.message.length;
+                        var notCompleted = 0;
+                        $.each(data.message, function(index, value){
+                            if(value.IsCompleted == false){
+                                notCompleted++;
+                            }
+                        })
+
+                        var completed = total-notCompleted;
+
+
+                        var percentage = (completed / total) * 100
+                        percentage = percentage.toFixed(2);
+                        if(percentage == "100.00"){
+                            percentage = 0.00;
+                        }
+
+                        $('#taskProgressBar').html(percentage + "%");
+                        $('#taskProgressBar').css('width', percentage+'%');
+                        $('#taskProgressStatus').html(completed+'/'+total);
+                        $('#taskProgressRemaining').html(notCompleted + ' task'+(notCompleted>1?'s':'') remaining');
+                        
+                    },
+
+        
+
+                    error: function () {
+                        alert("There was an issue with updating the table");
+                    }
+                });
+       }
     })
 </script>
