@@ -1,4 +1,6 @@
 ﻿using Capstone.Models;
+using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -103,7 +105,7 @@ namespace Capstone.Controllers
             DataRow[] drs;
             if (projectId == "_all"){
                 Project[] projects = GetAllProjects(sUser, model);
-
+                model.Projects = projects;
                 foreach(Project p in projects){
                     foreach(Task t in p.Tasks){
 
@@ -139,14 +141,21 @@ namespace Capstone.Controllers
                         CompletedDate = completionDate
                     });
                 }
+
+                model.Projects = new Project[]{
+                    new Project{
+                        Tasks = selectedTasks.ToArray()
+                    }
+                };
             }
            
             var sb = new System.Text.StringBuilder();
-            foreach(Task task in selectedTasks){
+            foreach (Task task in selectedTasks)
+            {
                 sb.Append($"<tr><td>{task.Title}</td><td>{task.Priority}</td><td>{task.DueDate.ToString("MM/dd/yyyy")}</td><td>{task.Status}</td><td>{task.ProjectName}</td></tr>");
             }
 
-            return Content(sb.ToString());
+            return Json(new { row = sb.ToString(), newModel = JsonConvert.SerializeObject(model) } );
         }
         
 
@@ -154,8 +163,9 @@ namespace Capstone.Controllers
         public ActionResult AddNote(string input, string username){
             DashboardModel model = new DashboardModel();
 
-            string results = ""+model.AddPersonalNote(username, input);
-            return Json(new { success = true, message = results });
+            DataRow[] drs = model.AddPersonalNote(username, input);
+            
+            return Json(new { success = true, message = drs[0][0].ToString() });
         }
 
         [HttpPost]
@@ -164,7 +174,7 @@ namespace Capstone.Controllers
             DashboardModel model = new DashboardModel();
 
             string results = "" + model.DeletePersonalNote(Int32.Parse(noteId));
-            return Json(new { success = true, message = noteId });
+            return Json(new { success = true, data = noteId });
         }
 
         [HttpPost]
@@ -174,6 +184,52 @@ namespace Capstone.Controllers
 
             string results = "" + model.UpdatePersonalNote(input, Int32.Parse(noteId));
             return Json(new { success = true, message = noteId });
+        }
+
+        [HttpPost]
+        public ActionResult LoadCompletedTasks(string projectId, string username)
+        {
+            DashboardModel model = new DashboardModel();
+            Project p = null;
+
+            if(projectId.Equals("_all")){
+                List<Task> tasks = new List<Task>();
+                DataRow[] drs = model.GetProjects(username);
+                int i = 0;
+                foreach (DataRow dr in drs)
+                {
+                    int currProjectId = Int32.Parse(drs[i++]["projectId"].ToString());
+                    string projectTitle = dr["title"].ToString();
+                    DataRow[] drs1 = model.GetTasks(username, currProjectId);
+
+                    foreach (DataRow dr1 in drs1)
+                    {
+                        DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
+                        DateTime completionDate = Convert.ToDateTime(dr1["completionDate"]);
+
+                        tasks.Add(new Task
+                        {
+                            Title = dr1["title"].ToString(),
+                            Priority = dr1["priority"].ToString(),
+                            DueDate = dueDate,
+                            Status = DateTime.Now < dueDate ? "On time" : "Overdue",
+                            ProjectName = projectTitle,
+                            CompletedDate = completionDate
+                        });
+                    }
+                }
+                p = new Project
+                {
+                    Tasks = tasks.ToArray()
+                };
+            }
+            else
+            {
+                p = model.GetProject(username, projectId);
+            }
+
+
+            return Json(new { success = true, message = p.Tasks });
         }
     }
 }

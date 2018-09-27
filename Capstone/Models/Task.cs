@@ -18,6 +18,11 @@ namespace Capstone.Models
         private DateTime startDate;
         private DateTime completedDate;
 
+        public Boolean IsCompleted{
+            get{
+                return !completedDate.ToString("MM/dd/yyyy").Contains("0001");
+            }
+        }
 
         public int TaskId{
             get{

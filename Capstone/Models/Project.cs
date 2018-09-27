@@ -12,7 +12,6 @@ namespace Capstone.Models
         private DateTime startDate, dueDate, completionDate;
         private Task[] tasks;
 
-
         public int ProjectId {
             get {
                 return projectId;

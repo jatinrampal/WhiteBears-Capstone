@@ -2,6 +2,7 @@
 @model DashboardModel
 @{
     ViewBag.msg = "Dashboard";
+    DashboardModel dm = new DashboardModel();
 }
 
 
@@ -112,10 +113,10 @@
         <div class="ProgressBarContainer">
             <label>Tasks Completed</label>
             <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 70%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">70%</div>
+                <div id="taskProgressBar" class="progress-bar progress-bar-success" role="progressbar" style="width:80%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
             </div>
-            <text class="text-large">7/10</text><br />
-            <text class="text-medium text-secondary">3 tasks remaining</text>
+            <text id="taskProgressStatus" class="text-large">k</text><br />
+            <text id="taskProgressRemaining" class="text-medium text-secondary">3 tasks remaining</text>
         </div>
 
         <div class="ProgressBarContainer">
@@ -183,6 +184,7 @@
                             username: "@Model.CurrentUser.Username"
                         },
                         success: function (data) {
+                            $('#PersonalNotesTable > table > tbody:last tr:last').attr("id", data.message);
                         }
                     });
 
@@ -283,26 +285,68 @@
 
         $('input[name=optradio]').on('click', function () {
             var radioValue = $("input[name='optradio']:checked").val();
+            var numOfTasks
 
             $.ajax({
                 type: "post",
                 url: '@Url.Action("UpdateProject", "Dashboard")',
-                dataType: "html",
+                dataType: "json",
                 data: {
                     projectId: "" + radioValue,
                     sUser: "@Model.CurrentUser.Username"
                 },
                 success: function(data){
-                    $('#tasktable tbody:last').html(data);
+                    $('#tasktable tbody:last').html(data.row);
+                    var tds = $('#tasktable tbody:last').children('tr').length;
                 },
 
                 error: function () {
                     alert("There was an issue with updating the table");
                 }
             });
+
+            
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("LoadCompletedTasks", "Dashboard")',
+                dataType: "json",
+                data: {
+                    projectId: ""+radioValue,
+                    username: "@Model.CurrentUser.Username"
+                },
+                success: function(data){
+
+                    var total = data.message.length;
+                    var notCompleted = 0;
+                    $.each(data.message, function(index, value){
+                        if(value.IsCompleted == false){
+                            notCompleted++;
+                        }
+                    })
+
+                    var completed = total-notCompleted;
+
+
+                    var percentage = (completed / total) * 100
+                    percentage = percentage.toFixed(2);
+                    if(percentage == "100.00"){
+                        percentage = 0.00;
+                    }
+
+                    $('#taskProgressBar').html(percentage);
+                    $('#taskProgressBar').css('width', percentage+'%');
+                    $('#taskProgressStatus').html(completed+'/'+total);
+                    $('#taskProgressRemaining').html(notCompleted + ' tasks remaining');
+                    
+                },
+
+    
+
+                error: function () {
+                    alert("There was an issue with updating the table");
+                }
+            });
+
         });
     })
-
-
-
 </script>

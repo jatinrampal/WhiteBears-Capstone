@@ -44,6 +44,42 @@ namespace Capstone.Models
                 $"WHERE up.uName = '{username}';");
         }
 
+        public Project GetProject(string username, string projectId)
+        {
+            DatabaseHelper dh = new DatabaseHelper();
+            DataRow[] drs = dh.RunQuery($"SELECT * FROM Project p " +
+                $"INNER JOIN User_Project up ON p.projectId = up.projectId " +
+                $"WHERE up.uName = '{username}' " +
+                                        $"AND p.projectId = '{projectId}';");
+
+
+            DataRow[] drs1 = GetTasks(username, Int32.Parse(drs[0]["projectId"].ToString()));
+            Task[] tasks = new Task[drs1.Count()];
+
+            int i = 0;
+            foreach(DataRow dr1 in drs1){
+                DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
+                DateTime completionDate = Convert.ToDateTime(dr1["completionDate"]);
+
+                tasks[i++] = new Task
+                {
+                    Title = dr1["title"].ToString(),
+                    Priority = dr1["priority"].ToString(),
+                    DueDate = dueDate,
+                    Status = DateTime.Now < dueDate ? "On time" : "Overdue",
+                    ProjectName = drs[0]["title"].ToString(),
+                    CompletedDate = completionDate
+                };
+            }
+
+            return new Project
+            {
+                ProjectId = Int32.Parse(drs[0]["projectId"].ToString()),
+                Title = drs[0]["title"].ToString(),
+                Tasks = tasks
+            };
+        }
+
         public DataRow[] GetTasks(string sUser, int projectId)
         {
             DatabaseHelper dh = new DatabaseHelper();
@@ -60,10 +96,12 @@ namespace Capstone.Models
             return dh.RunQuery($"SELECT * FROM PersonalNote WHERE PersonalNote.uName = '{uName}';");
         }
 
-        public int AddPersonalNote(string uName, string note)
+        public DataRow[] AddPersonalNote(string uName, string note)
         {
             DatabaseHelper dh = new DatabaseHelper();
-            return dh.RunUpdateQuery($"INSERT INTO PersonalNote VALUES('{uName}', '{note}', '{DateTime.Now}');");
+            dh.RunUpdateQuery($"INSERT INTO PersonalNote VALUES('{uName}', '{note}', '{DateTime.Now}');");
+
+            return dh.RunQuery($"SELECT MAX(noteId) FROM PersonalNote");
         }
 
         public int DeletePersonalNote(int noteId)
