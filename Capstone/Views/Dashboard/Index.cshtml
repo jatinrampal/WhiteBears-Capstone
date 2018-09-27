@@ -297,7 +297,7 @@
                     projectId: "" + radioValue,
                     sUser: "@Model.CurrentUser.Username"
                 },
-                success: function(data){
+                success: function (data) {
                     $('#tasktable tbody:last').html(data.row);
                     var tds = $('#tasktable tbody:last').children('tr').length;
                 },
@@ -343,7 +343,7 @@
                         $('#taskProgressBar').html(percentage + "%");
                         $('#taskProgressBar').css('width', percentage+'%');
                         $('#taskProgressStatus').html(completed+'/'+total);
-                        $('#taskProgressRemaining').html(notCompleted + ' task'+(notCompleted>1?'s':'') remaining');
+                        $('#taskProgressRemaining').html(notCompleted + ' task'+(notCompleted>1?'s':'') + ' remaining');
                         
                     },
 

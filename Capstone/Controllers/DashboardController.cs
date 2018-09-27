@@ -61,7 +61,8 @@ namespace Capstone.Controllers
                     DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
                     DateTime completionDate = Convert.ToDateTime(dr1["completionDate"]);
 
-                    if (!completionDate.ToString("MM/dd/yyyy").Equals("01-01-0001"))
+                    string completionDateString = completionDate.ToString("MM/dd/yyyy");
+                    if (!completionDateString.Equals("01/01/0001") && !completionDateString.Equals("01-01-0001"))
                         continue;
 
                     currProjectTasks.Add(new Task
@@ -107,10 +108,7 @@ namespace Capstone.Controllers
                 Project[] projects = GetAllProjects(sUser, model);
                 model.Projects = projects;
                 foreach(Project p in projects){
-                    foreach(Task t in p.Tasks){
-
-                        if (!t.CompletedDate.ToString("MM/dd/yyyy").Equals("01-01-0001"))
-                            continue;
+                    foreach (Task t in p.Tasks){
                         selectedTasks.Add(t);
                     }
                 }
@@ -126,7 +124,8 @@ namespace Capstone.Controllers
                     DateTime dueDate = Convert.ToDateTime(dr["dueDate"]);
                     DateTime completionDate = Convert.ToDateTime(dr["completionDate"]);
 
-                    if(!completionDate.ToString("MM/dd/yyyy").Equals("01-01-0001"))
+                    string completionDateString = completionDate.ToString("MM/dd/yyyy");
+                    if (!completionDateString.Equals("01/01/0001") && !completionDateString.Equals("01-01-0001"))
                         continue;
                     
                     
@@ -155,7 +154,8 @@ namespace Capstone.Controllers
                 sb.Append($"<tr><td>{task.Title}</td><td>{task.Priority}</td><td>{task.DueDate.ToString("MM/dd/yyyy")}</td><td>{task.Status}</td><td>{task.ProjectName}</td></tr>");
             }
 
-            return Json(new { row = sb.ToString(), newModel = JsonConvert.SerializeObject(model) } );
+            Debug.WriteLine("WOOOO"+sb.ToString());
+            return Json(new { row = sb.ToString() } );
         }
         
 
