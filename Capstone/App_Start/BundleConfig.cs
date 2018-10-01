@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace Capstone
+namespace WhiteBears
 {
     public class BundleConfig
     {

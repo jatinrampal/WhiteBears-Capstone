@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Capstone.Models
+namespace WhiteBears.Models
 {
     public class Project
     {

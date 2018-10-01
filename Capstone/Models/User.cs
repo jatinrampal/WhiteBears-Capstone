@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Capstone.Models
+namespace WhiteBears.Models
 {
     public class User
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using WhiteBears;
 
-namespace Capstone.Models
+namespace WhiteBears.Models
 {
     public class DashboardModel
     {

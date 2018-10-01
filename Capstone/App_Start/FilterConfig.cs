@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace Capstone
+namespace WhiteBears
 {
     public class FilterConfig
     {

@@ -1,4 +1,4 @@
-﻿using Capstone.Models;
+﻿using WhiteBears.Models;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using WhiteBears;
 
-namespace Capstone.Controllers
+namespace WhiteBears.Controllers
 {
     public class DashboardController : Controller
     {
