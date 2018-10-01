@@ -141,28 +141,28 @@
         var noteTextArea = $('#PersonalNoteText');
 
         $(document).on('click', 'tr[name=PersonalNoteRow]', function () {
-            clickedRow = $(this);
+            if (addButton.text() != "Save") {
+                clickedRow = $(this);
 
-            if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
-                clickedRow.css('background-color', 'white');
+                if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
+                    clickedRow.css('background-color', 'white');
+                    
+                    changeButtonState(modifyButton, false);
+                    changeButtonState(deleteButton, false);
 
-                changeButtonState(addButton, true);
-                changeButtonState(modifyButton, false);
-                changeButtonState(deleteButton, false);
+                    noteTextArea.css('display', 'none');
+                } else {
+                    $('#PersonalNotesTable table tr').css('background-color', 'white');
+                    $('#PersonalNotesTable table tr').removeClass('selected');
 
-                noteTextArea.css('display', 'none');
-            } else {
-                $('#PersonalNotesTable table tr').css('background-color', 'white');
-                $('#PersonalNotesTable table tr').removeClass('selected');
+                    clickedRow.css('background-color', 'lightgrey');
+                    clickedRow.addClass('selected');
+                    
+                    changeButtonState(modifyButton, true);
+                    changeButtonState(deleteButton, true);
 
-                clickedRow.css('background-color', 'lightgrey');
-                clickedRow.addClass('selected');
-
-                changeButtonState(addButton, false);
-                changeButtonState(modifyButton, true);
-                changeButtonState(deleteButton, true);
-
-                noteTextArea.css('display', 'none');
+                    noteTextArea.css('display', 'none');
+                }
             }
         });
 
@@ -173,6 +173,7 @@
                 addButton.text("Save");
                 deleteButton.text("Cancel");
                 changeButtonState(deleteButton, true);
+                changeButtonState(modifyButton, false);
             } else {
                 if (isNoteValid()) {
                     $('#PersonalNotesTable > table > tbody:last').append('<tr name="PersonalNoteRow"><td>@Model.CurrDate.ToString("MM/dd/yyyy")</td><td>' + noteTextArea.val() + '</td></tr>');
@@ -253,7 +254,6 @@
 
                 clickedRow.remove();
                 changeButtonState(deleteButton, false);
-                changeButtonState(addButton, true);
                 changeButtonState(modifyButton, false);
             } else {
                 noteTextArea.val('');
@@ -262,10 +262,8 @@
                 deleteButton.text('Delete');
                 modifyButton.text('Modify');
                 addButton.text("Add");
-
-                changeButtonState(modifyButton, addButton.hasClass('disabled'));
-                changeButtonState(deleteButton, addButton.hasClass('disabled'))
-                changeButtonState(addButton, modifyButton.hasClass('disabled'));
+                changeButtonState(deleteButton, false);
+                changeButtonState(modifyButton, false);
             }
         })
 
