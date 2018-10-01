@@ -156,3 +156,15 @@ header {
     height: 100px;
     display: none;
 }
+
+.scrollable-task{
+    height: auto;
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.scrollable-notes {
+    height: auto;
+    max-height: 400px;
+    overflow: scroll;
+}
