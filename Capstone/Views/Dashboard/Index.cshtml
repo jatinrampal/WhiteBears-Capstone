@@ -9,7 +9,49 @@
 @Styles.Render("~/Style/Dashboard.css")
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    function sortTable(n, isTaskTable) {
+        var table, rows, switching, i, first, second, shouldSwitch, direction, switchcount = 0;
+        table = document.getElementById(isTaskTable ? "tasktable" : "notestable");
+        switching = true;
 
+        direction = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+
+                first = rows[i].getElementsByTagName("TD")[n];
+                second = rows[i + 1].getElementsByTagName("TD")[n];
+
+                if (direction == "asc") {
+                    if (first.innerHTML.toLowerCase() > second.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (direction == "desc") {
+                    if (first.innerHTML.toLowerCase() < second.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && direction == "asc") {
+                    direction = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
 <div id="MainPage">
     <nav id="LeftPanel">
         <div class="LeftPanelBorder" id="UserInfoContainer">
@@ -59,11 +101,11 @@
         <div class="scrollable-task">
             <table id="tasktable" class="table table-hover">
                 <tr>
-                    <th scope="col">Task</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Project</th>
+                    <th scope="col" onclick="sortTable(0, true)">Task</th>
+                    <th scope="col" onclick="sortTable(1, true)">Priority</th>
+                    <th scope="col" onclick="sortTable(2, true)">Due Date</th>
+                    <th scope="col" onclick="sortTable(3, true)">Status</th>
+                    <th scope="col" onclick="sortTable(4, true)">Project</th>
                 </tr>
                 <tbody>
 
@@ -92,10 +134,10 @@
             <div>
                 <label>Personal Notes</label>
                 <div class="scrollable-notes" id="PersonalNotesTable">
-                    <table class="table table-hover">
+                    <table id="notestable" class="table table-hover">
                         <tr>
-                            <th>Date</th>
-                            <th>Note</th>
+                            <th onclick="sortTable(0, false)">Date</th>
+                            <th onclick="sortTable(1, false)">Note</th>
                         </tr>
                         @foreach (var note in Model.CurrentUser.PersonalNotes)
                         {
@@ -315,7 +357,6 @@
             loadPercentageBars(radioValue, "@Model.CurrentUser.Username");
         });
 
-
        function loadPercentageBars(projectId, username){
                 $.ajax({
                     type: "post",
@@ -350,8 +391,6 @@
                         $('#taskProgressRemaining').html(notCompleted + ' task'+(notCompleted>1?'s':'') + ' remaining');
                         
                     },
-
-        
 
                     error: function () {
                         alert("There was an issue with updating the table");
