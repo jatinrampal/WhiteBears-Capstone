@@ -1,0 +1,170 @@
+﻿html, body {
+    height: 100%;
+    font-family: "Avenir Next" !important;
+}
+
+
+#MainPage{
+    position: relative;
+    height: 100%;
+}
+
+button{
+    padding: 7px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+#TasksSection td, th {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 200px;
+}
+
+#TasksSection {
+    float: left;
+    margin-left: 50px;
+    margin-top: 20px;
+    min-height: 200px;
+}
+
+#TaskOverviewSection{
+    text-align: center;
+    float: right;
+}
+
+.TaskPercentage{
+    padding: 5px;
+    float: left;
+    margin-top: 5px;
+}
+
+
+#LeftPanel {
+    background: lightgrey;
+    text-align: center;
+    width: 200px;
+    float: left;
+    height: 100vh;
+}
+
+.ProjectButtons {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-color: lightgrey;
+    color: black;
+    background: lightgrey;
+    border-radius: 10px 10px 10px 10px
+}
+
+.ProjectButtons:hover {
+    background: darkgrey;
+    color: white;
+}
+
+
+header {
+    text-align: left;
+    margin-left: 250px;
+}
+
+.headerButtons:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.LeftPanelBorder {
+    padding: 50px;
+    border: solid black 2px;
+}
+
+#UserInfoContainer {
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ProjectListContainer {
+    height: 60%;
+}
+
+#PersonalNotesSection{
+    margin-top: 30px;
+    float: right;
+}
+
+#PersonalNotesSection td, th {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 300px;
+}
+
+#PersonalNotesButtonsContainer {
+    margin-top: 20px;
+    margin-left: 100px;
+    min-width: 300px;
+    text-align: center;
+}
+
+
+#Note{
+    width: 300px;
+}
+
+#profilePic {
+    width: 100px;
+    border-radius: 120px 120px 120px 120px;
+}
+
+#headings {
+    text-align: left;
+}
+
+.ProgressBarContainer {
+    margin-top: 30px;
+    margin-left: 250px;
+    width: 400px;
+
+}
+
+.ProgressBarContainers {
+    margin-top: 30px;
+    width: 300px;
+}
+
+.text-large {
+    font-size: large;
+}
+
+.text-medium{
+    font-size: medium;
+}
+
+.padding-5px{
+    padding: 5px;
+}
+
+#PersonalNoteText{
+    width: 100%;
+    resize: none;
+    height: 100px;
+    display: none;
+}
+
+.scrollable-task{
+    height: auto;
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.scrollable-notes {
+    height: auto;
+    max-height: 400px;
+    overflow: scroll;
+}
