@@ -1,8 +1,6 @@
-﻿html, body {
+﻿html, body{
     height: 100%;
-    font-family: "Avenir Next" !important;
 }
-
 
 #MainPage{
     position: relative;
@@ -13,11 +11,17 @@ button{
     padding: 7px;
 }
 
+textarea{
+    resize: none;
+}
+
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    word-wrap: break-word;
-    white-space: normal;
+}
+
+tr:nth-child(even){
+    background-color: #DDDDDD;
 }
 
 #TasksSection td, th {
@@ -26,16 +30,18 @@ table {
     max-width: 200px;
 }
 
+
+
 #TasksSection {
     float: left;
     margin-left: 50px;
     margin-top: 20px;
-    min-height: 200px;
 }
 
 #TaskOverviewSection{
+    float: left;
+    margin-left: 40px;
     text-align: center;
-    float: right;
 }
 
 .TaskPercentage{
@@ -44,6 +50,15 @@ table {
     margin-top: 5px;
 }
 
+#TasksCompleted {
+    background-color: lightgreen;
+    width: 60%;
+}
+
+#TasksNotCompleted{
+    background-color: lightcoral;
+    width: 40%;
+}
 
 #LeftPanel {
     background: lightgrey;
@@ -53,30 +68,20 @@ table {
     height: 100vh;
 }
 
-.ProjectButtons {
+.ProjectButtons{
     margin-top: 5px;
     margin-bottom: 5px;
-    border-color: lightgrey;
-    color: black;
-    background: lightgrey;
-    border-radius: 10px 10px 10px 10px
-}
-
-.ProjectButtons:hover {
-    background: darkgrey;
-    color: white;
 }
 
 
-header {
-    text-align: left;
-    margin-left: 250px;
+header{
+    text-align: center;
 }
 
-.headerButtons:hover {
-    background-color: #4CAF50; /* Green */
-    color: white;
+#signout{
+    float: right;
 }
+
 
 .LeftPanelBorder {
     padding: 50px;
@@ -84,19 +89,20 @@ header {
 }
 
 #UserInfoContainer {
-    height: 40%;
+    height: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #ProjectListContainer {
-    height: 60%;
+    height: 70%;
 }
 
 #PersonalNotesSection{
     margin-top: 30px;
-    float: right;
+    margin-left: 50px;
+    float: left;
 }
 
 #PersonalNotesSection td, th {
@@ -108,63 +114,23 @@ header {
 #PersonalNotesButtonsContainer {
     margin-top: 20px;
     margin-left: 100px;
-    min-width: 300px;
-    text-align: center;
 }
 
+.PersonalNotesButtons {
+    margin-left: 20px;
+}
+
+#AddNoteSection {
+    margin-top: 30px;
+    margin-left: 50px;
+    float: left;
+}
 
 #Note{
     width: 300px;
 }
 
-#profilePic {
-    width: 100px;
-    border-radius: 120px 120px 120px 120px;
-}
-
-#headings {
-    text-align: left;
-}
-
-.ProgressBarContainer {
-    margin-top: 30px;
-    margin-left: 250px;
-    width: 400px;
-
-}
-
-.ProgressBarContainers {
-    margin-top: 30px;
-    width: 300px;
-}
-
-.text-large {
-    font-size: large;
-}
-
-.text-medium{
-    font-size: medium;
-}
-
-.padding-5px{
-    padding: 5px;
-}
-
-#PersonalNoteText{
-    width: 100%;
-    resize: none;
-    height: 100px;
-    display: none;
-}
-
-.scrollable-task{
-    height: auto;
-    max-height: 300px;
-    overflow: scroll;
-}
-
-.scrollable-notes {
-    height: auto;
-    max-height: 400px;
-    overflow: scroll;
+#AddPersonalNote{
+    margin-left: 10px;
+    margin-top: 45px;
 }

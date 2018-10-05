@@ -3,48 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WhiteBears.Models
+namespace Capstone.Models
 {
     public class Project
     {
         private int projectId;
         private string title, description, scopeStatement;
         private DateTime startDate, dueDate, completionDate;
-        private Task[] tasks;
-
-        public int ProjectId {
-            get {
-                return projectId;
-            }
-
-            set {
-                projectId = value;
-            }
-        }
-
-        public string Title {
-            get {
-                return title;
-            }
-
-            set {
-                title = value;
-            }
-        }
-
-        public Task[] Tasks {
-            get {
-                return tasks;
-            }
-
-            set {
-                tasks = value;
-            }
-        }
-
 
         public void LoadProject(){
-            
+            //TODO
         }
 
         /*

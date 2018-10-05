@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace WhiteBears.Controllers
+namespace Capstone.Controllers
 {
     public class HomeController : Controller
     {

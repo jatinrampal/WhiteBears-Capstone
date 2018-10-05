@@ -3,45 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WhiteBears.Models
+namespace Capstone.Models
 {
     public class PersonalNote
     {
-        private readonly int personalNoteId;
+        private int personalNoteId;
         private string information;
         private DateTime timeStamp;
-
-        public PersonalNote(int pId, string info, DateTime dt)
-        {
-            personalNoteId = pId;
-            information = info;
-            timeStamp = dt;
-        }
-
-        public int PersonalNoteId {
-            get {
-                return personalNoteId;
-            }
-        }
-        public string Information {
-            get {
-                return information;
-            }
-
-            set {
-                information = value;
-            }
-        }
-
-        public DateTime TimeStamp {
-            get {
-                return timeStamp;
-            }
-
-            set {
-                timeStamp = value;
-            }
-        }
 
         public bool AddNote(){
             //TODO
