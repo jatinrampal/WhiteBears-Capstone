@@ -7146,3 +7146,15 @@ td.visible-print {
         transition: none;
     }
 }
+
+.float-left {
+    float: left !important
+}
+
+.float-right {
+    float: right !important
+}
+
+.float-none {
+    float: none !important
+}

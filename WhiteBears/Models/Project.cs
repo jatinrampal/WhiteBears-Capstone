@@ -32,6 +32,26 @@ namespace WhiteBears.Models
             }
         }
 
+        public string Description {
+            get {
+                return description;
+            }
+
+            set {
+                description = value;
+            }
+        }
+
+        public string ScopeStatement {
+            get {
+                return scopeStatement;
+            }
+
+            set {
+                scopeStatement = value;
+            }
+        }
+
         public Task[] Tasks {
             get {
                 return tasks;
@@ -42,30 +62,58 @@ namespace WhiteBears.Models
             }
         }
 
+        public DateTime StartDate {
+            get {
+                return startDate;
+            }
 
-        public void LoadProject(){
-            
+            set {
+                startDate = value;
+            }
         }
 
-        /*
-        public Document[] LoadDocuments(){
+        public DateTime DueDate {
+            get {
+                return dueDate;
+            }
 
-        }git
-        */
+            set {
+                dueDate = value;
+            }
+        }
 
-        public void GetNextMilestone(){
+        public DateTime CompletionDate {
+            get {
+                return completionDate;
+            }
+
+            set {
+                completionDate = value;
+            }
+        }
+
+        public void LoadProject()
+        {
+
+        }
+
+        public void GetNextMilestone()
+        {
             //TODO
         }
 
-        public void NextMilestoneCompletion(){
+        public void NextMilestoneCompletion()
+        {
             //TODO
         }
 
-        public void TasksCompletion(){
+        public void TasksCompletion()
+        {
             //TODO
         }
 
-        public void WorkCompletion(){
+        public void WorkCompletion()
+        {
             //TODO
         }
     }

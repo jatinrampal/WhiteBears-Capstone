@@ -8,7 +8,7 @@
 
 @Styles.Render("~/Style/Dashboard.css")
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
 <script>
     function sortTable(n, isTaskTable) {
         var table, rows, switching, i, first, second, shouldSwitch, direction, switchcount = 0;
@@ -68,7 +68,7 @@
                 <label>Projects</label> <br />
                 @foreach (var project in Model.Projects)
                 {
-                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project")'">@project.Title</button>;
+                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "TeamManagement", new { id = project.ProjectId })'">@project.Title</button>;
                 }
             </div>
         </div>

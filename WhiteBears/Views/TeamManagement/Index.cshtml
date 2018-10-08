@@ -1,4 +1,5 @@
 ﻿@using WhiteBears.Models
+@model TeamManagementModel
 
 <!DOCTYPE html>
 
@@ -6,9 +7,123 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    @Styles.Render("~/Style/Dashboard.css")
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
 </head>
 <body>
-    <div> 
+    <div>
+        <nav id="LeftPanel">
+            <div class="LeftPanelBorder" id="UserInfoContainer">
+                <div id="UserInfo">
+                    <img id="profilePic" src="https://image.freepik.com/free-icon/male-user-profile-picture_318-37825.jpg" /><br /><br />
+                    <label>@Html.DisplayFor(m => m.CurrentUser.FullName)</label><br />
+                    <label>@Html.DisplayFor(m => m.CurrentUser.Role)</label><br />
+                    <label>@Model.CurrDate.ToString("MM/dd/yyyy")</label>
+                </div>
+            </div>
+
+            <div class="LeftPanelBorder" id="ProjectListContainer">
+                <div id="ProjectList">
+                    <label>Projects</label> <br />
+                    @foreach (var project in Model.Projects)
+                    {
+                        <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "TeamManagement", new { id = project.ProjectId })'">@project.Title</button>;
+                    }
+                </div>
+            </div>
+        </nav>
+
+        <div>
+            <h2>Personal Dashboard</h2>
+            <h3>Here's an overview of your projects</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <table id="excluded-table" class="table table-hover border">
+                    <tr>
+                        <th>Excluded Users</th>
+                    </tr>
+                    @foreach (var item in Model.ExcludedUsers)
+                    {
+                        <tr name="excluded-user">
+                            <td>@item.Username</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div class="col-sm-2 btn-group">
+                <button class="btn btn-lg btn-success disabled" value="add">Add</button>
+                <button class="btn btn-lg btn-danger disabled" value="remove">Remove</button>
+            </div>
+
+            <div id="included-table" class="col-sm-2">
+                <table class="table table-hover border">
+                    <tr>
+                        <th>Included Users</th>
+                    </tr>
+                    @foreach (var item in Model.IncludedUsers)
+                    {
+                        <tr name="included-user">
+                            <td>@item.Username</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            var addButton = $('button[value=add]');
+            var removeButton = $('button[value=remove]');
+
+            $(document).on('click', 'tr', function () {
+                clickedRow = $(this);
+
+                var typeRow = $(this).attr('name');
+                if (typeRow == undefined) {
+                    return
+                }
+
+                if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
+                    clickedRow.css('background-color', 'white');
+                    clickedRow.removeClass('selected');
+
+                    var oneSelected = false;
+                    $('tr[name=' + typeRow + ']').each(function (i, row) {
+                        if ($(this).hasClass('selected')) {
+                            oneSelected = true
+                        }
+                    });
+
+                    if (!oneSelected) {
+                        changeButtonState((typeRow == "excluded-user" ? addButton : removeButton), false);
+                    }
+                } else {
+
+                    $('tr').each(function (i, row) {
+                        if ($(this).attr('name') != typeRow) {
+                            changeButtonState((typeRow == "excluded-user" ? removeButton : addButton), false);
+                            $(this).css('background-color', 'white');
+                            $(this).removeClass('selected');
+                        }
+                    })
+
+                    clickedRow.css('background-color', 'lightgrey');
+                    clickedRow.addClass('selected');
+                    changeButtonState((typeRow == "excluded-user" ? addButton : removeButton), true);
+                }
+            });
+
+            function changeButtonState(button, state) {
+                if (state)
+                    button.removeClass('disabled');
+                else
+                    button.addClass('disabled')
+            }
+        })
+    </script>
 </body>
 </html>

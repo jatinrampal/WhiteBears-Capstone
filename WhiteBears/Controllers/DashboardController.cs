@@ -26,6 +26,9 @@ namespace WhiteBears.Controllers
 
             DashboardModel model = new DashboardModel();
 
+            if(Session["username"] == null){
+                return RedirectToAction("Index", "Home");
+            }
             drs = model.GetUser(Session["username"].ToString());
 
             currUser = new User(drs[0]["firstName"].ToString(),
