@@ -1,0 +1,30 @@
+﻿body {
+}
+
+#myThead{
+    background-color: grey;
+    color: white;
+}
+
+#projectTaskTableDiv {
+    height: 350px;
+    border: solid;
+    border-color: lightgray;
+    border-width: 1px;
+}
+
+#projectTaskButtons
+{
+    margin-top: 2%; 
+}
+
+#projectTaskAdd {
+    margin-left: 14%;
+    width: 25%;
+}
+
+#projectTaskDelete
+{
+    margin-left: 14%;
+    width: 25%;
+}

@@ -1,0 +1,30 @@
+﻿@using WhiteBears.Models
+@model IEnumerable<Task>
+<head>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Style/ProjectTaskPage.css" rel="stylesheet" />
+
+</head>
+<h3>Documents</h3>
+<dd>
+    <div id="projectTaskTableDiv">
+        <table id="projectTaskTable" class="table table-striped">
+            <thead id="myThead">
+                <tr>
+                    <th>Document</th>
+                    <th>Access </th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody id="projectTaskTableTbody">
+              
+             
+            </tbody>
+        </table>
+    </div>
+    <div id="projectTaskButtons">
+        <button type="button" id="projectTaskAdd" class="btn btn-info">Upload</button>
+        
+    </div>
+</dd>
+

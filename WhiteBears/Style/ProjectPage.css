@@ -1,0 +1,99 @@
+﻿body {
+}
+
+#topBarTitle
+{
+    color: red;
+}
+
+#backButton
+{
+    text-align: left;
+}
+
+#nameDiv
+{
+    text-align: right;
+    color: red;
+    font-size: 25px;
+}
+
+#name
+{
+    color: red;
+    padding-right: 50px;
+}
+
+#hr {
+    border: none;
+    height: 20px;
+    width: 100%;
+    height: 50px;
+    margin-top: 0;
+    border-bottom: 1px solid #1f1209;
+    box-shadow: 0 20px 20px -20px #333;
+    margin: -40px auto 25px;
+}
+
+/*
+    Project Detail Container 
+    Ex: Project 1 Details 
+*/
+#projectDetailsDiv 
+{
+    text-align: left;  
+}
+
+/*
+    Project Detail 
+    Ex: Project 1 Details 
+*/
+#projectDetails {
+    color: red;
+    font-size: 25px;
+}
+
+/*
+    Project Button Container 
+    @Setting 
+    @Logout
+*/
+#projectButtons {
+    text-align: right;
+    font-size: 20px;
+    padding-right: 50px;
+}
+
+/* Setting */
+#settingButton
+{
+    padding-right: 20px;
+}
+
+/* Logout */
+#logoutButton
+{
+
+}
+
+/* Table content div/row */
+#tableContent
+{
+    margin-left: 1%;
+}
+
+.container-fluid
+{
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-right: 0%;
+    margin-bottom: 0%;
+}
+
+.row
+{
+    margin-bottom: 1.5%;
+    margin-top: 0%; 
+    margin-left: 0%; 
+    margin-right: 0%;
+}

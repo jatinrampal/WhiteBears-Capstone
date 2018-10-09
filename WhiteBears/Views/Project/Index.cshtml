@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+   
+    <link href="~/Style/ProjectPage.css" rel="stylesheet" />
+
+</head>
+    
+<body>
+  
+    <div class="container-fluid">
+
+        <h1 id="topBarTitle">White Bears</h1>
+        <hr id="hr" />
+        <div id="row" class="row">
+            
+            <div id="backButton" class="col-sm-6">
+                <span> @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")</span>
+            </div>
+            <div id="nameDiv" class="col-sm-6">
+                <span id="name">Kishan Dalal</span>
+            </div>
+        </div>
+
+       
+
+    </div>
+
+    <div class="container-fluid">
+
+        <div id="tableContent" class="row">
+            <div class="col-sm-4">
+
+                @{Html.RenderAction("Index", "ProjectTasks");}
+
+            </div>
+            <div class="col-sm-4">
+                @{Html.RenderAction("Index", "ProjectDocument");}
+            </div>
+            <div class="col-sm-4">
+                @{Html.RenderAction("Index", "ProjectNotes");}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
