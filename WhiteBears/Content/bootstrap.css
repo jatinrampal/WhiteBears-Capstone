@@ -7158,3 +7158,8 @@ td.visible-print {
 .float-none {
     float: none !important
 }
+
+.justify-content-center {
+    -ms-flex-pack: center !important;
+    justify-content: center !important
+}

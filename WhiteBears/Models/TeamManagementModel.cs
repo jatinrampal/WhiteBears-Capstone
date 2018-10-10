@@ -169,5 +169,29 @@ namespace WhiteBears.Models
                 return false;
             }
         }
+
+        public static bool RemoveUserFromProject(string[] usernames, int projectId)
+        {
+            DatabaseHelper dh = new DatabaseHelper();
+
+            try
+            {
+                foreach (string username in usernames)
+                {
+                    if (dh.RunQuery($"SELECT uName, ProjectId FROM [User_Project] " +
+                        $"WHERE projectId='{projectId}' AND uName='{username}'").Count() < 1)
+                        continue;
+
+                    dh.RunUpdateQuery($"DELETE FROM User_Project " +
+                        $"WHERE projectId='{projectId}' AND uName='{username}'");
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
+        }
     }
 }

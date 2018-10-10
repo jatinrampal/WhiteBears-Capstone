@@ -13,7 +13,7 @@ namespace WhiteBears.Controllers
         public ActionResult Index(int? id)
         {
 
-            if(Session["username"] == null)
+            if (Session["username"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -32,14 +32,36 @@ namespace WhiteBears.Controllers
             return View(model);
         }
 
-        public ActionResult Update(string[] usernames, int projectId)
+        public ActionResult AddUsers(string[] usernames, string[] includedUsers, int projectId)
         {
-            TeamManagementModel.AddUserToProject(usernames, projectId);
+            List<string> toAdd = new List<string>();
+
+            foreach (string s in usernames)
+            {
+                if (!includedUsers.Contains(s))
+                {
+                    toAdd.Add(s);
+                }
+            }
+
+            TeamManagementModel.AddUserToProject(toAdd.ToArray(), projectId);
             return Json(new { success = true });
         }
 
-        public ActionResult Cancel(){
-            return RedirectToAction("Index", "Home");
+        public ActionResult RemoveUsers(string[] usernames, string[] excludedUsers, int projectId)
+        {
+            List<string> toRemove = new List<string>();
+
+            foreach (string s in usernames)
+            {
+                if (!excludedUsers.Contains(s))
+                {
+                    toRemove.Add(s);
+                }
+            }
+
+            TeamManagementModel.RemoveUserFromProject(toRemove.ToArray(), projectId);
+            return Json(new { success = true });
         }
     }
 }

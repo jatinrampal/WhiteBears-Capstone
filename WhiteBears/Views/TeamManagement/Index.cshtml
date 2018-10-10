@@ -7,55 +7,58 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    @Styles.Render("~/Style/Dashboard.css")
+    @Styles.Render("~/Style/teammanagement.css")
     <script src="~/Scripts/jquery-3.3.1.js"></script>
 </head>
 <body>
-    <div>
-        <nav id="LeftPanel">
-            <div class="LeftPanelBorder" id="UserInfoContainer">
-                <div id="UserInfo">
-                    <img id="profilePic" src="https://image.freepik.com/free-icon/male-user-profile-picture_318-37825.jpg" /><br /><br />
-                    <label>@Html.DisplayFor(m => m.CurrentUser.FullName)</label><br />
-                    <label>@Html.DisplayFor(m => m.CurrentUser.Role)</label><br />
-                    <label>@Model.CurrDate.ToString("MM/dd/yyyy")</label>
-                </div>
+    <nav id="LeftPanel">
+        <div class="LeftPanelBorder" id="UserInfoContainer">
+            <div id="UserInfo">
+                <img id="profilePic" src="https://image.freepik.com/free-icon/male-user-profile-picture_318-37825.jpg" /><br /><br />
+                <label>@Html.DisplayFor(m => m.CurrentUser.FullName)</label><br />
+                <label>@Html.DisplayFor(m => m.CurrentUser.Role)</label><br />
+                <label>@Model.CurrDate.ToString("MM/dd/yyyy")</label>
             </div>
+        </div>
 
-            <div class="LeftPanelBorder" id="ProjectListContainer">
-                <div id="ProjectList">
-                    <label>Projects</label> <br />
-                    @foreach (var project in Model.Projects)
-                    {
-                        <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "TeamManagement", new { id = project.ProjectId })'">@project.Title</button>;
-                    }
-                </div>
+        <div class="LeftPanelBorder" id="ProjectListContainer">
+            <div id="ProjectList">
+                <label>Projects</label> <br />
+                @foreach (var project in Model.Projects)
+                {
+                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "TeamManagement", new { id = project.ProjectId })'">@project.Title</button>;
+                }
             </div>
-        </nav>
+        </div>
+    </nav>
 
+    <!--Migrate to CSS file-->
+    <div class="page-container">
         <div>
-            <h2>Personal Dashboard</h2>
-            <h3>Here's an overview of your projects</h3>
+            <h2>@Model.CurrentProject.Title</h2>
+            <h3>Team Management Settings</h3>
         </div>
 
         <div class="row">
-            <div class="col-sm-2">
-                <table id="excluded-table" class="table table-hover border">
+            <div id="excluded-table" class="col-sm-2">
+                <table class="table table-hover border">
                     <tr>
                         <th>Excluded Users</th>
                     </tr>
-                    @foreach (var item in Model.ExcludedUsers)
-                    {
-                        <tr name="excluded-user">
-                            <td>@item.Username</td>
-                        </tr>
-                    }
+                    <tbody>
+                        @foreach (var item in Model.ExcludedUsers)
+                        {
+                            <tr name="excluded-user">
+                                <td>@item.Username</td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
 
-            <div class="col-sm-2 btn-group">
-                <button class="btn btn-lg btn-success disabled" value="add">Add</button>
-                <button class="btn btn-lg btn-danger disabled" value="remove">Remove</button>
+            <div class="col-sm-3 justify-content-center">
+                <button class="btn btn-lg btn-primary disabled glyphicon glyphicon-plus" value="add">Add</button>
+                <button class="btn btn-lg btn-danger disabled glyphicon glyphicon-minus" value="remove">Remove</button>
             </div>
 
             <div id="included-table" class="col-sm-2">
@@ -63,21 +66,33 @@
                     <tr>
                         <th>Included Users</th>
                     </tr>
-                    @foreach (var item in Model.IncludedUsers)
-                    {
-                        <tr name="included-user">
-                            <td>@item.Username</td>
-                        </tr>
-                    }
+                    <tbody>
+                        @foreach (var item in Model.IncludedUsers)
+                        {
+                            <tr name="included-user">
+                                <td>@item.Username</td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
+            </div>
+
+            <div class="col-sm-3 justify-content-center">
+                <button class="btn btn-lg btn-success disabled glyphicon glyphicon-ok" value="submit">Submit</button>
+                <button class="btn btn-lg btn-secondary glyphicon glyphicon-remove" onclick="location.href='@Url.Action("Index", "Dashboard")'">Cancel</button>
             </div>
         </div>
     </div>
+
 
     <script>
         $(document).ready(function () {
             var addButton = $('button[value=add]');
             var removeButton = $('button[value=remove]');
+            var submitButton = $('button[value=submit]');
+
+            var newUsers = []
+            var removedUsers = []
 
             $(document).on('click', 'tr', function () {
                 clickedRow = $(this);
@@ -116,6 +131,76 @@
                     changeButtonState((typeRow == "excluded-user" ? addButton : removeButton), true);
                 }
             });
+
+            addButton.on('click', function () {
+                changeButtonState(submitButton, true)
+                $('tr.selected td').each(function (row, i) {
+                    newUsers.push($(this).text())
+                    $('#included-table > table > tbody:last').append('<tr name="included-user"><td>' + $(this).text() + '</td></tr>');
+                    $(this).remove();
+                })
+
+                changeButtonState(addButton, false)
+            });
+
+            removeButton.on('click', function () {
+                changeButtonState(submitButton, true)
+                $('tr.selected td').each(function (row, i) {
+                    removedUsers.push($(this).text())
+                    $('#excluded-table > table > tbody:last').append('<tr name="excluded-user"><td>' + $(this).text() + '</td></tr>');
+                    $(this).remove();
+                })
+
+                changeButtonState(removeButton, false)
+            });
+
+            submitButton.on('click', function () {
+                var successful = true;
+
+                if (newUsers.length > 0) {
+                    $.ajax({
+                        type: "post",
+                        url: '@Url.Action("AddUsers", "TeamManagement")',
+
+                        dataType: "json",
+                        data: {
+                            usernames: newUsers,
+                            includedUsers: '@Model.IncludedUsers',
+                            projectId: '@Model.CurrentProject.ProjectId'
+                        },
+                        success: function (data) {
+
+                        },
+
+                        error: function () {
+                            successful = false;
+                        }
+                    });
+                }
+
+                if (removedUsers.length > 0) {
+                    $.ajax({
+                        type: "post",
+                        url: '@Url.Action("RemoveUsers", "TeamManagement")',
+                        dataType: "json",
+                        data: {
+                            usernames: removedUsers,
+                            excludedUsers: '@Model.ExcludedUsers',
+                            projectId: '@Model.CurrentProject.ProjectId'
+                        },
+                        success: function (data) {
+                        },
+
+                        error: function () {
+                            successful = false;
+                        }
+                    });
+                }
+
+                alert("Update successful.")
+
+                window.location.href = '@Url.Action("Index", "Dashboard")';
+            })
 
             function changeButtonState(button, state) {
                 if (state)
