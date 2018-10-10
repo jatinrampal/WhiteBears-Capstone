@@ -29,6 +29,10 @@ namespace WhiteBears.Controllers
             model.Projects = model.GetProjects(username);
             model.CurrentUser = model.GetUser(username);
 
+            if (model.CurrentUser.Role == "PM"){
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(model);
         }
 
