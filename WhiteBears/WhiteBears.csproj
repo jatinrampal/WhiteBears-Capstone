@@ -149,6 +149,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TeamManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -158,6 +159,7 @@
     <Compile Include="Models\PersonalNote.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\TeamManagementModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\VerifyCredentials.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -1065,6 +1067,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\sitemap.xml" />
     <Content Include="Style\dashboard.css" />
+    <Content Include="Style\teammanagement.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1083,6 +1086,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\UserDashboard.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\TeamManagement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -42,6 +42,11 @@ namespace WhiteBears.Models
             }
         }
 
+        public string Description { get; internal set; }
+        public string ScopeStatement { get; internal set; }
+        public DateTime StartDate { get; internal set; }
+        public DateTime DueDate { get; internal set; }
+        public DateTime CompletionDate { get; internal set; }
 
         public void LoadProject(){
             
