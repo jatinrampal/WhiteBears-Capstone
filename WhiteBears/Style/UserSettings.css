@@ -1,0 +1,28 @@
+﻿table {
+    max-width: 600px;
+}
+
+
+#AddHeaderContainer {
+    box-shadow: 0 5px 5px 0px gray;
+    border-bottom: solid black 1px;
+    padding: 5px;
+    margin-bottom: 50px;
+    text-align: center
+}
+
+#NewUserForm {
+    margin-bottom: 100px;
+}
+
+.header {
+    color: red;
+}
+
+#EditUserTableContainer {
+    max-width: 600px;
+}
+
+#EditButtonsContainer {
+    text-align: center;
+}

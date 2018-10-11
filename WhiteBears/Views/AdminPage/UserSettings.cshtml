@@ -1,0 +1,134 @@
+﻿@model IEnumerable<WhiteBears.Models.User>
+
+@Styles.Render("~/Style/UserSettings.css")
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<div id="AddHeaderContainer">
+    <h2 class="header">User Settings</h2>
+</div>
+<h3 class="header">New User Information</h3>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <div id="NewUserForm" class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <table class="table borderless">
+                <tr><td class="left-column"><h4>First Name:</h4></td><td><input type="text" /></td></tr>
+                <tr><td class="left-column"><h4>Last Name:</h4></td><td><input type="text" /></td></tr>
+                <tr><td class="left-column"><h4>Username:</h4></td><td><input type="text" /></td></tr>
+                <tr><td class="left-column"><h4>Password (temporary):</h4></td><td><input type="password" /></td></tr>
+                <tr><td class="left-column"><h4>Password (confirm):</h4></td><td><input type="password" /></td></tr>
+                <tr><td class="left-column"><h4>Role:</h4></td><td><input type="text" /></td></tr>
+            </table>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success disabled" />
+            </div>
+        </div>
+    </div>
+}
+
+    <h3 class="header">Edit User</h3>
+    <hr />
+
+    <div id="EditUserTableContainer">
+        <table id="EditUserTable" class="table table-bordered table-hover">
+            <tbody>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+            </tbody>
+            <tbody>
+                @foreach (var user in Model) {
+                    @Html.Partial("UserTable", user)
+                }
+            </tbody>
+        </table>
+
+        <div id="EditButtonsContainer">
+            <button class="btn btn-primary disabled" value="modify">Modify</button>
+            <button class="btn btn-danger disabled" value="remove">Remove</button>
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        var modifyButton = $('button[value=modify]');
+        var removeButton = $('button[value=remove]');
+        var modifyModeOn = false;
+
+        var oldFirstName = "";
+        var oldLastName = "";
+        var oldUsername = "";
+
+        var clickedRow;
+        $(document).on('click', '#EditUserTable > tbody:last > tr', function () {
+            if (!modifyModeOn) {
+                changeButtonState(modifyButton, true);
+                changeButtonState(removeButton, true);
+
+                clickedRow = $(this);
+
+                if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
+                    clickedRow.css('background-color', 'white');
+                    clickedRow.removeClass('selected');
+
+                    changeButtonState(modifyButton, false);
+                    changeButtonState(removeButton, false);
+                } else {
+
+                    $('tr').each(function (i, row) {
+                        $(this).css('background-color', 'white');
+                        $(this).removeClass('selected');
+                        $(this).attr('contenteditable', 'false');
+                    })
+
+                    clickedRow.css('background-color', 'lightgrey');
+                    clickedRow.addClass('selected');
+                }
+            }
+        });
+
+        removeButton.on('click', function () {
+            if (removeButton.text() == "Remove") {
+                clickedRow.remove();
+            } else {
+                modifyModeOn = false;
+
+                clickedRow.find('td:eq(0)').text(oldFirstName)
+                clickedRow.find('td:eq(1)').text(oldLastName)
+                clickedRow.find('td:eq(2)').text(oldUsername)
+
+                modifyButton.text("Modify");
+                removeButton.text("Remove");
+            }
+        })
+
+    modifyButton.on('click', function () {
+        modifyModeOn = true;
+
+        oldFirstName = clickedRow.find('td:eq(0)').text()
+        oldLastName = clickedRow.find('td:eq(1)').text()
+        oldUsername = clickedRow.find('td:eq(2)').text()
+
+        modifyButton.text("Save");
+        removeButton.text("Cancel");
+
+        clickedRow.attr('contenteditable', 'true');
+        $(this).attr('contenteditable', 'true');
+    })
+
+    function changeButtonState(button, state) {
+        if (state)
+            button.removeClass('disabled');
+        else
+            button.addClass('disabled')
+    }
+    });
+</script>
