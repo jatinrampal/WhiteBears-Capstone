@@ -1,4 +1,4 @@
-﻿table {
+﻿table#EditUserTable {
     max-width: 600px;
 }
 
@@ -9,6 +9,10 @@
     padding: 5px;
     margin-bottom: 50px;
     text-align: center
+}
+
+#tasktable{
+    width: 100%;
 }
 
 #NewUserForm {
@@ -27,6 +31,20 @@
     text-align: center;
 }
 
+#DeleteButtonContainer{
+    margin-top: 20px;
+    text-align: center;
+}
+
 .noBorder {
     border: 0;
+}
+
+
+#projectselection {
+    margin-bottom: 20px;
+}
+
+.form-group{
+    margin-bottom: 20px;
 }

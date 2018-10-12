@@ -1,0 +1,68 @@
+﻿@model IEnumerable<WhiteBears.Models.Project>
+
+@Styles.Render("~/Style/UserSettings.css")
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<div id="AddHeaderContainer">
+    <h2 class="header">Project Settings</h2>
+</div>
+<h3 class="header">Project Information</h3>
+
+<div id="ProjectTableContainer">
+    <hr />
+    <form id="projectselection" class="text-center">
+        <span class="padding-5px">
+            @foreach (var project in Model) {
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" value="@project.ProjectId">@project.Title
+                </label>
+            }
+        </span>
+    </form>
+
+    <table class="table borderless" id="projecttable"></table>
+    <br />
+    <h3 class="header">Task Information</h3>
+    <hr />
+
+    <table id="tasktable"></table>
+    <div id="DeleteButtonContainer">
+        <button value="delete" class="btn btn-danger btn-lg">Delete</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var radioValue = -1;
+
+        $('#projecttable').load('/AdminPage/ProjectTable/', { projectId: @Model.First().ProjectId });
+        $('#tasktable').load('/AdminPage/TaskTable/', { projectId: @Model.First().ProjectId });
+
+        $('input[name=optradio]:eq(0)').attr('checked', "true");
+
+        $('input[name=optradio]').on('click', function () {
+
+            radioValue = $("input[name='optradio']:checked").val();
+            $('#projecttable').load('/AdminPage/ProjectTable/', { projectId: radioValue });
+            $('#tasktable').load('/AdminPage/TaskTable/', { projectId: radioValue });
+        });
+
+        $('button[value=delete]').on('click', function () {
+            $.ajax({
+                type: "post",
+                url: '/AdminPage/DeleteProject',
+                dataType: "json",
+                data: {
+                    projectId: radioValue
+                },
+                success: function (data) {
+
+                },
+
+                error: function () {
+                    successful = false;
+                }
+            });
+        })
+    });
+</script>

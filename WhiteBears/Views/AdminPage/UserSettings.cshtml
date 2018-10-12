@@ -7,46 +7,46 @@
 </div>
 <h3 class="header">New User Information</h3>
 
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div id="NewUserForm" class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <table class="table borderless">
-                <tr>
-                    <td class="left-column"><h4>First Name:</h4></td>
-                    <td><input name="firstname" type="text" /></td>
-                </tr>
-                <tr>
-                    <td class="left-column"><h4>Last Name:</h4></td>
-                    <td><input name="lastname" type="text" /></td>
-                </tr>
-                <tr>
-                    <td class="left-column"><h4>Username:</h4></td>
-                    <td><input name="username" type="text" /></td>
-                </tr>
-                <tr>
-                    <td class="left-column"><h4>Password (temporary):</h4></td>
-                    <td><input name="password" type="password" /></td>
-                </tr>
-                <tr>
-                    <td class="left-column"><h4>Password (confirm):</h4></td>
-                    <td><input name="passwordConfirm" type="password" /></td>
-                </tr>
-                <tr>
-                    <td class="left-column"><h4>Role:</h4></td>
-                    <td><input name="role" type="text" /></td>
-                </tr>
-            </table>
-        </div>
+<div id="NewUserForm" class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <table class="table borderless">
+            <tr>
+                <td class="left-column"><h4>First Name:</h4></td>
+                <td><input name="firstname" type="text" /></td>
+            </tr>
+            <tr>
+                <td class="left-column"><h4>Last Name:</h4></td>
+                <td><input name="lastname" type="text" /></td>
+            </tr>
+            <tr>
+                <td class="left-column"><h4>Username:</h4></td>
+                <td><input name="username" type="text" /></td>
+            </tr>
+            <tr>
+                <td class="left-column"><h4>Password (temporary):</h4></td>
+                <td><input name="password" type="password" /></td>
+            </tr>
+            <tr>
+                <td class="left-column"><h4>Password (confirm):</h4></td>
+                <td><input name="passwordConfirm" type="password" /></td>
+            </tr>
+            <tr>
+                <td class="left-column"><h4>Role:</h4></td>
+                <td><input name="role" type="text" /></td>
+            </tr>
+        </table>
+    </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button value="create" class="btn btn-success ">Create</button>
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button value="create" class="btn btn-success ">Create</button>
         </div>
     </div>
+</div>
 
 
 <h3 class="header">Edit User</h3>

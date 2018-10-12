@@ -1092,6 +1092,10 @@
     <Content Include="Views\TeamManagement\Index.cshtml" />
     <Content Include="Views\AdminPage\UserSettings.cshtml" />
     <Content Include="Views\AdminPage\UserTable.cshtml" />
+    <Content Include="Views\AdminPage\ProjectSettings.cshtml" />
+    <Content Include="Views\AdminPage\ProjectTable.cshtml" />
+    <Content Include="Views\AdminPage\TaskTable.cshtml" />
+    <Content Include="Views\AdminPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
