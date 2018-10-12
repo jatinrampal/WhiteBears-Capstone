@@ -7,7 +7,6 @@
 </div>
 <h3 class="header">New User Information</h3>
 
-@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
 
     <div id="NewUserForm" class="form-horizontal">
@@ -15,52 +14,85 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             <table class="table borderless">
-                <tr><td class="left-column"><h4>First Name:</h4></td><td><input type="text" /></td></tr>
-                <tr><td class="left-column"><h4>Last Name:</h4></td><td><input type="text" /></td></tr>
-                <tr><td class="left-column"><h4>Username:</h4></td><td><input type="text" /></td></tr>
-                <tr><td class="left-column"><h4>Password (temporary):</h4></td><td><input type="password" /></td></tr>
-                <tr><td class="left-column"><h4>Password (confirm):</h4></td><td><input type="password" /></td></tr>
-                <tr><td class="left-column"><h4>Role:</h4></td><td><input type="text" /></td></tr>
+                <tr>
+                    <td class="left-column"><h4>First Name:</h4></td>
+                    <td><input name="firstname" type="text" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Last Name:</h4></td>
+                    <td><input name="lastname" type="text" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Username:</h4></td>
+                    <td><input name="username" type="text" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Password (temporary):</h4></td>
+                    <td><input name="password" type="password" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Password (confirm):</h4></td>
+                    <td><input name="passwordConfirm" type="password" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Role:</h4></td>
+                    <td><input name="role" type="text" /></td>
+                </tr>
             </table>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-success disabled" />
+                <button value="create" class="btn btn-success ">Create</button>
             </div>
         </div>
     </div>
-}
 
-    <h3 class="header">Edit User</h3>
-    <hr />
 
-    <div id="EditUserTableContainer">
-        <table id="EditUserTable" class="table table-bordered table-hover">
-            <tbody>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                </tr>
-            </tbody>
-            <tbody>
-                @foreach (var user in Model) {
-                    @Html.Partial("UserTable", user)
-                }
-            </tbody>
-        </table>
+<h3 class="header">Edit User</h3>
+<hr />
 
+<div id="EditUserTableContainer">
+    <table id="EditUserTable" class="table table-bordered table-hover">
+        <tbody>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </tbody>
+        <tbody>
+            @foreach (var user in Model) {
+                @Html.Partial("UserTable", user)
+            }
+        </tbody>
+    </table>
+
+    <div id="EditWidgetsContainer">
         <div id="EditButtonsContainer">
             <button class="btn btn-primary disabled" value="modify">Modify</button>
+            <button class="btn btn-warning disabled" value="password">Change Password</button>
             <button class="btn btn-danger disabled" value="remove">Remove</button>
-        </div>
+        </div><br />
+        <div id="PasswordFieldContainer"><label style="margin-right: 5px;">New password:</label><input type="password" name="newpassword" /></div>
     </div>
+</div>
 
 <script>
     $(document).ready(function () {
+        var createButton = $('button[value=create]')
         var modifyButton = $('button[value=modify]');
         var removeButton = $('button[value=remove]');
+        var passwordButton = $('button[value=password]');
+
+        var passwordfield = $('#PasswordFieldContainer');
+
+        var MODIFY = "Modify"
+        var REMOVE = "Remove"
+        var CHANGEPASSWORD = "Change Password"
+        var CANCEL = "Cancel"
+        var SAVE = "Save"
+
         var modifyModeOn = false;
 
         var oldFirstName = "";
@@ -68,10 +100,14 @@
         var oldUsername = "";
 
         var clickedRow;
+
+        passwordfield.hide();
+
         $(document).on('click', '#EditUserTable > tbody:last > tr', function () {
             if (!modifyModeOn) {
                 changeButtonState(modifyButton, true);
                 changeButtonState(removeButton, true);
+                changeButtonState(passwordButton, true);
 
                 clickedRow = $(this);
 
@@ -79,8 +115,7 @@
                     clickedRow.css('background-color', 'white');
                     clickedRow.removeClass('selected');
 
-                    changeButtonState(modifyButton, false);
-                    changeButtonState(removeButton, false);
+                    disableAllButtons();
                 } else {
 
                     $('tr').each(function (i, row) {
@@ -96,39 +131,185 @@
         });
 
         removeButton.on('click', function () {
-            if (removeButton.text() == "Remove") {
+            changeButtonState(passwordButton, false);
+
+            if (removeButton.text() == REMOVE) {
                 clickedRow.remove();
-            } else {
+            } else if (modifyButton.text() == SAVE) {
                 modifyModeOn = false;
 
                 clickedRow.find('td:eq(0)').text(oldFirstName)
                 clickedRow.find('td:eq(1)').text(oldLastName)
                 clickedRow.find('td:eq(2)').text(oldUsername)
+            }
 
-                modifyButton.text("Modify");
-                removeButton.text("Remove");
+            clickedRow.css('background-color', 'white');
+            clickedRow.removeClass('selected');
+
+            disableAllButtons();
+
+            modifyButton.text(MODIFY);
+            removeButton.text(REMOVE);
+            passwordButton.text(CHANGEPASSWORD);
+            passwordfield.hide();
+        })
+
+        modifyButton.on('click', function () {
+            changeButtonState(passwordButton, false);
+
+
+            if (modifyButton.text() == MODIFY) {
+                modifyModeOn = true;
+
+                oldFirstName = clickedRow.find('td:eq(0)').text()
+                oldLastName = clickedRow.find('td:eq(1)').text()
+                oldUsername = clickedRow.find('td:eq(2)').text()
+
+                modifyButton.text(SAVE);
+                removeButton.text(CANCEL);
+
+                clickedRow.attr('contenteditable', 'true');
+            } else {
+                modifyModeOn = false;
+                clickedRow.attr('contenteditable', 'false');
+
+                modifyButton.text(MODIFY);
+                removeButton.text(REMOVE);
+
+                disableAllButtons();
+
+                clickedRow.css('background-color', 'white');
+                clickedRow.removeClass('selected');
+
+                var parameter = ['firstName', 'lastName', 'newUsername', 'password']
+
+                if (clickedRow.find('td:eq(0)').text() != oldFirstName) {
+                    modifyUser(oldUsername, clickedRow.find('td:eq(0)').text(), "ModifyUserFirstName");
+                }
+
+                if (clickedRow.find('td:eq(1)').text() != oldLastName) {
+                    modifyUser(oldUsername, clickedRow.find('td:eq(1)').text(), "ModifyUserLastName");
+                }
+
+                if (clickedRow.find('td:eq(2)').text() != oldUsername) {
+                    modifyUser(oldUsername, clickedRow.find('td:eq(2)').text(), "ModifyUserUsername");
+                }
             }
         })
 
-    modifyButton.on('click', function () {
-        modifyModeOn = true;
+        passwordButton.on('click', function () {
+            var passwordfield = $('#PasswordFieldContainer');
+            if (passwordButton.text() == CHANGEPASSWORD) {
+                passwordfield.show();
 
-        oldFirstName = clickedRow.find('td:eq(0)').text()
-        oldLastName = clickedRow.find('td:eq(1)').text()
-        oldUsername = clickedRow.find('td:eq(2)').text()
+                $("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
+                changeButtonState(modifyButton, false);
 
-        modifyButton.text("Save");
-        removeButton.text("Cancel");
+                removeButton.text(CANCEL);
+                passwordButton.text(SAVE);
+            } else {
+                var newPassword = $('input[name=newpassword]').val();
 
-        clickedRow.attr('contenteditable', 'true');
-        $(this).attr('contenteditable', 'true');
-    })
+                if (newPassword != "") {
+                    modifyUser(clickedRow.find('td:eq(2)').text(), newPassword, "ModifyUserPassword");
+                }
 
-    function changeButtonState(button, state) {
-        if (state)
-            button.removeClass('disabled');
-        else
-            button.addClass('disabled')
-    }
+                passwordButton.text(CHANGEPASSWORD);
+                removeButton.text(REMOVE);
+
+                disableAllButtons();
+
+                passwordfield.hide();
+            }
+        })
+
+        createButton.on('click', function () {
+            var firstName = $('input[name=firstname]').val();
+            var lastName = $('input[name=lastname]').val();
+            var username = $('input[name=username]').val();
+            var password = $('input[name=password]').val();
+            var passwordConfirm = $('input[name=passwordConfirm]').val();
+            var role = $('input[name=role]').val();
+
+
+            if (password != passwordConfirm) {
+                alert("Passwords don't match.");
+                return;
+            }
+
+            if (!ValidateInput(firstName, "First Name", 2, 20))
+                return;
+            if (!ValidateInput(lastName, "Last Name", 2, 20))
+                return;
+            if (!ValidateInput(username, "Username", 4, 20))
+                return;
+            if (!ValidateInput(password, "Password", 5, 20))
+                return;
+            if (!ValidateInput(role, "Role", 3, 20))
+                return;
+
+            $.ajax({
+                type: "post",
+                url: '/AdminPage/AddUser',
+                dataType: "json",
+                data: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    username: username,
+                    password: password,
+                    role: role
+                },
+                success: function (data) {
+                    alert();
+                },
+
+                error: function () {
+                    successful = false;
+                }
+            });
+        })
+
+        function ValidateInput(input, type, min, max) {
+            if (input.length < min || input.length > max) {
+                alert(type + ' must be between ' + min + ' and ' + max + ' characters long.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function disableAllButtons() {
+            changeButtonState(modifyButton, false);
+            changeButtonState(removeButton, false);
+            changeButtonState(passwordButton, false);
+        }
+
+
+
+        function modifyUser(username, change, actionMethod) {
+            $.ajax({
+                type: "post",
+                url: '/AdminPage/' + actionMethod,
+                dataType: "json",
+                data: {
+                    username: username,
+                    newInfo: change
+                },
+                success: function (data) {
+
+                },
+
+                error: function () {
+                    successful = false;
+                }
+            });
+        }
+
+        function changeButtonState(button, state) {
+            if (state)
+                button.removeClass('disabled');
+            else
+                button.addClass('disabled')
+        }
     });
 </script>

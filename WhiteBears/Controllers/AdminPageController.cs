@@ -29,5 +29,37 @@ namespace WhiteBears.Controllers {
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        public ActionResult AddUser(string firstName, string lastName, string username, string password, string role) {
+            User newUser = new User(firstName, lastName, username, password, role);
+
+            //Database code here
+
+            return null;
+        }
+
+        public ActionResult ModifyUserFirstName(string username, string newInfo) {
+            //Database code here
+
+            return null;
+        }
+
+        public ActionResult ModifyUserLastName(string username, string newInfo) {
+            //Database code here
+
+            return null;
+        }
+
+        public ActionResult ModifyUserPassword(string username, string newInfo) {
+            //Database code here
+
+            return null;
+        }
+
+        public ActionResult ModifyUserUsername(string username, string newInfo) {
+            //Database code here
+
+            return null;
+        }
     }
 }
