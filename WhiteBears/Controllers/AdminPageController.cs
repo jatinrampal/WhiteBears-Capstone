@@ -7,7 +7,16 @@ namespace WhiteBears.Controllers {
     public class AdminPageController : Controller {
         // GET: AdminPage
         public ActionResult Index() {
-            return View();
+            if (Session["username"] != null) {
+
+                //if (model.CurrentUser.Role == "Admin") {
+                return View();
+                //} else {
+                //    return RedirectToAction("Index", "Dashboard");
+                //}
+            } else {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public ActionResult UserSettings() {
