@@ -6,24 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WhiteBears.Models
+namespace WhiteBears
 {
-    public class DatabaseHelper
+    class DatabaseHelper
     {
-        private readonly SqlConnection conn;
+        private SqlConnection conn;
         private SqlDataAdapter da;
         private DataSet ds;
         private DataRow[] dr;
 
-        public DatabaseHelper()
-        {
-            conn = new SqlConnection(@"Data Source=whitebears-server.database.windows.net;Initial Catalog=whitebears-db;Persist Security Info=True;User ID=sysdba;Password=j3.'(Ge=");
-        }
+        private string connString = @"Data Source=whitebears-server.database.windows.net;Initial Catalog=whitebears-db;Persist Security Info=True;User ID=sysdba;Password=j3.'(Ge=";
 
-        public DataRow[] RunQuery(string sQuery)
-        {
-            using (conn)
-            {
+        public DataRow[] RunQuery(string sQuery){
+            using (conn = new SqlConnection(connString)){
                 da = new SqlDataAdapter(sQuery, conn);
                 ds = new DataSet();
                 da.Fill(ds);
@@ -32,6 +27,19 @@ namespace WhiteBears.Models
             }
 
             return dr;
+        }
+
+        public int RunUpdateQuery(string sQuery)
+        {
+            int i = 0;
+            using (conn = new SqlConnection(connString))
+            {
+                da = new SqlDataAdapter(sQuery, conn);
+                ds = new DataSet();
+                da.Fill(ds);
+            }
+
+            return i;
         }
     }
 }

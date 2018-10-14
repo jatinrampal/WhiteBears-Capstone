@@ -21,7 +21,8 @@ namespace WhiteBears.Controllers
 
             if (VerifyCredentials.VerifyLogin(username, password))
             {
-                return View("UserDashboard");
+                Session["username"] = username;
+                return RedirectToAction("Index", "Dashboard");
             }
            
            ViewBag.Error = "Username or Password Incorrect.";
