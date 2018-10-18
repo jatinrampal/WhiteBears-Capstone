@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NotLoggedIn.cshtml";
+}
+
+
+@Styles.Render("~/Style/SignUp.css")
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<body class="login-background">
+    <div id="HeaderContainer">
+        <h2 class="header">Company Sign Up Page</h2>
+    </div>
+    @using (Html.BeginForm("Go", "SignUp", FormMethod.Post)) {
+        <div id="container">
+            <div class="form-group" id="PersonalInformationContainer">
+                <h3 class="header">Your Information</h3>
+
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td class="left-column"><h4>First Name:</h4></td>
+                        <td><input name="firstname" type="text" required pattern=".{2,20}" title="2 to 20 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Last Name:</h4></td>
+                        <td><input name="lastname" type="text" required pattern=".{2,20}" title="2 to 20 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Username:</h4></td>
+                        <td><input id="username" name="username" required pattern=".{4,20}" title="4 to 20 characters" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Password:</h4></td>
+                        <td><input name="password" type="password" required pattern=".{5,20}" title="5 to 20 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Password (confirm):</h4></td>
+                        <td><input name="passwordConfirm" type="password" required pattern=".{5,20}" title="5 to 20 characters" /></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="CompanyInformationContainer">
+                <h3 class="header">Company Information</h3>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td class="left-column"><h4>Company Name:</h4></td>
+                        <td><input name="companyname" type="text" required pattern=".{1,}" title="1 character minimum" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Company Formed:</h4></td>
+                        <td><input name="companyformed" type="month" required /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="FirstProjectInformationContainer">
+
+            <h3 class="header">First Project</h3>
+
+            <div class="form-group" style="text-align: left;">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td class="left-column"><h4>Title:</h4></td>
+                        <td><input name="title" type="text" required pattern=".{2,25}" title="2 to 25 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Description:</h4></td>
+                        <td><input name="description" type="text" required pattern=".{2,100}" title="2 to 100 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Scope Statement:</h4></td>
+                        <td><input name="scope" type="text" required pattern=".{2,100}" title="2 to 100 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Start Date:</h4></td>
+                        <td><input name="start" type="date" required max="2099-01-01" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Due Date:</h4></td>
+                        <td><input name="due" type="date" required max="2099-01-01" /></td>
+                    </tr>
+                </table>
+                <input type="submit" class="btn btn-primary btn-lg" name="submitButton" /> @ViewBag.Error
+            </div>
+        </div>
+    }
+</body>
+<script>
+    $(document).ready(function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var startDate = $('input[name=start]');
+        var dueDate = $('input[name=due]')
+
+        $('input[name=companyformed]').attr('max', yyyy + '-' + mm)
+        startDate.attr('max', "2099-01-01");
+        dueDate.attr('max', "2099-01-01");
+
+        $('input[name=start]').change(function () {
+            dueDate.attr('min', startDate.val());
+
+            if (dueDate.val() < startDate.val()) {
+                dueDate.val(startDate.val());
+            }
+        })
+
+
+        $("form").submit(function (e) {
+    
+            e.preventDefault();
+
+            var firstname = $('input[name=firstname]').val();
+            var lastname = $('input[name=lastname]').val();
+            var username = $('input[name=username]').val();
+
+            var password = $('input[name=password]').val();
+            if (password != $('input[name=passwordConfirm]').val()) {
+                alert("Passwords don't match.");
+                return;
+            }
+
+            var companyname = $('input[name=companyname]').val();
+            var companyformed = $('input[name=companyformed]').val();
+
+            var title = $('input[name=title]').val();
+            var description = $('input[name=description]').val();
+            var scope = $('input[name=scope]').val();
+            startDate = $('input[name=start]').val();
+            dueDate = $('input[name=due]').val();
+
+
+            if ('0123456789'.indexOf(username.charAt(0)) !== -1) {
+                alert('Username must not start with a number.');
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: '/SignUp/Go',
+                    dataType: "json",
+                    data: {
+                        firstname: firstname,
+                        lastname: lastname,
+                        username: username,
+                        password: password,
+                        companyname: companyname,
+                        companyformed: companyformed,
+                        title: title,
+                        description: description,
+                        scope: scope,
+                        startDate: startDate,
+                        dueDate: dueDate
+                    },
+                    success: function (data) {
+                        alert(data);
+                    },
+
+                    error: function () {
+                        successful = false;
+                    }
+                });
+            }
+        });
+    });
+</script>
