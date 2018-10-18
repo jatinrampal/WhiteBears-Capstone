@@ -2,6 +2,49 @@
 
 @Styles.Render("~/Style/UserSettings.css")
 <script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+    function sortTable(n) {
+        var table, rows, switching, i, first, second, shouldSwitch, direction, switchcount = 0;
+        table = document.getElementById("EditUserTable");
+        switching = true;
+
+        direction = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+
+                first = rows[i].getElementsByTagName("TD")[n];
+                second = rows[i + 1].getElementsByTagName("TD")[n];
+
+                if (direction == "asc") {
+                    if (first.innerHTML.toLowerCase() > second.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (direction == "desc") {
+                    if (first.innerHTML.toLowerCase() < second.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && direction == "asc") {
+                    direction = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
 <div id="AddHeaderContainer">
     <h2 class="header">User Settings</h2>
 </div>
@@ -56,9 +99,9 @@
     <table id="EditUserTable" class="table table-bordered table-hover">
         <tbody>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
+                <th onclick="sortTable(0, true)">First Name</th>
+                <th onclick="sortTable(1, true)">Last Name</th>
+                <th onclick="sortTable(2, true)">Username</th>
             </tr>
         </tbody>
         <tbody>

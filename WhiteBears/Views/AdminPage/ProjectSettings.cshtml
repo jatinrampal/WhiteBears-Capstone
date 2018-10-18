@@ -3,51 +3,112 @@
 @Styles.Render("~/Style/UserSettings.css")
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+    $(document).ready(function () {
+        function sortTable(n) {
+            var table, rows, switching, i, first, second, shouldSwitch, direction, switchcount = 0;
+            table = document.getElementById("tasktable");
+            switching = true;
+
+            direction = "asc";
+
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+
+                    first = rows[i].getElementsByTagName("TD")[n];
+                    second = rows[i + 1].getElementsByTagName("TD")[n];
+
+                    if (direction == "asc") {
+                        if (first.innerHTML.toLowerCase() > second.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (direction == "desc") {
+                        if (first.innerHTML.toLowerCase() < second.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount == 0 && direction == "asc") {
+                        direction = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+    })
+</script>
+
 <div id="AddHeaderContainer">
     <h2 class="header">Project Settings</h2>
 </div>
-<h3 class="header">Project Information</h3>
 
+<form id="projectselection" class="text-center">
+    <span class="padding-5px">
+        @foreach (var project in Model) {
+            <label class="radio-inline">
+                <input type="radio" name="optradio" value="@project.ProjectId">@project.Title
+            </label>
+        }
+    </span>
+</form>
 <div id="ProjectTableContainer">
+
+    <h3 class="header">Project Information</h3>
+
     <hr />
-    <form id="projectselection" class="text-center">
-        <span class="padding-5px">
-            @foreach (var project in Model) {
-                <label class="radio-inline">
-                    <input type="radio" name="optradio" value="@project.ProjectId">@project.Title
-                </label>
-            }
-        </span>
-    </form>
 
     <table class="table borderless" id="projecttable"></table>
     <br />
-    <h3 class="header">Task Information</h3>
-    <hr />
 
-    <table id="tasktable"></table>
-    <div id="DeleteButtonContainer">
-        <button value="delete" class="btn btn-danger btn-lg">Delete</button>
+    <div id="TaskInformationContainer">
+        <h3 class="header">Task Information</h3>
+        <hr />
+
+        <table id="tasktable"></table>
+        <div id="DeleteButtonContainer">
+            <button value="delete" class="btn btn-danger btn-lg">Delete</button>
+        </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
         var radioValue = -1;
-
         $('#projecttable').load('/AdminPage/ProjectTable/', { projectId: @Model.First().ProjectId });
         $('#tasktable').load('/AdminPage/TaskTable/', { projectId: @Model.First().ProjectId });
 
         $('input[name=optradio]:eq(0)').attr('checked', "true");
+        var currentRadio = $("input[name='optradio']:checked")
+
 
         $('input[name=optradio]').on('click', function () {
-
-            radioValue = $("input[name='optradio']:checked").val();
-            $('#projecttable').load('/AdminPage/ProjectTable/', { projectId: radioValue });
-            $('#tasktable').load('/AdminPage/TaskTable/', { projectId: radioValue });
+            loadTables(); 
         });
 
-        $('button[value=delete]').on('click', function () {
+        $(document).on('click', 'button[value=delete]', function () {
+            currentRadio.parent().remove();
+            $('input[name=optradio]:eq(0)').prop("checked", true);
+
+
+            if ($('input[name=optradio]:eq(0)').length == 0) {
+                $('#TaskInformationContainer').remove();
+                $('#ProjectTableContainer').remove();
+            }
+
+            loadTables();
+
             $.ajax({
                 type: "post",
                 url: '/AdminPage/DeleteProject',
@@ -64,5 +125,12 @@
                 }
             });
         })
+
+        function loadTables() {
+            currentRadio = $("input[name='optradio']:checked")
+            radioValue = currentRadio.val();
+            $('#projecttable').load('/AdminPage/ProjectTable/', { projectId: radioValue });
+            $('#tasktable').load('/AdminPage/TaskTable/', { projectId: radioValue });
+        }
     });
 </script>
