@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WhiteBears.Models.Task>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+</script>
+
+<table class="table tasktable" id="tasktable">
+    <tbody>
+        <tr>
+            <th onclick="sortTable(0)">Task ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>Due Date</th>
+            <th>Completion Date</th>
+            <th>Priority</th>
+        </tr>
+    </tbody>
+    <tbody>
+
+        @foreach (var task in Model) {
+            <tr>
+                <td>@task.TaskId</td>
+                <td>@task.Title</td>
+                <td>@task.Description</td>
+                <td>@task.StartDate.ToString("yyyy/MM/dd")</td>
+                <td>@task.DueDate.ToString("yyyy/MM/dd")</td>
+                <td>@task.CompletedDate.ToString("yyyy/MM/dd")</td>
+                <td>@task.Priority</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,50 @@
+﻿table#EditUserTable {
+    max-width: 600px;
+}
+
+
+#AddHeaderContainer {
+    box-shadow: 0 5px 5px 0px gray;
+    border-bottom: solid black 1px;
+    padding: 5px;
+    margin-bottom: 50px;
+    text-align: center
+}
+
+#tasktable{
+    width: 100%;
+}
+
+#NewUserForm {
+    margin-bottom: 100px;
+}
+
+.header {
+    color: red;
+}
+
+#EditUserTableContainer {
+    max-width: 600px;
+}
+
+#EditWidgetsContainer {
+    text-align: center;
+}
+
+#DeleteButtonContainer{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.noBorder {
+    border: 0;
+}
+
+
+#projectselection {
+    margin-bottom: 20px;
+}
+
+.form-group{
+    margin-bottom: 20px;
+}
