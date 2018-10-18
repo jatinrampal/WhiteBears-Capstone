@@ -11,6 +11,19 @@ namespace WhiteBears.Models
         private string title, description, scopeStatement;
         private DateTime startDate, dueDate, completionDate;
         private Task[] tasks;
+        private string scope;
+
+        public Project(string title, string description, string scope, DateTime startDate, DateTime dueDate) {
+            this.title = title;
+            this.description = description;
+            this.scope = scope;
+            this.startDate = startDate;
+            this.dueDate = dueDate;
+        }
+
+        public Project() {
+
+        }
 
         public int ProjectId {
             get {

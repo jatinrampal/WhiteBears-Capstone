@@ -150,12 +150,14 @@
     <Compile Include="Controllers\AdminPageController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SignUpController.cs" />
     <Compile Include="Controllers\TeamManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddUserModel.cs" />
     <Compile Include="Models\Authentication.cs" />
+    <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DatabaseHelper.cs" />
     <Compile Include="Models\PersonalNote.cs" />
@@ -1068,6 +1070,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\sitemap.xml" />
+    <Content Include="Style\SignUp.css" />
     <Content Include="Style\UserSettings.css" />
     <Content Include="Style\dashboard.css" />
     <Content Include="Style\teammanagement.css" />
@@ -1096,6 +1099,8 @@
     <Content Include="Views\AdminPage\ProjectTable.cshtml" />
     <Content Include="Views\AdminPage\TaskTable.cshtml" />
     <Content Include="Views\AdminPage\Index.cshtml" />
+    <Content Include="Views\Shared\_NotLoggedIn.cshtml" />
+    <Content Include="Views\SignUp\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
