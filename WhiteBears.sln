@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteBears", "WhiteBears\WhiteBears.csproj", "{D94245C8-D1A7-40E3-9530-5F9F2182A4F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Whitebears-BlobStorage", "Z:\Documents\GitHub\DocumentsBlobStorage\Whitebears-BlobStorage\Whitebears-BlobStorage.csproj", "{443A989F-2597-4EA8-AE48-6A859512C754}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D94245C8-D1A7-40E3-9530-5F9F2182A4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D94245C8-D1A7-40E3-9530-5F9F2182A4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D94245C8-D1A7-40E3-9530-5F9F2182A4F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443A989F-2597-4EA8-AE48-6A859512C754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443A989F-2597-4EA8-AE48-6A859512C754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443A989F-2597-4EA8-AE48-6A859512C754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443A989F-2597-4EA8-AE48-6A859512C754}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
