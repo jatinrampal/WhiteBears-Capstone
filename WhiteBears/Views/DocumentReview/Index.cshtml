@@ -1,0 +1,83 @@
+﻿@using WhiteBears.Models
+@using SautinSoft.Document
+@using SautinSoft.Document.Drawing;
+@using SautinSoft.Document.Tables;
+@model DocumentVersionsModel
+
+@{
+    ViewBag.Title = "Document Version Comparison";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnReview").click(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ReviewDocument", "DocumentReview")',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: '{ "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
+                success: function (data) {
+                    console.log(data);
+                    $("#oldModifiedBy").html(data.modifiedBy1);
+                    $("#oldTimeStamp").html(data.timeStamp1);
+                    $("#newModifiedBy").html(data.modifiedBy2);
+                    $("#newTimeStamp").html(data.timeStamp2);
+                    $("#oldDocument").html(data.Doc1);
+                    $("#newDocument").html(data.Doc2);
+                    if (data.fileSize1 > 1000) {
+                        $("#oldFileSize").html((data.fileSize1/1000.00).tofixed(2) + " MB");
+                    }
+                    else {
+                        $("#oldFileSize").html(data.fileSize1 + " KB");
+                    }
+                    if (data.fileSize1 > 1000) {
+                        $("#newFileSize").html((data.fileSize2 / 1000.00).tofixed(2) + " MB");
+                    }
+                    else {
+                        $("#newFileSize").html(data.fileSize2 + " KB");
+                    }
+                },
+                error: function (e) { console.log(e); }
+            });
+        });
+    });
+</script>
+
+
+
+<h2>@ViewBag.Title</h2>
+
+<div style="width:45%;float:left;">
+    @Html.LabelFor(m => m.docList, "Version")
+    @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version1" })
+    <br/>
+    <label for="oldModBy" style="display:inline-block;width:100px;clear:both;float:left;">Modified By:</label>
+    <p id="oldModBy" style="float:left;"></p>
+    <label for="oldTimeStamp" style="display:inline-block;width:100px;clear:both;float:left;">Modified On:</label>
+    <p id="oldTimeStamp" style="float:left;"></p>
+    <label for="oldFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
+    <p id="oldFileSize" style="float:left;"></p>
+</div>
+<div style="width:10%;float:left;">
+    <input id="btnReview" type="button" value="Compare" />
+</div>
+<div style="width:45%;float:left;">
+    @Html.LabelFor(m => m.docList, "Version")
+    @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version2" })
+    <br />
+    <label for="newModBy" style="display:inline-block;width:100px;clear:both;float:left;">Modified By:</label>
+    <p id="newModBy" style="float:left;"></p>
+    <label for="newTimeStamp" style="display:inline-block;width:100px;clear:both;float:left;">Modified On:</label>
+    <p id="newTimeStamp" style="float:left;"></p>
+    <label for="newFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
+    <p id="newFileSize" style="float:left;"></p>
+</div>
+<div id="oldDocument" style="width:49%;margin:1% 1% 1% 0%;clear:both;float:left">
+
+</div>
+<div id="newDocument" style="width:49%;margin:1% 0% 1% 1%;float:left">
+
+</div>
+
+

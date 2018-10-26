@@ -10,14 +10,13 @@ using SautinSoft.Document;
 using SautinSoft.Document.Drawing;
 using SautinSoft.Document.Tables;
 
-namespace ConsoleApp1
+namespace WhiteBears
 {
-    class Document
+    public class Document
     {
 
-        public static DocumentJSON.Document CreateJSON(FileStream fileStream, int version)
+        public static DocumentJSON.Document CreateJSON(DocumentCore docCore, int version)
         {
-            DocumentCore docCore = DocumentCore.Load(fileStream, LoadOptions.DocxDefault);
             DocumentJSON.Document docJSON = new DocumentJSON.Document();
             string now = DateTime.Now.ToString("yyyymmdd");
             docJSON.date = now;
@@ -44,12 +43,9 @@ namespace ConsoleApp1
                             DocumentJSON.Cell cell = new DocumentJSON.Cell();
                             cell.hash = CalculateHash(Encoding.UTF8.GetBytes(c.Content.ToString()));
                             cell.content = c.Content.ToString();
-                            if (version == 1)
-                            {
-                                cell.version = 1;
-                                cell.date = now;
-                                cell.status = "n";
-                            }
+                            cell.version = 1;
+                            cell.date = now;
+                            cell.status = "n";
                             cellJSONList.Add(cell);
                         }
                     }
@@ -71,14 +67,11 @@ namespace ConsoleApp1
                         if (imageJSONList.Where(x => x.hash.Equals(hash)).Count() == 0) {
                             DocumentJSON.Image image = new DocumentJSON.Image();
                             image.hash = hash;
-                            if (version == 1)
-                            {
-                                image.id = imgId++;
-                                image.date = now;
-                                image.status = "n";
-                                image.version = version;
-                                image.numberOfRepetition = 0;
-                            }
+                            image.date = now;
+                            image.numberOfRepetition = 0;
+                            image.id = imgId++;
+                            image.status = "n";
+                            image.version = version;
                             imageJSONList.Add(image);
                         }
                         else
@@ -99,14 +92,10 @@ namespace ConsoleApp1
                             parJSON.content = parJSON.content.Replace("Created by the  version of Document .Net 3.3.3.27!\r\nThe  version sometimes inserts \"\" into random places.\r\nGet the full version of Document .Net.\r\n", "");
                         }
                         parJSON.hash = CalculateHash(Encoding.UTF8.GetBytes(parJSON.content));
-
-                        if (version == 1)
-                        {
-                            parJSON.id = parId++;
-                            parJSON.version = version;
-                            parJSON.date = now;
-                            parJSON.status = "n";
-                        }
+                        parJSON.id = parId++;
+                        parJSON.version = version;
+                        parJSON.date = now;
+                        parJSON.status = "n";
                         parJSON.sentence = null;
                         if (!parJSON.content.Equals(""))
                         {
@@ -180,9 +169,9 @@ namespace ConsoleApp1
             foreach (DocumentJSON.Paragraph par in newParList)
             {
                 //Checks for pre-existent paragraphs
-                if(oldParList.Where(x=> x.hash == par.hash).Count() != 0)
+                if(oldParList.Where(x=> x.hash.Equals(par.hash)).Count() != 0)
                 {
-                    if(!oldParList.Where(x => x.hash == par.hash).First().status.Equals("d"))
+                    if(!oldParList.Where(x => x.hash.Equals(par.hash)).First().status.Equals("d"))
                     {
                         par.status = "o";
                     }
@@ -203,19 +192,29 @@ namespace ConsoleApp1
                     string[] sentences = par.content.Split('.');
                     List<DocumentJSON.Sentence> sentenceList = new List<DocumentJSON.Sentence>();
                     //creates a similarityCounter
-                    int similarityCounter = 0;
+                    List<KeyVal<int, int>> similarityList = new List<KeyVal<int, int>>();
                     //creates a reference paragraph list
-                    List<DocumentJSON.Paragraph> refPar = new List<DocumentJSON.Paragraph>();
+                    List<DocumentJSON.Paragraph> refPars = new List<DocumentJSON.Paragraph>();
                     //sets version and date for the paragraph
                     par.version = newDocument.version;
                     par.date = now;
                     //loops through the sentences verifying the content on the paragraph
                     foreach (string s in sentences)
                     {
-                         refPar = (List<DocumentJSON.Paragraph>) oldParList.Where(x => x.content.Contains(s.Replace(".", ""))).ToList();
-                        if(refPar.Count > 0)
+                         refPars = (List<DocumentJSON.Paragraph>) oldParList.Where(x => x.content.Contains(s.Replace(".", ""))).ToList();
+                        if(refPars.Count > 0)
                         {
-                            similarityCounter++;
+                            foreach(DocumentJSON.Paragraph refPar in refPars)
+                            {
+                                if(similarityList.Where(x=>x.Id == refPar.id).Count() > 0)
+                                {
+                                    similarityList.Where(x => x.Id == refPar.id).First().Text += 1;
+                                }
+                                else
+                                {
+                                    similarityList.Add(new KeyVal<int, int>(refPar.id, 1));
+                                }
+                            }
                         }
                         else
                         {
@@ -223,20 +222,28 @@ namespace ConsoleApp1
                             sentenceList.Add(stc);
                         }
                     }
+                    KeyVal<int, int> mostSimilarPar = new KeyVal<int, int>(-1,-1);
+                    foreach(KeyVal<int,int> key in similarityList)
+                    {
+                        if(key.Text > mostSimilarPar.Text)
+                        {
+                            mostSimilarPar = key;
+                        }
+                    }
                     //if the content has more than 50% of similarity the paragraph is considered as modified
-                    if(similarityCounter/((double)sentences.Count()) > .5)
+                    if(mostSimilarPar.Text/((double)sentences.Count()) > .5)
                     {
                         par.status = "m";
-                        par.id = refPar.First().id;
+                        par.id = mostSimilarPar.Id;
                         par.sentence = sentenceList.ToArray();
-                        oldParList.Remove(refPar.First());
+                        oldParList.Remove(refPars.Where(x=>x.id == mostSimilarPar.Id).First());
                     }
                     //if the paragraph has less or equal to 50% of similarity, it is considered as new
                     else
                     {
                         par.status = "n";
                         //gets a new id for the paragraph
-                        par.id = ++newDocument.lastParId;
+                        par.id = newDocument.lastParId++;
                         //refDocParList.Remove(refPar.First());
                     } 
                 }
@@ -332,6 +339,20 @@ namespace ConsoleApp1
             }
             hash = Convert.ToBase64String(bhash);
             return hash;
+        }
+
+        public class KeyVal<Key, Val>
+        {
+            public Key Id { get; set; }
+            public Val Text { get; set; }
+
+            public KeyVal() { }
+
+            public KeyVal(Key key, Val val)
+            {
+                this.Id = key;
+                this.Text = val;
+            }
         }
 
     }
