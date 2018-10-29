@@ -457,3 +457,8 @@ C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\D
 C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.csproj.CopyComplete
 C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.dll
 C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.pdb
+C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\SautinSoft.Document.dll
+C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
+C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
+C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
+C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\SautinSoft.Document.xml
