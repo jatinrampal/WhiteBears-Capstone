@@ -311,3 +311,7 @@ C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\
 C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.dll
 C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.pdb
 C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.csprojResolveAssemblyReference.cache
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csprojResolveAssemblyReference.cache
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.pdb
