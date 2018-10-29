@@ -45,17 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.Storage.9.3.2\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
-    </Reference>
-    <Reference Include="SautinSoft.Document, Version=3.3.3.27, Culture=neutral, PublicKeyToken=e759c76c7515592a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dll\SautinSoft.Document.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -157,25 +147,23 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Classes\BlobStorageRepository.cs" />
-    <Compile Include="Classes\Document.cs" />
-    <Compile Include="Classes\DocumentJSON.cs" />
-    <Compile Include="Classes\IBlobStorageRepository.cs" />
+    <Compile Include="Controllers\AdminPageController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\DocumentReviewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SignUpController.cs" />
+    <Compile Include="Controllers\TeamManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddUserModel.cs" />
     <Compile Include="Models\Authentication.cs" />
-    <Compile Include="Models\BlobViewModel.cs" />
+    <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DatabaseHelper.cs" />
-    <Compile Include="Models\DocumentVersionsModel.cs" />
     <Compile Include="Models\PersonalNote.cs" />
     <Compile Include="Models\Project.cs" />
-    <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\TeamManagementModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\VerifyCredentials.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -1082,6 +1070,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\sitemap.xml" />
+    <Content Include="Style\SignUp.css" />
+    <Content Include="Style\UserSettings.css" />
+    <Content Include="Style\dashboard.css" />
+    <Content Include="Style\teammanagement.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1100,11 +1092,18 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\UserDashboard.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\DocumentReview\Index.cshtml" />
+    <Content Include="Views\TeamManagement\Index.cshtml" />
+    <Content Include="Views\AdminPage\UserSettings.cshtml" />
+    <Content Include="Views\AdminPage\UserTable.cshtml" />
+    <Content Include="Views\AdminPage\ProjectSettings.cshtml" />
+    <Content Include="Views\AdminPage\ProjectTable.cshtml" />
+    <Content Include="Views\AdminPage\TaskTable.cshtml" />
+    <Content Include="Views\AdminPage\Index.cshtml" />
+    <Content Include="Views\Shared\_NotLoggedIn.cshtml" />
+    <Content Include="Views\SignUp\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="dll\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
