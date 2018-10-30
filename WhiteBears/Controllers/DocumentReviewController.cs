@@ -22,18 +22,38 @@ namespace WhiteBears.Controllers
         static string MODIFIED_COLOR = "rgba(200, 200, 80, 0.8)";
         static string NEW_COLOR = "rgba(100, 200, 100, 0.8)";
         // GET: DocumentReview
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            //int documentId = int.Parse(Session["DocumentId"]);
-            int documentId = 1;
-            DatabaseHelper db = new DatabaseHelper();
-            DocumentVersionsModel document = new DocumentVersionsModel();
-            DataRow[] drArray = db.RunQuery($"SELECT d.fileName, v.version, v.timestamp FROM document d, documentversion v Where d.documentid = '{documentId}' and v.documentid = '{documentId}';");
-            foreach(DataRow dr in drArray)
+            string uName;
+            if(id == null)
             {
-                document.docList.Add(new SelectableVersions() { version = int.Parse(dr["version"].ToString()), timeStamp = dr["timestamp"].ToString() });
+                return RedirectToAction("Index", "Dashboard");
             }
-            return View(document);
+            //int documentId = int.Parse(Session["DocumentId"]);
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
+            else
+            {
+                uName = Session["username"].ToString();
+                DatabaseHelper db = new DatabaseHelper();
+                
+                DataRow[] userRoleQuery = db.RunQuery($"SELECT role FROM [user] WHERE uname = '{uName}'");
+                string role = userRoleQuery[0]["role"].ToString();
+                DataRow[] documentRoleQuery = db.RunQuery($"SELECT roleName FROM DocumentRole WHERE documentId = {id} and roleName = '{role}'");
+                if (documentRoleQuery.Length == 0)
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+                DocumentVersionsModel document = new DocumentVersionsModel();
+                DataRow[] drArray = db.RunQuery($"SELECT d.fileName, v.version, v.timestamp FROM document d, documentversion v Where d.documentid = '{id}' and v.documentid = '{id}';");
+                foreach (DataRow dr in drArray)
+                {
+                    document.docList.Add(new SelectableVersions() { version = int.Parse(dr["version"].ToString()), timeStamp = dr["timestamp"].ToString() });
+                }
+                return View(document);
+            }
         }
         [HttpPost]
         public string ReviewDocument(int ver1, int ver2)

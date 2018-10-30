@@ -14,7 +14,7 @@ namespace WhiteBears
 {
     public class Document
     {
-
+        public static double paragraphSensivity = Convert.ToDouble(System.Configuration.ConfigurationManager.AppSettings["ParagraphComparisonSensivity"]);
         public static DocumentJSON.Document CreateJSON(DocumentCore docCore, int version)
         {
             DocumentJSON.Document docJSON = new DocumentJSON.Document();
@@ -231,7 +231,7 @@ namespace WhiteBears
                         }
                     }
                     //if the content has more than 50% of similarity the paragraph is considered as modified
-                    if(mostSimilarPar.Text/((double)sentences.Count()) > .5)
+                    if(mostSimilarPar.Text/((double)sentences.Count()) > paragraphSensivity)
                     {
                         par.status = "m";
                         par.id = mostSimilarPar.Id;

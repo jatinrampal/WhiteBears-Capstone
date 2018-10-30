@@ -29,7 +29,7 @@ namespace WhiteBears.Controllers
 
             if(Session["username"] == null)
             {
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "Home");
             }
 
             username = Session["username"].ToString();
