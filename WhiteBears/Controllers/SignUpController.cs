@@ -20,8 +20,8 @@ namespace WhiteBears.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Go(string firstname, string lastname, string username, string password, string companyname, DateTime companyformed, string title, string description, string scope, DateTime startDate, DateTime dueDate) {
-            User u = new User(firstname, lastname, username, password, "admin");
+        public ActionResult Go(string firstname, string lastname, string username, string email, string password, string companyname, DateTime companyformed, string title, string description, string scope, DateTime startDate, DateTime dueDate) {
+            User u = new User(firstname, lastname, username, email, password, "admin");
             Project p = new Project(title, description, scope, startDate, dueDate);
             Company c = new Company(companyname, companyformed);
 

@@ -12,6 +12,8 @@
     <div id="HeaderContainer">
         <h2 class="header">Company Sign Up Page</h2>
     </div>
+
+
     @using (Html.BeginForm("Go", "SignUp", FormMethod.Post)) {
         <div id="container">
             <div class="form-group" id="PersonalInformationContainer">
@@ -29,6 +31,10 @@
                     <tr>
                         <td class="left-column"><h4>Username:</h4></td>
                         <td><input id="username" name="username" required pattern=".{4,20}" title="4 to 20 characters" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Email: </h4></td>
+                        <td><input type="email" name="emailaddress" /></td>
                     </tr>
                     <tr>
                         <td class="left-column"><h4>Password:</h4></td>
@@ -124,7 +130,9 @@
             var firstname = $('input[name=firstname]').val();
             var lastname = $('input[name=lastname]').val();
             var username = $('input[name=username]').val();
+            var email = $('input[name=emailaddress]').val();
 
+            
             var password = $('input[name=password]').val();
             if (password != $('input[name=passwordConfirm]').val()) {
                 alert("Passwords don't match.");
@@ -152,6 +160,7 @@
                         firstname: firstname,
                         lastname: lastname,
                         username: username,
+                        email: email,
                         password: password,
                         companyname: companyname,
                         companyformed: companyformed,
