@@ -23,8 +23,11 @@ namespace WhiteBears.Controllers {
 
             DashboardModel model = new DashboardModel();
 
-            drs = model.GetUser(Session["username"].ToString());
-
+            if (Session["username"] != null) {
+                drs = model.GetUser("Kalen");
+            } else {
+                drs = model.GetUser(Session["username"].ToString());
+            }
             //TODO: refactor the email to dr["email"]
             currUser = new User(drs[0]["firstName"].ToString(),
                 drs[0]["lastName"].ToString(),
