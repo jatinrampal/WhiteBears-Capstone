@@ -16,7 +16,7 @@
 
     @using (Html.BeginForm("Go", "SignUp", FormMethod.Post)) {
         <div id="container">
-            <div class="form-group" id="PersonalInformationContainer">
+            <div class="formContainer form-group" id="PersonalInformationContainer">
                 <h3 class="header">Your Information</h3>
 
                 <table class="table table-bordered table-striped">
@@ -47,7 +47,7 @@
                 </table>
             </div>
 
-            <div id="CompanyInformationContainer">
+            <div class="formContainer" id="CompanyInformationContainer">
                 <h3 class="header">Company Information</h3>
                 <table class="table table-bordered table-striped">
                     <tr>
@@ -66,7 +66,7 @@
 
             <h3 class="header">First Project</h3>
 
-            <div class="form-group" style="text-align: left;">
+            <div class="formContainer form-group" style="text-align: left;">
                 <table class="table table-bordered table-striped">
                     <tr>
                         <td class="left-column"><h4>Title:</h4></td>
