@@ -531,3 +531,5 @@ C:\Users\Rafael\source\repos\whitebears\WhiteBears\obj\Debug\WhiteBears.csproj.C
 C:\Users\Rafael\source\repos\whitebears\WhiteBears\obj\Debug\WhiteBears.csproj.CopyComplete
 C:\Users\Rafael\source\repos\whitebears\WhiteBears\obj\Debug\WhiteBears.dll
 C:\Users\Rafael\source\repos\whitebears\WhiteBears\obj\Debug\WhiteBears.pdb
+C:\Users\Rafael\source\repos\whitebears\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.dll
+C:\Users\Rafael\source\repos\whitebears\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
