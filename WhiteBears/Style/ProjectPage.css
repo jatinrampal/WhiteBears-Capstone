@@ -35,6 +35,8 @@
     margin: -40px auto 25px;
 }
 
+
+
 /*
     Project Detail Container 
     Ex: Project 1 Details 
@@ -79,8 +81,9 @@
 /* Table content div/row */
 #tableContent
 {
-    margin-left: 1%;
+    margin-left: 0%;
 }
+
 
 .container-fluid
 {
@@ -97,3 +100,89 @@
     margin-left: 0%; 
     margin-right: 0%;
 }
+    
+
+
+
+#myThead{
+    background-color: grey;
+    color: white;
+}
+
+
+#projectTableDiv {
+  
+    
+    /*border: solid;
+    border-color: black;
+    border-width: 1px;*/
+    width: 100%; 
+    
+  
+}
+
+#myThead, .projectTableTbody {
+    display: block;
+    /*white-space: nowrap;*/
+    
+}
+
+.projectTableTbody {
+    
+    
+    overflow-y: scroll;
+    height: 300px; 
+    overflow-x: hidden;
+    
+}
+
+ .projectTableTbody td {
+
+     width: 1%;
+    
+ }
+
+#myThead th {
+    width: 1%;
+  
+}
+.table 
+{
+    height: 350px;
+    width: 100%;
+   /* border: dashed; 
+    border-color: lightgray; */
+   overflow-y: scroll;
+}
+
+.on {
+    border-collapse: collapse;
+    background-color: lightblue !important;
+}
+
+
+
+#taskModalContent {
+   
+   margin-right: 50%; 
+}
+
+.container-fluid {
+        
+    margin: 1% 0% 0% 1%; 
+}
+
+.row {
+    margin-bottom: 1.5%;
+    margin-top: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+#projectTaskDelete, #projectTaskAdd, #projectNoteAdd, #projectNoteDelete
+{
+    margin-left: 15%;
+    width: 100px;
+}
+
+

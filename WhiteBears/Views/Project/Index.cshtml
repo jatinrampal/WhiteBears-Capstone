@@ -1,5 +1,7 @@
-﻿
+﻿@using WhiteBears.Models
+@model ProjectPageViewModel
 @{
+    
     Layout = null;
 }
 
@@ -10,46 +12,476 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    
    
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+
     <link href="~/Style/ProjectPage.css" rel="stylesheet" />
 
 </head>
-    
+
 <body>
-  
+
     <div class="container-fluid">
 
-        <h1 id="topBarTitle">White Bears</h1>
+        <h1 id="topBarTitle">@Model.Project.Title</h1>
         <hr id="hr" />
         <div id="row" class="row">
-            
+             <span id="projectId" hidden>@Model.Project.ProjectId</span>
             <div id="backButton" class="col-sm-6">
-                <span> @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")</span>
+                <span> @Html.ActionLink("Back to Dashboard", "Index", "Home")</span>
             </div>
             <div id="nameDiv" class="col-sm-6">
-                <span id="name">Kishan Dalal</span>
+                <span id="name">@Model.User.FullName</span>
             </div>
+            <!-- <p id="myResult">@ViewBag.Message</p> -->
         </div>
 
        
 
     </div>
 
+
     <div class="container-fluid">
+        <div class="row">
 
-        <div id="tableContent" class="row">
+            <!-- Task Information goes here -->
             <div class="col-sm-4">
 
-                @{Html.RenderAction("Index", "ProjectTasks");}
+                <!-- Task Information Header -->
+                <h3>Tasks</h3>
 
-            </div>
+                <!-- Task Table -->
+                <div id="projectTableDiv" class="table-responsive">
+                    <table id="projectTaskTable" class="table">
+                        <thead id="myThead">
+                            <tr>
+                                <th>Completed Date</th>
+                                <th>Tasks</th>
+                                <th>Due Date</th>
+                            </tr>
+                        </thead>
+                     
+                            @{ Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId});}
+                        
+                    </table>
+
+
+                    <!-- Tasks Buttons -->
+                    <div id="projectTaskButtons">
+                        <button type="button" id="projectTaskAdd" class="btn btn-info" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
+                        <button type="button" id="projectTaskDelete" class="btn btn-danger">Delete</button>
+
+                    </div>
+
+                    <!-- Note: Project ID, Username from Session. -->
+                    <!-- Modal -->
+                    <div id="projectTaskAddModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog" style="left:0% !important">
+                         
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Task</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form action="/Project/AddTask" method="post">
+                                       
+                                        <!-- ProjectID -->
+                                        <input type="hidden" id="projectId" name="projectId" value="@Model.Project.ProjectId">
+
+                                        <!-- Title -->
+                                        <div class="form-group row">
+                                            <label for="Title" class="col-sm-4 col-form-label">Title:</label>
+                                            <div class="col-sm-6">
+                                                <input id="taskTitle" name="taskTitle" class="form-control" type="text" required />
+                                            </div>
+                                        </div>
+
+                                        <!-- Description -->
+                                        <div class="form-group row">
+                                            <label for="Description" class="col-sm-4 col-form-label">Description:</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" name="taskDescription" id="taskDescription" rows="3" required></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- StartDate & EndDate Labels -->
+                                        <div class="form-group row">
+                                            <label for="StartDate" class="col-sm-6 col-form-label text-center">Start Date</label>
+                                            <label for="EndDate" class="col-sm-6 col-form-label text-center">End Date</label>
+
+                                        </div>
+
+                                        <!-- StartDate & EndDate Inputs -->
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 text-center">
+                                                <input id="taskStartDate" name="taskStartDate" type="date" required />
+                                            </div>
+                                            <div class="col-sm-6 text-center">
+                                                <input id="taskEndDate" name="taskEndDate" type="date" required />
+                                            </div>
+                                        </div>
+
+                                        <!-- CompletionDate Label -->
+                                        <div class="form-group row">
+                                            <label for="CompletionDate" class="col-sm-12 col-form-label text-center">Completion Date</label>
+                                        </div>
+
+                                        <!-- CompletionDate Input  -->
+                                        <div class="form-group row">
+                                            <div class="col-sm-12 text-center">
+                                                <input id="taskCompletionDate" name="taskCompletionDate" type="date" required />
+                                            </div>
+                                        </div>
+
+                                        <!-- Priority -->
+                                        <div class="form-group row">
+                                            <label for="Priority" class="col-sm-3 col-form-label text-center">Priority</label>
+                                            <select class="form-control" id="taskPriority" name="taskPriority" required>
+                                                <option>Low</option>
+                                                <option>Medium</option>
+                                                <option>High</option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <!-- Add Button -->
+                                            <input type="submit" class="btn btn-default" name="Add" value="Add" />
+                               
+
+                                        </div>
+                                    </form>
+
+                                </div> <!-- Modal Body Ends here -->
+
+                            </div> <!-- Modal Content Ends here -->
+                        </div> <!-- Modal Dialog Ends here -->
+                    </div>
+
+
+
+                </div> <!-- projectTableDiv ends here -->
+            </div> <!-- Task Information ENDS -->
+            <!--Document Information goes here -->
             <div class="col-sm-4">
-                @{Html.RenderAction("Index", "ProjectDocument");}
-            </div>
+
+                <!-- Document Header -->
+                <h3>Documents</h3>
+
+                <!-- Document Table -->
+                <div id="projectTableDiv">
+                    <table id="projectDocumentTable" class="table">
+                        <thead id="myThead">
+                            <tr>
+                                <th>Document</th>
+                                <th>Access</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectDocumentTableTbody" class="projectTableTbody">
+                            @{ Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role});}
+                        </tbody>
+                    </table>
+
+                    <div id="projectDocumentButtons">
+                        <button type="button" id="projectDocumentUpload" class="btn btn-info">Upload</button>
+                        <button type="button" id="projectCompare" class="btn btn-info">Version Compare</button>
+                    </div>
+
+                </div><!-- projectTableDiv ends here -->
+            </div> <!-- Document Information ENDS -->
+            <!--Notes Information goes here -->
             <div class="col-sm-4">
-                @{Html.RenderAction("Index", "ProjectNotes");}
-            </div>
-        </div>
-    </div>
+
+                <!-- Note Header -->
+                <h3>Notes</h3>
+
+                <!-- Note Table -->
+                <div id="projectTableDiv">
+                    <table id="projectNoteTable" class="table">
+                        <thead id="myThead">
+                            <tr>
+                                <th>Date</th>
+                                <th>For</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectNoteTableTbody" class="projectTableTbody">
+                            @{ Html.RenderAction("NoteView", "Project", new { projectId = Model.Project.ProjectId });}
+                        </tbody>
+                    </table>
+
+                    <!-- Notes Buttons -->
+                    <div id="projectNotesButtons">
+                        <button type="button" id="projectNoteAdd" class="btn btn-info" data-target="#projectNoteAddModal" data-toggle="modal">Add</button>
+                        <button type="button" id="projectNoteDelete" class="btn btn-danger">Delete</button>
+                    </div>
+
+                    <!-- Note: Project ID, Username from Session. -->
+                    <!-- Modal -->
+                    <div id="projectNoteAddModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog" style="left:0% !important">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Project Note</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form action="/Project/AddProjectNote" method="post">
+
+                                        <!-- Message -->
+                                        <div class="form-group row">
+                                            <label for="Message" class="col-sm-2 col-form-label">Message:</label>
+                                            <div class="col-sm-8">
+                                                <textarea class="form-control" name="noteMessage" id="noteMessage" rows="3" required></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- SentDate & Completed Labels -->
+                                        <div class="form-group row">
+                                            <label for="SentDate" class="col-sm-6 col-form-label text-center">Send Date</label>
+                                            <label for="CompletedDate" class="col-sm-6 col-form-label text-center">Completed Date</label>
+
+                                        </div>
+
+                                        <!-- StartDate & EndDate Inputs -->
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 text-center">
+                                                <input id="noteSentDate" name="noteSentDate" type="date" required />
+                                            </div>
+                                            <div class="col-sm-6 text-center">
+                                                <input id="noteCompletedDate" name="noteCompletedDate" type="date" />
+                                            </div>
+                                        </div>
+
+                                        <!-- To -->
+                                        <div class="form-group row">
+                                            <label for="noteTo" class="col-sm-2 col-form-label text-center">To:</label>
+                                            <select class="form-control" id="noteTo" name="noteTo" required>
+                                                <option>Developer</option>
+                                                <option>Project Manager</option>
+                                                <option>Full Stack Developer</option>
+                                                <option>Business Analyst</option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <!-- Add Button -->
+                                            <input id="submit1" type="submit" class="btn btn-default" name="Add" value="Add" />
+                                           
+                                        </div>
+                                    </form>
+
+                                </div> <!-- Modal Body Ends here -->
+
+                            </div> <!-- Modal Content Ends here -->
+                        </div> <!-- Modal Dialog Ends here -->
+                    </div>
+
+
+
+                </div><!-- projectTableDiv ends here -->
+            </div> <!-- Notes Information ENDS -->
+        </div> <!-- Row ends here -->
+    </div> <!-- Container-Fluid ends here-->
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            // jQuery methods go here...
+        
+
+            // Double Click on ProjectTaskTable
+            $("#projectTaskTable tbody tr").dblclick(function () {
+                alert("test");
+            });
+
+            $("#projectDocumentTable tbody tr").dblclick(function () {
+                alert("test");
+            });
+
+            var TaskSelectedArray = [];
+            // Click on task 
+            $('#projectTaskTableTbody').on('click', 'tr', function ()
+            {
+                $(this).toggleClass('on');
+
+                myTaskID = $(this).attr('id'); // table row ID 
+                
+                var exitsVal = false; 
+
+                for (var i = 0; i <= TaskSelectedArray.length; i++)
+                {
+                    if (myTaskID == TaskSelectedArray[i])
+                    {
+                        TaskSelectedArray.splice(TaskSelectedArray.indexOf(myTaskID), 1);
+                        exitsVal = true;
+                        //alert("Removed")
+                    }
+                }
+                if (exitsVal == false)
+                {
+                    TaskSelectedArray.push(myTaskID);
+                    //alert("Pushed");
+                } 
+            });
+
+            var ProjectNoteSelectedArray = [];
+            // Click on Project Note 
+            $('#projectNoteTableTbody').on('click', 'tr', function () {
+                $(this).toggleClass('on');
+
+                myNoteID = $(this).attr('id'); // table row ID 
+
+            
+                var exitsVal = false;
+
+                for (var i = 0; i <= ProjectNoteSelectedArray.length; i++) {
+                    if (myNoteID == ProjectNoteSelectedArray[i]) {
+                        ProjectNoteSelectedArray.splice(ProjectNoteSelectedArray.indexOf(myNoteID), 1);
+                        exitsVal = true;
+                        //alert("Removed")
+                    }
+                }
+                if (exitsVal == false) {
+                    ProjectNoteSelectedArray.push(myNoteID);
+                    //alert("Pushed");
+                }
+            });
+
+
+            mnew = 0; 
+            stored = 0; 
+            fileExtension = "Empty";
+            //Click on Project Document
+            $('#projectDocumentTableTbody').on('click', 'tr', function () {
+                myDocumentID = $(this).attr('id'); // table row ID 
+                
+                    myFileExtension = $(this).find("#fileExtension").text();
+             
+               
+
+                if (myDocumentID == stored || mnew == 0) {
+                    alert("myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew);
+                    $(this).toggleClass('on');
+
+                    mnew = -1;
+                    stored = myDocumentID;
+                    fileExtension = myFileExtension;
+                    if ($(this).hasClass('on') == false)
+                    {
+                        alert("RESET");
+                        mnew = 0;
+                        stored = 0;
+                        fileExtension = "Empty";
+                    }
+                }
+                alert("NOTE: myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew + " fileEX " + fileExtension);
+            });
+
+            // Clicking compare button
+            $('#projectCompare').click(function () {
+
+                
+
+                if (fileExtension == "empty" || stored == 0 || fileExtension == null) {
+
+                    alert("Nope you dumb fuck");
+                    alert("fileEx" + fileExtension);
+
+
+                }
+                else if ($.trim(String(fileExtension)) == "docx" || $.trim(String(fileExtension)) == "doc") {
+                    alert("File " + fileExtension);
+                    var url = '/DocumentReviewController/Index/' + stored;
+                    window.location = url;
+                }
+                else {
+                    alert("File must be doc or docx!");
+                }
+                
+            })
+
+            // Clicking Upload Button
+            $('#projectDocumentUpload').click(function () {
+                var projectID = $('#projectId').text();
+                var urlUpload = '/BlobController/Index/' + projectID;
+                window.location = urlUpload;
+            })
+
+            // Deleting Task
+            $('#projectTaskDelete').click(function ()
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteTask", "Project")", // the method we are calling
+                    data: 
+                        JSON.stringify({ 'TaskSelectedArray': TaskSelectedArray }),
+                        TaskSelectedArray,
+                    contentType: 'application/json',
+                    success: function (msg)
+                    {
+                        location.reload();
+                    }
+                });
+            });
+
+            // Deleting Project Note
+           $('#projectNoteDelete').click(function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteProjectNote", "Project")", // the method we are calling
+                    data: 
+                        JSON.stringify({ 'ProjectNoteSelectedArray': ProjectNoteSelectedArray }),
+                    contentType: 'application/json',
+                    success: function (msg) {
+                        location.reload();
+                    }
+ 
+                });
+            });
+
+
+           // Incomplete dynamic role 
+            $('#projectNoteAdd').click(function () {
+                $.ajax({
+                    url: "@Url.Action("getRoles", "Project")",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { id: 'value' },
+                    success: function (data) {
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                });
+            });
+        });
+   
+    </script>
+
+
+
 </body>
 </html>

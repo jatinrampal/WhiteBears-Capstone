@@ -1,4 +1,6 @@
-﻿body {
+﻿
+body {
+    overflow: hidden;
 }
 
 #myThead{
@@ -28,3 +30,22 @@
     margin-left: 14%;
     width: 25%;
 }
+
+#taskModalContent {
+   
+   margin-right: 50%; 
+}
+
+.container-fluid {
+        
+    margin: 1% 0% 0% 1%; 
+}
+
+.row {
+    margin-bottom: 1.5%;
+    margin-top: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+
