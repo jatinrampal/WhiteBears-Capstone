@@ -13,8 +13,9 @@
     </div>
 
 
-    @using (Html.BeginForm("Go", "SignUp", FormMethod.Post)) {
-        <div id="container">
+    <div id="container" style="margin-left: 300px">
+        <!--using (Html.BeginForm("Go", "SignUp", FormMethod.Post)) {-->
+        <form id="PersonalInfoForm">
             <div class="formContainer form-group" id="PersonalInformationContainer">
                 <h3 class="header">Your Information</h3>
 
@@ -44,9 +45,12 @@
                         <td><input name="passwordConfirm" type="password" required pattern=".{5,20}" title="5 to 20 characters" /></td>
                     </tr>
                 </table>
+                <input type="submit" id="PersonalInfoButton" class="btn btn-primary btn-lg" value="Continue" style="float: right;" />
             </div>
+        </form>
 
-            <div class="formContainer" id="CompanyInformationContainer">
+        <form id="CompanyInfoForm">
+            <div class="formContainer" id="CompanyInformationContainer" hidden>
                 <h3 class="header">Company Information</h3>
                 <table class="table table-bordered table-striped">
                     <tr>
@@ -58,40 +62,42 @@
                         <td><input name="companyformed" type="month" required /></td>
                     </tr>
                 </table>
+                <input type="submit" id="CompanyInfoButton" class="btn btn-primary btn-lg" value="Continue" style="float: right;" />
             </div>
-        </div>
+        </form>
+        <form id="ProjectInfoForm">
+            <div id="FirstProjectInformationContainer" hidden>
+                <h3 class="header">First Project</h3>
 
-        <div id="FirstProjectInformationContainer">
+                <div class="formContainer form-group" style="text-align: left;">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <td class="left-column"><h4>Title:</h4></td>
+                            <td><input name="title" type="text" required pattern=".{2,25}" title="2 to 25 characters" /></td>
+                        </tr>
+                        <tr>
+                            <td class="left-column"><h4>Description:</h4></td>
+                            <td><input name="description" type="text" required pattern=".{2,100}" title="2 to 100 characters" /></td>
+                        </tr>
+                        <tr>
+                            <td class="left-column"><h4>Scope Statement:</h4></td>
+                            <td><input name="scope" type="text" required pattern=".{2,100}" title="2 to 100 characters" /></td>
+                        </tr>
+                        <tr>
+                            <td class="left-column"><h4>Start Date:</h4></td>
+                            <td><input name="start" type="date" required max="2099-01-01" /></td>
+                        </tr>
+                        <tr>
+                            <td class="left-column"><h4>Due Date:</h4></td>
+                            <td><input name="due" type="date" required max="2099-01-01" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="submit" class="btn btn-primary btn-lg" name="submitButton" style="float: right;" value="Submit" /> @ViewBag.Error
 
-            <h3 class="header">First Project</h3>
-
-            <div class="formContainer form-group" style="text-align: left;">
-                <table class="table table-bordered table-striped">
-                    <tr>
-                        <td class="left-column"><h4>Title:</h4></td>
-                        <td><input name="title" type="text" required pattern=".{2,25}" title="2 to 25 characters" /></td>
-                    </tr>
-                    <tr>
-                        <td class="left-column"><h4>Description:</h4></td>
-                        <td><input name="description" type="text" required pattern=".{2,100}" title="2 to 100 characters" /></td>
-                    </tr>
-                    <tr>
-                        <td class="left-column"><h4>Scope Statement:</h4></td>
-                        <td><input name="scope" type="text" required pattern=".{2,100}" title="2 to 100 characters" /></td>
-                    </tr>
-                    <tr>
-                        <td class="left-column"><h4>Start Date:</h4></td>
-                        <td><input name="start" type="date" required max="2099-01-01" /></td>
-                    </tr>
-                    <tr>
-                        <td class="left-column"><h4>Due Date:</h4></td>
-                        <td><input name="due" type="date" required max="2099-01-01" /></td>
-                    </tr>
-                </table>
-                <input type="submit" class="btn btn-primary btn-lg" name="submitButton" /> @ViewBag.Error
             </div>
-        </div>
-    }
+        </form>
+    </div>
 </body>
 <script>
     $(document).ready(function () {
@@ -121,9 +127,21 @@
             }
         })
 
+        $("#PersonalInfoForm").submit(function (e) {
+            e.preventDefault();
 
-        $("form").submit(function (e) {
-    
+            $('#CompanyInformationContainer').removeAttr('hidden')
+            $('#PersonalInfoForm').attr("hidden", true)
+        });
+
+        $("#CompanyInfoForm").submit(function (e) {
+            e.preventDefault();
+
+            $('#FirstProjectInformationContainer').removeAttr('hidden')
+            $('#CompanyInfoForm').attr("hidden", true)
+        });
+
+        $("#ProjectInfoForm").submit(function (e) {
             e.preventDefault();
 
             var firstname = $('input[name=firstname]').val();
@@ -131,7 +149,7 @@
             var username = $('input[name=username]').val();
             var email = $('input[name=emailaddress]').val();
 
-            
+
             var password = $('input[name=password]').val();
             if (password != $('input[name=passwordConfirm]').val()) {
                 alert("Passwords don't match.");
@@ -179,5 +197,6 @@
                 });
             }
         });
+
     });
 </script>
