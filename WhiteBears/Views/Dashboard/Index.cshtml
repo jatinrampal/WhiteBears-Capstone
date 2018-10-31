@@ -253,6 +253,7 @@
                 noteTextArea.val($('tr.selected td:last-child').text());
                 modifyButton.text("Save");
                 deleteButton.text("Cancel");
+                changeButtonState(addButton, false);
             } else {
                 if (isNoteValid()) {
                     $('tr.selected td:last-child').text(noteTextArea.val());
@@ -277,6 +278,7 @@
                     noteTextArea.css('display', 'none');
                     modifyButton.text('Modify');
                     deleteButton.text("Delete");
+                    changeButtonState(addButton, true);
                 }
             }
         });
@@ -310,6 +312,7 @@
                 addButton.text("Add");
                 changeButtonState(deleteButton, false);
                 changeButtonState(modifyButton, false);
+                changeButtonState(addButton, true);
             }
         })
 
