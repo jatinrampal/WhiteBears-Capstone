@@ -10,6 +10,12 @@
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script>
     $(document).ready(function () {
+        setDocumentDisplayHeight();
+
+        $(window).on('resize', function () {
+            setDocumentDisplayHeight();
+        });
+
         $("#btnReview").click(function () {
             $.ajax({
                 type: "POST",
@@ -18,7 +24,6 @@
                 dataType: "json",
                 data: '{ "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
                 success: function (data) {
-                    console.log(data);
                     $("#oldModifiedBy").html(data.modifiedBy1);
                     $("#oldTimeStamp").html(data.timeStamp1);
                     $("#newModifiedBy").html(data.modifiedBy2);
@@ -42,6 +47,15 @@
             });
         });
     });
+    
+    var setDocumentDisplayHeight = function () {
+        var windowHeight = $(window).height();
+        var headerPosition = $("#documentHeaderContainer").offset().top;
+        var headerHeight = $('#documentHeaderContainer').height();
+        var height = windowHeight - (headerPosition + headerHeight + 20);
+        console.log("window:" + windowHeight + " header top: " + headerPosition + " header height: " + headerHeight + " height: " + height);
+        $("#documentComparisonContainer").attr("style", "height:" + height + "px;overflow-y:scroll;clear:both;float:left;min-height:100px;");
+    }
 
     var displayDocument = function (elements, target) {
         var returnString = "";
@@ -54,7 +68,6 @@
                 switch (par.status) {
                     case "o": 
                         returnString += "<p>ID:" + element.id + " " + element.content + "</p>";
-                        console.log(returnString);
                         break;
                     case "n":
                         returnString += "<p style='background-color:rgba(100, 200, 100, 0.8);'>ID:" + element.id + " " + element.content + "</p>";
@@ -99,7 +112,6 @@
                         break;
                 }
                 returnString += "<img id='p" + element.order + "'/><br/>";
-                console.log(returnString);
                 $("#" + target).append(returnString);
                 $('#p' + element.order).attr("src", "data:image/" + element.format + ";base64, " + element.content);
                 $('#p' + element.order).attr("style", style);
@@ -116,7 +128,6 @@
                     cells = row.elements;
                     for (k = 0; k < cells.length; k++) {
                         cell = searchArray(cells, k);
-                        console.log(cell);
                         var cellId = "c" + element.order + row.order + cell.order + target;
                         $("#" + rowId).append("<td id='" + cellId + "'>" + cell.content + "</td>");
                         var style = "border:solid 1px;width:" + 100 / cells.length +"%;";
@@ -152,37 +163,40 @@
 
 
 <h2>@ViewBag.Title</h2>
+<div id="documentHeaderContainer" style="height:110px;">
+    <div style="width:45%;float:left;">
+        @Html.LabelFor(m => m.docList, "Version")
+        @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version1" })
+        <br/>
+        <label for="oldModBy" style="display:inline-block;width:100px;clear:both;float:left;">Modified By:</label>
+        <p id="oldModBy" style="float:left;"></p>
+        <label for="oldTimeStamp" style="display:inline-block;width:100px;clear:both;float:left;">Modified On:</label>
+        <p id="oldTimeStamp" style="float:left;"></p>
+        <label for="oldFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
+        <p id="oldFileSize" style="float:left;"></p>
+    </div>
+    <div style="width:10%;float:left;">
+        <input id="btnReview" type="button" class="btn btn-primary btn-sm" value="Compare" />
+    </div>
+    <div style="width:45%;float:left;">
+        @Html.LabelFor(m => m.docList, "Version")
+        @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version2" })
+        <br />
+        <label for="newModBy" style="display:inline-block;width:100px;clear:both;float:left;">Modified By:</label>
+        <p id="newModBy" style="float:left;"></p>
+        <label for="newTimeStamp" style="display:inline-block;width:100px;clear:both;float:left;">Modified On:</label>
+        <p id="newTimeStamp" style="float:left;"></p>
+        <label for="newFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
+        <p id="newFileSize" style="float:left;"></p>
+    </div>
+</div>
+<div id="documentComparisonContainer">
+    <div id="oldDocument" style="width:49%;margin:1% 1% 1% 0%;clear:both;float:left">
 
-<div style="width:45%;float:left;">
-    @Html.LabelFor(m => m.docList, "Version")
-    @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version1" })
-    <br/>
-    <label for="oldModBy" style="display:inline-block;width:100px;clear:both;float:left;">Modified By:</label>
-    <p id="oldModBy" style="float:left;"></p>
-    <label for="oldTimeStamp" style="display:inline-block;width:100px;clear:both;float:left;">Modified On:</label>
-    <p id="oldTimeStamp" style="float:left;"></p>
-    <label for="oldFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
-    <p id="oldFileSize" style="float:left;"></p>
-</div>
-<div style="width:10%;float:left;">
-    <input id="btnReview" type="button" value="Compare" />
-</div>
-<div style="width:45%;float:left;">
-    @Html.LabelFor(m => m.docList, "Version")
-    @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version2" })
-    <br />
-    <label for="newModBy" style="display:inline-block;width:100px;clear:both;float:left;">Modified By:</label>
-    <p id="newModBy" style="float:left;"></p>
-    <label for="newTimeStamp" style="display:inline-block;width:100px;clear:both;float:left;">Modified On:</label>
-    <p id="newTimeStamp" style="float:left;"></p>
-    <label for="newFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
-    <p id="newFileSize" style="float:left;"></p>
-</div>
-<div id="oldDocument" style="width:49%;margin:1% 1% 1% 0%;clear:both;float:left">
+    </div>
+    <div id="newDocument" style="width:49%;margin:1% 0% 1% 1%;float:left">
 
-</div>
-<div id="newDocument" style="width:49%;margin:1% 0% 1% 1%;float:left">
-
+    </div>
 </div>
 
 
