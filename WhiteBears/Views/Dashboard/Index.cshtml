@@ -9,6 +9,7 @@
 @Styles.Render("~/Style/Dashboard.css")
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+<script src="~/Scripts/chartjs-plugin-labels.js"></script>
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script>
     function sortTable(n, isTaskTable) {
@@ -107,7 +108,7 @@
                     <th scope="col" onclick="sortTable(3, true)">Status</th>
                     <th scope="col" onclick="sortTable(4, true)">Project</th>
                 </tr>
-                <tbody>
+                <tbody id="taskTableBody">
 
                     @foreach (var project in Model.Projects) {
                         foreach (var task in project.Tasks) {
@@ -409,7 +410,8 @@
 
                         var percentage = (completed / total) * 100
                         percentage = percentage.toFixed(2);
-                        if (percentage == "100.00") {
+
+                        if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
                             percentage = 0.00;
                         }
 
@@ -448,12 +450,15 @@
 
                         var ctx = $('#pie-chartcanvas')
 
+                        var dataArr = [completedOnTime, delayedCompletion, onSchedule, overdue]
+
                         var data1 = {
                             labels: ["Completed (On Time)", "Completed (Delayed)", "On Schedule", "Overdue"],
+
                             datasets: [
                                 {
                                     label: "Task Overview",
-                                    data: [completedOnTime, delayedCompletion, onSchedule, overdue],
+                                    data: dataArr,
                                     backgroundColor: [
                                         "#008b00",
                                         "#ffb732",
@@ -471,12 +476,33 @@
                             ]
                         };
 
+
+                        var options = {
+                            title: {
+                                display: true,
+                                text: 'Task Overview',
+                                position: 'top'
+                            }, responsive: false,
+
+                            legend: {
+                                position: 'right'
+                            },
+
+                            plugins: {
+                                labels: {
+                                    render: 'value',
+                                    fontSize: 14,
+                                    fontStyle: 'bold',
+                                    fontColor: '#fff',
+                                    fontFamily: '"Lucida Console", Monaco, monospace'
+                                }
+                            }
+                        };
+
                         var myDoughnutChart = new Chart(ctx, {
                             type: 'doughnut',
                             data: data1,
-                            options: {
-                                responsive: false
-                            }
+                            options: options
                         });
                     },
 
