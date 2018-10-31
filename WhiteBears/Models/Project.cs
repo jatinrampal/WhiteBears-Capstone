@@ -22,7 +22,6 @@ namespace WhiteBears.Models
         }
 
         public Project() {
-
         }
 
         public int ProjectId {

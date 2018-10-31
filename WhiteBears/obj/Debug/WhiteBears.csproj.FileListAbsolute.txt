@@ -249,213 +249,137 @@ C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.
 C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
 C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
 C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.pdb
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\ApplicationInsights.config
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.dll.config
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.pdb
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.exe
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.exe.config
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.rsp
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.exe
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.exe.config
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.rsp
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.AppContext.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Console.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Compression.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Pipes.AccessControl.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Pipes.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.AccessControl.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Claims.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Principal.Windows.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.ValueTuple.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XPath.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.exe
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.exe.config
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.rsp
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\System.Web.Helpers.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\System.Web.Mvc.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\System.Web.Optimization.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\System.Web.Razor.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Razor.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\Newtonsoft.Json.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\Antlr3.Runtime.pdb
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\System.Diagnostics.DiagnosticSource.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.DependencyCollector.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csprojResolveAssemblyReference.cache
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
-C:\Users\Kalen\Downloads\WhiteBears-Capstone-master\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.pdb
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\ApplicationInsights.config
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.dll.config
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.pdb
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.exe
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.exe.config
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.rsp
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.exe
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.exe.config
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.rsp
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.AppContext.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Console.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Compression.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Pipes.AccessControl.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Pipes.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.AccessControl.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Claims.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Principal.Windows.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.ValueTuple.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XPath.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.exe
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.exe.config
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.rsp
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\System.Web.Helpers.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\System.Web.Mvc.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\System.Web.Optimization.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\System.Web.Razor.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Razor.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\Newtonsoft.Json.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\Antlr3.Runtime.pdb
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\System.Diagnostics.DiagnosticSource.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.DependencyCollector.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csprojResolveAssemblyReference.cache
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
-C:\Users\Kalen\source\repos\admin\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.pdb
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\ApplicationInsights.config
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\WhiteBears.dll.config
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\WhiteBears.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\WhiteBears.pdb
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csc.exe
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csc.exe.config
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csc.rsp
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csi.exe
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csi.exe.config
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csi.rsp
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.AppContext.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Console.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.Compression.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.Pipes.AccessControl.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.Pipes.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.AccessControl.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Claims.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Principal.Windows.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.ValueTuple.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Xml.XPath.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\vbc.exe
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\vbc.exe.config
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\vbc.rsp
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\VBCSCompiler.exe
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\SautinSoft.Document.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\SautinSoft.Document.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.csproj.CopyComplete
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.dll
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.pdb
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.csprojAssemblyReference.cache
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\System.Web.Helpers.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\System.Web.Mvc.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\System.Web.Optimization.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\System.Web.Razor.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\System.Web.WebPages.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\System.Web.WebPages.Razor.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Newtonsoft.Json.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Antlr3.Runtime.pdb
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\System.Diagnostics.DiagnosticSource.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.AI.DependencyCollector.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.AI.Web.xml
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\ApplicationInsights.config
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\WhiteBears.dll.config
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\WhiteBears.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\WhiteBears.pdb
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csc.exe
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csc.exe.config
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csc.rsp
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csi.exe
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csi.exe.config
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\csi.rsp
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.AppContext.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Console.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.Compression.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.IO.Pipes.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Claims.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.ValueTuple.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Xml.XPath.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\vbc.exe
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\vbc.exe.config
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\vbc.rsp
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\VBCSCompiler.exe
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.WindowsAzure.Storage.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\SautinSoft.Document.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\bin\SautinSoft.Document.xml
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.csproj.CopyComplete
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.dll
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.pdb
+C:\Users\Rafael\Desktop\WhiteBears-Capstone-DocumentReview\WhiteBears\obj\Debug\WhiteBears.csprojResolveAssemblyReference.cache
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csprojResolveAssemblyReference.cache
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.pdb
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\ApplicationInsights.config
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.dll.config
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\WhiteBears.pdb
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.exe
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.exe.config
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\csc.rsp
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.exe
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.exe.config
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\csi.rsp
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.AppContext.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Collections.Immutable.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Console.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Compression.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Pipes.AccessControl.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.Pipes.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Reflection.Metadata.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.AccessControl.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Claims.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Security.Principal.Windows.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.ValueTuple.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XPath.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.exe
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.exe.config
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.rsp
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe.config
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Helpers.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Mvc.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Optimization.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Razor.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Deployment.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Razor.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Newtonsoft.Json.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Antlr3.Runtime.pdb
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\System.Diagnostics.DiagnosticSource.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.DependencyCollector.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
+E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
