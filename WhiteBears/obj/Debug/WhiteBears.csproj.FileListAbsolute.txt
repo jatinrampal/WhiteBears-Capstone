@@ -383,3 +383,7 @@ E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Micros
 E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
 E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
 E:\Users\Yolanda\Documents\VS Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Rafael\source\repos\whitebears\WhiteBears\obj\Debug\WhiteBears.csprojAssemblyReference.cache
+C:\Users\Rafael\source\repos\whitebears\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
+C:\Users\Rafael\source\repos\whitebears\WhiteBears\obj\Debug\WhiteBears.dll
+C:\Users\Rafael\source\repos\whitebears\WhiteBears\obj\Debug\WhiteBears.pdb

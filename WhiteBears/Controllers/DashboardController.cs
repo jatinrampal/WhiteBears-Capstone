@@ -31,6 +31,8 @@ namespace WhiteBears.Controllers {
 
             username = Session["username"].ToString();
 
+            drs = model.GetUser(Session["username"].ToString());
+
             //TODO: refactor the email to dr["email"]
             currUser = new User(drs[0]["firstName"].ToString(),
                 drs[0]["lastName"].ToString(),
