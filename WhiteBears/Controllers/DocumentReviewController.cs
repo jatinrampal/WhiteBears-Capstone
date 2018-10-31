@@ -21,6 +21,11 @@ namespace WhiteBears.Controllers
         static string DELETED_COLOR = "rgba(200, 100, 100, 0.8)";
         static string MODIFIED_COLOR = "rgba(200, 200, 80, 0.8)";
         static string NEW_COLOR = "rgba(100, 200, 100, 0.8)";
+
+        static string PICTURE_TYPE = "PICTURE";
+        static string PARAGRAPH_TYPE = "PARAGRAPH";
+        static string TABLE_TYPE = "TABLE";
+        static string SENTENCE_TYPE = "SENTENCE";
         // GET: DocumentReview
         public ActionResult Index(int? id)
         {
@@ -86,33 +91,26 @@ namespace WhiteBears.Controllers
             docJSON2 = Document.CompareParagraphs(docJSON1, docJSON2);
             docJSON2 = Document.CompareTables(docJSON1, docJSON2);
             docJSON2 = Document.CompareDocumentImages(docJSON1, docJSON2);
-            rm.Doc1 = "";
-            rm.Doc2 = "";
-            foreach(Section sec in docCore2.GetChildElements(false, ElementType.Section)){
-                foreach(Element el in sec.GetChildElements(false))
+            int order = 0;
+            List<ElementJSON> doc2Elements = new List<ElementJSON>();
+            foreach (Section sec in docCore2.GetChildElements(false, ElementType.Section)) {
+                foreach (Element el in sec.GetChildElements(false))
                 {
                     if (el.ElementType.Equals(ElementType.Paragraph))
                     {
-                        
+
                         if (el.GetChildElements(false, ElementType.Picture).Count() != 0)
                         {
-                            Picture pic = (Picture) el.GetChildElements(false, ElementType.Picture).First();
+                            Picture pic = (Picture)el.GetChildElements(false, ElementType.Picture).First();
                             String hash = Document.CalculateHash(pic.ImageData.GetStream().ToArray());
                             string status = docJSON2.images.Where(x => x.hash == hash).First().status;
-                            string style = "style='height:300px;margin:1px;border:solid 3px;border-color:";
-                            switch (status)
-                            {
-                                case "n":
-                                    style += DocumentReviewController.NEW_COLOR + "'";
-                                    break;
-                                case "m":
-                                    style += DocumentReviewController.MODIFIED_COLOR + "'";
-                                    break;
-                                default:
-                                    style = "style = 'height:300px;margin:1px;'";
-                                    break;
-                            }
-                            rm.Doc2 += "<img  src='data:image/" + pic.ImageData.Format + ";base64, " + Convert.ToBase64String(pic.ImageData.GetStream().ToArray())+"' " + style + "></img><br/>";
+                            ElementJSON picture = new ElementJSON();
+                            picture.order = order++;
+                            picture.type = PICTURE_TYPE;
+                            picture.content = Convert.ToBase64String(pic.ImageData.GetStream().ToArray());
+                            picture.status = status;
+                            picture.format = pic.ImageData.Format.ToString();
+                            doc2Elements.Add(picture);
                         }
                         else
                         {
@@ -121,91 +119,96 @@ namespace WhiteBears.Controllers
                             {
                                 String hash = Document.CalculateHash(Encoding.UTF8.GetBytes(par.Content.ToString().Replace("trial", "")));
                                 DocumentJSON.Paragraph parJSON = docJSON2.paragraphs.Where(x => x.hash.Equals(hash)).First();
-                                string status = parJSON.status;
-                                string style = "style='background-color:";
-                                switch (status)
+                                ElementJSON paragraph = new ElementJSON();
+                                paragraph.id = parJSON.id;
+                                paragraph.order = order++;
+                                paragraph.content = par.Content.ToString();
+                                paragraph.type = PARAGRAPH_TYPE;
+                                paragraph.status = parJSON.status;
+                                if (paragraph.status.Equals("m"))
                                 {
-                                    case "n":
-                                        style += DocumentReviewController.NEW_COLOR + "'";
-                                        break;
-                                    case "m":
-                                        style += DocumentReviewController.MODIFIED_COLOR + "'";
-                                        break;
-                                    default:
-                                        style = "";
-                                        break;
-                                }
-                                if (status.Equals("m"))
-                                {
-                                    rm.Doc2 += "<p>ID:" + parJSON.id + "\t";
+                                    List<ElementJSON> sentencesList = new List<ElementJSON>();
                                     string[] sentences = par.Content.ToString().Split('.');
-                                    List<DocumentJSON.Sentence> sJson = parJSON.sentence.ToList();
-                                    foreach(string sentence in sentences)
+                                    List<DocumentJSON.Sentence> sJSON = parJSON.sentence.ToList();
+                                    int sentenceOrder = 0;
+                                    foreach (string s in sentences)
                                     {
-                                        if (sJson.Where(x=>x.content.Equals(sentence)).Count()>0)
+                                        ElementJSON sent = new ElementJSON();
+                                        sent.type = SENTENCE_TYPE;
+                                        sent.order = sentenceOrder++;
+                                        sent.content = s;
+                                        if (sJSON.Where(x => x.content.Equals(s)).Count() > 0)
                                         {
-                                            rm.Doc2 += "<span "+ style + "> " + sentence + ".</span>";
+                                            sent.status = "m";
                                         }
                                         else
                                         {
-                                            rm.Doc2 += sentence + ".";
+                                            sent.status = "o";
                                         }
+                                        sentencesList.Add(sent);
                                     }
+                                    paragraph.elements = sentencesList.ToArray();
                                 }
-                                else
-                                {
-                                    rm.Doc2 += "<p " + style + ">ID:" + parJSON.id + "\t" + par.Content + "</p>";
-                                }
+                                doc2Elements.Add(paragraph);
                             }
                         }
                     }
                     else if (el.ElementType.Equals(ElementType.Table))
                     {
-                        rm.Doc2 += "<table style='width:100%;margin:5px 0px 5px 0px'>";
-                        foreach(TableRow tr in el.GetChildElements(false, ElementType.TableRow))
+                        ElementJSON table = new ElementJSON();
+                        table.order = order++;
+                        table.type = TABLE_TYPE;
+                        List<ElementJSON> rows = new List<ElementJSON>();
+                        int rowOrder = 0;
+                        foreach (TableRow tr in el.GetChildElements(false, ElementType.TableRow))
                         {
-                            int cellPerRow = tr.GetChildElements(false, ElementType.TableCell).Count();
-                            rm.Doc2 += "<tr style='width:100%'>";
-                            foreach(TableCell tc in tr.GetChildElements(false, ElementType.TableCell))
+                            ElementJSON row = new ElementJSON();
+                            row.order = rowOrder++;
+                            List<ElementJSON> cells = new List<ElementJSON>();
+                            int cellOrder = 0;
+                            foreach (TableCell tc in tr.GetChildElements(false, ElementType.TableCell))
                             {
+                                ElementJSON cell = new ElementJSON();
                                 string hash = Document.CalculateHash(Encoding.UTF8.GetBytes(tc.Content.ToString()));
-                                List<DocumentJSON.Cell> cellsList = docJSON2.cells.ToList();
-                                string style = "style='border:solid 1px;width:"+ 100/cellPerRow +"%;";
-                                if (cellsList.Where(x => x.hash.Equals(hash)).First().status.Equals("n"))
-                                {
-                                    style += "background-color:" + NEW_COLOR + "";
-                                }
-                                rm.Doc2 += "<td " + style + "'>" + tc.Content + "</td>";
+                                cell.order = cellOrder++;
+                                cell.content = tc.Content.ToString();
+                                cell.status = docJSON2.cells.ToList().Where(x => x.hash.Equals(hash)).First().status;
+                                cells.Add(cell);
                             }
-                            rm.Doc2 += "</tr>";
+                            row.elements = cells.ToArray();
+                            rows.Add(row);
                         }
-                        rm.Doc2 += "</table>";
+                        table.elements = rows.ToArray();
+                        doc2Elements.Add(table);
                     }
                 }
             }
-
+            rm.Doc2 = doc2Elements.ToArray();
+            order = 0;
+            List<ElementJSON> doc1Elements = new List<ElementJSON>();
             foreach (Section sec in docCore1.GetChildElements(false, ElementType.Section))
             {
                 foreach (Element el in sec.GetChildElements(false))
                 {
                     if (el.ElementType.Equals(ElementType.Paragraph))
                     {
+
                         if (el.GetChildElements(false, ElementType.Picture).Count() != 0)
                         {
                             Picture pic = (Picture)el.GetChildElements(false, ElementType.Picture).First();
                             String hash = Document.CalculateHash(pic.ImageData.GetStream().ToArray());
                             string status = docJSON1.images.Where(x => x.hash == hash).First().status;
-                            string style = "style='height:300px;margin:1px;border:solid 3px;border-color:";
-                            switch (status)
+                            ElementJSON picture = new ElementJSON();
+                            picture.order = order++;
+                            picture.type = PICTURE_TYPE;
+                            picture.content = Convert.ToBase64String(pic.ImageData.GetStream().ToArray());
+                            picture.status = status;
+                            if (!picture.status.Equals("d"))
                             {
-                                case "d":
-                                    style += DocumentReviewController.DELETED_COLOR + "'";
-                                    break;
-                                default:
-                                    style = "style='height:300px;margin:1px;'";
-                                    break;
+                                picture.status = "o";
                             }
-                            rm.Doc1 += "<img src='data:image/" + pic.ImageData.Format + ";base64, " + Convert.ToBase64String(pic.ImageData.GetStream().ToArray()) + "' " + style + "></img><br/>";
+                            picture.format = pic.ImageData.Format.ToString();
+                            doc1Elements.Add(picture);
                         }
                         else
                         {
@@ -213,59 +216,56 @@ namespace WhiteBears.Controllers
                             if (!par.Content.ToString().Equals("\r\n") && !par.Content.ToString().Equals("") && !par.Content.ToString().Contains("Created by the trial version of Document .Net 3.3.3.27!"))
                             {
                                 String hash = Document.CalculateHash(Encoding.UTF8.GetBytes(par.Content.ToString().Replace("trial", "")));
-                                string status = "";
                                 DocumentJSON.Paragraph parJSON = docJSON1.paragraphs.Where(x => x.hash.Equals(hash)).First();
-                                if (docJSON2.paragraphs.Where(x => x.hash.Equals(hash)).Count() > 0)
+                                ElementJSON paragraph = new ElementJSON();
+                                paragraph.id = parJSON.id;
+                                paragraph.order = order++;
+                                paragraph.content = par.Content.ToString();
+                                paragraph.type = PARAGRAPH_TYPE;
+                                paragraph.status = parJSON.status;
+                                if (!paragraph.status.Equals("d"))
                                 {
-                                    status = docJSON2.paragraphs.Where(x => x.hash.Equals(hash)).First().status;
+                                    paragraph.status = "o";
                                 }
-                                string style = "style='background-color:";
-                                switch (status)
-                                {
-                                    case "d":
-                                        style += DocumentReviewController.DELETED_COLOR + "'";
-                                        break;
-                                    default:
-                                        style = "";
-                                        break;
-                                }
-                                rm.Doc1 += "<p " + style + ">ID:" + parJSON.id + "\t" + par.Content + "</p>";
-
+                                doc1Elements.Add(paragraph);
                             }
                         }
                     }
                     else if (el.ElementType.Equals(ElementType.Table))
                     {
-                        rm.Doc1 += "<table style='width:100%;margin:5px 0px 5px 0px'>";
+                        ElementJSON table = new ElementJSON();
+                        table.order = order++;
+                        table.type = TABLE_TYPE;
+                        List<ElementJSON> rows = new List<ElementJSON>();
+                        int rowOrder = 0;
                         foreach (TableRow tr in el.GetChildElements(false, ElementType.TableRow))
                         {
-                            int cellsPerRow = tr.GetChildElements(false, ElementType.TableCell).Count();
-                            rm.Doc1 += "<tr style='width:100%'>";
+                            ElementJSON row = new ElementJSON();
+                            row.order = rowOrder++;
+                            List<ElementJSON> cells = new List<ElementJSON>();
+                            int cellOrder = 0;
                             foreach (TableCell tc in tr.GetChildElements(false, ElementType.TableCell))
                             {
+                                ElementJSON cell = new ElementJSON();
                                 string hash = Document.CalculateHash(Encoding.UTF8.GetBytes(tc.Content.ToString()));
-                                string status = "";
-                                if (docJSON2.cells.Where(x => x.hash.Equals(hash)).Count() > 0)
+                                cell.order = cellOrder++;
+                                cell.content = tc.Content.ToString();
+                                cell.status = docJSON1.cells.ToList().Where(x => x.hash.Equals(hash)).First().status;
+                                if (!cell.status.Equals("d"))
                                 {
-                                    status = docJSON2.cells.Where(x => x.hash.Equals(hash)).First().status;
+                                    cell.status="o";
                                 }
-                                string style = "style='border:solid 1px;padding:0px;width:"+ (100/cellsPerRow) +"%;";
-                                switch (status){
-                                    case "d":
-                                        style += "background-color:" + DELETED_COLOR + "'";
-                                        break;
-                                    default:
-                                        style += "'";
-                                        break;
-                                }
-                                rm.Doc1 += "<td " + style + ">" + tc.Content + "</td>";
+                                cells.Add(cell);
                             }
-                            rm.Doc1 += "</tr>";
+                            row.elements = cells.ToArray();
+                            rows.Add(row);
                         }
-                        rm.Doc1 += "</table>";
+                        table.elements = rows.ToArray();
+                        doc1Elements.Add(table);
                     }
                 }
             }
+            rm.Doc1 = doc1Elements.ToArray();
             return JsonConvert.SerializeObject(rm);
         }
     }

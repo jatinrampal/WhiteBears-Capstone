@@ -243,7 +243,7 @@ namespace WhiteBears
                     {
                         par.status = "n";
                         //gets a new id for the paragraph
-                        par.id = newDocument.lastParId++;
+                        par.id = ++newDocument.lastParId;
                         //refDocParList.Remove(refPar.First());
                     } 
                 }

@@ -15,8 +15,8 @@ namespace WhiteBears.Models
         public string modifiedBy2 { get; set; }
         public string timeStamp2 { get; set; }
 
-        public string Doc1 { get; set; }
-        public string Doc2 { get; set; }
+        public ElementJSON[] Doc1 { get; set; }
+        public ElementJSON[] Doc2 { get; set; }
         public long fileSize1 { get; set; }
         public long fileSize2 { get; set; }
         
