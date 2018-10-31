@@ -22,6 +22,14 @@ namespace WhiteBears.Controllers {
             DataRow[] drs, drs1;
 
             DashboardModel model = new DashboardModel();
+            string username;
+
+            if(Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            username = Session["username"].ToString();
 
             if (Session["username"] != null) {
                 drs = model.GetUser("Kalen");
