@@ -60,6 +60,10 @@ namespace WhiteBears.Models
         public DateTime DueDate { get; internal set; }
         public DateTime CompletionDate { get; internal set; }
 
+    
+
+
+
         public void LoadProject(){
             
         }

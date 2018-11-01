@@ -17,6 +17,21 @@ namespace WhiteBears.Models
         private DateTime dueDate;
         private DateTime startDate;
         private DateTime completedDate;
+        private string projectId; 
+        
+
+
+        public string ProjectId
+        {
+            get
+            {
+                return projectId; 
+            }
+            set
+            {
+                projectId = value;
+            }
+        }
 
         public Boolean IsCompleted{
             get{

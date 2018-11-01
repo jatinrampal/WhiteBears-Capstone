@@ -69,7 +69,7 @@
             <div id="ProjectList">
                 <label>Projects</label> <br />
                 @foreach (var project in Model.Projects) {
-                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project")'">@project.Title</button>;
+                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project", new { id = project.ProjectId})'">@project.Title</button>;
                 }
             </div>
         </div>
