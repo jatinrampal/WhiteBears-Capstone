@@ -8,6 +8,8 @@
 
 @Styles.Render("~/Style/Dashboard.css")
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+<script src="~/Scripts/chartjs-plugin-labels.js"></script>
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script>
     function sortTable(n, isTaskTable) {
@@ -66,9 +68,8 @@
         <div class="LeftPanelBorder" id="ProjectListContainer">
             <div id="ProjectList">
                 <label>Projects</label> <br />
-                @foreach (var project in Model.Projects)
-                {
-                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project",  new { @id = project.ProjectId })'">@project.Title</button>;
+                @foreach (var project in Model.Projects) {
+                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project")'">@project.Title</button>;
                 }
             </div>
         </div>
@@ -107,12 +108,10 @@
                     <th scope="col" onclick="sortTable(3, true)">Status</th>
                     <th scope="col" onclick="sortTable(4, true)">Project</th>
                 </tr>
-                <tbody>
+                <tbody id="taskTableBody">
 
-                    @foreach (var project in Model.Projects)
-                    {
-                        foreach (var task in project.Tasks)
-                        {
+                    @foreach (var project in Model.Projects) {
+                        foreach (var task in project.Tasks) {
                             <tr>
                                 <td>@task.Title</td>
                                 <td>@task.Priority</td>
@@ -128,34 +127,34 @@
     </div>
 
     <div id="TaskOverviewSection">
-        <img src="https://www.patternfly.org/pattern-library/data-visualization/pie-chart/img/right-legend-pie-chart.png" />
+            <canvas id="pie-chartcanvas"></canvas>
+
     </div>
     <div id="PersonalNotesSection">
-            <div>
-                <label>Personal Notes</label>
-                <div class="scrollable-notes" id="PersonalNotesTable">
-                    <table id="notestable" class="table table-hover">
-                        <tr>
-                            <th onclick="sortTable(0, false)">Date</th>
-                            <th onclick="sortTable(1, false)">Note</th>
+        <div>
+            <label>Personal Notes</label>
+            <div class="scrollable-notes" id="PersonalNotesTable">
+                <table id="notestable" class="table table-hover">
+                    <tr>
+                        <th onclick="sortTable(0, false)">Date</th>
+                        <th onclick="sortTable(1, false)">Note</th>
+                    </tr>
+                    @foreach (var note in Model.CurrentUser.PersonalNotes) {
+                        <tr id="@note.PersonalNoteId" name="PersonalNoteRow">
+                            <td>@note.TimeStamp.ToString("MM/dd/yyyy")</td>
+                            <td>@note.Information</td>
                         </tr>
-                        @foreach (var note in Model.CurrentUser.PersonalNotes)
-                        {
-                            <tr id="@note.PersonalNoteId" name="PersonalNoteRow">
-                                <td>@note.TimeStamp.ToString("MM/dd/yyyy")</td>
-                                <td>@note.Information</td>
-                            </tr>
-                        }
-                    </table>
-                </div>
+                    }
+                </table>
             </div>
+        </div>
 
-            <textarea id="PersonalNoteText"></textarea><br />
-            <div id="PersonalNotesButtonsContainer" class="btn-group">
-                <button type="button" class="btn btn-primary btn-lg disabled" value="modify">Modify</button>
-                <button type="button" class="btn btn-success btn-lg" value="add">Add</button>
-                <button type="button" class="btn btn-danger btn-lg disabled" value="delete">Delete</button>
-            </div>
+        <textarea id="PersonalNoteText"></textarea><br />
+        <div id="PersonalNotesButtonsContainer" class="btn-group">
+            <button type="button" class="btn btn-primary btn-lg disabled" value="modify">Modify</button>
+            <button type="button" class="btn btn-success btn-lg" value="add">Add</button>
+            <button type="button" class="btn btn-danger btn-lg disabled" value="delete">Delete</button>
+        </div>
     </div>
     <div class="ProgressBarContainers">
         <div class="ProgressBarContainer">
@@ -194,7 +193,7 @@
 
                 if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
                     clickedRow.css('background-color', 'white');
-                    
+
                     changeButtonState(modifyButton, false);
                     changeButtonState(deleteButton, false);
 
@@ -205,7 +204,7 @@
 
                     clickedRow.css('background-color', 'lightgrey');
                     clickedRow.addClass('selected');
-                    
+
                     changeButtonState(modifyButton, true);
                     changeButtonState(deleteButton, true);
 
@@ -255,6 +254,7 @@
                 noteTextArea.val($('tr.selected td:last-child').text());
                 modifyButton.text("Save");
                 deleteButton.text("Cancel");
+                changeButtonState(addButton, false);
             } else {
                 if (isNoteValid()) {
                     $('tr.selected td:last-child').text(noteTextArea.val());
@@ -279,6 +279,7 @@
                     noteTextArea.css('display', 'none');
                     modifyButton.text('Modify');
                     deleteButton.text("Delete");
+                    changeButtonState(addButton, true);
                 }
             }
         });
@@ -312,6 +313,7 @@
                 addButton.text("Add");
                 changeButtonState(deleteButton, false);
                 changeButtonState(modifyButton, false);
+                changeButtonState(addButton, true);
             }
         })
 
@@ -353,7 +355,6 @@
                 }
             });
 
-
             loadPercentageBars(radioValue, "@Model.CurrentUser.Username");
         });
 
@@ -366,30 +367,143 @@
                         projectId: ""+projectId,
                         username: username
                     },
-                    success: function(data){
+                    success: function (data) {
 
                         var total = data.message.length;
                         var notCompleted = 0;
-                        $.each(data.message, function(index, value){
-                            if(value.IsCompleted == false){
+
+                        var rawData = {
+                            product: []
+                        };
+
+                        $.each(data.message, function (index, value) {
+                            if (value.IsCompleted == false) {
                                 notCompleted++;
+
+                                var dt = new Date();
+                                var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
+                                if (value.DueDate < dt) {
+
+                                }
+                                var date = new Date(parseInt(value.DueDate.substr(6)));
+
+                                if (date < dt) {
+                                    rawData.product.push({ attribute: "o" })
+                                } else {
+                                    rawData.product.push({ attribute: "o_s" })
+                                }
+                            } else {
+                                var dueDate = new Date(parseInt(value.DueDate.substr(6)));
+                                var completedDate = new Date(parseInt(value.CompletedDate.substr(6)));
+
+                                if (dueDate > completedDate) {
+                                    rawData.product.push({ attribute: "c_o" })
+                                } else {
+                                    rawData.product.push({ attribute: "d_c" })
+                                }
                             }
                         })
 
-                        var completed = total-notCompleted;
+                        var completed = total - notCompleted;
 
 
                         var percentage = (completed / total) * 100
                         percentage = percentage.toFixed(2);
-                        if(percentage == "100.00"){
+
+                        if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
                             percentage = 0.00;
                         }
 
                         $('#taskProgressBar').html(percentage + "%");
-                        $('#taskProgressBar').css('width', percentage+'%');
-                        $('#taskProgressStatus').html(completed+'/'+total);
-                        $('#taskProgressRemaining').html(notCompleted + ' task'+(notCompleted>1?'s':'') + ' remaining');
-                        
+                        $('#taskProgressBar').css('width', percentage + '%');
+                        $('#taskProgressStatus').html(completed + '/' + total);
+                        $('#taskProgressRemaining').html(notCompleted + ' task' + (notCompleted > 1 ? 's' : '') + ' remaining');
+
+                        var onSchedule = 0;
+                        var completedOnTime = 0;
+                        var delayedCompletion = 0;
+                        var overdue = 0;
+
+                        $.each(rawData.product, function (index, value) {
+                            if (value.attribute == "o") {
+                                overdue = overdue + 1;
+                            }
+
+                            if (value.attribute == "o_s") {
+                                onSchedule = onSchedule + 1;
+                            }
+
+                            if (value.attribute == "c_o") {
+                                completedOnTime = completedOnTime + 1;
+                            }
+
+                            if (value.attribute == "d_c") {
+                                delayedCompletion = delayedCompletion + 1;
+                            }
+                        })
+
+                        var ctx = $('#pie-chartcanvas')
+
+                        ctx.remove();
+                        $('#TaskOverviewSection').append('<canvas id="pie-chartcanvas"><canvas>')
+
+                        var ctx = $('#pie-chartcanvas')
+
+                        var dataArr = [completedOnTime, delayedCompletion, onSchedule, overdue]
+
+                        var data1 = {
+                            labels: ["Completed (On Time)", "Completed (Delayed)", "On Schedule", "Overdue"],
+
+                            datasets: [
+                                {
+                                    label: "Task Overview",
+                                    data: dataArr,
+                                    backgroundColor: [
+                                        "#008b00",
+                                        "#ffb732",
+                                        "#1a1aff",
+                                        "#cd0000",
+                                    ],
+                                    borderColor: [
+                                        "#008b55",
+                                        "#ffb788",
+                                        "#1a1fff",
+                                        "#cd0088",
+                                    ],
+                                    borderWidth: [1, 1, 1, 1]
+                                }
+                            ]
+                        };
+
+
+                        var options = {
+                            title: {
+                                display: true,
+                                text: 'Task Overview',
+                                position: 'top'
+                            }, responsive: false,
+
+                            legend: {
+                                position: 'right'
+                            },
+
+                            plugins: {
+                                labels: {
+                                    render: 'value',
+                                    fontSize: 14,
+                                    fontStyle: 'bold',
+                                    fontColor: '#fff',
+                                    fontFamily: '"Lucida Console", Monaco, monospace'
+                                }
+                            }
+                        };
+
+                        var myDoughnutChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: data1,
+                            options: options
+                        });
                     },
 
                     error: function () {

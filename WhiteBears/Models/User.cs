@@ -22,6 +22,8 @@ namespace WhiteBears.Models
 
         private string fullName;
 
+        private readonly string email;
+
         private string role;
 
         private PersonalNote[] personalNotes;
@@ -33,6 +35,12 @@ namespace WhiteBears.Models
             set
             {
                 firstName = value; 
+            }
+        }
+
+        public string Email {
+            get {
+                return email;
             }
         }
 
@@ -94,10 +102,11 @@ namespace WhiteBears.Models
             this. fullName = $"{firstName} {lastName}";
         }
 
-        public User(string firstName, string lastName, string username, string password, string role) {
+        public User(string firstName, string lastName, string username, string email, string password, string role) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.username = username;
+            this.email = email;
             this.password = password;
             this.fullName = $"{firstName} {lastName}";
             this.role = role;
