@@ -11,17 +11,14 @@ using System.Web;
 using System.Web.Mvc;
 using WhiteBears;
 
-namespace WhiteBears.Controllers
-{
-    public class DashboardController : Controller
-    {
+namespace WhiteBears.Controllers {
+    public class DashboardController : Controller {
 
         Project[] projects;
         User currUser;
         public static SqlDataAdapter da;
 
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             DataRow[] drs, drs1;
 
             DashboardModel model = new DashboardModel();
@@ -29,16 +26,18 @@ namespace WhiteBears.Controllers
 
             if(Session["username"] == null)
             {
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "Home");
             }
 
             username = Session["username"].ToString();
 
             drs = model.GetUser(Session["username"].ToString());
 
+            //TODO: refactor the email to dr["email"]
             currUser = new User(drs[0]["firstName"].ToString(),
                 drs[0]["lastName"].ToString(),
                 drs[0]["uName"].ToString(),
+                drs[0]["firstName"].ToString()+"@email.com",
                 drs[0]["password"].ToString(),
                 drs[0]["role"].ToString());
 
@@ -50,21 +49,19 @@ namespace WhiteBears.Controllers
             return View(model);
         }
 
-        private Project[] GetAllProjects(string username, DashboardModel model){
+        private Project[] GetAllProjects(string username, DashboardModel model) {
             DataRow[] drs = model.GetProjects(username);
             projects = new Project[drs.Count()];
 
             int i = 0;
-            foreach (DataRow dr in drs)
-            {
+            foreach (DataRow dr in drs) {
                 int currProjectId = Int32.Parse(drs[i]["projectId"].ToString());
                 string projectTitle = dr["title"].ToString();
                 DataRow[] drs1 = model.GetTasks(username, currProjectId);
 
                 List<Task> currProjectTasks = new List<Task>();
 
-                foreach (DataRow dr1 in drs1)
-                {
+                foreach (DataRow dr1 in drs1) {
                     DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
                     DateTime completionDate = Convert.ToDateTime(dr1["completionDate"]);
 
@@ -72,8 +69,7 @@ namespace WhiteBears.Controllers
                     if (!completionDateString.Equals("01/01/0001") && !completionDateString.Equals("01-01-0001"))
                         continue;
 
-                    currProjectTasks.Add(new Task
-                    {
+                    currProjectTasks.Add(new Task {
                         Title = dr1["title"].ToString(),
                         Priority = dr1["priority"].ToString(),
                         DueDate = dueDate,
@@ -83,8 +79,7 @@ namespace WhiteBears.Controllers
                     });
                 }
 
-                projects[i++] = new Project
-                {
+                projects[i++] = new Project {
                     ProjectId = Int32.Parse(dr["projectId"].ToString()),
                     Title = projectTitle,
                     Tasks = currProjectTasks.ToArray()
@@ -94,12 +89,11 @@ namespace WhiteBears.Controllers
             return projects;
         }
 
-        private PersonalNote[] GetPersonalNotes(DashboardModel model){
+        private PersonalNote[] GetPersonalNotes(DashboardModel model) {
             DataRow[] drs = model.GetPersonalNote(currUser.Username);
             PersonalNote[] notes = new PersonalNote[drs.Count()];
             int i = 0;
-            foreach (DataRow dr in drs)
-            {
+            foreach (DataRow dr in drs) {
                 notes[i++] = new PersonalNote(Int32.Parse(dr["noteId"].ToString()), dr["note"].ToString(), Convert.ToDateTime(dr["date"]));
             }
 
@@ -107,38 +101,36 @@ namespace WhiteBears.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProject(string projectId, string sUser){
+        public ActionResult UpdateProject(string projectId, string sUser) {
             List<Task> selectedTasks = new List<Task>();
             DashboardModel model = new DashboardModel();
             DataRow[] drs;
-            if (projectId == "_all"){
+            if (projectId == "_all") {
                 Project[] projects = GetAllProjects(sUser, model);
                 model.Projects = projects;
-                foreach(Project p in projects){
-                    foreach (Task t in p.Tasks){
+                foreach (Project p in projects) {
+                    foreach (Task t in p.Tasks) {
                         selectedTasks.Add(t);
                     }
                 }
 
-            }else{
+            } else {
                 model = new DashboardModel();
                 drs = model.GetTasks(sUser, Int32.Parse(projectId));
 
                 string projectName = model.GetProjectName(projectId);
 
-                foreach (DataRow dr in drs)
-                {
+                foreach (DataRow dr in drs) {
                     DateTime dueDate = Convert.ToDateTime(dr["dueDate"]);
                     DateTime completionDate = Convert.ToDateTime(dr["completionDate"]);
 
                     string completionDateString = completionDate.ToString("MM/dd/yyyy");
                     if (!completionDateString.Equals("01/01/0001") && !completionDateString.Equals("01-01-0001"))
                         continue;
-                    
-                    
 
-                    selectedTasks.Add(new Task
-                    {
+
+
+                    selectedTasks.Add(new Task {
                         Title = dr["title"].ToString(),
                         Priority = dr["priority"].ToString(),
                         DueDate = dueDate,
@@ -154,30 +146,28 @@ namespace WhiteBears.Controllers
                     }
                 };
             }
-           
+
             var sb = new System.Text.StringBuilder();
-            foreach (Task task in selectedTasks)
-            {
+            foreach (Task task in selectedTasks) {
                 sb.Append($"<tr><td>{task.Title}</td><td>{task.Priority}</td><td>{task.DueDate.ToString("MM/dd/yyyy")}</td><td>{task.Status}</td><td>{task.ProjectName}</td></tr>");
             }
 
-            Debug.WriteLine("WOOOO"+sb.ToString());
-            return Json(new { row = sb.ToString() } );
+            Debug.WriteLine("WOOOO" + sb.ToString());
+            return Json(new { row = sb.ToString() });
         }
-        
+
 
         [HttpPost]
-        public ActionResult AddNote(string input, string username){
+        public ActionResult AddNote(string input, string username) {
             DashboardModel model = new DashboardModel();
 
             DataRow[] drs = model.AddPersonalNote(username, input);
-            
+
             return Json(new { success = true, message = drs[0][0].ToString() });
         }
 
         [HttpPost]
-        public ActionResult DeleteNote(string noteId)
-        {
+        public ActionResult DeleteNote(string noteId) {
             DashboardModel model = new DashboardModel();
 
             string results = "" + model.DeletePersonalNote(Int32.Parse(noteId));
@@ -185,8 +175,7 @@ namespace WhiteBears.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateNote(string input, string noteId)
-        {
+        public ActionResult UpdateNote(string input, string noteId) {
             DashboardModel model = new DashboardModel();
 
             string results = "" + model.UpdatePersonalNote(input, Int32.Parse(noteId));
@@ -194,28 +183,24 @@ namespace WhiteBears.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoadCompletedTasks(string projectId, string username)
-        {
+        public ActionResult LoadCompletedTasks(string projectId, string username) {
             DashboardModel model = new DashboardModel();
             Project p = null;
 
-            if(projectId.Equals("_all")){
+            if (projectId.Equals("_all")) {
                 List<Task> tasks = new List<Task>();
                 DataRow[] drs = model.GetProjects(username);
                 int i = 0;
-                foreach (DataRow dr in drs)
-                {
+                foreach (DataRow dr in drs) {
                     int currProjectId = Int32.Parse(drs[i++]["projectId"].ToString());
                     string projectTitle = dr["title"].ToString();
                     DataRow[] drs1 = model.GetTasks(username, currProjectId);
 
-                    foreach (DataRow dr1 in drs1)
-                    {
+                    foreach (DataRow dr1 in drs1) {
                         DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
                         DateTime completionDate = Convert.ToDateTime(dr1["completionDate"]);
 
-                        tasks.Add(new Task
-                        {
+                        tasks.Add(new Task {
                             Title = dr1["title"].ToString(),
                             Priority = dr1["priority"].ToString(),
                             DueDate = dueDate,
@@ -225,13 +210,10 @@ namespace WhiteBears.Controllers
                         });
                     }
                 }
-                p = new Project
-                {
+                p = new Project {
                     Tasks = tasks.ToArray()
                 };
-            }
-            else
-            {
+            } else {
                 p = model.GetProject(username, projectId);
             }
 

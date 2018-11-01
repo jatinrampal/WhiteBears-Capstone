@@ -30,12 +30,8 @@ table {
     float: left;
     margin-left: 50px;
     margin-top: 20px;
-    min-height: 200px;
-}
-
-#TaskOverviewSection{
-    text-align: center;
-    float: right;
+    min-height: 300px;
+    min-width: 550px;
 }
 
 .TaskPercentage{
@@ -157,14 +153,30 @@ header {
     display: none;
 }
 
-.scrollable-task{
-    height: auto;
+.scrollable-task {
+    height: 400px;
     max-height: 300px;
     overflow: scroll;
+    overflow-x: hidden;
 }
 
 .scrollable-notes {
     height: auto;
     max-height: 400px;
     overflow: scroll;
+}
+
+#TaskOverviewSection {
+    text-align: center;
+    float: right;
+    height: 300px;
+    width: 300px;
+    margin-top: 20px;
+    margin-right: 30px;
+}
+
+
+#pie-chartcanvas{
+    width: 500px;
+    height: 250px;
 }
