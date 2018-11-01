@@ -9,18 +9,20 @@ namespace WhiteBears.Models
     public class User
     {
         [Required]
-        private readonly string firstName;
+        private string firstName;
 
         [Required]
-        private readonly string lastName;
+        private string lastName;
 
         [Required]
-        private readonly string username;
+        private string username;
 
         [Required]
-        private readonly string password;
+        private string password;
 
-        private readonly string fullName;
+        private string fullName;
+
+        private readonly string email;
 
         private string role;
 
@@ -30,11 +32,25 @@ namespace WhiteBears.Models
             get {
                 return firstName;
             }
+            set
+            {
+                firstName = value; 
+            }
+        }
+
+        public string Email {
+            get {
+                return email;
+            }
         }
 
         public string Username {
             get {
                 return username;
+            }
+            set
+            {
+                username = value; 
             }
         }
 
@@ -42,11 +58,19 @@ namespace WhiteBears.Models
             get {
                 return lastName;
             }
+            set
+            {
+                lastName = value; 
+            }
         }
 
         public string FullName {
             get {
                 return fullName;
+            }
+            set
+            {
+                fullName = value; 
             }
         }
 
@@ -78,13 +102,18 @@ namespace WhiteBears.Models
             this. fullName = $"{firstName} {lastName}";
         }
 
-        public User(string firstName, string lastName, string username, string password, string role) {
+        public User(string firstName, string lastName, string username, string email, string password, string role) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.username = username;
+            this.email = email;
             this.password = password;
             this.fullName = $"{firstName} {lastName}";
             this.role = role;
+        }
+
+        public User()
+        {
         }
 
         public string GetFullName() {

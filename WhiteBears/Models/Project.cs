@@ -22,7 +22,6 @@ namespace WhiteBears.Models
         }
 
         public Project() {
-
         }
 
         public int ProjectId {
@@ -60,6 +59,10 @@ namespace WhiteBears.Models
         public DateTime StartDate { get; internal set; }
         public DateTime DueDate { get; internal set; }
         public DateTime CompletionDate { get; internal set; }
+
+    
+
+
 
         public void LoadProject(){
             

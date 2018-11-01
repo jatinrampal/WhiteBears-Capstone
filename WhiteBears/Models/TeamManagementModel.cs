@@ -60,7 +60,8 @@ namespace WhiteBears.Models
                 int i = 0;
                 foreach (DataRow dr in drs)
                 {
-                    users[i++] = new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), dr["password"].ToString(), dr["role"].ToString());
+                    //TODO: refactor the email to dr["email"]
+                    users[i++] = new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), $"{dr["firstName"].ToString()}@email.com", dr["password"].ToString(), dr["role"].ToString());
                 }
 
                 return users;
@@ -88,7 +89,8 @@ namespace WhiteBears.Models
                 int i = 0;
                 foreach (DataRow dr in drs)
                 {
-                    users[i++] = new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), dr["password"].ToString(), dr["role"].ToString());
+                    //TODO: refactor email to dr["email"]
+                    users[i++] = new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), $"{dr["firstName"].ToString()}@email", dr["password"].ToString(), dr["role"].ToString());
                 }
 
                 return users;
@@ -130,7 +132,8 @@ namespace WhiteBears.Models
             try
             {
                 DataRow[] drs = dh.RunQuery($"SELECT * FROM [User] WHERE uName='{username}';");
-                return new User(drs[0]["firstName"].ToString(), drs[0]["lastName"].ToString(), drs[0]["uName"].ToString(), drs[0]["password"].ToString(), drs[0]["role"].ToString());
+                //TODO: Refactor email to drs[0][email].toString()
+                return new User(drs[0]["firstName"].ToString(), drs[0]["lastName"].ToString(), drs[0]["uName"].ToString(), $"{drs[0]["firstName"].ToString()}@email.com", drs[0]["password"].ToString(), drs[0]["role"].ToString());
             }
             catch (Exception e)
             {

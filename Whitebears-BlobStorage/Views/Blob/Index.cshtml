@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Whitebears_BlobStorage.Models.BlobViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @Html.ActionLink("Upload to Azure Blob","UploadBlob", new { controller = "Blob"}, new { @class = "btn btn-link"})
+
+    <div>
+        <table id="tablex" class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>Container  </th>
+                    <th>Actual File Name </th>
+                    <th>Uri </th>
+                    <th>Download </th>
+                    <th>Remove </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr id="row_@item.PrimaryUri">
+                            <td>@item.BlobContainerName</td>
+                            <td>@item.ActualFileName</td>
+                            <td>
+                                <a href="@item.PrimaryUri">@item.PrimaryUri</a>
+                            </td>
+                            <td>@Html.ActionLink("Download", "DownloadBlob", new { controller = "Blob", file = @item.FileNameWithoutExt, extension = @item.FileNameExtensionOnly}, new { @class = "btn btn-link" })</td>
+                            <td>
+                                <input type="submit" href="#" class="btn btn-link" id="btndel" value="Remove" data-id="@item.ActualFileName" />
+                            </td>
+
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        debugger
+        $(document).ready(function () {
+            $('table tbody tr td input[type="submit"]').click(function () {
+                var fileName = $(this).attr("data-id")
+                var ext = fileName.split('.').pop();
+                var file = fileName.substr(0, fileName.lastIndexOf('.'))
+                var tr = $(this).closest('tr')
+
+                var msg = confirm("Are you sure you want to delete the file?");
+                if (msg) {
+                    $.ajax({
+                        type: "post",
+                        url: '@Url.Action("RemoveBlob","Blob")',
+                        data: { file: file, extension: ext },
+                        success: function (response) {
+                            if (response == true) {
+                                tr.remove();
+                            }
+                        }
+
+                    })
+
+                }
+            })
+        })
+
+    </script>
+
+    }
+

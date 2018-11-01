@@ -23,11 +23,11 @@ namespace WhiteBears.Controllers {
             if(Session["username"] != null) {
 
                 List<User> users = new List<User> {
-                    new User("Kalen", "Rose", "Kalen", "Admin4", "PM"),
-                    new User("Jatin", "Rampal", "Jatin", "Admin4", "Wopm"),
-                    new User("Kish", "Dalal", "Kish", "Admin2", "Asas"),
-                    new User("Rafael", "Sigwalt", "Raf", "Admin1", "Esdasd"),
-                    new User("Mark", "Orlando", "Mark", "Admin100", "Teacher")
+                    new User("Kalen", "Rose", "Kalen", "kalen@email.com", "Admin4", "PM"),
+                    new User("Jatin", "Rampal", "Jatin", "jatin@email.com", "Admin4", "Wopm"),
+                    new User("Kish", "Dalal", "Kish", "kish@email.com", "Admin2", "Asas"),
+                    new User("Rafael", "Sigwalt", "Raf", "raf@email.com", "Admin1", "Esdasd"),
+                    new User("Mark", "Orlando", "Mark", "mark@email.com", "Admin100", "Teacher")
                 };
 
                 //if (model.CurrentUser.Role == "Admin") {
@@ -302,8 +302,8 @@ namespace WhiteBears.Controllers {
             return null;
         }
 
-        public ActionResult AddUser(string firstName, string lastName, string username, string password, string role) {
-            User newUser = new User(firstName, lastName, username, password, role);
+        public ActionResult AddUser(string firstName, string lastName, string username, string email, string password, string role) {
+            User newUser = new User(firstName, lastName, username, email, password, role);
 
             //Database code here
 

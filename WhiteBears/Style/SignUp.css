@@ -29,9 +29,12 @@
     margin-bottom: 20px;
 }
 
-.table{
-    
+.formContainer {
+    border: solid darkgray 2px;
+    border-radius: 20px 20px 20px 20px;
+    padding: 25px;
 }
+
 
 #CompanyInformationContainer{
     margin-left: 50px;
@@ -51,8 +54,8 @@
     overflow: auto;
 }
 
-input[text]{
-    width: auto;
+input{
+    width: inherit
 }
 
 .login-background {
