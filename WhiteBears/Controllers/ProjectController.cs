@@ -166,6 +166,7 @@ namespace WhiteBears.Controllers
 
             bool result = taskModel.AddTask(task, username);
 
+            Debug.WriteLine("THIS IS PROJECT id" + id);
             return RedirectToAction("Index", "Project", new { result, @id = id });
         }
 
