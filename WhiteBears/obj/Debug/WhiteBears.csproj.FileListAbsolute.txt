@@ -805,6 +805,5 @@ C:\Users\Rafael\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.exe.c
 C:\Users\Rafael\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.rsp
 C:\Users\Rafael\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe
 C:\Users\Rafael\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Rafael\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.dll
 C:\Users\Rafael\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
 C:\Users\Rafael\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
