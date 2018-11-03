@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WhiteBears
 {
-    class DatabaseHelper
+    public class DatabaseHelper
     {
         private SqlConnection conn;
         private SqlDataAdapter da;
@@ -17,8 +17,10 @@ namespace WhiteBears
 
         private string connString = @"Data Source=whitebears-server.database.windows.net;Initial Catalog=whitebears-db;Persist Security Info=True;User ID=sysdba;Password=j3.'(Ge=";
 
-        public DataRow[] RunQuery(string sQuery){
-            using (conn = new SqlConnection(connString)){
+        public DataRow[] RunQuery(string sQuery)
+        {
+            using (conn = new SqlConnection(connString))
+            {
                 da = new SqlDataAdapter(sQuery, conn);
                 ds = new DataSet();
                 da.Fill(ds);
@@ -40,6 +42,33 @@ namespace WhiteBears
             }
 
             return i;
+        }
+
+        public int RunInsertQuery(string sQuery)
+        {
+            int i = 0;
+            using (conn = new SqlConnection(connString))
+            {
+                da = new SqlDataAdapter(sQuery, conn);
+                ds = new DataSet();
+                da.Fill(ds);
+            }
+
+            return i;
+        }
+
+        public DataRow[] RunSelectQuery(string sQuery)
+        {
+            using (conn = new SqlConnection(connString))
+            {
+                da = new SqlDataAdapter(sQuery, conn);
+                ds = new DataSet();
+                da.Fill(ds);
+
+                dr = ds.Tables[0].Select();
+            }
+
+            return dr;
         }
     }
 }

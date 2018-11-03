@@ -3,10 +3,10 @@ using System.Web.Mvc;
 
 using Unity.AspNet.Mvc;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Whitebears_BlobStorage.UnityMvcActivator), nameof(Whitebears_BlobStorage.UnityMvcActivator.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(Whitebears_BlobStorage.UnityMvcActivator), nameof(Whitebears_BlobStorage.UnityMvcActivator.Shutdown))]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(WhiteBears.UnityMvcActivator), nameof(WhiteBears.UnityMvcActivator.Start))]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(WhiteBears.UnityMvcActivator), nameof(WhiteBears.UnityMvcActivator.Shutdown))]
 
-namespace Whitebears_BlobStorage
+namespace WhiteBears
 {
     /// <summary>
     /// Provides the bootstrapping for integrating Unity with ASP.NET MVC.

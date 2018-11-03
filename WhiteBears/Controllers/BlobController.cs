@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Whitebears_BlobStorage.Repository;
+using Whitebears.Repository;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Whitebears.Repository;
 
-namespace Whitebears_BlobStorage.Controllers
+namespace Whitebears.Controllers
 {
     public class BlobController : Controller
     {
@@ -62,8 +64,19 @@ namespace Whitebears_BlobStorage.Controllers
                 actualFileName = actualFileName.Substring(0, index);
 
             //required a session variable for ProjectID and UploaderName
-
+            string url = Request.Url.ToString();
+            string[] strArray = url.Split('/');
             
+
+            try
+            {
+                string projectid = strArray[6];
+            }
+            catch(Exception e)
+            {
+
+            }
+
 
             //Check if a file exists with the same name
             int count = CheckDocumentVersionDB("1", actualFileName);
@@ -71,11 +84,11 @@ namespace Whitebears_BlobStorage.Controllers
             //If filename doesn't exist INSERT and if it does UPDATE
             if (count==0)
             {
-                InsertDocumentDB("1", actualFileName /*+ "_v" + (count + 1)*/, "Jatin", System.IO.Path.GetExtension(uploadFileName.FileName));
+                InsertDocumentDB(projectid, actualFileName /*+ "_v" + (count + 1)*/, "Jatin", System.IO.Path.GetExtension(uploadFileName.FileName));
             }
             else if(count>0)
             {
-                UpdateDocumentDB("1", actualFileName /*+ "_v" + (count)*/, actualFileName /*+ "_v" + (count + 1)*/, "Jatin", System.IO.Path.GetExtension(uploadFileName.FileName));
+                UpdateDocumentDB(projectid, actualFileName /*+ "_v" + (count)*/, actualFileName /*+ "_v" + (count + 1)*/, "Jatin", System.IO.Path.GetExtension(uploadFileName.FileName));
             }
 
             //Update the Database and put in the Document entry

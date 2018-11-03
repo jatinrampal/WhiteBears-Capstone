@@ -1,9 +1,9 @@
 using System;
 
 using Unity;
-using Whitebears_BlobStorage.Repository;
+using Whitebears.Repository;
 
-namespace Whitebears_BlobStorage
+namespace WhiteBears
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.

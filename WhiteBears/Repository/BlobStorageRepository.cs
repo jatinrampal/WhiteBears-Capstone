@@ -9,7 +9,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Auth;
 using System.IO;
 
-namespace Whitebears
+namespace Whitebears.Repository
 {
     public class BlobStorageRepository : IBlobStorageRepository
     {
@@ -72,7 +72,7 @@ namespace Whitebears
             CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file + "." + fileExtension);
             blockBlob.FetchAttributes();
             fileSize = blockBlob.Properties.Length;
-            return fileSize/1000;
+            return fileSize / 1000;
         }
 
         public IEnumerable<BlobViewModel> GetBlobs()
@@ -91,15 +91,28 @@ namespace Whitebears
             return vm;
         }
 
-        public bool UploadBlob(HttpPostedFileBase blobFile)
+        public bool UploadBlob(HttpPostedFileBase blobFile, int count)
         {
             if (blobFile == null)
             {
                 return false;
             }
 
+            string fileName = blobFile.FileName.ToString();
+
+            int length = fileName.Length;
+            int index = fileName.LastIndexOf(".");
+
+
+            if (index > 0)
+            {
+                fileName = fileName.Substring(0, index);
+
+            }
+
+
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
-            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(blobFile.FileName);
+            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(fileName + "_v" + (count + 1) + System.IO.Path.GetExtension(blobFile.FileName));
 
             using (var fileStream = blobFile.InputStream)
             {

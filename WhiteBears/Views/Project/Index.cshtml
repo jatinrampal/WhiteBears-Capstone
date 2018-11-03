@@ -425,7 +425,7 @@
             // Clicking Upload Button
             $('#projectDocumentUpload').click(function () {
                 var projectID = $('#projectId').text();
-                var urlUpload = '/BlobController/Index/' + projectID;
+                var urlUpload = '/Blob/UploadBlob/' + projectID;
                 window.location = urlUpload;
             })
 
