@@ -887,3 +887,13 @@ C:\Users\Rafael\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.Window
 \\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
 \\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 \\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CopyComplete
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.Process.dll
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Threading.Thread.dll
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\Unity.Abstractions.dll
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\Unity.Container.dll
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\Unity.Mvc.dll
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\WebActivatorEx.dll
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
+C:\Users\Kalen\source\repos\WhiteBears-Capstone\WhiteBears\bin\SautinSoft.Document.xml

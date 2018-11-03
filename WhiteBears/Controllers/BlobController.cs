@@ -66,16 +66,9 @@ namespace Whitebears.Controllers
             //required a session variable for ProjectID and UploaderName
             string url = Request.Url.ToString();
             string[] strArray = url.Split('/');
-            
 
-            try
-            {
-                string projectid = strArray[6];
-            }
-            catch(Exception e)
-            {
+            string projectid = strArray[6];
 
-            }
 
 
             //Check if a file exists with the same name
