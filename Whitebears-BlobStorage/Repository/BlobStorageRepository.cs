@@ -70,15 +70,28 @@ namespace Whitebears_BlobStorage.Repository
             return vm;
         }
 
-        public bool UploadBlob(HttpPostedFileBase blobFile)
+        public bool UploadBlob(HttpPostedFileBase blobFile, int count)
         {
             if (blobFile == null)
             {
                 return false;
             }
 
+            string fileName = blobFile.FileName.ToString();
+            
+            int length = fileName.Length;
+            int index = fileName.LastIndexOf(".");
+            
+
+            if (index > 0)
+            {
+                fileName = fileName.Substring(0, index);
+               
+            }
+                
+
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
-            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(blobFile.FileName);
+            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(fileName + "_v" + (count+1) + System.IO.Path.GetExtension(blobFile.FileName));
 
             using (var fileStream = blobFile.InputStream)
             {

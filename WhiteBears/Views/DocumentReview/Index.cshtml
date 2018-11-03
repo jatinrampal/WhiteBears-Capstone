@@ -1,0 +1,202 @@
+﻿@using WhiteBears.Models
+@using SautinSoft.Document
+@using SautinSoft.Document.Drawing;
+@using SautinSoft.Document.Tables;
+@model DocumentVersionsModel
+
+@{
+    ViewBag.Title = "Document Version Comparison";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+    $(document).ready(function () {
+        setDocumentDisplayHeight();
+
+        $(window).on('resize', function () {
+            setDocumentDisplayHeight();
+        });
+
+        $("#btnReview").click(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ReviewDocument", "DocumentReview")',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: '{ "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
+                success: function (data) {
+                    $("#oldModifiedBy").html(data.modifiedBy1);
+                    $("#oldTimeStamp").html(data.timeStamp1);
+                    $("#newModifiedBy").html(data.modifiedBy2);
+                    $("#newTimeStamp").html(data.timeStamp2);
+                    displayDocument(data.Doc1, "oldDocument");
+                    displayDocument(data.Doc2, "newDocument");
+                    if (data.fileSize1 > 1000) {
+                        $("#oldFileSize").html((data.fileSize1/1000.00).tofixed(2) + " MB");
+                    }
+                    else {
+                        $("#oldFileSize").html(data.fileSize1 + " KB");
+                    }
+                    if (data.fileSize1 > 1000) {
+                        $("#newFileSize").html((data.fileSize2 / 1000.00).tofixed(2) + " MB");
+                    }
+                    else {
+                        $("#newFileSize").html(data.fileSize2 + " KB");
+                    }
+                },
+                error: function (e) { console.log(e); }
+            });
+        });
+    });
+    
+    var setDocumentDisplayHeight = function () {
+        var windowHeight = $(window).height();
+        var headerPosition = $("#documentHeaderContainer").offset().top;
+        var headerHeight = $('#documentHeaderContainer').height();
+        var height = windowHeight - (headerPosition + headerHeight + 20);
+        console.log("window:" + windowHeight + " header top: " + headerPosition + " header height: " + headerHeight + " height: " + height);
+        $("#documentComparisonContainer").attr("style", "height:" + height + "px;overflow-y:scroll;clear:both;float:left;min-height:100px;");
+    }
+
+    var displayDocument = function (elements, target) {
+        var returnString = "";
+        $("#" + target).empty();
+        for (i = 0; i < elements.length; i++) {
+            
+            element = searchArray(elements, i);
+            if (element.type == "PARAGRAPH") {
+                var par = elements[i];
+                switch (par.status) {
+                    case "o": 
+                        returnString += "<p>ID:" + element.id + " " + element.content + "</p>";
+                        break;
+                    case "n":
+                        returnString += "<p style='background-color:rgba(100, 200, 100, 0.8);'>ID:" + element.id + " " + element.content + "</p>";
+                        break;
+                    case "d":
+                        returnString += "<p style='background-color:rgba(200, 100, 100, 0.8);'>ID:" + element.id + " " + element.content + "</p>";
+                        break;
+                    case "m":
+                        returnString += "<p>ID:" + element.id + " ";
+                        sentences = par.elements;
+                        for (j = 0; j < sentences.length; j++) {
+                            sentence = searchArray(sentences, j);
+                            switch (sentence.status) {
+                                case "m":
+                                    returnString += "<span style='background-color:rgba(200, 200, 80, 0.8);'>" + sentence.content + ".</span>";
+                                    break;
+                                case "o":
+                                    returnString += sentence.content + ".";
+                                    break;
+                            }
+                        }
+                        returnString += "</p>";
+                        break;
+                }
+                $("#" + target).append(returnString);
+                returnString = "";
+            }
+            else if (element.type == "PICTURE") {
+                var style = "height:300px;margin:1px;border:solid 3px;border-color:";
+                switch (element.status) {
+                    case "n":
+                        style += "rgba(100, 200, 100, 0.8);";
+                        break;
+                    case "m":
+                        style += "rgba(200, 200, 80, 0.8);";
+                        break;
+                    case "d":
+                        style += "rgba(200, 100, 100, 0.8);";
+                        break;
+                    default:
+                        style = "height:300px;margin:1px;";
+                        break;
+                }
+                returnString += "<img id='p" + element.order + "'/><br/>";
+                $("#" + target).append(returnString);
+                $('#p' + element.order).attr("src", "data:image/" + element.format + ";base64, " + element.content);
+                $('#p' + element.order).attr("style", style);
+                returnString = "";
+            }
+            else if (element.type == "TABLE") {
+                var tableId = "t" + element.order + target;
+                $("#" + target).append("<table id='" + tableId + "' style='width:100%;margin:5px 0px 5px 0px;'><tbody>");
+                rows = element.elements;
+                for (j = 0; j < rows.length; j++) {
+                    row = searchArray(rows, j);
+                    var rowId = "r" + element.order + row.order + target;
+                    $("#" + tableId).append("<tr id='" + rowId + "' style='width:100%;'>");
+                    cells = row.elements;
+                    for (k = 0; k < cells.length; k++) {
+                        cell = searchArray(cells, k);
+                        var cellId = "c" + element.order + row.order + cell.order + target;
+                        $("#" + rowId).append("<td id='" + cellId + "'>" + cell.content + "</td>");
+                        var style = "border:solid 1px;width:" + 100 / cells.length +"%;";
+                        switch (cell.status) {
+                            case "o":
+                                break;
+                            case "n":
+                                style += "background-color:rgba(100, 200, 100, 0.8);"
+                                break;
+                            case "d":
+                                style += "background-color:rgba(200, 100, 100, 0.8);"
+                                break;
+                        }
+                        $("#" + cellId).attr("style", style);
+                    }
+                }
+            }
+        }
+        
+    }
+
+    var searchArray = function (elements, order) {
+        var element;
+        $.each(elements, function (i, v) {
+            if (v.order == order) {
+                element = v;
+            }
+        })
+        return element;
+    }
+</script>
+
+
+
+<h2>@ViewBag.Title</h2>
+<div id="documentHeaderContainer" style="height:110px;">
+    <div style="width:45%;float:left;">
+        @Html.LabelFor(m => m.docList, "Version")
+        @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version1" })
+        <br/>
+        <label for="oldModBy" style="display:inline-block;width:100px;clear:both;float:left;">Modified By:</label>
+        <p id="oldModBy" style="float:left;"></p>
+        <label for="oldTimeStamp" style="display:inline-block;width:100px;clear:both;float:left;">Modified On:</label>
+        <p id="oldTimeStamp" style="float:left;"></p>
+        <label for="oldFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
+        <p id="oldFileSize" style="float:left;"></p>
+    </div>
+    <div style="width:10%;float:left;">
+        <input id="btnReview" type="button" class="btn btn-primary btn-sm" value="Compare" />
+    </div>
+    <div style="width:45%;float:left;">
+        @Html.LabelFor(m => m.docList, "Version")
+        @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version2" })
+        <br />
+        <label for="newModBy" style="display:inline-block;width:100px;clear:both;float:left;">Modified By:</label>
+        <p id="newModBy" style="float:left;"></p>
+        <label for="newTimeStamp" style="display:inline-block;width:100px;clear:both;float:left;">Modified On:</label>
+        <p id="newTimeStamp" style="float:left;"></p>
+        <label for="newFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
+        <p id="newFileSize" style="float:left;"></p>
+    </div>
+</div>
+<div id="documentComparisonContainer">
+    <div id="oldDocument" style="width:49%;margin:1% 1% 1% 0%;clear:both;float:left">
+
+    </div>
+    <div id="newDocument" style="width:49%;margin:1% 0% 1% 1%;float:left">
+
+    </div>
+</div>
+
+

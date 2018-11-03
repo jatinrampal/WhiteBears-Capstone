@@ -11,7 +11,7 @@ namespace Whitebears_BlobStorage.Repository
     {
         IEnumerable<BlobViewModel> GetBlobs();
         bool DeleteBlob(string file, string fileExtension);
-        bool UploadBlob(HttpPostedFileBase blobFile);
+        bool UploadBlob(HttpPostedFileBase blobFile, int count);
 
         Task<bool> DownloadBlobAsync(string file, string fileExtension);
     }
