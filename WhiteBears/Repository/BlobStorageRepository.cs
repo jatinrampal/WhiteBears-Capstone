@@ -19,7 +19,7 @@ namespace Whitebears.Repository
         private CloudBlobContainer _cloudBlobContainer; //blob container
 
         private string containerName = "test";
-        private string downloadPath = @"C:\WhiteBears\";
+        private string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads//");
 
 
         public BlobStorageRepository()
