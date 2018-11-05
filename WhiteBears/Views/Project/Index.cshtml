@@ -199,7 +199,7 @@
                     </table>
 
                     <div id="projectDocumentButtons">
-                        <button type="button" id="projectDocumentUpload" class="btn btn-info" onclick="location.href='@Url.Action("Index", "BlobController", new { projectId = Model.Project.ProjectId, role = Model.User.Role})'">Upload</button>
+                        <button type="button" id="projectDocumentUpload" class="btn btn-info" onclick="location.href='@Url.Action("Index", "Blob", new { projectId = Model.Project.ProjectId, role = Model.User.Role})'">Upload</button>
                         <button type="button" id="projectCompare" class="btn btn-info">Version Compare</button>
                     </div>
 
