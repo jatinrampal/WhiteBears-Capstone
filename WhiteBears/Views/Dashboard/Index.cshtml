@@ -520,13 +520,11 @@
 
 
         function assignTaskRowClasses() {
-            $.each($('#tasktable tbody tr td:nth-child(2)'), function (key, value) {
-                var priority = $(this).text()
-                if (priority == "High"){
+            $.each($('#tasktable tbody tr td:nth-child(4)'), function (key, value) {
+                var status = $(this).text()
+                if (status == "Overdue"){
                     $(this).parent().addClass('high-priority');
-                } else if (priority == "Medium") {
-                    $(this).parent().addClass('med-priority');
-                }
+                } 
             })
         }
     })
