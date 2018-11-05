@@ -25,7 +25,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
 
     <link href="~/Style/ProjectPage.css" rel="stylesheet" />
-
+    
 </head>
 
 <body>
@@ -286,6 +286,8 @@
                                                 <option>Project Manager</option>
                                                 <option>Full Stack Developer</option>
                                                 <option>Business Analyst</option>
+                                                <option>Contractor</option>
+                                                <option>Admin</option>
                                             </select>
                                         </div>
 
@@ -315,7 +317,7 @@
     <script>
 
         $(document).ready(function () {
-
+            $('#adminTeamManagement').hide();
             // jQuery methods go here...
 
             // Double Click on ProjectTaskTable
@@ -661,7 +663,6 @@
 
             });
 
-            $('#adminTeamManagement').hide();
 
             if ("@Model.User.Role" == "Admin") {
                 $('#adminTeamManagement').show();
