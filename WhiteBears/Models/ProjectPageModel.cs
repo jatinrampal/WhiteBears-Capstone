@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -12,7 +13,7 @@ namespace WhiteBears.Models
     {
         private string connString = @"Data Source=whitebears-server.database.windows.net;Initial Catalog=whitebears-db;Persist Security Info=True;User ID=sysdba;Password=j3.'(Ge=";
 
-        public IEnumerable<ProjectPageViewModel> getDocuments(String username, int projectId, string userRoleName)
+        public IEnumerable<ProjectPageViewModel> getDocuments(String username, int projectId, string userRoleName, string uName)
         {
             //var model = new Task();
             //List<ProjectDocumentViewModel> modelList = new List<ProjectDocumentViewModel>();
@@ -25,18 +26,13 @@ namespace WhiteBears.Models
                 // Query with vals 
                 //command.CommandText = "select Document.documentId, Document.projectId, Document.fileName, Document.uploader, Document.creationTime, Document.fileExtension, DocumentRole.writeAccess, DocumentRole.roleName from  Document LEFT JOIN DocumentRole ON Document.documentId = DocumentRole.documentId WHERE projectId = @projectId; ";
 
-                command.CommandText = "SELECT d.documentId, d.projectId, d.uploader, d.creationTime, d.fileExtension, d.fileName, dr.writeAccess, dr.roleName, u.firstName FROM DocumentRole dr JOIN Document d ON @projectId = dr.documentId JOIN[User] u ON u.[role] = dr.roleName WHERE dr.roleName = @rolename";
+                command.CommandText = "select * from Document JOIN DocumentRole ON  Document.documentId = DocumentRole.documentId JOIN[User] ON[User].role = DocumentRole.roleName where projectId = @projectId AND DocumentRole.roleName = @userRoleName AND [User].uName = @uName;";
 
-                /*
-                SELECT d.documentId, d.fileExtension, d.fileName, dr.roleName, u.firstName FROM DocumentRole dr
-                JOIN Document d ON d.documentId = dr.documentId
-                JOIN[User] u ON u.[role] = dr.roleName
-                WHERE dr.roleName = 'Full Stack Developer'
-                */
-
+             
                 //command.CommandText = "select * from Document where projectId = @projectId";
-                command.Parameters.AddWithValue("@rolename", userRoleName);
+                command.Parameters.AddWithValue("@userRolename", userRoleName);
                 command.Parameters.AddWithValue("@projectId", projectId);
+                command.Parameters.AddWithValue("@uName", uName);
 
                 // Open connection 
                 connection.Open();
@@ -124,6 +120,35 @@ namespace WhiteBears.Models
             }
             return modelList;
         }
+       public bool isCompleted(bool complete, int taskID)
+        {
+
+            DatabaseHelper dh = new DatabaseHelper();
+            try
+            {
+                
+                DateTime currentDateTime = DateTime.Now;
+                if (complete == true)
+                {
+                    Debug.WriteLine("Complee value being passed is " + complete + " With Date Time " + currentDateTime);
+                    dh.RunUpdateQuery($"UPDATE Task SET Task.completionDate = '{currentDateTime}' where taskId = '{taskID}'");
+                }
+                else if (complete == false)
+                {
+                    Debug.WriteLine("Complee value being passed is " + complete + " but failed");
+                    dh.RunUpdateQuery($"UPDATE Task SET Task.completionDate = '0001-01-01' where taskId = '{taskID}'");
+                }
+            
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
+
+           
+        }
 
         public bool deleteTask(int taskId)
         {
@@ -147,8 +172,10 @@ namespace WhiteBears.Models
             DatabaseHelper dh = new DatabaseHelper();
             try
             {
+                // Keeps the database not NULL (As it will effect Dashboard tasks)
+                DateTime completionDate = DateTime.ParseExact("0001-01-01", "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 dh.RunUpdateQuery($"INSERT INTO Task (title, description, startDate, dueDate, completionDate, projectId, priority) VALUES('{task.Title}', '{task.Description}', '{task.StartDate}'," +
-                    $"'{task.DueDate}', '{task.CompletedDate}', '{task.ProjectId}', '{task.Priority}');");
+                    $"'{task.DueDate}', '{completionDate}', '{task.ProjectId}', '{task.Priority}');");
 
                 DataRow[] drs = dh.RunQuery($"SELECT MAX(taskId) FROM Task;");
                 dh.RunUpdateQuery($"INSERT INTO User_Task VALUES('{username}', '{drs[0][0].ToString()}');");
@@ -271,18 +298,36 @@ namespace WhiteBears.Models
 
         public Project GetProject(string currentUser, int projectId)
         {
-            DatabaseHelper dh = new DatabaseHelper();
-            DataRow[] drs = dh.RunQuery($"SELECT * FROM Project WHERE projectId = '{projectId}';");
-
-            return new Project()
+            try
             {
-                ProjectId = Int32.Parse(drs[0]["projectId"].ToString()),
-                Title = drs[0]["title"].ToString(),
-                Description = drs[0]["description"].ToString(),
-                StartDate = Convert.ToDateTime(drs[0]["startDate"]),
-                DueDate = Convert.ToDateTime(drs[0]["dueDate"]),
-                CompletionDate = Convert.ToDateTime(drs[0]["completionDate"])
-            };
+                DatabaseHelper dh = new DatabaseHelper();
+                DataRow[] drs = dh.RunQuery($"SELECT * FROM Project WHERE projectId = '{projectId}';");
+
+                return new Project()
+                {
+                    ProjectId = Int32.Parse(drs[0]["projectId"].ToString()),
+                    Title = drs[0]["title"].ToString(),
+                    Description = drs[0]["description"].ToString(),
+                    StartDate = Convert.ToDateTime(drs[0]["startDate"]),
+                    DueDate = Convert.ToDateTime(drs[0]["dueDate"]),
+                    CompletionDate = Convert.ToDateTime(drs[0]["completionDate"])
+                };
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Crash: " + e);
+                return new Project()
+                {
+                    ProjectId = 0,
+                    Title = "0",
+                    Description = "0",
+                    StartDate = Convert.ToDateTime("0001-01-01"),
+                    DueDate = Convert.ToDateTime("0001-01-01"),
+                    CompletionDate = Convert.ToDateTime("0001-01-01")
+
+                };
+            }
+           
         }
 
         public User getUser(string currentUser)

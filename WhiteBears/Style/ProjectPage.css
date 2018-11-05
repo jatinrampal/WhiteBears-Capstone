@@ -160,6 +160,12 @@
     background-color: lightblue !important;
 }
 
+#taskError
+{
+    color: red;
+    align-content: center;
+}
+
 
 
 #taskModalContent {

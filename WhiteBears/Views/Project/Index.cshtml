@@ -97,8 +97,16 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <form action="/Project/AddTask" method="post">
-                                       
+                                    <form id="taskPost" action="/Project/AddTask" method="post">
+
+                                        <!-- Errors -->
+                                        <div class="form-group row">
+                                            <div class="col-sm-12" id="taskErrors">
+
+                                            </div>
+                                        </div>
+                                        <hr />
+
                                         <!-- ProjectID -->
                                         <input type="hidden" id="projectId" name="projectId" value="@Model.Project.ProjectId">
 
@@ -140,12 +148,7 @@
                                             <label for="CompletionDate" class="col-sm-12 col-form-label text-center">Completion Date</label>
                                         </div>
 
-                                        <!-- CompletionDate Input  -->
-                                        <div class="form-group row">
-                                            <div class="col-sm-12 text-center">
-                                                <input id="taskCompletionDate" name="taskCompletionDate" type="date" required />
-                                            </div>
-                                        </div>
+
 
                                         <!-- Priority -->
                                         <div class="form-group row">
@@ -160,8 +163,8 @@
 
                                         <div class="modal-footer">
                                             <!-- Add Button -->
-                                            <input type="submit" class="btn btn-default" name="Add" value="Add" />
-                               
+                                            <input id="taskAddbtn" type="submit" class="btn btn-default" name="Add" value="Add" />
+
 
                                         </div>
                                     </form>
@@ -193,7 +196,7 @@
                             </tr>
                         </thead>
                         <tbody id="projectDocumentTableTbody" class="projectTableTbody">
-                            @{ Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role});}
+                            @{ Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role, uName = Model.User.Username});}
                         </tbody>
                     </table>
 
@@ -243,8 +246,9 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    @Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId }){
-                                    <!--<form action="/Project/AddProjectNote" method="post">-->
+
+                                    @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId}))
+                                    {
                                     <!-- Message -->
                                     <div class="form-group row">
                                         <label for="Message" class="col-sm-2 col-form-label">Message:</label>
@@ -309,7 +313,7 @@
         $(document).ready(function () {
 
             // jQuery methods go here...
-        
+
 
             // Double Click on ProjectTaskTable
             $("#projectTaskTable tbody tr").dblclick(function () {
@@ -320,31 +324,66 @@
                 alert("test");
             });
 
+
+            // Click on isComplete checkbox
+            var disableSelectColor = 0;
+
+            $('#projectTaskTableTbody').on('click', '#isCompleted', function () {
+                //myChecked = $('#task').prop("checked");
+                disableSelectColor = 1;
+            });
+
+
+            var myChecked;
+            var myTaskID;
             var TaskSelectedArray = [];
             // Click on task 
-            $('#projectTaskTableTbody').on('click', 'tr', function ()
-            {
-                $(this).toggleClass('on');
-
+            $('#projectTaskTableTbody').on('click', 'tr', function () {
                 myTaskID = $(this).attr('id'); // table row ID 
-                
-                var exitsVal = false; 
 
-                for (var i = 0; i <= TaskSelectedArray.length; i++)
-                {
-                    if (myTaskID == TaskSelectedArray[i])
-                    {
-                        TaskSelectedArray.splice(TaskSelectedArray.indexOf(myTaskID), 1);
-                        exitsVal = true;
-                        //alert("Removed")
+                myChecked = $('#task').prop("checked");
+
+
+                // Only run if checkedBox is not clicked
+                if (disableSelectColor == 0) {
+                    $(this).toggleClass('on');
+                    //alert("myChecked value is " + myChecked + myTaskID);
+                    var exitsVal = false;
+
+                    for (var i = 0; i <= TaskSelectedArray.length; i++) {
+                        if (myTaskID == TaskSelectedArray[i]) {
+                            TaskSelectedArray.splice(TaskSelectedArray.indexOf(myTaskID), 1);
+                            exitsVal = true;
+                            //alert("Removed")
+                        }
+                    }
+                    if (exitsVal == false) {
+                        TaskSelectedArray.push(myTaskID);
+                        //alert("Pushed");
                     }
                 }
-                if (exitsVal == false)
-                {
-                    TaskSelectedArray.push(myTaskID);
-                    //alert("Pushed");
-                } 
+                else {
+                    disableSelectColor = 0;
+                    alert("Passing values " + myChecked + " TaskID " + myTaskID);
+
+                    var data = JSON.stringify({
+                        'taskID': myTaskID,
+                        'complete': myChecked
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("isCompleted", "Project")", // the method we are calling
+                        data: data,
+                        contentType: 'application/json',
+                        success: function (msg) {
+                            location.reload();
+                        }
+                    });
+                }
             });
+
+
 
             var ProjectNoteSelectedArray = [];
             // Click on Project Note 
@@ -353,7 +392,7 @@
 
                 myNoteID = $(this).attr('id'); // table row ID 
 
-            
+
                 var exitsVal = false;
 
                 for (var i = 0; i <= ProjectNoteSelectedArray.length; i++) {
@@ -370,16 +409,16 @@
             });
 
 
-            mnew = 0; 
-            stored = 0; 
+            mnew = 0;
+            stored = 0;
             fileExtension = "Empty";
             //Click on Project Document
             $('#projectDocumentTableTbody').on('click', 'tr', function () {
                 myDocumentID = $(this).attr('id'); // table row ID 
-                
-                    myFileExtension = $(this).find("#fileExtension").text();
-             
-               
+
+                myFileExtension = $(this).find("#fileExtension").text();
+
+
 
                 if (myDocumentID == stored || mnew == 0) {
                     alert("myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew);
@@ -388,9 +427,8 @@
                     mnew = -1;
                     stored = myDocumentID;
                     fileExtension = myFileExtension;
-                    if ($(this).hasClass('on') == false)
-                    {
-                        alert("RESET");
+                    if ($(this).hasClass('on') == false) {
+                      //  alert("RESET");
                         mnew = 0;
                         stored = 0;
                         fileExtension = "Empty";
@@ -402,24 +440,22 @@
             // Clicking compare button
             $('#projectCompare').click(function () {
 
-                
-
                 if (fileExtension == "empty" || stored == 0 || fileExtension == null) {
 
-                    alert("Nope you dumb fuck");
-                    alert("fileEx" + fileExtension);
+                   // alert("Sorry, file Extension is ");
+                   // alert("fileEx" + fileExtension);
 
 
                 }
                 else if ($.trim(String(fileExtension)) == "docx" || $.trim(String(fileExtension)) == "doc") {
                     alert("File " + fileExtension);
-                    var url = '/DocumentReviewController/Index/' + stored;
+                    var url = '/DocumentReview/Index/' + stored;
                     window.location = url;
                 }
                 else {
                     alert("File must be doc or docx!");
                 }
-                
+
             })
 
             // Clicking Upload Button
@@ -430,40 +466,38 @@
             })
 
             // Deleting Task
-            $('#projectTaskDelete').click(function ()
-            {
+            $('#projectTaskDelete').click(function () {
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("DeleteTask", "Project")", // the method we are calling
-                    data: 
+                    data:
                         JSON.stringify({ 'TaskSelectedArray': TaskSelectedArray }),
-                        TaskSelectedArray,
+                    TaskSelectedArray,
                     contentType: 'application/json',
-                    success: function (msg)
-                    {
+                    success: function (msg) {
                         location.reload();
                     }
                 });
             });
 
             // Deleting Project Note
-           $('#projectNoteDelete').click(function () {
+            $('#projectNoteDelete').click(function () {
 
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("DeleteProjectNote", "Project")", // the method we are calling
-                    data: 
+                    data:
                         JSON.stringify({ 'ProjectNoteSelectedArray': ProjectNoteSelectedArray }),
                     contentType: 'application/json',
                     success: function (msg) {
                         location.reload();
                     }
- 
+
                 });
             });
 
 
-           // Incomplete dynamic role 
+            // Incomplete dynamic role 
             $('#projectNoteAdd').click(function () {
                 $.ajax({
                     url: "@Url.Action("getRoles", "Project")",
@@ -477,6 +511,105 @@
                     }
                 });
             });
+
+            // Title - Description, StartDate, EndDate)
+            var enableAdd = false;
+            var endDateVal = false;
+            var startDateVal = false;
+            var titleVal = false; 
+            var descriptionVal = false; 
+
+            $("#taskPost").on('submit', function (e) {
+
+               
+                if (endDateVal == false || startDateVal == false || titleVal == false) {
+                    e.preventDefault();
+                }
+
+            });
+
+            // Title VALIDATION
+            $('#taskTitle').focusout(function () {
+                var myTaskTitle = $('#taskTitle').val();
+                if (/\d/.test(myTaskTitle)) {
+                    // number found
+                    $('#taskErrors').text("Title cannot have numbers, try agian.");
+                    titleVal = false; 
+                }
+                else if (myTaskTitle.length > 40)
+                {
+                    $('#taskErrors').text("Title must be smaller, try agian.");
+                    titleVal = false; 
+                }
+                else if ($.trim(myTaskTitle).length == 0)
+                {
+                    $('#taskErrors').text("You havn't entered a title.");
+                    titleVal = false; 
+                }
+                else {
+                    $('#taskErrors').empty();
+                    titleVal = true; 
+                    
+                }
+            });
+
+            // Description VALIDATION
+            $('#taskDescription').focusout(function () {
+                var myTaskDescription = $('#taskDescription').val();
+               
+                if (myTaskDescription.length > 255) {
+                    $('#taskErrors').text("Description must be smaller, try agian.");
+              
+                    descriptionVal = false;
+                }
+                else if ($.trim(myTaskDescription).length == 0) {
+                    $('#taskErrors').text("Please enter a Description.");
+                  
+                    descriptionVal = false;
+                }
+                else {
+                    $('#taskErrors').empty();
+                 
+                    descriptionVal = true;
+
+                }
+            });
+
+
+            // EndDate VALIDATION
+            $('#taskEndDate').focusout(function () {
+                var myEndDate = new Date($(this).val());
+                var myStartDate = new Date($('#taskStartDate').val());
+                if (myEndDate < myStartDate) {
+                   // alert("Your End Date, ends before your Start Date.");
+                    $('#taskErrors').text("Your End Date, ends before your Start Date.");
+                    endDateVal = false; 
+                }
+                else
+                {
+                    $('#taskErrors').empty();
+                    endDateVal = true; 
+                }
+      
+            });
+
+            // StartDate VALIDATION
+            $('#taskStartDate').focusout(function () {
+                var myStartDate = new Date($(this).val());
+                var myEndDate = new Date($('#taskEndDate').val());
+                if (myEndDate < myStartDate) {
+                    //alert("Your Start Date, ends before your End Date.");
+                    $('#taskErrors').text("Your Start Date, ends before your End Date");
+                    startDateVal = false;
+                }
+                else {
+                    $('#taskErrors').empty();
+                    startDateVal = true;
+                }
+               
+            });
+
+            
         });
    
     </script>
