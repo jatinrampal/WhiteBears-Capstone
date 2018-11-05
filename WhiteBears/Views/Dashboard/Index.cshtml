@@ -66,9 +66,14 @@
         </div>
 
         <div class="LeftPanelBorder" id="ProjectListContainer">
+            @if (Model.CurrentUser.Role.Equals("Project Manager"))
+            {
+                <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "AddProject")'">Add project</button>
+            }
             <div id="ProjectList">
                 <label>Projects</label> <br />
-                @foreach (var project in Model.Projects) {
+                @foreach (var project in Model.Projects)
+                {
                     <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project", new { id = project.ProjectId})'">@project.Title</button>;
                 }
             </div>

@@ -31,8 +31,8 @@ namespace WhiteBears.Controllers
             model.IncludedUsers = model.GetIncludedUsers(projectId);
             model.Projects = model.GetProjects(username);
             model.CurrentUser = model.GetUser(username);
-            if (model.CurrentUser.Role != "PM"){
-                return RedirectToAction("Index", "Home");
+            if (model.CurrentUser.Role != "Project Manager"){
+                return RedirectToAction("Index", "Project", new { id = projectId });
             }
 
             return View(model);
