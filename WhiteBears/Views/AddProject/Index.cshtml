@@ -1,0 +1,29 @@
+﻿@using WhiteBears.Models
+@model AddProject
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NotLoggedIn.cshtml";
+}
+
+<h2>Add Project</h2>
+@using(Html.BeginForm("Index", "AddProject")){
+    <div id="FirstProjectInformationContainer" >
+        <h3 class="header">First Project</h3>
+
+        <div class="formContainer form-group" style="text-align: left;">
+            @Html.LabelFor(x => x.Title, "Project Title")
+            @Html.EditorFor(x => x.Title)<br/>
+            @Html.LabelFor(x => x.Description, "Description")
+            @Html.TextAreaFor(x => x.Description)<br/>
+            @Html.LabelFor(x => x.ScopeStatement, "Scope Statement")
+            @Html.TextAreaFor(x => x.ScopeStatement)<br/>
+            @Html.LabelFor(x => x.StartDate, "Start Date")
+            @Html.TextBoxFor(x => x.StartDate, new { @type = "date", @class = "form-control datepicker", @placeholder = "Start Date" })<br/>
+            @Html.LabelFor(x => x.DueDate, "Due Date")
+            @Html.TextBoxFor(x => x.DueDate, new { @type = "date", @class = "form-control datepicker", @placeholder = "Due Date" })<br/>
+
+        </div>
+        <button type="submit" >Add</button>
+    </div>
+}
+
