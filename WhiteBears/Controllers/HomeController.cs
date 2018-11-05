@@ -12,6 +12,10 @@ namespace WhiteBears.Controllers
     {
         public ActionResult Index()
         {
+            if(Session["username"] != null) {
+                return RedirectToAction("Index", "Dashboard");
+            }
+
             return View();
         }
 
@@ -32,5 +36,10 @@ namespace WhiteBears.Controllers
 
         }
       
+        [HttpGet]
+        public ActionResult LogOut() {
+            Session["username"] = null;
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

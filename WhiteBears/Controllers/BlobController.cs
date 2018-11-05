@@ -64,22 +64,15 @@ namespace Whitebears.Controllers
                 actualFileName = actualFileName.Substring(0, index);
 
             //required a session variable for ProjectID and UploaderName
-            string url = Request.Url.ToString();
+            /*string url = Request.Url.ToString();
             string[] strArray = url.Split('/');
-            
 
-            try
-            {
-                string projectid = strArray[6];
-            }
-            catch(Exception e)
-            {
-
-            }
+            string projectid = strArray[6];*/
+            string projectid = "1";
 
 
             //Check if a file exists with the same name
-            int count = CheckDocumentVersionDB("1", actualFileName);
+            int count = CheckDocumentVersionDB(projectid, actualFileName);
 
             //If filename doesn't exist INSERT and if it does UPDATE
             if (count==0)

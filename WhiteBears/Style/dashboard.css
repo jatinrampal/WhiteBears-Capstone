@@ -175,8 +175,15 @@ header {
     margin-right: 30px;
 }
 
-
 #pie-chartcanvas{
     width: 500px;
     height: 250px;
+}
+
+.high-priority{
+    background-color: #ffb2b2
+}
+
+.med-priority {
+    background-color: #ffffb2
 }
