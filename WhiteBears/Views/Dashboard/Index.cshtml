@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div class="LeftPanelBorder" id="ProjectListContainer">
+        <div class="LeftPanelBorder" id="ProjectListContainer" style="overflow-y:scroll">
             @if (Model.CurrentUser.Role.Equals("Project Manager"))
             {
                 <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "AddProject")'">Add project</button>
