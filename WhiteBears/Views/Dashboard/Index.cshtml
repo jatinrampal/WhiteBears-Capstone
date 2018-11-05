@@ -127,7 +127,7 @@
     </div>
 
     <div id="TaskOverviewSection">
-            <canvas id="pie-chartcanvas"></canvas>
+        <canvas id="pie-chartcanvas"></canvas>
 
     </div>
     <div id="PersonalNotesSection">
@@ -180,6 +180,7 @@
 
     $(document).ready(function () {
         loadPercentageBars("_all", "@Model.CurrentUser.Username");
+        assignTaskRowClasses();
 
         var clickedRow = null;
         var addButton = $('button[value=add');
@@ -358,158 +359,170 @@
             loadPercentageBars(radioValue, "@Model.CurrentUser.Username");
         });
 
-       function loadPercentageBars(projectId, username){
-                $.ajax({
-                    type: "post",
-                    url: '@Url.Action("LoadCompletedTasks", "Dashboard")',
-                    dataType: "json",
-                    data: {
-                        projectId: ""+projectId,
-                        username: username
-                    },
-                    success: function (data) {
+        function loadPercentageBars(projectId, username) {
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("LoadCompletedTasks", "Dashboard")',
+                dataType: "json",
+                data: {
+                    projectId: "" + projectId,
+                    username: username
+                },
+                success: function (data) {
 
-                        var total = data.message.length;
-                        var notCompleted = 0;
+                    var total = data.message.length;
+                    var notCompleted = 0;
 
-                        var rawData = {
-                            product: []
-                        };
+                    var rawData = {
+                        product: []
+                    };
 
-                        $.each(data.message, function (index, value) {
-                            if (value.IsCompleted == false) {
-                                notCompleted++;
+                    $.each(data.message, function (index, value) {
+                        if (value.IsCompleted == false) {
+                            notCompleted++;
 
-                                var dt = new Date();
-                                var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                            var dt = new Date();
+                            var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
-                                if (value.DueDate < dt) {
+                            if (value.DueDate < dt) {
 
-                                }
-                                var date = new Date(parseInt(value.DueDate.substr(6)));
-
-                                if (date < dt) {
-                                    rawData.product.push({ attribute: "o" })
-                                } else {
-                                    rawData.product.push({ attribute: "o_s" })
-                                }
-                            } else {
-                                var dueDate = new Date(parseInt(value.DueDate.substr(6)));
-                                var completedDate = new Date(parseInt(value.CompletedDate.substr(6)));
-
-                                if (dueDate > completedDate) {
-                                    rawData.product.push({ attribute: "c_o" })
-                                } else {
-                                    rawData.product.push({ attribute: "d_c" })
-                                }
                             }
-                        })
+                            var date = new Date(parseInt(value.DueDate.substr(6)));
 
-                        var completed = total - notCompleted;
+                            if (date < dt) {
+                                rawData.product.push({ attribute: "o" })
+                            } else {
+                                rawData.product.push({ attribute: "o_s" })
+                            }
+                        } else {
+                            var dueDate = new Date(parseInt(value.DueDate.substr(6)));
+                            var completedDate = new Date(parseInt(value.CompletedDate.substr(6)));
+
+                            if (dueDate > completedDate) {
+                                rawData.product.push({ attribute: "c_o" })
+                            } else {
+                                rawData.product.push({ attribute: "d_c" })
+                            }
+                        }
+                    })
+
+                    var completed = total - notCompleted;
 
 
-                        var percentage = (completed / total) * 100
-                        percentage = percentage.toFixed(2);
+                    var percentage = (completed / total) * 100
+                    percentage = percentage.toFixed(2);
 
-                        if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
-                            percentage = 0.00;
+                    if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
+                        percentage = 0.00;
+                    }
+
+                    $('#taskProgressBar').html(percentage + "%");
+                    $('#taskProgressBar').css('width', percentage + '%');
+                    $('#taskProgressStatus').html(completed + '/' + total);
+                    $('#taskProgressRemaining').html(notCompleted + ' task' + (notCompleted > 1 ? 's' : '') + ' remaining');
+
+                    var onSchedule = 0;
+                    var completedOnTime = 0;
+                    var delayedCompletion = 0;
+                    var overdue = 0;
+
+                    $.each(rawData.product, function (index, value) {
+                        if (value.attribute == "o") {
+                            overdue = overdue + 1;
                         }
 
-                        $('#taskProgressBar').html(percentage + "%");
-                        $('#taskProgressBar').css('width', percentage + '%');
-                        $('#taskProgressStatus').html(completed + '/' + total);
-                        $('#taskProgressRemaining').html(notCompleted + ' task' + (notCompleted > 1 ? 's' : '') + ' remaining');
+                        if (value.attribute == "o_s") {
+                            onSchedule = onSchedule + 1;
+                        }
 
-                        var onSchedule = 0;
-                        var completedOnTime = 0;
-                        var delayedCompletion = 0;
-                        var overdue = 0;
+                        if (value.attribute == "c_o") {
+                            completedOnTime = completedOnTime + 1;
+                        }
 
-                        $.each(rawData.product, function (index, value) {
-                            if (value.attribute == "o") {
-                                overdue = overdue + 1;
+                        if (value.attribute == "d_c") {
+                            delayedCompletion = delayedCompletion + 1;
+                        }
+                    })
+
+                    var ctx = $('#pie-chartcanvas')
+
+                    ctx.remove();
+                    $('#TaskOverviewSection').append('<canvas id="pie-chartcanvas"><canvas>')
+
+                    var ctx = $('#pie-chartcanvas')
+
+                    var dataArr = [completedOnTime, delayedCompletion, onSchedule, overdue]
+
+                    var data1 = {
+                        labels: ["Completed (On Time)", "Completed (Delayed)", "On Schedule", "Overdue"],
+
+                        datasets: [
+                            {
+                                label: "Task Overview",
+                                data: dataArr,
+                                backgroundColor: [
+                                    "#008b00",
+                                    "#ffb732",
+                                    "#1a1aff",
+                                    "#cd0000",
+                                ],
+                                borderColor: [
+                                    "#008b55",
+                                    "#ffb788",
+                                    "#1a1fff",
+                                    "#cd0088",
+                                ],
+                                borderWidth: [1, 1, 1, 1]
                             }
+                        ]
+                    };
 
-                            if (value.attribute == "o_s") {
-                                onSchedule = onSchedule + 1;
+
+                    var options = {
+                        title: {
+                            display: true,
+                            text: 'Task Overview',
+                            position: 'top'
+                        }, responsive: false,
+
+                        legend: {
+                            position: 'right'
+                        },
+
+                        plugins: {
+                            labels: {
+                                render: 'value',
+                                fontSize: 14,
+                                fontStyle: 'bold',
+                                fontColor: '#fff',
+                                fontFamily: '"Lucida Console", Monaco, monospace'
                             }
+                        }
+                    };
 
-                            if (value.attribute == "c_o") {
-                                completedOnTime = completedOnTime + 1;
-                            }
+                    var myDoughnutChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: data1,
+                        options: options
+                    });
+                },
 
-                            if (value.attribute == "d_c") {
-                                delayedCompletion = delayedCompletion + 1;
-                            }
-                        })
-
-                        var ctx = $('#pie-chartcanvas')
-
-                        ctx.remove();
-                        $('#TaskOverviewSection').append('<canvas id="pie-chartcanvas"><canvas>')
-
-                        var ctx = $('#pie-chartcanvas')
-
-                        var dataArr = [completedOnTime, delayedCompletion, onSchedule, overdue]
-
-                        var data1 = {
-                            labels: ["Completed (On Time)", "Completed (Delayed)", "On Schedule", "Overdue"],
-
-                            datasets: [
-                                {
-                                    label: "Task Overview",
-                                    data: dataArr,
-                                    backgroundColor: [
-                                        "#008b00",
-                                        "#ffb732",
-                                        "#1a1aff",
-                                        "#cd0000",
-                                    ],
-                                    borderColor: [
-                                        "#008b55",
-                                        "#ffb788",
-                                        "#1a1fff",
-                                        "#cd0088",
-                                    ],
-                                    borderWidth: [1, 1, 1, 1]
-                                }
-                            ]
-                        };
+                error: function () {
+                    alert("There was an issue with updating the table");
+                }
+            });
+        }
 
 
-                        var options = {
-                            title: {
-                                display: true,
-                                text: 'Task Overview',
-                                position: 'top'
-                            }, responsive: false,
-
-                            legend: {
-                                position: 'right'
-                            },
-
-                            plugins: {
-                                labels: {
-                                    render: 'value',
-                                    fontSize: 14,
-                                    fontStyle: 'bold',
-                                    fontColor: '#fff',
-                                    fontFamily: '"Lucida Console", Monaco, monospace'
-                                }
-                            }
-                        };
-
-                        var myDoughnutChart = new Chart(ctx, {
-                            type: 'doughnut',
-                            data: data1,
-                            options: options
-                        });
-                    },
-
-                    error: function () {
-                        alert("There was an issue with updating the table");
-                    }
-                });
-       }
+        function assignTaskRowClasses() {
+            $.each($('#tasktable tbody tr td:nth-child(2)'), function (key, value) {
+                var priority = $(this).text()
+                if (priority == "High"){
+                    $(this).parent().addClass('high-priority');
+                } else if (priority == "Medium") {
+                    $(this).parent().addClass('med-priority');
+                }
+            })
+        }
     })
 </script>
