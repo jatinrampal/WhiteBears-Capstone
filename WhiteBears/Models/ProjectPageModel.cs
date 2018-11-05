@@ -93,7 +93,7 @@ namespace WhiteBears.Models
             {
 
                 // Query with vals 
-                command.CommandText = "SELECT * FROM Task t JOIN Project p on t.projectId = p.projectId JOIN User_Task ut on t.taskId = ut.taskId WHERE ut.uName = @username and p.projectId = @projectId";
+                command.CommandText = "SELECT * FROM Task t JOIN Project p on t.projectId = p.projectId JOIN User_Task ut on t.taskId = ut.taskId WHERE ut.uName = @username and p.projectId = @projectId ORDER BY cast(T.dueDate as datetime) asc";
                 command.Parameters.AddWithValue("@username", username);
                 command.Parameters.AddWithValue("@projectId", projectId);
 
@@ -112,6 +112,8 @@ namespace WhiteBears.Models
                     model.Task.CompletedDate = (DateTime)reader["completionDate"];
 
                     model.Task.DueDate = (DateTime)reader["dueDate"];
+                    model.Task.Priority = reader["priority"].ToString();
+                    model.Task.Description = reader["description"].ToString();
                     modelList.Add(model);
                 }
 
@@ -189,7 +191,7 @@ namespace WhiteBears.Models
             }
         }
 
-        public IEnumerable<ProjectPageViewModel> getProjectNotes(String username, int projectId)
+        public IEnumerable<ProjectPageViewModel> getProjectNotes(String username, int projectId, string roleName)
         {
 
             List<ProjectPageViewModel> modelList = new List<ProjectPageViewModel>();
@@ -199,8 +201,10 @@ namespace WhiteBears.Models
             {
 
                 // Query with vals 
-                command.CommandText = "SELECT * FROM ProjectNote WHERE projectId = @projectId";
+                //command.CommandText = "SELECT * FROM ProjectNote WHERE projectId = @projectId ";
+                command.CommandText = "SELECT * FROM ProjectNote pn WHERE projectId = @projectId AND [to] = @userRole ORDER BY sentDate; ";
                 command.Parameters.AddWithValue("@projectId", projectId);
+                command.Parameters.AddWithValue("@userRole", roleName);
 
                 // Open connection 
                 connection.Open();
@@ -343,6 +347,25 @@ namespace WhiteBears.Models
                 Role = drs[0]["role"].ToString(),
                 FullName = drs[0]["firstName"].ToString() + " "+ drs[0]["lastName"].ToString(),
             };
+        }
+
+        public bool userAccessProject(int projectId, string username)
+        {
+            DatabaseHelper dh = new DatabaseHelper();
+            try
+            {
+                DataRow[] drs = dh.RunQuery($"SELECT * FROM Project p JOIN User_Project up ON up.projectId = p.projectId where p.projectId = '{projectId}' AND up.uName = '{username}';");
+                if(drs.Length == 0)
+                {
+                    return false; 
+                }
+            }
+            catch(Exception e)
+            {
+                return false; 
+            }
+            return true; 
+            //SELECT * FROM Project p JOIN User_Project up ON up.projectId = p.projectId where p.projectId = 2 AND up.uName = 'Kish';  
         }
     }
 

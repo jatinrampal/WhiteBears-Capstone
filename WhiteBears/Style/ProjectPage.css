@@ -3,7 +3,7 @@
 
 #topBarTitle
 {
-    color: red;
+    color: black;
 }
 
 #backButton
@@ -14,25 +14,24 @@
 #nameDiv
 {
     text-align: right;
-    color: red;
+    color: black;
     font-size: 25px;
 }
 
 #name
 {
-    color: red;
+    color: black;
     padding-right: 50px;
 }
 
 #hr {
     border: none;
-    height: 20px;
     width: 100%;
-    height: 50px;
+    height: 40px;
     margin-top: 0;
     border-bottom: 1px solid #1f1209;
-    box-shadow: 0 20px 20px -20px #333;
-    margin: -40px auto 25px;
+    box-shadow: 0 15px 15px -15px #333;
+    margin: -35px auto 20px;
 }
 
 
@@ -191,4 +190,22 @@
     width: 100px;
 }
 
+#projectCompare, #projectDocumentUpload
+{
+    margin-left: 10%;
+    
+    width: 150px;
+}
+
+#adminTeamManagement
+{
+   
+    float:right; 
+    
+}
+
+#topBarTitle
+{
+    float: left;
+}
 

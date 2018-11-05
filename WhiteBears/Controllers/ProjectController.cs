@@ -19,7 +19,7 @@ namespace WhiteBears.Controllers
             if (Session["username"] == null)
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             if (id == null)
@@ -31,6 +31,14 @@ namespace WhiteBears.Controllers
                 string username = Session["username"].ToString();
                 int projectid = Convert.ToInt32(id);
 
+                ProjectPageModel p = new ProjectPageModel();
+                var userExists = p.userAccessProject(projectid, username);
+                Debug.WriteLine("This userExists val is: " + userExists);
+                if(userExists == false)
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+
                 /*
                 ProjectModel pm = new ProjectModel();
                 Project p = new Project();
@@ -39,7 +47,7 @@ namespace WhiteBears.Controllers
                 ViewBag.Message = Result;
                 */
                 ProjectPageViewModel pm = new ProjectPageViewModel();
-                ProjectPageModel p = new ProjectPageModel();
+                
                 
                 
                 if(p.GetProject(username, projectid).ProjectId == 0)
@@ -174,45 +182,57 @@ namespace WhiteBears.Controllers
 
             bool result = taskModel.AddTask(task, username);
 
-            Debug.WriteLine("THIS IS PROJECT id" + id);
+            //Debug.WriteLine("THIS IS PROJECT id" + id);
             return RedirectToAction("Index", "Project", new { result, @id = id });
         }
 
         [HttpPost]
         public ActionResult AddProjectNote(int? projectId)
         {
-            // Validations needed 
-            string projectNoteMessage = Request["noteMessage"];
-            string projectNoteSentDate = Request["noteSentDate"];
-            string projectNoteCompletedDate = Request["noteCompletedDate"];
-            string projectNoteTo = Request["noteTo"];
-
-            DateTime dateTimeSentDate = DateTime.Parse(projectNoteSentDate);
-            string mdateTimeSentDate = dateTimeSentDate.ToString("dd-MM-yyyy");
-            DateTime mprojectSentDate = DateTime.ParseExact(mdateTimeSentDate, "dd/MM/yyyy", null);
-
-
-            DateTime dateTimeCompletedDate = DateTime.Parse(projectNoteCompletedDate);
-            string mdateTimeCompletedDate = dateTimeCompletedDate.ToString("dd-MM-yyyy");
-            DateTime mprojectCompletedDate = DateTime.ParseExact(mdateTimeCompletedDate, "dd/MM/yyyy", null);
-
             // Get values from session 
 
             string username = Session["username"].ToString();
             int id = Convert.ToInt32(projectId);
+            bool result = false; 
 
-            ProjectPageModel pm = new ProjectPageModel();
-            ProjectNotes projectNotes = new ProjectNotes {
-                ProjectId = Convert.ToInt32(id),
-                Message = projectNoteMessage,
-                SentDate = mprojectSentDate, 
-                From = username,
-                To = projectNoteTo,
-                CompletedDate = mprojectCompletedDate
-              };
+            // Validations needed 
+            try
+            {
+                string projectNoteMessage = Request["noteMessage"];
+                string projectNoteSentDate = DateTime.Now.ToString();
+                string projectNoteCompletedDate = Request["noteCompletedDate"];
+                string projectNoteTo = Request["noteTo"];
 
-            bool result = pm.AddProjectNote(projectNotes);
+                DateTime dateTimeSentDate = DateTime.Parse(projectNoteSentDate);
+                string mdateTimeSentDate = dateTimeSentDate.ToString("dd-MM-yyyy");
+                DateTime mprojectSentDate = DateTime.ParseExact(mdateTimeSentDate, "dd/MM/yyyy", null);
 
+
+                DateTime dateTimeCompletedDate = DateTime.Parse(projectNoteCompletedDate);
+                string mdateTimeCompletedDate = dateTimeCompletedDate.ToString("dd-MM-yyyy");
+                DateTime mprojectCompletedDate = DateTime.ParseExact(mdateTimeCompletedDate, "dd/MM/yyyy", null);
+
+         
+
+                ProjectPageModel pm = new ProjectPageModel();
+                ProjectNotes projectNotes = new ProjectNotes
+                {
+                    ProjectId = Convert.ToInt32(id),
+                    Message = projectNoteMessage,
+                    SentDate = mprojectSentDate,
+                    From = username,
+                    To = projectNoteTo,
+                    CompletedDate = mprojectCompletedDate
+                };
+
+               result = pm.AddProjectNote(projectNotes);
+            }
+            catch(Exception e)
+            {
+
+            }
+            
+            
             return RedirectToAction("Index", "Project", new { result, @id = id });
         }
 
@@ -236,7 +256,7 @@ namespace WhiteBears.Controllers
             // Gets values from POST request 
             //int taskID = Convert.ToInt32(Request["taskID"]);
             //bool complete = Convert.ToBoolean(Request["isCompleted"]);
-            Debug.WriteLine("Task ID = " + taskID, " isCompleted  = " + complete);
+           // Debug.WriteLine("Task ID = " + taskID, " isCompleted  = " + complete);
             // Call SQL method
             ProjectPageModel projectPage = new ProjectPageModel();
             var result = projectPage.isCompleted(complete, taskID);
@@ -249,7 +269,7 @@ namespace WhiteBears.Controllers
             if (Session["username"] == null)
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             ProjectPageModel taskModel = new ProjectPageModel();
@@ -260,20 +280,20 @@ namespace WhiteBears.Controllers
             return View(td);
         }
        
-        public ActionResult NoteView(int? projectId)
+        public ActionResult NoteView(int? projectId, string roleName)
         {
 
             if (Session["username"] == null)
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             string username = Session["username"].ToString();
             int id = Convert.ToInt32(projectId);
 
             ProjectPageModel projectNotesModel = new ProjectPageModel();
-            IEnumerable<ProjectPageViewModel> td = projectNotesModel.getProjectNotes(username, id);
+            IEnumerable<ProjectPageViewModel> td = projectNotesModel.getProjectNotes(username, id, roleName);
             return View(td);
         }
 
@@ -282,17 +302,19 @@ namespace WhiteBears.Controllers
             if (Session["username"] == null)
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             // Pass roleName from Main Model view to document view 
             string username = Session["username"].ToString();
             int id = Convert.ToInt32(projectId);
-            Debug.WriteLine("ROLE NAME IS: " + roleName);
+           // Debug.WriteLine("ROLE NAME IS: " + roleName);
             ProjectPageModel documentModel = new ProjectPageModel();
            
             IEnumerable<ProjectPageViewModel> td = documentModel.getDocuments(username, id, roleName, uName);
             return View(td);
         }
+
+      
     }
 }

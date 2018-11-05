@@ -13,8 +13,6 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     
-   
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -34,12 +32,19 @@
 
     <div class="container-fluid">
 
-        <h1 id="topBarTitle">@Model.Project.Title</h1>
+        <div id="row" class="row">
+            <div id="topBar" class="col-sm-6">
+              <h1 id="topBarTitle">@Model.Project.Title   </h1> 
+            </div>
+            <div class="col-sm-6">
+                <button type="button" id="adminTeamManagement" class="btn btn-info" onclick="location.href='@Url.Action("Index", "TeamManagement", new { projectId = Model.Project.ProjectId})'">Admin Management</button>
+            </div>
+        </div>
         <hr id="hr" />
         <div id="row" class="row">
-             <span id="projectId" hidden>@Model.Project.ProjectId</span>
+            <span id="projectId" hidden>@Model.Project.ProjectId</span>
             <div id="backButton" class="col-sm-6">
-                <span> @Html.ActionLink("Back to Dashboard", "Index", "Home")</span>
+                <span> @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")</span>
             </div>
             <div id="nameDiv" class="col-sm-6">
                 <span id="name">@Model.User.FullName</span>
@@ -47,10 +52,7 @@
             <!-- <p id="myResult">@ViewBag.Message</p> -->
         </div>
 
-       
-
     </div>
-
 
     <div class="container-fluid">
         <div class="row">
@@ -148,8 +150,6 @@
                                             <label for="CompletionDate" class="col-sm-12 col-form-label text-center">Completion Date</label>
                                         </div>
 
-
-
                                         <!-- Priority -->
                                         <div class="form-group row">
                                             <label for="Priority" class="col-sm-3 col-form-label text-center">Priority</label>
@@ -164,8 +164,6 @@
                                         <div class="modal-footer">
                                             <!-- Add Button -->
                                             <input id="taskAddbtn" type="submit" class="btn btn-default" name="Add" value="Add" />
-
-
                                         </div>
                                     </form>
 
@@ -176,9 +174,9 @@
                     </div>
 
 
-
                 </div> <!-- projectTableDiv ends here -->
             </div> <!-- Task Information ENDS -->
+
             <!--Document Information goes here -->
             <div class="col-sm-4">
 
@@ -201,7 +199,7 @@
                     </table>
 
                     <div id="projectDocumentButtons">
-                        <button type="button" id="projectDocumentUpload" class="btn btn-info">Upload</button>
+                        <button type="button" id="projectDocumentUpload" class="btn btn-info" onclick="location.href='@Url.Action("Index", "BlobController", new { projectId = Model.Project.ProjectId, role = Model.User.Role})'">Upload</button>
                         <button type="button" id="projectCompare" class="btn btn-info">Version Compare</button>
                     </div>
 
@@ -218,13 +216,13 @@
                     <table id="projectNoteTable" class="table">
                         <thead id="myThead">
                             <tr>
-                                <th>Date</th>
+                                <th>Send Date</th>
                                 <th>For</th>
                                 <th>Message</th>
                             </tr>
                         </thead>
                         <tbody id="projectNoteTableTbody" class="projectTableTbody">
-                            @{ Html.RenderAction("NoteView", "Project", new { projectId = Model.Project.ProjectId });}
+                            @{ Html.RenderAction("NoteView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role });}
                         </tbody>
                     </table>
 
@@ -247,50 +245,56 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId}))
+                                    @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId },FormMethod.Post, new { @id = "notePost"}))
                                     {
-                                    <!-- Message -->
-                                    <div class="form-group row">
-                                        <label for="Message" class="col-sm-2 col-form-label">Message:</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="noteMessage" id="noteMessage" rows="3" required></textarea>
+                                        <!-- Errors -->
+                                        <div class="form-group row">
+                                            <div class="col-sm-12" id="noteErrors">
+
+                                            </div>
                                         </div>
-                                    </div>
+                                        <hr />
 
-                                    <!-- SentDate & Completed Labels -->
-                                    <div class="form-group row">
-                                        <label for="SentDate" class="col-sm-6 col-form-label text-center">Send Date</label>
-                                        <label for="CompletedDate" class="col-sm-6 col-form-label text-center">Completed Date</label>
-
-                                    </div>
-
-                                    <!-- StartDate & EndDate Inputs -->
-                                    <div class="form-group row">
-                                        <div class="col-sm-6 text-center">
-                                            <input id="noteSentDate" name="noteSentDate" type="date" required />
+                                        <!-- Message -->
+                                        <div class="form-group row">
+                                            <label for="Message" class="col-sm-2 col-form-label">Message:</label>
+                                            <div class="col-sm-8">
+                                                <textarea class="form-control" name="noteMessage" id="noteMessage" rows="3" required></textarea>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6 text-center">
-                                            <input id="noteCompletedDate" name="noteCompletedDate" type="date" />
+
+                                        <!--  Completed Labels -->
+                                        <div class="form-group row">
+                                           
+                                            <label for="CompletedDate" class="col-sm-12 col-form-label text-center">Completed Date</label>
+
                                         </div>
-                                    </div>
 
-                                    <!-- To -->
-                                    <div class="form-group row">
-                                        <label for="noteTo" class="col-sm-2 col-form-label text-center">To:</label>
-                                        <select class="form-control" id="noteTo" name="noteTo" required>
-                                            <option>Developer</option>
-                                            <option>Project Manager</option>
-                                            <option>Full Stack Developer</option>
-                                            <option>Business Analyst</option>
-                                        </select>
-                                    </div>
+                                        <!-- EndDate Inputs -->
+                                        <div class="form-group row">
+                                            
+                                            <div class="col-sm-12 text-center">
+                                                <input id="noteCompletedDate" name="noteCompletedDate" type="date" required />
+                                            </div>
+                                        </div>
+
+                                        <!-- To -->
+                                        <div class="form-group row">
+                                            <label for="noteTo" class="col-sm-2 col-form-label text-center">To:</label>
+                                            <select class="form-control" id="noteTo" name="noteTo" required>
+                                                <option>Developer</option>
+                                                <option>Project Manager</option>
+                                                <option>Full Stack Developer</option>
+                                                <option>Business Analyst</option>
+                                            </select>
+                                        </div>
 
 
-                                    <div class="modal-footer">
-                                        <!-- Add Button -->
-                                        <input id="submit1" type="submit" class="btn btn-default" name="Add" value="Add" />
+                                        <div class="modal-footer">
+                                            <!-- Add Button -->
+                                            <input id="submit1" type="submit" class="btn btn-default" name="Add" value="Add" />
 
-                                    </div>
+                                        </div>
                                     }
                                     <!--</form>-->
 
@@ -313,7 +317,6 @@
         $(document).ready(function () {
 
             // jQuery methods go here...
-
 
             // Double Click on ProjectTaskTable
             $("#projectTaskTable tbody tr").dblclick(function () {
@@ -458,13 +461,6 @@
 
             })
 
-            // Clicking Upload Button
-            $('#projectDocumentUpload').click(function () {
-                var projectID = $('#projectId').text();
-                var urlUpload = '/BlobController/Index/' + projectID;
-                window.location = urlUpload;
-            })
-
             // Deleting Task
             $('#projectTaskDelete').click(function () {
                 $.ajax({
@@ -513,7 +509,6 @@
             });
 
             // Title - Description, StartDate, EndDate)
-            var enableAdd = false;
             var endDateVal = false;
             var startDateVal = false;
             var titleVal = false; 
@@ -521,8 +516,8 @@
 
             $("#taskPost").on('submit', function (e) {
 
-               
-                if (endDateVal == false || startDateVal == false || titleVal == false) {
+
+                if (endDateVal == false || startDateVal == false || titleVal == false || descriptionVal == false) {
                     e.preventDefault();
                 }
 
@@ -543,7 +538,7 @@
                 }
                 else if ($.trim(myTaskTitle).length == 0)
                 {
-                    $('#taskErrors').text("You havn't entered a title.");
+                    $('#taskErrors').text("You have not entered a title.");
                     titleVal = false; 
                 }
                 else {
@@ -580,9 +575,15 @@
             $('#taskEndDate').focusout(function () {
                 var myEndDate = new Date($(this).val());
                 var myStartDate = new Date($('#taskStartDate').val());
+                var currentdateTime = new Date($.now());
                 if (myEndDate < myStartDate) {
                    // alert("Your End Date, ends before your Start Date.");
                     $('#taskErrors').text("Your End Date, ends before your Start Date.");
+                    endDateVal = false; 
+                }
+                else if (currentdateTime == myEndDate)
+                {
+                    $('#taskErrors').text("Your End Date, must end after today.");
                     endDateVal = false; 
                 }
                 else
@@ -609,7 +610,64 @@
                
             });
 
-            
+            // Message, CompletionDate)
+           
+            var completionVal = false;
+            var messageVal = false;
+
+            $("#notePost").on('submit', function (e) {
+
+
+                if (completionVal == false || messageVal == false) {
+                    e.preventDefault();
+                }
+
+            });
+
+            // Message VALIDATION
+            $('#noteMessage').focusout(function () {
+                var myNoteMessage = $('#noteMessage').val();
+
+                if (myNoteMessage.length > 255) {
+                    $('#noteErrors').text("Note Message must be smaller, try agian.");
+
+                    messageVal = false;
+                }
+                else if ($.trim(myNoteMessage).length == 0) {
+                    $('#noteErrors').text("Please enter a message.");
+
+                    messageVal = false;
+                }
+                else {
+                    $('#noteErrors').empty();
+
+                    messageVal = true;
+
+                }
+            });
+
+            // CompletionDate VALIDATION
+            $('#noteCompletedDate').focusout(function () {
+                var myNoteCompletedDate = new Date($('#noteCompletedDate').val());
+                var currentdateTime = new Date($.now());
+                if (currentdateTime > myNoteCompletedDate) {
+                    $('#noteErrors').text("Enter a completion date after today.");
+                    completionVal = false;
+                }
+                else {
+                    $('#noteErrors').empty();
+                    completionVal = true;
+                }
+
+            });
+
+            $('#adminTeamManagement').hide();
+
+            if ("@Model.User.Role" == "Admin") {
+                $('#adminTeamManagement').show();
+               
+            }
+       
         });
    
     </script>
