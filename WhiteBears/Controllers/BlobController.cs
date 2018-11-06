@@ -21,6 +21,9 @@ namespace Whitebears.Controllers
         private static SqlDataAdapter da;
         private static DataSet ds;
         private static DataRow[] dr;
+        public string projectid { get; set; }
+        public string role { get; set; }
+        public string uname { get; set; }
 
         private readonly IBlobStorageRepository repo;
         public BlobController(IBlobStorageRepository _repo)
@@ -28,6 +31,9 @@ namespace Whitebears.Controllers
             this.repo = _repo;
 
         }
+
+
+
         // GET: Blob
         public ActionResult Index()
         {
@@ -51,12 +57,16 @@ namespace Whitebears.Controllers
         [HttpGet]
         public ActionResult UploadBlob()
         {
+            role = Request["role"];
+            projectid = Request["projectId"];
+            uname = Session["username"].ToString();
             return View();
         }
 
         [HttpPost]
         public ActionResult UploadBlob(HttpPostedFileBase uploadFileName)
         {
+            
             string actualFileName = uploadFileName.FileName.ToString();
             int index = actualFileName.LastIndexOf(".");
 
@@ -68,8 +78,6 @@ namespace Whitebears.Controllers
             string[] strArray = url.Split('/');
 
             string projectid = strArray[6];*/
-            string projectid = "1";
-
 
             //Check if a file exists with the same name
             int count = CheckDocumentVersionDB(projectid, actualFileName);
@@ -77,31 +85,17 @@ namespace Whitebears.Controllers
             //If filename doesn't exist INSERT and if it does UPDATE
             if (count==0)
             {
-                InsertDocumentDB(projectid, actualFileName /*+ "_v" + (count + 1)*/, "Jatin", System.IO.Path.GetExtension(uploadFileName.FileName));
+                InsertDocumentDB(projectid, actualFileName /*+ "_v" + (count + 1)*/, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
             }
             else if(count>0)
             {
-                UpdateDocumentDB(projectid, actualFileName /*+ "_v" + (count)*/, actualFileName /*+ "_v" + (count + 1)*/, "Jatin", System.IO.Path.GetExtension(uploadFileName.FileName));
+                UpdateDocumentDB(projectid, actualFileName /*+ "_v" + (count)*/, actualFileName /*+ "_v" + (count + 1)*/, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
             }
 
             //Update the Database and put in the Document entry
             string documentID = CheckUploadDocumentID(actualFileName /*+ "_v" + (count + 1)*/);
 
-            /*var type = typeof(HttpPostedFileBase);
-            var property = type.GetProperty("FileName");
-
-            var backingField = type
-                            .GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
-                            .FirstOrDefault(field =>
-                            field.Attributes.HasFlag(FieldAttributes.Private) &&
-                            field.Attributes.HasFlag(FieldAttributes.InitOnly) &&
-                            field.CustomAttributes.Any(attr => attr.AttributeType == typeof(CompilerGeneratedAttribute)) &&
-                            (field.DeclaringType == property.DeclaringType) &&
-                            field.FieldType.IsAssignableFrom(property.PropertyType) &&
-                            field.Name.StartsWith("<" + property.Name + ">")
-                            ); */
-
-            //backingField.SetValue(uploadFileName.FileName, actualFileName + "_v" + (count + 1));
+           
             //CloudBlobContainer.CreateIfNotExists Method
 
             string docName = actualFileName + "_v" + (count);
@@ -112,7 +106,7 @@ namespace Whitebears.Controllers
             if (isUploaded == true )
             {
                 //UploaderName Required Here
-                UpdateDocumentVersionDB(documentID, count+1, "Jatin");
+                UpdateDocumentVersionDB(documentID, count+1, uname);
                 return RedirectToAction("Index");
             }
             return View();
