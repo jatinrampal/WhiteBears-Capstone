@@ -149,13 +149,13 @@ namespace WhiteBears.Controllers
             Debug.WriteLine("Task ProjectId " + id);
 
             DateTime dateTimeStartDate = DateTime.Parse(taskStartDate);
-            string mdateTimeStartDate = dateTimeStartDate.ToString("dd-MM-yyyy");
+            string mdateTimeStartDate = dateTimeStartDate.ToString("dd/MM/yyyy");
             DateTime mtaskStartDate = DateTime.ParseExact(mdateTimeStartDate, "dd/MM/yyyy", null);
 
 
 
             DateTime dateTimeEndDate = DateTime.Parse(taskEndDate);
-            string mdateTimeEndDate = dateTimeEndDate.ToString("dd-MM-yyyy");
+            string mdateTimeEndDate = dateTimeEndDate.ToString("dd/MM/yyyy");
             DateTime mtaskEndDate = DateTime.ParseExact(mdateTimeEndDate, "dd/MM/yyyy", null);
 
             //DateTime dateTimeCompletionDate = DateTime.Parse(taskCompletionDate);

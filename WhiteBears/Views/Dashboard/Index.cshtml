@@ -354,14 +354,14 @@
                 success: function (data) {
                     $('#tasktable tbody:last').html(data.row);
                     var tds = $('#tasktable tbody:last').children('tr').length;
+                    assignTaskRowClasses();
+                    loadPercentageBars(radioValue, "@Model.CurrentUser.Username");
                 },
 
                 error: function () {
                     alert("There was an issue with updating the table");
                 }
             });
-
-            loadPercentageBars(radioValue, "@Model.CurrentUser.Username");
         });
 
         function loadPercentageBars(projectId, username) {
@@ -524,7 +524,7 @@
                 var status = $(this).text()
                 if (status == "Overdue"){
                     $(this).parent().addClass('high-priority');
-                } 
+                }
             })
         }
     })
