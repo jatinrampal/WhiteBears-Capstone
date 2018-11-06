@@ -2,4 +2,5 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs
+/.vs/WhiteBears-Capstone/v15
+/.vs/WhiteBears/v15/Server/sqlite3

@@ -322,11 +322,11 @@
 
             // Double Click on ProjectTaskTable
             $("#projectTaskTable tbody tr").dblclick(function () {
-               // alert("test");
+                alert("More things will go here...");
             });
 
             $("#projectDocumentTable tbody tr").dblclick(function () {
-                //alert("test");
+                alert("More things will go here");
             });
 
 
@@ -439,7 +439,7 @@
                         fileExtension = "Empty";
                     }
                 }
-                //alert("NOTE: myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew + " fileEX " + fileExtension);
+                alert("NOTE: myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew + " fileEX " + fileExtension);
             });
 
             // Clicking compare button
@@ -453,8 +453,8 @@
 
                 }
                 else if ($.trim(String(fileExtension)) == "docx" || $.trim(String(fileExtension)) == "doc") {
-                    alert("File " + fileExtension);
-                    var url = '/DocumentReview/Index/' + stored;
+                   // alert("File " + fileExtension);
+                   // var url = '/DocumentReview/Index/' + stored;
                     window.location = url;
                 }
                 else {
