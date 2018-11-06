@@ -128,62 +128,72 @@ namespace WhiteBears.Controllers
         [HttpPost]
         public ActionResult AddTask()
         {
-            // Retriving values from POST 
-            string taskTitle = Request["taskTitle"];
-            string taskDescription = Request["taskDescription"];
-            string taskStartDate = Request["taskStartDate"];
-            string taskEndDate = Request["taskEndDate"];
-            //string taskCompletionDate = Request["taskCompletionDate"];
-            string taskPriority = Request["taskPriority"];
-            int id = Convert.ToInt32(Request["projectId"]);
-
-            //Debug.WriteLine("YEST" + id);
-
-            // Check Results from Posted values 
-            Debug.WriteLine("Task title " + taskTitle);
-            Debug.WriteLine("Task Description " + taskDescription);
-            Debug.WriteLine("Task StartDate " + taskStartDate);
-            Debug.WriteLine("Task EndDate " + taskEndDate);
-            //Debug.WriteLine("Task CompletionDate " + taskCompletionDate);
-            Debug.WriteLine("Task Priority " + taskPriority);
-            Debug.WriteLine("Task ProjectId " + id);
-
-            DateTime dateTimeStartDate = DateTime.Parse(taskStartDate);
-            string mdateTimeStartDate = dateTimeStartDate.ToString("dd-MM-yyyy");
-            DateTime mtaskStartDate = DateTime.ParseExact(mdateTimeStartDate, "dd/MM/yyyy", null);
-
-
-
-            DateTime dateTimeEndDate = DateTime.Parse(taskEndDate);
-            string mdateTimeEndDate = dateTimeEndDate.ToString("dd-MM-yyyy");
-            DateTime mtaskEndDate = DateTime.ParseExact(mdateTimeEndDate, "dd/MM/yyyy", null);
-
-            //DateTime dateTimeCompletionDate = DateTime.Parse(taskCompletionDate);
-            //string mdateTimeCompletionDate = dateTimeCompletionDate.ToString("dd-MM-yyyy");
-            //DateTime mtaskCompletionDate = DateTime.ParseExact(mdateTimeCompletionDate, "dd/MM/yyyy", null);
-
-            string username = Session["username"].ToString();
-            // Get values from session 
-           
-            
-
-
-            ProjectPageModel taskModel = new ProjectPageModel();
-            Task task = new Task
+            try
             {
-                Title = taskTitle,
-                Description = taskDescription,
-                StartDate = mtaskStartDate,
-                DueDate = mtaskEndDate,
-                //CompletedDate = mtaskCompletionDate,
-                Priority = taskPriority,
-                ProjectId = id.ToString()
-            };
+                // Retriving values from POST 
+                string taskTitle = Request["taskTitle"];
+                string taskDescription = Request["taskDescription"];
+                string taskStartDate = Request["taskStartDate"];
+                string taskEndDate = Request["taskEndDate"];
+                //string taskCompletionDate = Request["taskCompletionDate"];
+                string taskPriority = Request["taskPriority"];
+                int id = Convert.ToInt32(Request["projectId"]);
 
-            bool result = taskModel.AddTask(task, username);
+                //Debug.WriteLine("YEST" + id);
 
-            //Debug.WriteLine("THIS IS PROJECT id" + id);
-            return RedirectToAction("Index", "Project", new { result, @id = id });
+                // Check Results from Posted values 
+                Debug.WriteLine("Task title " + taskTitle);
+                Debug.WriteLine("Task Description " + taskDescription);
+                Debug.WriteLine("Task StartDate " + taskStartDate);
+                Debug.WriteLine("Task EndDate " + taskEndDate);
+                //Debug.WriteLine("Task CompletionDate " + taskCompletionDate);
+                Debug.WriteLine("Task Priority " + taskPriority);
+                Debug.WriteLine("Task ProjectId " + id);
+
+                DateTime dateTimeStartDate = DateTime.Parse(taskStartDate);
+                string mdateTimeStartDate = dateTimeStartDate.ToString("dd/MM/yyyy");
+                DateTime mtaskStartDate = DateTime.ParseExact(mdateTimeStartDate, "dd/MM/yyyy", null);
+
+
+
+                DateTime dateTimeEndDate = DateTime.Parse(taskEndDate);
+                string mdateTimeEndDate = dateTimeEndDate.ToString("dd/MM/yyyy");
+                DateTime mtaskEndDate = DateTime.ParseExact(mdateTimeEndDate, "dd/MM/yyyy", null);
+
+                //DateTime dateTimeCompletionDate = DateTime.Parse(taskCompletionDate);
+                //string mdateTimeCompletionDate = dateTimeCompletionDate.ToString("dd-MM-yyyy");
+                //DateTime mtaskCompletionDate = DateTime.ParseExact(mdateTimeCompletionDate, "dd/MM/yyyy", null);
+
+                string username = Session["username"].ToString();
+                // Get values from session 
+
+
+
+
+                ProjectPageModel taskModel = new ProjectPageModel();
+                Task task = new Task
+                {
+                    Title = taskTitle,
+                    Description = taskDescription,
+                    StartDate = mtaskStartDate,
+                    DueDate = mtaskEndDate,
+                    //CompletedDate = mtaskCompletionDate,
+                    Priority = taskPriority,
+                    ProjectId = id.ToString()
+                };
+
+                bool result = taskModel.AddTask(task, username);
+
+
+                //Debug.WriteLine("THIS IS PROJECT id" + id);
+                return RedirectToAction("Index", "Project", new { result, @id = id });
+            }
+            catch (Exception e)
+            {
+                var result = "false";    
+                return RedirectToAction("Index", "Project", new { result});
+            }
+           
         }
 
         [HttpPost]
@@ -204,12 +214,12 @@ namespace WhiteBears.Controllers
                 string projectNoteTo = Request["noteTo"];
 
                 DateTime dateTimeSentDate = DateTime.Parse(projectNoteSentDate);
-                string mdateTimeSentDate = dateTimeSentDate.ToString("dd-MM-yyyy");
+                string mdateTimeSentDate = dateTimeSentDate.ToString("dd/MM/yyyy");
                 DateTime mprojectSentDate = DateTime.ParseExact(mdateTimeSentDate, "dd/MM/yyyy", null);
 
 
                 DateTime dateTimeCompletedDate = DateTime.Parse(projectNoteCompletedDate);
-                string mdateTimeCompletedDate = dateTimeCompletedDate.ToString("dd-MM-yyyy");
+                string mdateTimeCompletedDate = dateTimeCompletedDate.ToString("dd/MM/yyyy");
                 DateTime mprojectCompletedDate = DateTime.ParseExact(mdateTimeCompletedDate, "dd/MM/yyyy", null);
 
          

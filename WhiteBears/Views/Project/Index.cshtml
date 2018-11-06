@@ -37,7 +37,7 @@
               <h1 id="topBarTitle">@Model.Project.Title   </h1> 
             </div>
             <div class="col-sm-6">
-                <button type="button" id="adminTeamManagement" class="btn btn-info" onclick="location.href='@Url.Action("Index", "TeamManagement", new { projectId = Model.Project.ProjectId})'">Admin Management</button>
+                <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { projectId = Model.Project.ProjectId})'">Team Management</button>
             </div>
         </div>
         <hr id="hr" />
@@ -317,7 +317,7 @@
     <script>
 
         $(document).ready(function () {
-            $('#adminTeamManagement').hide();
+           
             // jQuery methods go here...
 
             // Double Click on ProjectTaskTable
@@ -426,7 +426,7 @@
 
 
                 if (myDocumentID == stored || mnew == 0) {
-                    alert("myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew);
+                    //alert("myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew);
                     $(this).toggleClass('on');
 
                     mnew = -1;
@@ -439,7 +439,7 @@
                         fileExtension = "Empty";
                     }
                 }
-                alert("NOTE: myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew + " fileEX " + fileExtension);
+                //alert("NOTE: myDocumentID " + myDocumentID + " Stored: " + stored + " mnew : " + mnew + " fileEX " + fileExtension);
             });
 
             // Clicking compare button
@@ -454,7 +454,7 @@
                 }
                 else if ($.trim(String(fileExtension)) == "docx" || $.trim(String(fileExtension)) == "doc") {
                    // alert("File " + fileExtension);
-                   // var url = '/DocumentReview/Index/' + stored;
+                    var url = '/DocumentReview/Index/' + stored;
                     window.location = url;
                 }
                 else {
@@ -665,7 +665,7 @@
 
 
             if ("@Model.User.Role" == "Admin") {
-                $('#adminTeamManagement').show();
+                $('#TeamManagement').removeClass('hidden');
                
             }
        

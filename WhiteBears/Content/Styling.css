@@ -39,6 +39,8 @@
 .login-button {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     background-color: beige;
+    width: 10%;
+    font-size: 15px;
 }
 
 #topBarTitle
@@ -53,10 +55,14 @@
 
 .login-label
 {
-    color: whitesmoke;
-    font-size: medium;
+    color: black;
+    font-size: 25px;
+    margin-right: 3px; 
+   
  
 }
 #Error {
-    color: pink;
+    font-size: 20px;
+    margin-top: 5px; 
+    color: red;
 }
