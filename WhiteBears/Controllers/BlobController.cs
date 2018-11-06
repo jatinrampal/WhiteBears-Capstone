@@ -64,22 +64,22 @@ namespace Whitebears.Controllers
                 actualFileName = actualFileName.Substring(0, index);
 
             //required a session variable for ProjectID and UploaderName
-            string url = Request.Url.ToString();
+            /*string url = Request.Url.ToString();
             string[] strArray = url.Split('/');
 
-            string projectid = strArray[6];
-
+            string projectid = strArray[6];*/
+            string projectid = "1";
 
 
             //Check if a file exists with the same name
-            int count = CheckDocumentVersionDB("1", actualFileName);
+            int count = CheckDocumentVersionDB(projectid, actualFileName);
 
             //If filename doesn't exist INSERT and if it does UPDATE
-            if (count==0)
+            if (count == 0)
             {
                 InsertDocumentDB(projectid, actualFileName /*+ "_v" + (count + 1)*/, "Jatin", System.IO.Path.GetExtension(uploadFileName.FileName));
             }
-            else if(count>0)
+            else if (count > 0)
             {
                 UpdateDocumentDB(projectid, actualFileName /*+ "_v" + (count)*/, actualFileName /*+ "_v" + (count + 1)*/, "Jatin", System.IO.Path.GetExtension(uploadFileName.FileName));
             }
@@ -105,14 +105,14 @@ namespace Whitebears.Controllers
             //CloudBlobContainer.CreateIfNotExists Method
 
             string docName = actualFileName + "_v" + (count);
-            
+
 
             bool isUploaded = repo.UploadBlob(uploadFileName, count);
 
-            if (isUploaded == true )
+            if (isUploaded == true)
             {
                 //UploaderName Required Here
-                UpdateDocumentVersionDB(documentID, count+1, "Jatin");
+                UpdateDocumentVersionDB(documentID, count + 1, "Jatin");
                 return RedirectToAction("Index");
             }
             return View();
@@ -142,7 +142,7 @@ namespace Whitebears.Controllers
         {
             string id;
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
-            DataRow[] a= dh.RunSelectQuery($"SELECT DocumentId FROM Document WHERE FileName = '{fileName}'");
+            DataRow[] a = dh.RunSelectQuery($"SELECT DocumentId FROM Document WHERE FileName = '{fileName}'");
             return a[0][0].ToString();
 
         }
