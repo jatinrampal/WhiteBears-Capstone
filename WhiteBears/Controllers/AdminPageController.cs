@@ -13,14 +13,17 @@ namespace WhiteBears.Controllers
         // GET: AdminPage
         public ActionResult Index()
         {
-            if (Session["username"] != null)
-            {
+            DatabaseHelper dh = new DatabaseHelper();
 
-                //if (model.CurrentUser.Role == "Admin") {
+            string username = Session["username"].ToString();
+            if (username != null)
+            {
+                DataRow[] dr = dh.RunQuery($"SELECT role FROM [User] WHERE uName='{Session["username"].ToString()}'");
+                if (dr[0]["role"].ToString() == "Admin") {
                 return View();
-                //} else {
-                //    return RedirectToAction("Index", "Dashboard");
-                //}
+                } else {
+                    return RedirectToAction("Index", "Dashboard");
+                }
             }
             else
             {
@@ -92,9 +95,11 @@ namespace WhiteBears.Controllers
 
         public ActionResult AddUser(string firstName, string lastName, string username, string email, string password, string role)
         {
-            User newUser = new User(firstName, lastName, username, email, password, role);
-
-            newUser.CompanyId = 1;
+            User newUser = new User(firstName, lastName, username, email, password, role)
+            {
+                CompanyId = 1,
+                Enabled = true
+            };
             return Json(new { success = AdminAddUser(newUser) });
         }
 

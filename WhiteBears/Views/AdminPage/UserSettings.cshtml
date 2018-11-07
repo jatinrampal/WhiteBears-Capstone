@@ -408,7 +408,8 @@
                     role: role
                 },
                 success: function (data) {
-                    alert('Successfully added' + username);
+                    alert('Successfully added ' + username);
+                    window.location.href = '@Url.Action("UserSettings", "AdminPage")';
                 },
 
                 error: function () {
@@ -431,8 +432,6 @@
             changeButtonState(removeButton, false);
             changeButtonState(passwordButton, false);
         }
-
-
 
         function modifyUser(username, change, actionMethod) {
             $.ajax({
