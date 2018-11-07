@@ -19,6 +19,14 @@
         <td>@Model.ScopeStatement</td>
         <td>@Model.StartDate.ToString("yyyy/MM/dd")</td>
         <td>@Model.DueDate.ToString("yyyy/MM/dd")</td>
-        <td>@Model.CompletionDate.ToString("yyyy/MM/dd")</td>
+        @{ if (Model.CompletionDate.ToString("yyyy/MM/dd") == "0001-01-01")
+            {
+                <td>Not completed yet</td>
+            }
+            else
+            {
+                <td>@Model.CompletionDate.ToString("yyyy/MM/dd")</td>
+            }
+        }
     </tr>
 </tbody>

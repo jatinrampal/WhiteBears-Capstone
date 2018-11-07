@@ -20,15 +20,23 @@
 
         @foreach (var task in Model) {
             if (task == null) { break; }
-            <tr>
-                <td>@task.TaskId</td>
-                <td>@task.Title</td>
-                <td>@task.Description</td>
-                <td>@task.StartDate.ToString("yyyy/MM/dd")</td>
-                <td>@task.DueDate.ToString("yyyy/MM/dd")</td>
-                <td>@task.CompletedDate.ToString("yyyy/MM/dd")</td>
-                <td>@task.Priority</td>
-            </tr>
+        <tr>
+            <td>@task.TaskId</td>
+            <td>@task.Title</td>
+            <td>@task.Description</td>
+            <td>@task.StartDate.ToString("yyyy/MM/dd")</td>
+            <td>@task.DueDate.ToString("yyyy/MM/dd")</td>
+            @{ if (task.CompletedDate.ToString("yyyy/MM/dd") == "0001-01-01")
+                {
+                    <td>Not completed yet</td>
+                }
+                else
+                {
+                    <td>@task.CompletedDate.ToString("yyyy/MM/dd")</td>
+                }
+            }
+            <td>@task.Priority</td>
+        </tr>
         }
 
     </tbody>
