@@ -53,7 +53,7 @@
         var headerHeight = $('#documentHeaderContainer').height();
         var height = windowHeight - (headerPosition + headerHeight + 20);
         console.log("window:" + windowHeight + " header top: " + headerPosition + " header height: " + headerHeight + " height: " + height);
-        $("#documentComparisonContainer").attr("style", "height:" + height + "px;overflow-y:scroll;clear:both;float:left;min-height:100px;");
+        $("#documentComparisonContainer").attr("style", "height:" + height + "px;overflow-y:scroll;clear:both;float:left;min-height:100px;width:100%;");
     }
 
     var displayDocument = function (elements, target) {
@@ -162,7 +162,7 @@
 
 
 <h2>@ViewBag.Title</h2>
-<div id="documentHeaderContainer" style="height:110px;">
+<div id="documentHeaderContainer">
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
         @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version1" })
@@ -189,7 +189,7 @@
         <p id="newFileSize" style="float:left;"></p>
     </div>
 </div>
-<div id="documentComparisonContainer">
+<div id="documentComparisonContainer" style="width:100%;min-width:100%;">
     <div id="oldDocument" style="width:49%;margin:1% 1% 1% 0%;clear:both;float:left">
 
     </div>

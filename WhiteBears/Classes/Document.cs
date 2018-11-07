@@ -127,17 +127,10 @@ namespace WhiteBears
             {
                 if(oldCellList.Where( x=> x.hash == cell.hash).Count() > 0)
                 {
-                    if (!oldCellList.Where(x => x.hash == cell.hash).First().status.Equals("d"))
-                    {
-                        cell.status = "o";
-                    }
-                    else
-                    {
-                        cell.status = "d";
-                    }
+                    cell.status = "o";
                     cell.date = oldCellList.Where(x => x.hash == cell.hash).First().date;
                     cell.version = oldCellList.Where(x => x.hash == cell.hash).First().version;
-                    oldCellList.Remove(cell);
+                    oldCellList.Remove(oldCellList.Where(x => x.hash == cell.hash).First());
                 }
                 else
                 {
