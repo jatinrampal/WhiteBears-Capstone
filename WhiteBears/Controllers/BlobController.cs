@@ -11,6 +11,7 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Whitebears.Repository;
+using System.Diagnostics;
 
 namespace Whitebears.Controllers
 {
@@ -54,19 +55,39 @@ namespace Whitebears.Controllers
             return RedirectToAction("Index");
 
         }
-        [HttpGet]
+        
         public ActionResult UploadBlob()
         {
+            // IF username session is null
+            if (Session["username"] == null)
+            {
+
+                return RedirectToAction("Index", "Home");
+            }
             role = Request["role"];
             projectid = Request["projectId"];
             uname = Session["username"].ToString();
+
+            // Sends to the view through ViewBag 
+            ViewBag.projectid = projectid;
+            ViewBag.role = role; 
+
             return View();
         }
 
         [HttpPost]
         public ActionResult UploadBlob(HttpPostedFileBase uploadFileName)
         {
-            
+            // Retrives from form 
+            var  role = Request["role"].ToString();
+            var projectId = Convert.ToInt32(Request["projectId"]);
+            uname = Session["username"].ToString();
+            /* Testing
+            Debug.WriteLine("Role: " + role);
+            Debug.WriteLine("Project ID " + projectId);
+            Debug.WriteLine("USername" + uname);
+            */
+
             string actualFileName = uploadFileName.FileName.ToString();
             int index = actualFileName.LastIndexOf(".");
 
