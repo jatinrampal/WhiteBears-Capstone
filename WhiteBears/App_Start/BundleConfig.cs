@@ -8,23 +8,51 @@ namespace WhiteBears
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts/jquery").Include(
+                    "~/Scripts/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts/modernizr").Include(
+                    "~/Scripts/modernizr-2.8.3.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts/popper").Include(
+                    "~/Scripts/umd/popper.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts/angular").Include(
+                    "~/Scripts/angular.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts/bootstrap").Include(
+                    "~/Scripts/bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts/chartjs").Include(
+                    "~/Scripts/chartjs-plugin-labels.js"));
+
+
+            bundles.Add(new StyleBundle("~/bundles/style/bootstrap").Include(
+                "~/Content/bootstrap.css",
+                "~/Content/bootstrap.css.map",
+                "~/Content/bootstrap-theme.css",
+                "~/Content/bootstrap-theme.css.map",
+                "~/Content/Site.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/styling").Include(
+                "~/Content/Styling.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/dashboard").Include(
+                "~/Style/dashboard.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/projectpage").Include(
+                "~/Style/ProjectPage.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/projecttaskpage").Include(
+                "~/Style/ProjectTaskPage.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/signup").Include(
+                "~/Style/SignUp.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/teammanagement").Include(
+                "~/Style/teammanagement.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/usersettings").Include(
+                "~/Style/UserSettings.css"));
         }
     }
 }

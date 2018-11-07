@@ -30,7 +30,7 @@
 
 .login-background 
 {
-    background-image:url(background1.jpg);
+    background-image:url('/Content/background1.jpg');
     opacity: 0.8;
    
     background-repeat: no-repeat;

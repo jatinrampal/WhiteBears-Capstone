@@ -1098,6 +1098,14 @@
     <Content Include=".vs\WhiteBears\v15\Server\sqlite3\storage.ide-shm" />
     <Content Include=".vs\WhiteBears\v15\Server\sqlite3\storage.ide-wal" />
     <Content Include="packages\bootstrap.3.3.7\.signature.p7s" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="packages\jQuery.3.3.1\Content\Scripts\jquery-3.3.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.3.1\Content\Scripts\jquery-3.3.1.js" />
     <Content Include="packages\jQuery.3.3.1\Content\Scripts\jquery-3.3.1.min.js" />
@@ -1261,13 +1269,11 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chartjs-plugin-labels.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -1297,7 +1303,6 @@
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\WhiteBears.csproj.CopyComplete" />
     <Content Include="obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Debug\WhiteBears.csprojAssemblyReference.cache" />
     <Content Include="packages\angularjs.1.7.2\angularjs.1.7.2.nupkg" />
     <Content Include="packages\angularjs.1.7.2\content\Scripts\angular-animate.min.js.map" />
     <Content Include="packages\angularjs.1.7.2\content\Scripts\angular-aria.min.js.map" />
@@ -1415,10 +1420,6 @@
     <Content Include="packages\WebGrease.1.6.0\WebGrease.1.6.0.nupkg" />
     <None Include="Properties\PublishProfiles\WhiteBears - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WhiteBears - Web Deploy.pubxml" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
@@ -2241,14 +2242,6 @@
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
@@ -2278,7 +2271,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49837/</IISUrl>
+          <IISUrl>http://localhost:49838/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

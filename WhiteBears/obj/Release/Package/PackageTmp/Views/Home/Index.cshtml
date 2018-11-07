@@ -1,0 +1,43 @@
+﻿
+<html>
+<head>
+   @{     Layout = "~/Views/Shared/_NotLoggedIn.cshtml";
+}
+    
+</head>
+
+<body class="login-background">
+  
+    <div class="login-grid-container">
+        <div class="login-grid-header">
+            <p id="topBarTitle">Project Management Portal</p>
+        </div>
+        <div class="login-grid-left">
+           
+            <div class="loginform-full-width">
+                @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                {
+                    <mat-form-field>
+                        <mat-label class="login-label">Username:</mat-label>
+                        <input id="username" name="username" required type="text" matInput placeholder="Example">
+
+
+                        <mat-label class="login-label">Password:</mat-label>
+                        <input id="password" name="password" required type="password" matInput placeholder="*******">
+
+                    </mat-form-field>
+
+                    <input class="login-button" type="submit" value="Login" />
+
+                }
+                
+                    <div id="Error">@ViewBag.Error </div>
+                
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
