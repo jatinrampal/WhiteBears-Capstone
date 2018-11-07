@@ -19,6 +19,7 @@
     <tbody>
 
         @foreach (var task in Model) {
+            if (task == null) { break; }
             <tr>
                 <td>@task.TaskId</td>
                 <td>@task.Title</td>

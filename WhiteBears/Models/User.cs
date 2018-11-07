@@ -28,6 +28,34 @@ namespace WhiteBears.Models
 
         private PersonalNote[] personalNotes;
 
+        private bool enabled;
+
+        private int companyId;
+
+        public int CompanyId
+        {
+            get
+            {
+                return companyId;
+            }
+            set
+            {
+                companyId = value;
+            }
+        }
+
+        public bool Enabled
+        {
+            get
+            {
+                return enabled;
+            }
+            set
+            {
+                enabled = value;
+            }
+        }
+
         public string FirstName {
             get {
                 return firstName;
@@ -91,6 +119,18 @@ namespace WhiteBears.Models
 
             set {
                 personalNotes = value;
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                password = value;
             }
         }
 
