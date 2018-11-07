@@ -1,4 +1,4 @@
-﻿table#EditUserTable {
+﻿table#EditUserTable, table#DisabledUsersTable {
     max-width: 600px;
 }
 
@@ -23,7 +23,7 @@
     color: red;
 }
 
-#EditUserTableContainer {
+#EditUserTableContainer, #DisabledUsersTableContainer {
     max-width: 600px;
 }
 

@@ -92,7 +92,7 @@
 </div>
 
 
-<h3 class="header">Edit User</h3>
+<h3 class="header">Edit Enabled User</h3>
 <hr />
 
 <div id="EditUserTableContainer">
@@ -105,8 +105,12 @@
             </tr>
         </tbody>
         <tbody>
-            @foreach (var user in Model) {
-                @Html.Partial("UserTable", user)
+            @foreach (var user in Model)
+            {
+                if (user.Enabled)
+                {
+                    @Html.Partial("UserTable", user)
+                }
             }
         </tbody>
     </table>
@@ -115,9 +119,39 @@
         <div id="EditButtonsContainer">
             <button class="btn btn-primary disabled" value="modify">Modify</button>
             <button class="btn btn-warning disabled" value="password">Change Password</button>
-            <button class="btn btn-danger disabled" value="remove">Remove</button>
+            <button class="btn btn-danger disabled" value="remove">Disable</button>
         </div><br />
         <div id="PasswordFieldContainer"><label style="margin-right: 5px;">New password:</label><input type="password" name="newpassword" /></div>
+    </div>
+</div><br />
+
+<h3 class="header">Disabled Users</h3>
+<hr />
+
+<div id="DisabledUsersTableContainer">
+    <table id="DisabledUsersTable" class="table table-bordered table-hover">
+        <tbody>
+            <tr>
+                <th onclick="sortTable(0, true)">First Name</th>
+                <th onclick="sortTable(1, true)">Last Name</th>
+                <th onclick="sortTable(2, true)">Username</th>
+            </tr>
+        </tbody>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                if (!user.Enabled)
+                {
+                    @Html.Partial("UserTable", user)
+                }
+            }
+        </tbody>
+    </table>
+
+    <div id="EditWidgetsContainer">
+        <div id="EditButtonsContainer">
+            <button class="btn btn-success disabled" value="enable">Enable</button>
+        </div>
     </div>
 </div>
 
@@ -127,11 +161,13 @@
         var modifyButton = $('button[value=modify]');
         var removeButton = $('button[value=remove]');
         var passwordButton = $('button[value=password]');
+        var enableButton = $('button[value=enable]');
+
 
         var passwordfield = $('#PasswordFieldContainer');
 
         var MODIFY = "Modify"
-        var REMOVE = "Remove"
+        var REMOVE = "Disable"
         var CHANGEPASSWORD = "Change Password"
         var CANCEL = "Cancel"
         var SAVE = "Save"
@@ -142,11 +178,40 @@
         var oldLastName = "";
         var oldUsername = "";
 
+        var selectedUsername = "";
+
         var clickedRow;
 
         passwordfield.hide();
 
+        $(document).on('click', '#DisabledUsersTable > tbody:last > tr', function () {
+            changeButtonState(enableButton, enableButton.attr('hidden') == 'true');
+
+            clickedRow = $(this);
+
+            if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
+                clickedRow.css('background-color', 'white');
+                clickedRow.removeClass('selected');
+
+                changeButtonState(enableButton, false);
+            } else {
+
+                $('tr').each(function (i, row) {
+                    $(this).css('background-color', 'white');
+                    $(this).removeClass('selected');
+                    $(this).attr('contenteditable', 'false');
+                })
+
+                clickedRow.css('background-color', 'lightgrey');
+                clickedRow.addClass('selected');
+
+                changeButtonState(enableButton, true);
+            }
+
+        })
+
         $(document).on('click', '#EditUserTable > tbody:last > tr', function () {
+
             if (!modifyModeOn) {
                 changeButtonState(modifyButton, true);
                 changeButtonState(removeButton, true);
@@ -173,11 +238,49 @@
             }
         });
 
+        enableButton.on('click', function () {
+            username = clickedRow.find('td:eq(2)').text()
+
+            $.ajax({
+                type: "post",
+                url: '/AdminPage/EnableUser',
+                dataType: "json",
+                data: {
+                    username: username,
+                },
+                success: function (data) {
+                    alert('Successfully enabled ' + username);
+                },
+
+                error: function () {
+                    successful = false;
+                }
+            });
+        })
+
         removeButton.on('click', function () {
             changeButtonState(passwordButton, false);
 
+            username = clickedRow.find('td:eq(2)').text()
+
             if (removeButton.text() == REMOVE) {
                 clickedRow.remove();
+
+                $.ajax({
+                    type: "post",
+                    url: '/AdminPage/DisableUser',
+                    dataType: "json",
+                    data: {
+                        username: username,
+                    },
+                    success: function (data) {
+                        alert('Successfully disabled ' + username);
+                    },
+
+                    error: function () {
+                        successful = false;
+                    }
+                });
             } else if (modifyButton.text() == SAVE) {
                 modifyModeOn = false;
 
@@ -303,7 +406,7 @@
                     role: role
                 },
                 success: function (data) {
-                    alert();
+                    alert('Successfully added' + username);
                 },
 
                 error: function () {

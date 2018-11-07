@@ -33,13 +33,7 @@ namespace WhiteBears.Controllers
             if (Session["username"] != null)
             {
 
-                List<User> users = new List<User> {
-                    new User("Kalen", "Rose", "Kalen", "kalen@email.com", "Admin4", "PM"),
-                    new User("Jatin", "Rampal", "Jatin", "jatin@email.com", "Admin4", "Wopm"),
-                    new User("Kish", "Dalal", "Kish", "kish@email.com", "Admin2", "Asas"),
-                    new User("Rafael", "Sigwalt", "Raf", "raf@email.com", "Admin1", "Esdasd"),
-                    new User("Mark", "Orlando", "Mark", "mark@email.com", "Admin100", "Teacher")
-                };
+                List<User> users = AdminGetUsers().ToList();
 
                 //if (model.CurrentUser.Role == "Admin") {
                 return View(users);
@@ -99,6 +93,8 @@ namespace WhiteBears.Controllers
         public ActionResult AddUser(string firstName, string lastName, string username, string email, string password, string role)
         {
             User newUser = new User(firstName, lastName, username, email, password, role);
+
+            newUser.CompanyId = 1;
             return Json(new { success = AdminAddUser(newUser) });
         }
 
@@ -129,6 +125,11 @@ namespace WhiteBears.Controllers
             return Json(new { success = AdminDisableUser(username) });
         }
 
+        public ActionResult EnableUser(string username)
+        {
+            return Json(new { success = AdminDisableUser(username) });
+        }
+
         public static bool AdminDisableUser(string username)
         {
             // Marks Users are Disabled
@@ -136,6 +137,22 @@ namespace WhiteBears.Controllers
             try
             {
                 dh.RunQuery($"UPDATE [User] SET [enabled] = 0 where [User].uName = '{username}';");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public static bool AdminEnableUser(string username)
+        {
+            // Marks Users are Disabled
+            DatabaseHelper dh = new DatabaseHelper();
+            try
+            {
+                dh.RunQuery($"UPDATE [User] SET [enabled] = 1 where [User].uName = '{username}';");
                 return true;
             }
             catch (Exception e)
@@ -186,6 +203,36 @@ namespace WhiteBears.Controllers
             }
         }
 
+        public static User[] AdminGetUsers()
+        {
+            DatabaseHelper dh = new DatabaseHelper();
+            try
+            {
+                DataRow[] drs = dh.RunQuery($"SELECT * FROM [User];");
+                User[] users = new User[drs.Count()];
+
+                int i = 0;
+                foreach(DataRow dr in drs){
+                    users[i++] = new User()
+                    {
+                        Username = dr["uName"].ToString(),
+                        CompanyId = Convert.ToInt32(dr["companyId"]),
+                        Password = dr["password"].ToString(),
+                        FirstName = dr["firstName"].ToString(),
+                        LastName = dr["lastName"].ToString(),
+                        Role = dr["role"].ToString(),
+                        Enabled = Convert.ToBoolean(dr["enabled".ToString()])
+                    };
+                }
+
+                return users;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
+        }
 
         public static bool AdminDeleteProject(int projectId)
         {
