@@ -11,6 +11,7 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Whitebears.Repository;
+using System.Diagnostics;
 
 namespace Whitebears.Controllers
 {
@@ -54,19 +55,40 @@ namespace Whitebears.Controllers
             return RedirectToAction("Index");
 
         }
-        [HttpGet]
+
         public ActionResult UploadBlob()
         {
+            // IF username session is null
+            if (Session["username"] == null)
+            {
+
+                return RedirectToAction("Index", "Home");
+            }
             role = Request["role"];
             projectid = Request["projectId"];
             uname = Session["username"].ToString();
+
+            // Sends to the view through ViewBag 
+            ViewBag.projectid = projectid;
+            ViewBag.role = role;
+
             return View();
         }
 
         [HttpPost]
         public ActionResult UploadBlob(HttpPostedFileBase uploadFileName)
         {
-            
+            // Retrives from form 
+            var role = Request["role"].ToString();
+            var projectId = Request["projectId"];
+            uname = Session["username"].ToString();
+
+            //Testing
+            Debug.WriteLine("Role: " + role);
+            Debug.WriteLine("Project ID " + projectId);
+            Debug.WriteLine("Username" + uname);
+
+
             string actualFileName = uploadFileName.FileName.ToString();
             int index = actualFileName.LastIndexOf(".");
 
@@ -80,33 +102,34 @@ namespace Whitebears.Controllers
             string projectid = strArray[6];*/
 
             //Check if a file exists with the same name
-            int count = CheckDocumentVersionDB(projectid, actualFileName);
+            int count = CheckDocumentVersionDB(projectId, actualFileName);
 
             //If filename doesn't exist INSERT and if it does UPDATE
-            if (count==0)
+            if (count == 0)
             {
-                InsertDocumentDB(projectid, actualFileName /*+ "_v" + (count + 1)*/, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
+                InsertDocumentDB(projectId, actualFileName /*+ "_v" + (count + 1)*/, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
             }
-            else if(count>0)
+            else if (count > 0)
             {
-                UpdateDocumentDB(projectid, actualFileName /*+ "_v" + (count)*/, actualFileName /*+ "_v" + (count + 1)*/, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
+                UpdateDocumentDB(projectId, actualFileName /*+ "_v" + (count)*/, actualFileName /*+ "_v" + (count + 1)*/, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
             }
 
             //Update the Database and put in the Document entry
             string documentID = CheckUploadDocumentID(actualFileName /*+ "_v" + (count + 1)*/);
 
-           
+
             //CloudBlobContainer.CreateIfNotExists Method
 
             string docName = actualFileName + "_v" + (count);
-            
+
 
             bool isUploaded = repo.UploadBlob(uploadFileName, count);
 
-            if (isUploaded == true )
+            if (isUploaded == true)
             {
                 //UploaderName Required Here
-                UpdateDocumentVersionDB(documentID, count+1, uname);
+                UpdateDocumentVersionDB(documentID, count + 1, uname);
+                UpdateDocumentRoleDB(role, documentID);
                 return RedirectToAction("Index");
             }
             return View();
@@ -136,16 +159,20 @@ namespace Whitebears.Controllers
         {
             string id;
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
-            DataRow[] a= dh.RunSelectQuery($"SELECT DocumentId FROM Document WHERE FileName = '{fileName}'");
+            DataRow[] a = dh.RunSelectQuery($"SELECT DocumentId FROM Document WHERE FileName = '{fileName}'");
             return a[0][0].ToString();
-
         }
-
 
         public static int UpdateDocumentVersionDB(string documentId, int version, string uploaderName)
         {
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
             return dh.RunInsertQuery($"INSERT INTO DocumentVersion VALUES('{version}','{documentId.ToString()}','{DateTime.Now}','{uploaderName}')");
+        }
+
+        public static int UpdateDocumentRoleDB(string role, string documentId)
+        {
+            WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
+            return dh.RunInsertQuery($"INSERT INTO DocumentRole VALUES('{role}','{documentId}', 1)");
         }
     }
 
