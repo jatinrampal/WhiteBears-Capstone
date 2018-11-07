@@ -250,6 +250,7 @@
                 },
                 success: function (data) {
                     alert('Successfully enabled ' + username);
+                    window.location.href = '@Url.Action("UserSettings", "AdminPage")';
                 },
 
                 error: function () {
@@ -275,6 +276,7 @@
                     },
                     success: function (data) {
                         alert('Successfully disabled ' + username);
+                        window.location.href = '@Url.Action("UserSettings", "AdminPage")';
                     },
 
                     error: function () {

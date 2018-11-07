@@ -127,7 +127,7 @@ namespace WhiteBears.Controllers
 
         public ActionResult EnableUser(string username)
         {
-            return Json(new { success = AdminDisableUser(username) });
+            return Json(new { success = AdminEnableUser(username) });
         }
 
         public static bool AdminDisableUser(string username)
