@@ -19,7 +19,7 @@ namespace Whitebears.Repository
         private CloudBlobContainer _cloudBlobContainer; //blob container
 
         private string containerName = "test";
-        private string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads//");
+        private string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads\\");
 
 
         public BlobStorageRepository()
@@ -58,7 +58,7 @@ namespace Whitebears.Repository
         public MemoryStream GetBlobAsStream(string file, string fileExtension)
         {
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
-            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file + "." + fileExtension);
+            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file + fileExtension);
             MemoryStream memStream = new MemoryStream();
             blockBlob.DownloadToStream(memStream);
             memStream.Position = 0;
@@ -69,7 +69,7 @@ namespace Whitebears.Repository
         {
             long fileSize;
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
-            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file + "." + fileExtension);
+            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file  + fileExtension);
             blockBlob.FetchAttributes();
             fileSize = blockBlob.Properties.Length;
             return fileSize / 1000;

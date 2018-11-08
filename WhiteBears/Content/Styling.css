@@ -31,8 +31,8 @@
 .login-background 
 {
     background-image:url('/Content/background1.jpg');
+    background-size:100%;
     opacity: 0.8;
-   
     background-repeat: no-repeat;
    
 }

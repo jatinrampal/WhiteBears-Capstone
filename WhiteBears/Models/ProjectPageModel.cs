@@ -26,7 +26,7 @@ namespace WhiteBears.Models
                 // Query with vals 
                 //command.CommandText = "select Document.documentId, Document.projectId, Document.fileName, Document.uploader, Document.creationTime, Document.fileExtension, DocumentRole.writeAccess, DocumentRole.roleName from  Document LEFT JOIN DocumentRole ON Document.documentId = DocumentRole.documentId WHERE projectId = @projectId; ";
 
-                command.CommandText = "select * from Document JOIN DocumentRole ON  Document.documentId = DocumentRole.documentId JOIN[User] ON[User].role = DocumentRole.roleName where projectId = @projectId AND DocumentRole.roleName = @userRoleName AND [User].uName = @uName;";
+                command.CommandText = "select DISTINCT(d.filename), d.projectId, d.fileExtension, d.uploader, d.creationTime, dr.writeAccess, d.documentId, dr.roleName from Document d JOIN DocumentRole dr ON  d.documentId = dr.documentId JOIN[User] ON[User].role = dr.roleName where projectId = @projectId AND dr.roleName = @userRoleName AND [User].uName = @uName AND dr.writeAccess = 1;";
 
              
                 //command.CommandText = "select * from Document where projectId = @projectId";

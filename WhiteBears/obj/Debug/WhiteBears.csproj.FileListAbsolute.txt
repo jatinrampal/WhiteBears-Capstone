@@ -823,9 +823,6 @@ C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.exe
 C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.rsp
 C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe
 C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\System.Web.Optimization.xml
-C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\bin\Antlr3.Runtime.pdb
-C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csprojAssemblyReference.cache
 C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
 C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CopyComplete
 C:\Users\Superman\Source\Repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
@@ -980,3 +977,4 @@ C:\Users\Kyana\Documents\Capstone\WhiteBears-Capstone\WhiteBears\obj\Debug\White
 C:\Users\Kyana\Documents\Capstone\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CopyComplete
 C:\Users\Kyana\Documents\Capstone\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
 C:\Users\Kyana\Documents\Capstone\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.pdb
+C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csprojAssemblyReference.cache

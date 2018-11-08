@@ -308,6 +308,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Styling.css" />
+    <Content Include="Content\WhiteBears.jpg" />
     <Content Include="dll\SautinSoft.Document.dll" />
     <Content Include="dll\SautinSoft.Document.XML" />
     <Content Include="favicon.ico" />
@@ -2271,7 +2272,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49837/</IISUrl>
+          <IISUrl>http://localhost:49838/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
