@@ -58,18 +58,18 @@ namespace WhiteBears.Controllers
                 {
                     document.docList.Add(new SelectableVersions() { version = int.Parse(dr["version"].ToString()), timeStamp = dr["timestamp"].ToString() });
                 }
+                document.id = Convert.ToInt32(id);
                 return View(document);
             }
         }
         [HttpPost]
-        public string ReviewDocument(int ver1, int ver2)
+        public string ReviewDocument(int id, int ver1, int ver2)
         {
             BlobStorageRepository blobStorage = new BlobStorageRepository();
             DatabaseHelper dbh = new DatabaseHelper();
-            int documentId = 1;
-            DataRow[] dr = dbh.RunQuery($"Select fileName, fileExtension from Document where documentId={documentId}");
-            DataRow[] dr2 = dbh.RunQuery($"Select timeStamp, modifiedBy from documentVersion where documentId={documentId} and version={ver1}");
-            DataRow[] dr3 = dbh.RunQuery($"Select timeStamp, modifiedBy from documentVersion where documentId={documentId} and version={ver2}"); ;
+            DataRow[] dr = dbh.RunQuery($"Select fileName, fileExtension from Document where documentId={id}");
+            DataRow[] dr2 = dbh.RunQuery($"Select timeStamp, modifiedBy from documentVersion where documentId={id} and version={ver1}");
+            DataRow[] dr3 = dbh.RunQuery($"Select timeStamp, modifiedBy from documentVersion where documentId={id} and version={ver2}"); ;
             string fileName = dr[0]["fileName"].ToString();
             string fileExtention = dr[0]["fileExtension"].ToString();
             string fileName1 = fileName + "_v" + ver1;

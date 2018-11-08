@@ -9,6 +9,7 @@ namespace WhiteBears.Models
 {
     public class DocumentVersionsModel
     {
+        public int id { get; set; }
         public List<SelectableVersions> docList { get; set; }
     public DocumentVersionsModel()
         {

@@ -21,7 +21,7 @@
                 url: '@Url.Action("ReviewDocument", "DocumentReview")',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                data: '{ "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
+                data: '{ "id": @Model.id, "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
                 success: function (data) {
                     $("#oldModifiedBy").html(data.modifiedBy1);
                     $("#oldTimeStamp").html(data.timeStamp1);
