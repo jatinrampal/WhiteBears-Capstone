@@ -18,10 +18,9 @@ namespace WhiteBears.Controllers
             string username = Session["username"].ToString();
             if (username != null)
             {
-                DataRow[] dr = dh.RunQuery($"SELECT role FROM [User] WHERE uName='{Session["username"].ToString()}'");
-                if (dr[0]["role"].ToString() == "Admin") {
-                return View();
-                } else {
+                if (Authentication.VerifyIfAdmin(username)) {
+                    return View();
+                }else {
                     return RedirectToAction("Index", "Dashboard");
                 }
             }

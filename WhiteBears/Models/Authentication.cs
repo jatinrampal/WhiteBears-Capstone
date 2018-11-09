@@ -15,5 +15,11 @@ namespace WhiteBears
             DatabaseHelper dh = new DatabaseHelper();
             return dh.RunQuery($"SELECT * FROM [User] WHERE uName = '{sUser}' AND password = '{sPassword}'").Count() == 1;
         }
+
+        public static bool VerifyIfAdmin(string sUser) {
+            DatabaseHelper dh = new DatabaseHelper();
+            return dh.RunQuery($"SELECT role FROM [User] WHERE uName = '{sUser}'")[0]["role"].ToString() == "Admin";
+
+        }
     }
 }
