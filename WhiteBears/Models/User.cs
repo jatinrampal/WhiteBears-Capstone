@@ -152,19 +152,12 @@ namespace WhiteBears.Models
             this.role = role;
         }
 
-        public User()
-        {
-        }
+        public User(){}
 
         public string GetFullName() {
             return $"{firstName} {lastName}";
         }
 
-
-        public Task[] LoadTasks(int projectId, int userId, string role){
-            //TODO
-            return null;
-        }
 
         public PersonalNote[] LoadNotes(){
             //TODO

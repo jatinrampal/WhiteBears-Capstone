@@ -552,9 +552,6 @@ E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn
 E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\vbc.rsp
 E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe
 E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\VBCSCompiler.exe.config
-E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
-E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
-E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
 E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Helpers.xml
 E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Mvc.xml
 E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Optimization.xml
@@ -998,3 +995,8 @@ C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.D
 C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
 C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.Process.dll
+E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Threading.Thread.dll
+E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\SautinSoft.Document.xml

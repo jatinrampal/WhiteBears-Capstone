@@ -17,9 +17,9 @@ namespace WhiteBears.Models
         private DateTime dueDate;
         private DateTime startDate;
         private DateTime completedDate;
-        private string projectId; 
-        
+        private string projectId;
 
+        public List<User> Users { get; set; }
 
         public string ProjectId
         {
