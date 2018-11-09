@@ -185,29 +185,29 @@
         passwordfield.hide();
 
         $(document).on('click', '#DisabledUsersTable > tbody:last > tr', function () {
-            changeButtonState(enableButton, enableButton.attr('hidden') == 'true');
+                changeButtonState(enableButton, enableButton.attr('hidden') == 'true');
 
-            clickedRow = $(this);
+                clickedRow = $(this);
 
-            if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
-                clickedRow.css('background-color', 'white');
-                clickedRow.removeClass('selected');
+                if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
+                    clickedRow.css('background-color', 'white');
+                    clickedRow.removeClass('selected');
 
-                changeButtonState(enableButton, false);
-            } else {
+                    changeButtonState(enableButton, false);
+                } else {
 
-                $('tr').each(function (i, row) {
-                    $(this).css('background-color', 'white');
-                    $(this).removeClass('selected');
-                    $(this).attr('contenteditable', 'false');
-                })
+                    $('tr').each(function (i, row) {
+                        $(this).css('background-color', 'white');
+                        $(this).removeClass('selected');
+                        $(this).attr('contenteditable', 'false');
+                    })
 
-                clickedRow.css('background-color', 'lightgrey');
-                clickedRow.addClass('selected');
+                    clickedRow.css('background-color', 'lightgrey');
+                    clickedRow.addClass('selected');
 
-                changeButtonState(enableButton, true);
-            }
-
+                    changeButtonState(enableButton, true);
+                }
+            
         })
 
         $(document).on('click', '#EditUserTable > tbody:last > tr', function () {
@@ -289,6 +289,8 @@
                 clickedRow.find('td:eq(0)').text(oldFirstName)
                 clickedRow.find('td:eq(1)').text(oldLastName)
                 clickedRow.find('td:eq(2)').text(oldUsername)
+            } else {
+                modifyModeOn = false;
             }
 
             clickedRow.css('background-color', 'white');
@@ -317,6 +319,7 @@
                 removeButton.text(CANCEL);
 
                 clickedRow.attr('contenteditable', 'true');
+                clickedRow.css('background-color', 'pink');
             } else {
                 modifyModeOn = false;
                 clickedRow.attr('contenteditable', 'false');
@@ -348,18 +351,23 @@
         passwordButton.on('click', function () {
             var passwordfield = $('#PasswordFieldContainer');
             if (passwordButton.text() == CHANGEPASSWORD) {
-                passwordfield.show();
+                modifyModeOn = true;
 
+                passwordfield.show();
                 $("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
                 changeButtonState(modifyButton, false);
 
                 removeButton.text(CANCEL);
                 passwordButton.text(SAVE);
             } else {
-                var newPassword = $('input[name=newpassword]').val();
+                modifyModeOn = false;
 
-                if (newPassword != "") {
-                    modifyUser(clickedRow.find('td:eq(2)').text(), newPassword, "ModifyUserPassword");
+                var newPassword = $('input[name=newpassword]')
+
+                var newPasswordText = newPassword.val();
+
+                if (newPasswordText != "") {
+                    modifyUser(clickedRow.find('td:eq(2)').text(), newPasswordText, "ModifyUserPassword");
                 }
 
                 passwordButton.text(CHANGEPASSWORD);
@@ -367,6 +375,8 @@
 
                 disableAllButtons();
 
+                newPassword.val('');
+                
                 passwordfield.hide();
             }
         })
