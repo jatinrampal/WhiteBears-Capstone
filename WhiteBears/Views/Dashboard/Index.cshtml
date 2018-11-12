@@ -64,14 +64,12 @@
         </div>
 
         <div class="LeftPanelBorder" id="ProjectListContainer" style="overflow-y:scroll">
-            @if (Model.CurrentUser.Role.Equals("Project Manager"))
-            {
+            @if (Model.CurrentUser.Role.Equals("Project Manager")) {
                 <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "AddProject")'">Add project</button>
             }
             <div id="ProjectList">
                 <label>Projects</label> <br />
-                @foreach (var project in Model.Projects)
-                {
+                @foreach (var project in Model.Projects) {
                     <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project", new { id = project.ProjectId})'">@project.Title</button>;
                 }
             </div>
@@ -90,8 +88,7 @@
                     <input type="radio" name="optradio" value="_all" checked>All
                 </label>
 
-                @foreach (var project in Model.Projects)
-                {
+                @foreach (var project in Model.Projects) {
                     <label class="radio-inline">
                         <input type="radio" name="optradio" value="@project.ProjectId">@project.Title
                     </label>
@@ -114,11 +111,9 @@
                 </tr>
                 <tbody id="taskTableBody">
 
-                    @foreach (var project in Model.Projects)
-                    {
-                        foreach (var task in project.Tasks)
-                        {
-                            <tr>
+                    @foreach (var project in Model.Projects) {
+                        foreach (var task in project.Tasks) {
+                            <tr value="@task.TaskId">
                                 <td>@task.Title</td>
                                 <td>@task.Priority</td>
                                 <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
@@ -145,8 +140,7 @@
                         <th onclick="sortTable(0, false)">Date</th>
                         <th onclick="sortTable(1, false)">Note</th>
                     </tr>
-                    @foreach (var note in Model.CurrentUser.PersonalNotes)
-                    {
+                    @foreach (var note in Model.CurrentUser.PersonalNotes) {
                         <tr id="@note.PersonalNoteId" name="PersonalNoteRow">
                             <td>@note.TimeStamp.ToString("MM/dd/yyyy")</td>
                             <td>@note.Information</td>
@@ -188,6 +182,7 @@
     $(document).ready(function () {
         loadPercentageBars("_all", "@Model.CurrentUser.Username");
         assignTaskRowClasses();
+        getTaskUser();
 
         var clickedRow = null;
         var addButton = $('button[value=add');
@@ -229,6 +224,8 @@
                 deleteButton.text("Cancel");
                 changeButtonState(deleteButton, true);
                 changeButtonState(modifyButton, false);
+
+                focusOnTextArea()
             } else {
                 if (isNoteValid()) {
                     $('#PersonalNotesTable > table > tbody:last').append('<tr name="PersonalNoteRow"><td>@Model.CurrDate.ToString("MM/dd/yyyy")</td><td>' + noteTextArea.val() + '</td></tr>');
@@ -263,6 +260,8 @@
                 modifyButton.text("Save");
                 deleteButton.text("Cancel");
                 changeButtonState(addButton, false);
+
+                focusOnTextArea()
             } else {
                 if (isNoteValid()) {
                     $('tr.selected td:last-child').text(noteTextArea.val());
@@ -339,6 +338,10 @@
             }
 
             return true;
+        }
+
+        function focusOnTextArea() {
+            $('#PersonalNoteText').focus();
         }
 
         $('input[name=optradio]').on('click', function () {
@@ -468,22 +471,21 @@
                                 label: "Task Overview",
                                 data: dataArr,
                                 backgroundColor: [
-                                    "#008b00",
-                                    "#ffb732",
-                                    "#1a1aff",
-                                    "#cd0000",
+                                    "#9EFFA6",
+                                    "#FFE29E",
+                                    "#9E9EFF",
+                                    "#FF9E9E",
                                 ],
                                 borderColor: [
-                                    "#008b55",
-                                    "#ffb788",
-                                    "#1a1fff",
-                                    "#cd0088",
+                                    "#9EFFA6",
+                                    "#FFE29E",
+                                    "#9E9EFF",
+                                    "#FF9E9E",
                                 ],
-                                borderWidth: [1, 1, 1, 1]
+                                borderWidth: [2, 2, 2,2]
                             }
                         ]
                     };
-
 
                     var options = {
                         title: {
@@ -501,7 +503,7 @@
                                 render: 'value',
                                 fontSize: 14,
                                 fontStyle: 'bold',
-                                fontColor: '#fff',
+                                fontColor: '#000',
                                 fontFamily: '"Lucida Console", Monaco, monospace'
                             }
                         }
@@ -518,6 +520,13 @@
                     alert("There was an issue with updating the table");
                 }
             });
+        }
+
+        function getTaskUser() {
+
+            /*$.each($('#tasktable tbody:last tr'), function (key, data) {
+                alert(data.getAttribute('value'));
+            })*/
         }
 
 

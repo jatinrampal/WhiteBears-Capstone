@@ -21,7 +21,7 @@
                 url: '@Url.Action("ReviewDocument", "DocumentReview")',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                data: '{ "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
+                data: '{ "id": @Model.id, "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
                 success: function (data) {
                     $("#oldModifiedBy").html(data.modifiedBy1);
                     $("#oldTimeStamp").html(data.timeStamp1);
@@ -110,10 +110,10 @@
                         style = "height:300px;margin:1px;";
                         break;
                 }
-                returnString += "<img id='p" + element.order + "'/><br/>";
+                returnString += "<img id='p" + target + element.order + "'/><br/>";
                 $("#" + target).append(returnString);
-                $('#p' + element.order).attr("src", "data:image/" + element.format + ";base64, " + element.content);
-                $('#p' + element.order).attr("style", style);
+                $('#p' + target + element.order).attr("src", "data:image/" + element.format + ";base64, " + element.content);
+                $('#p' + target + element.order).attr("style", style);
                 returnString = "";
             }
             else if (element.type == "TABLE") {

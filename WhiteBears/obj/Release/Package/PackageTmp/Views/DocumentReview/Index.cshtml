@@ -110,10 +110,10 @@
                         style = "height:300px;margin:1px;";
                         break;
                 }
-                returnString += "<img id='p" + element.order + "'/><br/>";
+                returnString += "<img id='p" + target + element.order + "'/><br/>";
                 $("#" + target).append(returnString);
-                $('#p' + element.order).attr("src", "data:image/" + element.format + ";base64, " + element.content);
-                $('#p' + element.order).attr("style", style);
+                $('#p' + target + element.order).attr("src", "data:image/" + element.format + ";base64, " + element.content);
+                $('#p' + target + element.order).attr("style", style);
                 returnString = "";
             }
             else if (element.type == "TABLE") {

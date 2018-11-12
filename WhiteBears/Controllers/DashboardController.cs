@@ -19,7 +19,7 @@ namespace WhiteBears.Controllers {
         public static SqlDataAdapter da;
 
         public ActionResult Index() {
-            DataRow[] drs, drs1;
+            DataRow[] drs;
 
             DashboardModel model = new DashboardModel();
             string username;
@@ -37,9 +37,10 @@ namespace WhiteBears.Controllers {
             currUser = new User(drs[0]["firstName"].ToString(),
                 drs[0]["lastName"].ToString(),
                 drs[0]["uName"].ToString(),
-                drs[0]["firstName"].ToString()+"@email.com",
+                drs[0]["firstName"].ToString() + "@email.com",
                 drs[0]["password"].ToString(),
-                drs[0]["role"].ToString());
+                drs[0]["role"].ToString()) {
+            };
 
             currUser.PersonalNotes = GetPersonalNotes(model);
             model.Projects = GetAllProjects(currUser.Username, model);
@@ -70,12 +71,14 @@ namespace WhiteBears.Controllers {
                         continue;
 
                     currProjectTasks.Add(new Task {
+                        TaskId = Convert.ToInt32(dr1["taskId"]),
                         Title = dr1["title"].ToString(),
                         Priority = dr1["priority"].ToString(),
                         DueDate = dueDate,
                         Status = DateTime.Now < dueDate ? "On time" : "Overdue",
                         ProjectName = projectTitle,
-                        CompletedDate = completionDate
+                        CompletedDate = completionDate,
+                        Users = model.GetTaskUsers(Convert.ToInt32(dr1["taskId"]))
                     });
                 }
 
@@ -129,15 +132,15 @@ namespace WhiteBears.Controllers {
                         continue;
 
 
-
                     selectedTasks.Add(new Task {
                         Title = dr["title"].ToString(),
                         Priority = dr["priority"].ToString(),
                         DueDate = dueDate,
                         Status = DateTime.Now < dueDate ? "On time" : "Overdue",
                         ProjectName = projectName,
-                        CompletedDate = completionDate
-                    });
+                        CompletedDate = completionDate,
+                        Users = model.GetTaskUsers(Convert.ToInt32(dr["taskId"]))
+                });
                 }
 
                 model.Projects = new Project[]{

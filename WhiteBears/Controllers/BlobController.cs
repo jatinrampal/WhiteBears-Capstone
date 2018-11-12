@@ -107,15 +107,15 @@ namespace Whitebears.Controllers
             //If filename doesn't exist INSERT and if it does UPDATE
             if (count == 0)
             {
-                InsertDocumentDB(projectId, actualFileName /*+ "_v" + (count + 1)*/, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
+                InsertDocumentDB(projectId, actualFileName , uname, System.IO.Path.GetExtension(uploadFileName.FileName));
             }
             else if (count > 0)
             {
-                UpdateDocumentDB(projectId, actualFileName /*+ "_v" + (count)*/, actualFileName /*+ "_v" + (count + 1)*/, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
+                UpdateDocumentDB(projectId, actualFileName , actualFileName , uname, System.IO.Path.GetExtension(uploadFileName.FileName));
             }
 
             //Update the Database and put in the Document entry
-            string documentID = CheckUploadDocumentID(actualFileName /*+ "_v" + (count + 1)*/);
+            string documentID = CheckUploadDocumentID(actualFileName);
 
 
             //CloudBlobContainer.CreateIfNotExists Method

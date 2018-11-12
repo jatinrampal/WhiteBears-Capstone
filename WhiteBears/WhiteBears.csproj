@@ -207,7 +207,6 @@
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\TeamManagementModel.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\VerifyCredentials.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -308,6 +307,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Styling.css" />
+    <Content Include="Content\WhiteBears.jpg" />
     <Content Include="dll\SautinSoft.Document.dll" />
     <Content Include="dll\SautinSoft.Document.XML" />
     <Content Include="favicon.ico" />
@@ -1418,12 +1418,12 @@
     <Content Include="packages\System.Diagnostics.DiagnosticSource.4.4.1\ref\netcoreapp2.0\_._" />
     <Content Include="packages\System.Diagnostics.DiagnosticSource.4.4.1\System.Diagnostics.DiagnosticSource.4.4.1.nupkg" />
     <Content Include="packages\WebGrease.1.6.0\WebGrease.1.6.0.nupkg" />
-    <None Include="Properties\PublishProfiles\WhiteBears - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\WhiteBears - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
+    <None Include="Properties\PublishProfiles\WhiteBears - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\WhiteBears - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -2271,7 +2271,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49837/</IISUrl>
+          <IISUrl>http://localhost:49838/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -331,7 +331,7 @@
             $('#projectTaskTableTbody').on('click', 'tr', function () {
                 myTaskID = $(this).attr('id'); // table row ID 
 
-                myChecked = $('#task').prop("checked");
+                myChecked = $('#task' + myTaskID).prop("checked");
 
 
                 // Only run if checkedBox is not clicked
@@ -354,7 +354,7 @@
                 }
                 else {
                     disableSelectColor = 0;
-                    alert("Passing values " + myChecked + " TaskID " + myTaskID);
+                    //alert("Passing values " + myChecked + " TaskID " + myTaskID);
 
                     var data = JSON.stringify({
                         'taskID': myTaskID,
@@ -367,7 +367,7 @@
                         data: data,
                         contentType: 'application/json',
                         success: function (msg) {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -437,7 +437,7 @@
 
 
                 }
-                else if ($.trim(String(fileExtension)) == "docx" || $.trim(String(fileExtension)) == "doc") {
+                else if ($.trim(String(fileExtension)) == ".docx" || $.trim(String(fileExtension)) == ".doc") {
                    // alert("File " + fileExtension);
                     var url = '/DocumentReview/Index/' + stored;
                     window.location = url;

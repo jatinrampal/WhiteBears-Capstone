@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using WhiteBears.Models;
 
 namespace WhiteBears.Controllers
@@ -23,9 +18,13 @@ namespace WhiteBears.Controllers
         public ActionResult Index(string username, string password)
         {
 
-            if (VerifyCredentials.VerifyLogin(username, password))
+            if (Authentication.VerifyCredentials(username, password))
             {
                 Session["username"] = username;
+
+                if (Authentication.VerifyIfAdmin(username)) {
+                    return RedirectToAction("Index", "AdminPage");
+                }
                 return RedirectToAction("Index", "Dashboard");
             }
            
