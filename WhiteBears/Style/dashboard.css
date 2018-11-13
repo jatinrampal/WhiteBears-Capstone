@@ -66,7 +66,7 @@ table {
 
 
 header {
-    text-align: left;
+    text-align: center;
     margin-left: 250px;
 }
 
@@ -181,7 +181,15 @@ header {
     height: 250px;
 }
 
-.high-priority{
+#projectselection {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: inline-block;
+    width: 600px;
+    white-space: nowrap;
+}
+
+.high-priority {
     background-color: #ffb2b2
 }
 
@@ -191,4 +199,8 @@ header {
 
 .pointer{
     cursor: pointer;
+}
+
+#text-center{
+    text-align: center;
 }
