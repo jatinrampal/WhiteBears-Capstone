@@ -164,7 +164,8 @@ header {
 .scrollable-notes {
     height: auto;
     max-height: 400px;
-    overflow: scroll;
+    overflow: hidden;
+    overflow-y: scroll
 }
 
 #TaskOverviewSection {
