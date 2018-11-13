@@ -14,11 +14,10 @@ namespace WhiteBears.Controllers
         public ActionResult Index()
         {
             DatabaseHelper dh = new DatabaseHelper();
-
-            string username = Session["username"].ToString();
-            if (username != null)
+            
+            if (Session["username"] != null)
             {
-                if (Authentication.VerifyIfAdmin(username)) {
+                if (Authentication.VerifyIfAdmin(Session["username"].ToString())) {
                     return View();
                 }else {
                     return RedirectToAction("Index", "Dashboard");
