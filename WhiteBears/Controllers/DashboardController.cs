@@ -233,14 +233,23 @@ namespace WhiteBears.Controllers {
             DashboardModel model = new DashboardModel();
             Project p = null;
 
+            bool isProjectManager = Authentication.VerifyIfProjectManager(username);
+
             if (projectId.Equals("_all")) {
                 List<Task> tasks = new List<Task>();
+
                 DataRow[] drs = model.GetProjects(username);
                 int i = 0;
                 foreach (DataRow dr in drs) {
                     int currProjectId = Int32.Parse(drs[i++]["projectId"].ToString());
                     string projectTitle = dr["title"].ToString();
-                    DataRow[] drs1 = model.GetTasks(username, currProjectId);
+
+                    DataRow[] drs1 = null;
+                    if (isProjectManager) {
+                        drs1 = model.GetAllTasks(currProjectId);
+                    } else {
+                        drs1 = model.GetTasks(username, currProjectId);
+                    }
 
                     foreach (DataRow dr1 in drs1) {
                         DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
@@ -252,7 +261,7 @@ namespace WhiteBears.Controllers {
                             DueDate = dueDate,
                             Status = DateTime.Now < dueDate ? "On time" : "Overdue",
                             ProjectName = projectTitle,
-                            CompletedDate = completionDate
+                            CompletedDate = completionDate,
                         });
                     }
                 }
@@ -260,7 +269,32 @@ namespace WhiteBears.Controllers {
                     Tasks = tasks.ToArray()
                 };
             } else {
-                p = model.GetProject(username, projectId);
+                int iProjectId = Convert.ToInt32(projectId);
+
+                List<Task> tasks = new List<Task>();
+                if (!isProjectManager)
+                    p = model.GetProject(username, projectId);
+                else {
+                    p = model.GetProject(username, projectId);
+
+                    DataRow[] drs1 = model.GetAllTasks(iProjectId);
+
+                    foreach (DataRow dr1 in drs1) {
+                        DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
+                        DateTime completionDate = Convert.ToDateTime(dr1["completionDate"]);
+
+                        tasks.Add(new Task {
+                            Title = dr1["title"].ToString(),
+                            Priority = dr1["priority"].ToString(),
+                            DueDate = dueDate,
+                            Status = DateTime.Now < dueDate ? "On time" : "Overdue",
+                            ProjectName = p.Title,
+                            CompletedDate = completionDate,
+                        });
+                    }
+
+                    p.Tasks = tasks.ToArray();
+                }
             }
 
 
