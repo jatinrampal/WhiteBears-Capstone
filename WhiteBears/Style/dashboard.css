@@ -76,7 +76,6 @@ header {
 }
 
 .LeftPanelBorder {
-    padding: 50px;
     border: solid black 2px;
 }
 
@@ -85,6 +84,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 50px;
 }
 
 #ProjectListContainer {
@@ -187,4 +187,8 @@ header {
 
 .med-priority {
     background-color: #ffffb2
+}
+
+.pointer{
+    cursor: pointer;
 }
