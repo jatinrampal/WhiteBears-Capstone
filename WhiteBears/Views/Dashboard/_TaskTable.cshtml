@@ -1,0 +1,21 @@
+﻿@using WhiteBears.Models
+
+@foreach (var project in Model.Projects) {
+    foreach (var task in project.Tasks) {
+        <tr value="@task.TaskId">
+            <td>@task.Title</td>
+            <td>@task.Priority</td>
+            <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
+            <td>@task.Status</td>
+            <td>@project.Title</td>
+            @if (Model.CurrentUser.Role == "Project Manager") {
+                <td>
+                    @foreach (User user in task.Users) {
+                            <span>@user.FirstName @user.LastName, </span>
+                        
+                    }
+                </td>
+            }
+        </tr>
+    }
+}

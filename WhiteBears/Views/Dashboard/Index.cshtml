@@ -1,10 +1,5 @@
 ﻿@using WhiteBears.Models
 @model DashboardModel
-@{
-    ViewBag.msg = "Dashboard";
-    DashboardModel dm = new DashboardModel();
-}
-
 
 @Styles.Render("~/bundles/style/dashboard")
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
@@ -64,14 +59,20 @@
         </div>
 
         <div class="LeftPanelBorder" id="ProjectListContainer" style="overflow-y:scroll">
+            <br />
             @if (Model.CurrentUser.Role.Equals("Project Manager")) {
                 <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "AddProject")'">Add project</button>
             }
+            <br /><br />
             <div id="ProjectList">
                 <label>Projects</label> <br />
-                @foreach (var project in Model.Projects) {
-                    <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "Project", new { id = project.ProjectId})'">@project.Title</button>;
-                }
+                <table class="table table-hover pointer" style="width: 100%">
+                    @foreach (var project in Model.Projects) {
+                        <tr style="width: 100%">
+                            <td onclick="location.href='@Url.Action("Index", "Project", new { id = project.ProjectId})'">@project.Title</td>
+                        </tr>
+                    }
+                </table>
             </div>
         </div>
     </nav>
@@ -101,13 +102,17 @@
     <div id="TasksSection">
         <label>Tasks</label>
         <div class="scrollable-task">
-            <table id="tasktable" class="table table-hover">
+            <table id="tasktable" class="table table-hover ">
                 <tr>
                     <th scope="col" onclick="sortTable(0, true)">Task</th>
                     <th scope="col" onclick="sortTable(1, true)">Priority</th>
                     <th scope="col" onclick="sortTable(2, true)">Due Date</th>
                     <th scope="col" onclick="sortTable(3, true)">Status</th>
                     <th scope="col" onclick="sortTable(4, true)">Project</th>
+
+                    @if (Model.CurrentUser.Role == "Project Manager") {
+                        <th scope="col" onclick="sortTable(5, true)">Assigned To</th>
+                    }
                 </tr>
                 <tbody id="taskTableBody">
 
@@ -119,6 +124,17 @@
                                 <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
                                 <td>@task.Status</td>
                                 <td>@project.Title</td>
+                                    @if (Model.CurrentUser.Role == "Project Manager") {
+                                        <td>
+                                        @foreach (User user in task.Users) {
+                                            if (task.Users.Last() != user) {
+                                                <span>@user.FirstName @user.LastName, </span>
+                                            } else {
+                                                <span>@user.FirstName @user.LastName</span>
+                                            }
+                                        }
+                                        </td>
+                                    }
                             </tr>
                         }
                     }
@@ -135,7 +151,7 @@
         <div>
             <label>Personal Notes</label>
             <div class="scrollable-notes" id="PersonalNotesTable">
-                <table id="notestable" class="table table-hover">
+                <table id="notestable" class="table table-hover pointer">
                     <tr>
                         <th onclick="sortTable(0, false)">Date</th>
                         <th onclick="sortTable(1, false)">Note</th>
@@ -150,11 +166,13 @@
             </div>
         </div>
 
-        <textarea id="PersonalNoteText"></textarea><br />
-        <div id="PersonalNotesButtonsContainer" class="btn-group">
-            <button type="button" class="btn btn-primary btn-lg disabled" value="modify">Modify</button>
-            <button type="button" class="btn btn-success btn-lg" value="add">Add</button>
-            <button type="button" class="btn btn-danger btn-lg disabled" value="delete">Delete</button>
+        <div id="PersonalNoteTextContainer">
+            <textarea id="PersonalNoteText"></textarea><br />
+            <div id="PersonalNotesButtonsContainer" class="btn-group">
+                <button type="button" class="btn btn-primary btn-lg disabled" value="modify">Modify</button>
+                <button type="button" class="btn btn-success btn-lg" value="add">Add</button>
+                <button type="button" class="btn btn-danger btn-lg disabled" value="delete">Delete</button>
+            </div>
         </div>
     </div>
     <div class="ProgressBarContainers">
