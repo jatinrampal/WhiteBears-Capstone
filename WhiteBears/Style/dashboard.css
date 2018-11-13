@@ -4,12 +4,12 @@ html, body {
 }
 
 
-#MainPage{
+#MainPage {
     position: relative;
     height: 100%;
 }
 
-button{
+button {
     padding: 7px;
 }
 
@@ -23,7 +23,19 @@ table {
 #TasksSection td, th {
     border: 1px solid darkgrey;
     padding: 10px;
-    max-width: 200px;
+    max-width: 125px;
+}
+
+#TasksSection td:last-child, th:last-child {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 100px;
+}
+
+#TasksSection td:nth-child(5), th:nth-child(5) {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 100px;
 }
 
 #TasksSection {
@@ -31,11 +43,12 @@ table {
     margin-left: 50px;
     margin-top: 20px;
     min-height: 300px;
-    min-width: 550px;
-    max-width: 550px;
+    min-width: 700px;
+    max-width: 700px;
+    margin-bottom: 15px;
 }
 
-.TaskPercentage{
+.TaskPercentage {
     padding: 5px;
     float: left;
     margin-top: 5px;
@@ -59,10 +72,10 @@ table {
     border-radius: 10px 10px 10px 10px
 }
 
-.ProjectButtons:hover {
-    background: darkgrey;
-    color: white;
-}
+    .ProjectButtons:hover {
+        background: darkgrey;
+        color: white;
+    }
 
 
 header {
@@ -91,26 +104,26 @@ header {
     height: 60%;
 }
 
-#PersonalNotesSection{
+#PersonalNotesSection {
     margin-top: 30px;
     float: right;
 }
 
-#PersonalNotesSection td, th {
-    border: 1px solid darkgrey;
-    padding: 10px;
-    max-width: 300px;
-}
+    #PersonalNotesSection td, th {
+        border: 1px solid darkgrey;
+        padding: 10px;
+        max-width: 300px;
+    }
 
 #PersonalNotesButtonsContainer {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 100px;
     min-width: 300px;
     text-align: center;
 }
 
 
-#Note{
+#Note {
     width: 300px;
 }
 
@@ -127,7 +140,6 @@ header {
     margin-top: 30px;
     margin-left: 250px;
     width: 400px;
-
 }
 
 .ProgressBarContainers {
@@ -139,19 +151,24 @@ header {
     font-size: large;
 }
 
-.text-medium{
+.text-medium {
     font-size: medium;
 }
 
-.padding-5px{
+.padding-5px {
     padding: 5px;
 }
 
-#PersonalNoteText{
+#PersonalNoteText {
     width: 100%;
     resize: none;
     height: 100px;
     display: none;
+    text-align: left;
+}
+
+#PersonalNoteTextContainer {
+    margin-top: 15px;
 }
 
 .scrollable-task {
@@ -171,13 +188,13 @@ header {
 #TaskOverviewSection {
     text-align: center;
     float: right;
-    height: 300px;
-    width: 300px;
+    height: 100px;
+    width: 100px;
     margin-top: 20px;
-    margin-right: 30px;
+    margin-right: 75px;
 }
 
-#pie-chartcanvas{
+#pie-chartcanvas {
     width: 500px;
     height: 250px;
 }
@@ -198,10 +215,10 @@ header {
     background-color: #ffffb2
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
-#text-center{
+#text-center {
     text-align: center;
 }
