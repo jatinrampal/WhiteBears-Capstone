@@ -3,6 +3,10 @@ html, body {
     font-family: "Avenir Next" !important;
 }
 
+body{
+    padding: 0;
+}
+
 
 #MainPage {
     height: 100%;
@@ -58,7 +62,7 @@ table {
     text-align: center;
     width: 200px;
     float: left;
-    height: 100vh;
+    height: 100%;
 
 }
 
