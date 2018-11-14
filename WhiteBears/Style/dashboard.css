@@ -5,7 +5,6 @@ html, body {
 
 
 #MainPage {
-    position: relative;
     height: 100%;
 }
 
@@ -61,6 +60,7 @@ table {
     width: 200px;
     float: left;
     height: 100vh;
+
 }
 
 .ProjectButtons {

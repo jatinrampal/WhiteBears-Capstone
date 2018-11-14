@@ -2187,6 +2187,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Style\dashboard.css" />
+    <Content Include="Style\layout.css" />
     <Content Include="Style\ProjectPage.css" />
     <Content Include="Style\ProjectTaskPage.css" />
     <Content Include="Style\SignUp.css" />

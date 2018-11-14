@@ -36,6 +36,9 @@ namespace WhiteBears
             bundles.Add(new StyleBundle("~/bundles/style/styling").Include(
                 "~/Content/Styling.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/style/layout").Include(
+                "~/Style/layout.css"));
+
             bundles.Add(new StyleBundle("~/bundles/style/dashboard").Include(
                 "~/Style/dashboard.css"));
 
