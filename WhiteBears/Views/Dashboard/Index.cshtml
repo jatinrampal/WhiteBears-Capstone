@@ -60,15 +60,19 @@
 
         <div class="LeftPanelBorder" id="ProjectListContainer" style="overflow-y:scroll">
             <br />
-            @if (Model.CurrentUser.Role.Equals("Project Manager")) {
-                <button class="ProjectButtons btn-secondary" onclick="location.href='@Url.Action("Index", "AddProject")'">Add project</button>
-            }
-            <br /><br />
+
+            <table class="table table-hover pointer" style="style="width: 100%">
+                <tr style="width: 100% ">
+                    <td onclick="location.href='@Url.Action("Index", "AddProject")'"><span style="font-weight: bold">Add Project</span></td>
+                </tr>
+            </table>
+
+            <br />
             <div id="ProjectList">
                 <label>Projects</label> <br />
                 <table class="table table-hover pointer" style="width: 100%">
                     @foreach (var project in Model.Projects) {
-                        <tr style="width: 100%">
+                        <tr style="width: 100%; text-align: left;">
                             <td onclick="location.href='@Url.Action("Index", "Project", new { id = project.ProjectId})'">@project.Title</td>
                         </tr>
                     }
