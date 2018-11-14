@@ -195,6 +195,7 @@
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DatabaseHelper.cs" />
     <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\DocumentDownload.cs" />
     <Compile Include="Models\DocumentRole.cs" />
     <Compile Include="Models\DocumentVersionsModel.cs" />
     <Compile Include="Models\ElementJSON.cs" />

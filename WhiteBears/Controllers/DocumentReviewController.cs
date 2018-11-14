@@ -269,5 +269,32 @@ namespace WhiteBears.Controllers
             rm.Doc1 = doc1Elements.ToArray();
             return JsonConvert.SerializeObject(rm);
         }
+        [HttpPost]
+        public string DownloadDocument(int id, int ver)
+        {
+            BlobStorageRepository br = new BlobStorageRepository();
+            if (id != null) {
+                string[] fileName = getFileNameAndExtention(Convert.ToInt32(id));
+                MemoryStream ms = br.GetBlobAsStream(fileName[0] + "_v" + ver, fileName[1]);
+                DocumentDownload dd = new DocumentDownload()
+                {
+                    FileName = fileName[0] + fileName[1],
+                    B64 = Convert.ToBase64String(ms.ToArray())
+                }; 
+                return JsonConvert.SerializeObject(dd);
+             }
+            else return "error";
+        }
+
+        private string[] getFileNameAndExtention(int id)
+        {
+            DatabaseHelper dbh = new DatabaseHelper();
+            DataRow[] dr = dbh.RunQuery($"Select fileName, fileExtension from Document where documentId={id}");
+            string[] fileName = new string[2];
+            fileName[0] = dr[0]["fileName"].ToString();
+            fileName[1] = dr[0]["fileExtension"].ToString();
+            return fileName;
+
+        }
     }
 }
