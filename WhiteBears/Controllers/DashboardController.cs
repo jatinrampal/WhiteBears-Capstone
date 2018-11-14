@@ -51,14 +51,22 @@ namespace WhiteBears.Controllers {
         }
 
         private Project[] GetAllProjects(string username, DashboardModel model) {
-            DataRow[] drs = model.GetProjects(username);
+            DataRow[] drs, drs1 = null;
+            drs = model.GetProjects(username);
+            
+
             projects = new Project[drs.Count()];
 
             int i = 0;
             foreach (DataRow dr in drs) {
                 int currProjectId = Int32.Parse(drs[i]["projectId"].ToString());
                 string projectTitle = dr["title"].ToString();
-                DataRow[] drs1 = model.GetTasks(username, currProjectId);
+
+                if (Authentication.VerifyIfProjectManager(username)) {
+                    drs1 = model.GetAllTasks(currProjectId);
+                } else {
+                    drs1 = model.GetTasks(username, currProjectId);
+                }
 
                 List<Task> currProjectTasks = new List<Task>();
 
@@ -108,7 +116,11 @@ namespace WhiteBears.Controllers {
             List<Task> selectedTasks = new List<Task>();
             DashboardModel model = new DashboardModel();
             DataRow[] drs;
+
+            bool isProjectManager = false;
+
             if (projectId == "_all") {
+                isProjectManager = Authentication.VerifyIfProjectManager(sUser);
                 Project[] projects = GetAllProjects(sUser, model);
                 model.Projects = projects;
                 foreach (Project p in projects) {
@@ -118,8 +130,16 @@ namespace WhiteBears.Controllers {
                 }
 
             } else {
+                int iProjectId = Convert.ToInt32(projectId);
                 model = new DashboardModel();
-                drs = model.GetTasks(sUser, Int32.Parse(projectId));
+
+
+                isProjectManager = Authentication.VerifyIfProjectManager(sUser);
+                if (isProjectManager) {
+                    drs = model.GetAllTasks(iProjectId);
+                } else {
+                    drs = model.GetTasks(sUser, iProjectId);
+                }
 
                 string projectName = model.GetProjectName(projectId);
 
@@ -150,12 +170,35 @@ namespace WhiteBears.Controllers {
                 };
             }
 
+            var users = new System.Text.StringBuilder();
+
+            
+
+
             var sb = new System.Text.StringBuilder();
             foreach (Task task in selectedTasks) {
-                sb.Append($"<tr><td>{task.Title}</td><td>{task.Priority}</td><td>{task.DueDate.ToString("MM/dd/yyyy")}</td><td>{task.Status}</td><td>{task.ProjectName}</td></tr>");
+                users.Clear();
+                users.Append("");
+                if (isProjectManager) {
+                    foreach (User u in task.Users) {
+                        if(task.Users.Last() != u) {
+                            users.Append($"{u.FirstName} {u.LastName}, ");
+                        } else {
+                            users.Append($"{u.FirstName} {u.LastName}");
+                        }
+                        
+                    }
+                }
+                sb.Append($"<tr>" +
+                    $"<td>{task.Title}</td>" +
+                    $"<td>{task.Priority}</td>" +
+                    $"<td>{task.DueDate.ToString("MM/dd/yyyy")}</td>" +
+                    $"<td>{task.Status}</td>" +
+                    $"<td>{task.ProjectName}</td>" +
+                    (isProjectManager ? $"<td>{users.ToString()}</tb>" : "") +
+                    $"</tr>");
             }
 
-            Debug.WriteLine("WOOOO" + sb.ToString());
             return Json(new { row = sb.ToString() });
         }
 
@@ -190,14 +233,23 @@ namespace WhiteBears.Controllers {
             DashboardModel model = new DashboardModel();
             Project p = null;
 
+            bool isProjectManager = Authentication.VerifyIfProjectManager(username);
+
             if (projectId.Equals("_all")) {
                 List<Task> tasks = new List<Task>();
+
                 DataRow[] drs = model.GetProjects(username);
                 int i = 0;
                 foreach (DataRow dr in drs) {
                     int currProjectId = Int32.Parse(drs[i++]["projectId"].ToString());
                     string projectTitle = dr["title"].ToString();
-                    DataRow[] drs1 = model.GetTasks(username, currProjectId);
+
+                    DataRow[] drs1 = null;
+                    if (isProjectManager) {
+                        drs1 = model.GetAllTasks(currProjectId);
+                    } else {
+                        drs1 = model.GetTasks(username, currProjectId);
+                    }
 
                     foreach (DataRow dr1 in drs1) {
                         DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
@@ -209,7 +261,7 @@ namespace WhiteBears.Controllers {
                             DueDate = dueDate,
                             Status = DateTime.Now < dueDate ? "On time" : "Overdue",
                             ProjectName = projectTitle,
-                            CompletedDate = completionDate
+                            CompletedDate = completionDate,
                         });
                     }
                 }
@@ -217,7 +269,32 @@ namespace WhiteBears.Controllers {
                     Tasks = tasks.ToArray()
                 };
             } else {
-                p = model.GetProject(username, projectId);
+                int iProjectId = Convert.ToInt32(projectId);
+
+                List<Task> tasks = new List<Task>();
+                if (!isProjectManager)
+                    p = model.GetProject(username, projectId);
+                else {
+                    p = model.GetProject(username, projectId);
+
+                    DataRow[] drs1 = model.GetAllTasks(iProjectId);
+
+                    foreach (DataRow dr1 in drs1) {
+                        DateTime dueDate = Convert.ToDateTime(dr1["dueDate"]);
+                        DateTime completionDate = Convert.ToDateTime(dr1["completionDate"]);
+
+                        tasks.Add(new Task {
+                            Title = dr1["title"].ToString(),
+                            Priority = dr1["priority"].ToString(),
+                            DueDate = dueDate,
+                            Status = DateTime.Now < dueDate ? "On time" : "Overdue",
+                            ProjectName = p.Title,
+                            CompletedDate = completionDate,
+                        });
+                    }
+
+                    p.Tasks = tasks.ToArray();
+                }
             }
 
 
