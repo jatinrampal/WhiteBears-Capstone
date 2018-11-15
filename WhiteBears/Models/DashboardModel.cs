@@ -78,6 +78,14 @@ namespace WhiteBears.Models {
                                $"AND p.projectId='{projectId}'");
         }
 
+        public DataRow[] GetAllTasks(int projectId) {
+            DatabaseHelper dh = new DatabaseHelper();
+
+            return dh.RunQuery($"SELECT * FROM Task t " +
+                               $"JOIN Project p on t.projectId = p.projectId " +
+                               $"AND p.projectId='{projectId}'");
+        }
+
         public List<User> GetTaskUsers(int taskId) {
             DatabaseHelper dh = new DatabaseHelper();
 

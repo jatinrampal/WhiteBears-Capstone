@@ -55,16 +55,15 @@ namespace WhiteBears.Models
                     $"JOIN User_Project up ON u.uName = up.uName " +
                     $"WHERE up.projectId='{projectId}';");
 
-                User[] users = new User[drs.Count()];
+                List<User> users = new List<User>();
 
-                int i = 0;
                 foreach (DataRow dr in drs)
                 {
-                    //TODO: refactor the email to dr["email"]
-                    users[i++] = new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), $"{dr["firstName"].ToString()}@email.com", dr["password"].ToString(), dr["role"].ToString());
+                    if(Convert.ToBoolean(dr["enabled".ToString()]))
+                        users.Add(new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), $"{dr["firstName"].ToString()}@email.com", dr["password"].ToString(), dr["role"].ToString()));
                 }
 
-                return users;
+                return users.ToArray();
             }
             catch (Exception e)
             {
@@ -84,16 +83,16 @@ namespace WhiteBears.Models
                     $"JOIN User_Project up ON u.uName = up.uName " +
                     $"WHERE up.projectId='{projectId}');");
 
-                User[] users = new User[drs.Count()];
+                List<User> users = new List<User>();
 
-                int i = 0;
                 foreach (DataRow dr in drs)
                 {
                     //TODO: refactor email to dr["email"]
-                    users[i++] = new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), $"{dr["firstName"].ToString()}@email", dr["password"].ToString(), dr["role"].ToString());
+                    if (Convert.ToBoolean(dr["enabled".ToString()]))
+                        users.Add(new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), $"{dr["firstName"].ToString()}@email", dr["password"].ToString(), dr["role"].ToString()));
                 }
 
-                return users;
+                return users.ToArray();
             }
             catch (Exception e)
             {

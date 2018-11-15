@@ -22,6 +22,7 @@ namespace WhiteBears
 
             bundles.Add(new ScriptBundle("~/bundles/scripts/bootstrap").Include(
                     "~/Scripts/bootstrap.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/scripts/chartjs").Include(
                     "~/Scripts/chartjs-plugin-labels.js"));
 
@@ -31,10 +32,14 @@ namespace WhiteBears
                 "~/Content/bootstrap.css.map",
                 "~/Content/bootstrap-theme.css",
                 "~/Content/bootstrap-theme.css.map",
+                "~/packages/bootstrap.3.3.7/content/Content/bootstrap-theme.css.map",
                 "~/Content/Site.css"));
 
             bundles.Add(new StyleBundle("~/bundles/style/styling").Include(
                 "~/Content/Styling.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/layout").Include(
+                "~/Style/layout.css"));
 
             bundles.Add(new StyleBundle("~/bundles/style/dashboard").Include(
                 "~/Style/dashboard.css"));

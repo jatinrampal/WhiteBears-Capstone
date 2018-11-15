@@ -19,7 +19,11 @@ namespace WhiteBears
         public static bool VerifyIfAdmin(string sUser) {
             DatabaseHelper dh = new DatabaseHelper();
             return dh.RunQuery($"SELECT role FROM [User] WHERE uName = '{sUser}'")[0]["role"].ToString() == "Admin";
+        }
 
+        public static bool VerifyIfProjectManager(string sUser) {
+            DatabaseHelper dh = new DatabaseHelper();
+            return dh.RunQuery($"SELECT role FROM [User] WHERE uName = '{sUser}'")[0]["role"].ToString() == "Project Manager";
         }
     }
 }
