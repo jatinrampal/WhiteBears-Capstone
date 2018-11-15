@@ -35,8 +35,8 @@
     <!--Migrate to CSS file-->
     <div class="page-container">
         <div>
-            <h2>@Model.CurrentProject.Title</h2>
-            <h3>Team Management Settings</h3>
+            <h2 class="header-text">@Model.CurrentProject.Title</h2>
+            <h3 class="header-text">Team Management Settings</h3>
         </div>
 
         <div class="row">
@@ -185,7 +185,8 @@
                         dataType: "json",
                         data: {
                             usernames: removedUsers,
-                            excludedUsers: '@Model.ExcludedUsers',
+                            
+                            : '@Model.ExcludedUsers',
                             projectId: '@Model.CurrentProject.ProjectId'
                         },
                         success: function (data) {

@@ -3,9 +3,12 @@ html, body {
     font-family: "Avenir Next" !important;
 }
 
+body{
+    padding: 0;
+}
+
 
 #MainPage {
-    position: relative;
     height: 100%;
 }
 
@@ -43,8 +46,7 @@ table {
     margin-left: 50px;
     margin-top: 20px;
     min-height: 300px;
-    min-width: 700px;
-    max-width: 700px;
+    width: 65%;
     margin-bottom: 15px;
 }
 
@@ -60,7 +62,8 @@ table {
     text-align: center;
     width: 200px;
     float: left;
-    height: 100vh;
+    height: 100%;
+
 }
 
 .ProjectButtons {
@@ -80,7 +83,7 @@ table {
 
 header {
     text-align: center;
-    margin-left: 250px;
+    margin-left: 50px;
 }
 
 .headerButtons:hover {
@@ -105,23 +108,28 @@ header {
 }
 
 #PersonalNotesSection {
-    margin-top: 30px;
+    margin-top: 20px;
     float: right;
+    margin-right: 20px;
 }
 
     #PersonalNotesSection td, th {
         border: 1px solid darkgrey;
         padding: 10px;
-        max-width: 300px;
+        max-width: 800px;
     }
 
 #PersonalNotesButtonsContainer {
     margin-top: 10px;
-    margin-left: 100px;
-    min-width: 300px;
+    width: 100%;
     text-align: center;
 }
 
+textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 #Note {
     width: 300px;
@@ -136,15 +144,20 @@ header {
     text-align: left;
 }
 
-.ProgressBarContainer {
+.ProgressBarContainer:last-of-type {
     margin-top: 30px;
-    margin-left: 250px;
-    width: 400px;
+}
+
+.ProgressBarContainer {
+    margin-left: 50px;
+    width: 600px;
+    float: left;
 }
 
 .ProgressBarContainers {
-    margin-top: 30px;
+    margin-top: 20px;
     width: 300px;
+    float:left;
 }
 
 .text-large {
@@ -180,7 +193,7 @@ header {
 
 .scrollable-notes {
     height: auto;
-    max-height: 400px;
+    max-height: 250px;
     overflow: hidden;
     overflow-y: scroll
 }
@@ -189,9 +202,9 @@ header {
     text-align: center;
     float: right;
     height: 100px;
-    width: 100px;
+    width: 30%;
     margin-top: 20px;
-    margin-right: 75px;
+    margin-right: 20px;
 }
 
 #pie-chartcanvas {

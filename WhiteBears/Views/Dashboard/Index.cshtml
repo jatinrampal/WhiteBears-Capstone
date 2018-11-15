@@ -47,43 +47,43 @@
         }
     }
 </script>
-<div id="MainPage">
-    <nav id="LeftPanel">
-        <div class="LeftPanelBorder" id="UserInfoContainer">
-            <div id="UserInfo">
-                <img id="profilePic" src="https://image.freepik.com/free-icon/male-user-profile-picture_318-37825.jpg" /><br /><br />
-                <label>@Html.DisplayFor(m => m.CurrentUser.FullName)</label><br />
-                <label>@Html.DisplayFor(m => m.CurrentUser.Role)</label><br />
-                <label>@Model.CurrDate.ToString("MM/dd/yyyy")</label>
-            </div>
+
+<nav id="LeftPanel">
+    <div class="LeftPanelBorder" id="UserInfoContainer">
+        <div id="UserInfo">
+            <img id="profilePic" src="https://image.freepik.com/free-icon/male-user-profile-picture_318-37825.jpg" /><br /><br />
+            <label>@Html.DisplayFor(m => m.CurrentUser.FullName)</label><br />
+            <label>@Html.DisplayFor(m => m.CurrentUser.Role)</label><br />
+            <label>@Model.CurrDate.ToString("MM/dd/yyyy")</label>
         </div>
+    </div>
 
-        <div class="LeftPanelBorder" id="ProjectListContainer" style="overflow-y:scroll">
-            <br />
+    <div class="LeftPanelBorder" id="ProjectListContainer" style="overflow-y:scroll">
+        <br />
 
-            <table class="table table-hover pointer" style="style="width: 100%">
-                <tr style="width: 100% ">
-                    <td onclick="location.href='@Url.Action("Index", "AddProject")'"><span style="font-weight: bold">Add Project</span></td>
-                </tr>
+        <table class="table table-hover pointer" style="width: 100%">
+            <tr style="width: 100% ">
+                <td onclick="location.href='@Url.Action("Index", "AddProject")'"><span style="font-weight: bold">Add Project</span></td>
+            </tr>
+        </table>
+
+        <br />
+        <div id="ProjectList">
+            <label>Projects</label> <br />
+            <table class="table table-hover pointer" style="width: 100%">
+                @foreach (var project in Model.Projects) {
+                    <tr style="width: 100%; text-align: left;">
+                        <td onclick="location.href='@Url.Action("Index", "Project", new { id = project.ProjectId})'">@project.Title</td>
+                    </tr>
+                }
             </table>
-
-            <br />
-            <div id="ProjectList">
-                <label>Projects</label> <br />
-                <table class="table table-hover pointer" style="width: 100%">
-                    @foreach (var project in Model.Projects) {
-                        <tr style="width: 100%; text-align: left;">
-                            <td onclick="location.href='@Url.Action("Index", "Project", new { id = project.ProjectId})'">@project.Title</td>
-                        </tr>
-                    }
-                </table>
-            </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-
+<div style="float: left; width: 85%">
     <header>
-        <div id="headings">
+        <div id="headings" class="header-text" style="margin-top: 70px;">
             <h2>Personal Dashboard</h2>
             <h3>Here's an overview of your projects</h3>
         </div>
@@ -102,55 +102,77 @@
         </form>
     </header>
 
+    <div style="overflow: auto">
+        <div id="TasksSection">
+            <label>Tasks</label>
+            <div class="scrollable-task">
+                <table id="tasktable" class="table table-hover ">
+                    <tr>
+                        <th scope="col" onclick="sortTable(0, true)">Task</th>
+                        <th scope="col" onclick="sortTable(1, true)">Priority</th>
+                        <th scope="col" onclick="sortTable(2, true)">Due Date</th>
+                        <th scope="col" onclick="sortTable(3, true)">Status</th>
+                        <th scope="col" onclick="sortTable(4, true)">Project</th>
 
-    <div id="TasksSection">
-        <label>Tasks</label>
-        <div class="scrollable-task">
-            <table id="tasktable" class="table table-hover ">
-                <tr>
-                    <th scope="col" onclick="sortTable(0, true)">Task</th>
-                    <th scope="col" onclick="sortTable(1, true)">Priority</th>
-                    <th scope="col" onclick="sortTable(2, true)">Due Date</th>
-                    <th scope="col" onclick="sortTable(3, true)">Status</th>
-                    <th scope="col" onclick="sortTable(4, true)">Project</th>
+                        @if (Model.CurrentUser.Role == "Project Manager") {
+                            <th scope="col" onclick="sortTable(5, true)">Assignee</th>
+                        }
+                    </tr>
+                    <tbody id="taskTableBody">
 
-                    @if (Model.CurrentUser.Role == "Project Manager") {
-                        <th scope="col" onclick="sortTable(5, true)">Assignee</th>
-                    }
-                </tr>
-                <tbody id="taskTableBody">
-
-                    @foreach (var project in Model.Projects) {
-                        foreach (var task in project.Tasks) {
-                            <tr value="@task.TaskId">
-                                <td>@task.Title</td>
-                                <td>@task.Priority</td>
-                                <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
-                                <td>@task.Status</td>
-                                <td>@project.Title</td>
+                        @foreach (var project in Model.Projects) {
+                            foreach (var task in project.Tasks) {
+                                <tr value="@task.TaskId">
+                                    <td>@task.Title</td>
+                                    <td>@task.Priority</td>
+                                    <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@task.Status</td>
+                                    <td>@project.Title</td>
                                     @if (Model.CurrentUser.Role == "Project Manager") {
                                         <td>
-                                        @foreach (User user in task.Users) {
-                                            if (task.Users.Last() != user) {
-                                                <span>@user.FirstName @user.LastName, </span>
-                                            } else {
-                                                <span>@user.FirstName @user.LastName</span>
+                                            @foreach (User user in task.Users) {
+                                                if (task.Users.Last() != user) {
+                                                    <span>@user.FirstName @user.LastName, </span>
+                                                } else {
+                                                    <span>@user.FirstName @user.LastName</span>
+                                                }
                                             }
-                                        }
                                         </td>
                                     }
-                            </tr>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="TaskOverviewSection">
+            <canvas id="pie-chartcanvas"></canvas>
+
         </div>
     </div>
 
-    <div id="TaskOverviewSection">
-        <canvas id="pie-chartcanvas"></canvas>
+    <div style="overflow: auto;">
+        <div class="ProgressBarContainers">
+            <div class="ProgressBarContainer">
+                <label>Tasks Completed</label>
+                <div class="progress">
+                    <div id="taskProgressBar" class="progress-bar progress-bar-success" role="progressbar" style="width:80%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                </div>
+                <text id="taskProgressStatus" class="text-large">0/0</text><br />
+                <text id="taskProgressRemaining" class="text-medium text-secondary">0 tasks remaining</text>
+            </div>
 
-    </div>
+            <div class="ProgressBarContainer">
+                <label>Storage Used</label>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">10%</div>
+                </div>
+                <text class="text-large">100/1000 GB</text><br />
+                <text class="text-medium text-secondary">900GB remaining</text>
+            </div>
+        </div>
     <div id="PersonalNotesSection">
         <div>
             <label>Personal Notes</label>
@@ -172,39 +194,22 @@
 
         <div id="PersonalNoteTextContainer">
             <textarea id="PersonalNoteText"></textarea><br />
-            <div id="PersonalNotesButtonsContainer" class="btn-group">
+            <div id="PersonalNotesButtonsContainer" class="">
                 <button type="button" class="btn btn-primary btn-lg disabled" value="modify">Modify</button>
                 <button type="button" class="btn btn-success btn-lg" value="add">Add</button>
                 <button type="button" class="btn btn-danger btn-lg disabled" value="delete">Delete</button>
             </div>
         </div>
     </div>
-    <div class="ProgressBarContainers">
-        <div class="ProgressBarContainer">
-            <label>Tasks Completed</label>
-            <div class="progress">
-                <div id="taskProgressBar" class="progress-bar progress-bar-success" role="progressbar" style="width:80%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
-            </div>
-            <text id="taskProgressStatus" class="text-large">0/0</text><br />
-            <text id="taskProgressRemaining" class="text-medium text-secondary">0 tasks remaining</text>
+    
         </div>
-
-        <div class="ProgressBarContainer">
-            <label>Storage Used</label>
-            <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">10%</div>
-            </div>
-            <text class="text-large">100/1000 GB</text><br />
-            <text class="text-medium text-secondary">900GB remaining</text>
-        </div>
-    </div>
 </div>
+
 <script>
 
     $(document).ready(function () {
         loadPercentageBars("_all", "@Model.CurrentUser.Username");
         assignTaskRowClasses();
-        getTaskUser();
 
         var clickedRow = null;
         var addButton = $('button[value=add');
@@ -271,6 +276,8 @@
 
                     deleteButton.text("Delete");
                     changeButtonState(deleteButton, false);
+
+                    scrollToTop();
                 }
             }
         });
@@ -309,28 +316,32 @@
                     modifyButton.text('Modify');
                     deleteButton.text("Delete");
                     changeButtonState(addButton, true);
+
+                    scrollToTop();
                 }
             }
         });
 
         deleteButton.on('click', function () {
             if (deleteButton.text() === "Delete") {
-                $.ajax({
-                        type: "post",
-                        url: '@Url.Action("DeleteNote", "Dashboard")',
-                        dataType: "json",
-                        data: {
-                            noteId: ""+clickedRow.attr('id')
-                        },
-                        success: function (data) {
-                        },
+                if(confirm('Are you sure you want to delete this note?')){
+                    $.ajax({
+                            type: "post",
+                            url: '@Url.Action("DeleteNote", "Dashboard")',
+                            dataType: "json",
+                            data: {
+                                noteId: ""+clickedRow.attr('id')
+                            },
+                            success: function (data) {
+                            },
 
-                        error: function () {
-                            alert("There was an issue deleting this note.");
-                        }
-                });
+                            error: function () {
+                                alert("There was an issue deleting this note.");
+                            }
+                    });
 
-                clickedRow.remove();
+                    clickedRow.remove();
+                }
                 changeButtonState(deleteButton, false);
                 changeButtonState(modifyButton, false);
             } else {
@@ -343,6 +354,8 @@
                 changeButtonState(deleteButton, false);
                 changeButtonState(modifyButton, false);
                 changeButtonState(addButton, true);
+
+                scrollToTop();
             }
         })
 
@@ -364,6 +377,7 @@
 
         function focusOnTextArea() {
             $('#PersonalNoteText').focus();
+            scrollToBottom();
         }
 
         $('input[name=optradio]').on('click', function () {
@@ -544,13 +558,6 @@
             });
         }
 
-        function getTaskUser() {
-
-            /*$.each($('#tasktable tbody:last tr'), function (key, data) {
-                alert(data.getAttribute('value'));
-            })*/
-        }
-
 
         function assignTaskRowClasses() {
             $.each($('#tasktable tbody tr td:nth-child(4)'), function (key, value) {
@@ -559,6 +566,14 @@
                     $(this).parent().addClass('high-priority');
                 }
             })
+        }
+
+        function scrollToTop() {
+            $(window).scrollTop(0);
+        }
+
+        function scrollToBottom() {
+            $("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
         }
     })
 </script>
