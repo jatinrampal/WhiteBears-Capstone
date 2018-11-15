@@ -1,7 +1,7 @@
 ﻿@using WhiteBears.Models
 @model ProjectPageViewModel
 @{
-    
+
     Layout = null;
 }
 
@@ -21,10 +21,10 @@
 
         <div id="row" class="row">
             <div id="topBar" class="col-sm-6">
-              <h1 id="topBarTitle">@Model.Project.Title   </h1> 
+              <h1 id="topBarTitle">@Model.Project.Title </h1> 
             </div>
             <div class="col-sm-6">
-                <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { projectId = Model.Project.ProjectId})'">Team Management</button>
+                <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { projectId = Model.Project.ProjectId })'">Team Management</button>
             </div>
         </div>
         <hr id="hr" />
@@ -60,22 +60,27 @@
                                 <th>Due Date</th>
                             </tr>
                         </thead>
-                            @{ Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId});}
+                        @{ Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId });}
                     </table>
 
 
                     <!-- Tasks Buttons -->
                     <div id="projectTaskButtons">
                         <button type="button" id="projectTaskAdd" class="btn btn-info" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
+                     
                         <button type="button" id="projectTaskDelete" class="btn btn-danger">Delete</button>
 
+
                     </div>
+
+                    @Html.Partial("EditTaskView")
+
 
                     <!-- Note: Project ID, Username from Session. -->
                     <!-- Modal -->
                     <div id="projectTaskAddModal" class="modal fade" role="dialog">
                         <div class="modal-dialog" style="left:0% !important">
-                         
+
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -161,7 +166,7 @@
 
                 </div> <!-- projectTableDiv ends here -->
             </div> <!-- Task Information ENDS -->
-
+         
             <!--Document Information goes here -->
             <div class="col-sm-4">
 
@@ -179,7 +184,7 @@
                             </tr>
                         </thead>
                         <tbody id="projectDocumentTableTbody" class="projectTableTbody">
-                            @{ Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role, uName = Model.User.Username});}
+                            @{ Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role, uName = Model.User.Username });}
                         </tbody>
                     </table>
 
@@ -230,7 +235,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId },FormMethod.Post, new { @id = "notePost"}))
+                                    @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId }, FormMethod.Post, new { @id = "notePost" }))
                                     {
                                         <!-- Errors -->
                                         <div class="form-group row">
@@ -250,14 +255,14 @@
 
                                         <!--  Completed Labels -->
                                         <div class="form-group row">
-                                           
+
                                             <label for="CompletedDate" class="col-sm-12 col-form-label text-center">Completed Date</label>
 
                                         </div>
 
                                         <!-- EndDate Inputs -->
                                         <div class="form-group row">
-                                            
+
                                             <div class="col-sm-12 text-center">
                                                 <input id="noteCompletedDate" name="noteCompletedDate" type="date" required />
                                             </div>
@@ -267,11 +272,14 @@
                                         <div class="form-group row">
                                             <label for="noteTo" class="col-sm-2 col-form-label text-center">To:</label>
                                             <select class="form-control" id="noteTo" name="noteTo" required>
-                                                <option>Developer</option>
                                                 <option>Project Manager</option>
+                                                <option>Developer</option>
+                                                <option>Database Administrator</option>
+                                                <option>Software Architect</option>
                                                 <option>Full Stack Developer</option>
                                                 <option>Business Analyst</option>
                                                 <option>Contractor</option>
+                                                <option>Quality Analyst</option>
                                                 <option>Admin</option>
                                             </select>
                                         </div>
@@ -299,6 +307,7 @@
     </div> <!-- Container-Fluid ends here-->
 
 
+   
     <script>
 
         $(document).ready(function () {
@@ -307,7 +316,28 @@
 
             // Double Click on ProjectTaskTable
             $("#projectTaskTable tbody tr").dblclick(function () {
-                alert("More things will go here...");
+                myDBCTaskID = $(this).attr('id'); // task id 
+                myDBCProjectID = @Model.Project.ProjectId; 
+                alert("My DBC id: " + myDBCTaskID);
+              
+
+                var data = JSON.stringify({
+                    'taskID': myDBCTaskID,
+                    'projectId': myDBCProjectID 
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("EditTaskView", "Project")", // the method we are calling
+                        data: data,
+                        contentType: 'application/json',
+                        success: function (msg) {
+                           
+                        }
+                    });
+
+                $('#projectTaskEditModal').modal();
+
             });
 
             $("#projectDocumentTable tbody tr").dblclick(function () {
@@ -509,6 +539,8 @@
                 }
 
             });
+
+           
 
             // Title VALIDATION
             $('#taskTitle').focusout(function () {

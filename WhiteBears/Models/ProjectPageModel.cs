@@ -367,6 +367,34 @@ namespace WhiteBears.Models
             return true; 
             //SELECT * FROM Project p JOIN User_Project up ON up.projectId = p.projectId where p.projectId = 2 AND up.uName = 'Kish';  
         }
+
+        public Task currTaskSelect(int projectId, int taskId)
+        {
+            Task task = new Task();
+            DatabaseHelper dh = new DatabaseHelper();
+            try
+            {
+                DataRow[] drs = dh.RunQuery($"SELECT * FROM Task t where t.taskId = '{taskId}' AND t.projectId = '{projectId}';");
+                return new Task()
+                {
+                    TaskId = Convert.ToInt32(drs[0]["taskId"]),
+                    Title = drs[0]["title"].ToString(),
+                    Description = drs[0]["description"].ToString(),
+                    StartDate = Convert.ToDateTime(drs[0]["startDate"].ToString()),
+                    DueDate = Convert.ToDateTime(drs[0]["dueDate"].ToString()),
+                    CompletedDate = Convert.ToDateTime(drs[0]["completionDate"].ToString()),
+                    ProjectId = drs[0]["projectId"].ToString(),
+                    Priority = drs[0]["priority"].ToString()
+
+
+                };
+            }
+            catch(Exception e)
+            {
+
+                return task; 
+            }
+        }
     }
 
 }

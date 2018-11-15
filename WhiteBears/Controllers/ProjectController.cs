@@ -57,10 +57,23 @@ namespace WhiteBears.Controllers
                 else
                 {
                     pm.Project = p.GetProject(username, projectid);
+                  
                 }
                 pm.User = p.getUser(username);
                 return View(pm);
             }
+        }
+
+     
+
+        public ActionResult EditTaskView(int taskId, int projectId)
+        {
+
+            ProjectPageViewModel pm = new ProjectPageViewModel();
+            ProjectPageModel p = new ProjectPageModel();
+            pm.Task = p.currTaskSelect(projectId, taskId);
+            Debug.WriteLine("WRITING TASK : " + pm.Task.Title);
+            return View(pm);
         }
 
         [HttpPost]
@@ -324,6 +337,8 @@ namespace WhiteBears.Controllers
             IEnumerable<ProjectPageViewModel> td = documentModel.getDocuments(username, id, roleName, uName);
             return View(td);
         }
+
+
 
       
     }
