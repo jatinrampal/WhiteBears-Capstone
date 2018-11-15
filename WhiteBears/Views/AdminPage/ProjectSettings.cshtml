@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<WhiteBears.Models.Project>
 
 @Styles.Render("~/Style/UserSettings.css")
+@{
+    Layout = "~/Views/Shared/_AdminPages.cshtml";
+}
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script>
@@ -51,7 +54,8 @@
 </script>
 
 <div id="AddHeaderContainer">
-    <h2 class="header">Project Settings</h2>
+    <button class="btn btn-secondary back-button" onclick="location.href='@Url.Action("Index", "AdminPage")'">Back</button>
+    <h2 class="header header-text">Project Settings</h2>
 </div>
 
 <form id="projectselection" class="text-center">
