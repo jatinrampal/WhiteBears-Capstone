@@ -17,9 +17,13 @@ namespace WhiteBears.Controllers
         [HttpPost]
         public ActionResult Index(string username, string password)
         {
-
             if (Authentication.VerifyCredentials(username, password))
             {
+                if (!Authentication.VerifyIfEnabled(username)) {
+                    ViewBag.Error = "Your account is disabled.  Please contact your administrator";
+                    return View();
+                }
+
                 Session["username"] = username;
 
                 if (Authentication.VerifyIfAdmin(username)) {
