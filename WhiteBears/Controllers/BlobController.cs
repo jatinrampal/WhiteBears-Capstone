@@ -30,7 +30,6 @@ namespace Whitebears.Controllers
         public BlobController(IBlobStorageRepository _repo)
         {
             this.repo = _repo;
-
         }
 
 

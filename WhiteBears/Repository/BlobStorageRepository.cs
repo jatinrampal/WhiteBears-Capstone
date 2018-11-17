@@ -33,6 +33,31 @@ namespace Whitebears.Repository
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
         }
 
+        public long BlobStorage()
+        {
+            _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
+            var blobs = _cloudBlobContainer.ListBlobs(); // Use ListBlobsSegmentedAsync for containers with large numbers of files
+            var blobsList = new List<IListBlobItem>(blobs);
+
+            long sizeInBytes = 0;
+
+            if (blobsList.Count == 0)
+            { 
+                // Refresh enumeration after initializing
+                blobs = _cloudBlobContainer.ListBlobs();
+                blobsList.AddRange(blobs);
+            }
+
+            foreach (var item in blobs)
+            {
+                if (item is CloudBlockBlob blob)
+                {
+                    sizeInBytes += blob.Properties.Length;
+                }
+            }
+            return sizeInBytes;
+        }
+
         public bool DeleteBlob(string file, string fileExtension)
         {
             //throw new NotImplementedException();
