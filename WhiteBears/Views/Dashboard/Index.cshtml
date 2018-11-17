@@ -1,4 +1,4 @@
-﻿@using WhiteBears.Models
+@using WhiteBears.Models
 @model DashboardModel
 
 @Styles.Render("~/bundles/style/dashboard")
@@ -167,10 +167,10 @@
             <div class="ProgressBarContainer">
                 <label>Storage Used</label>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">10%</div>
+                    <div id="storageProgressBar" class="progress-bar progress-bar-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">10%</div>
                 </div>
-                <text class="text-large">100/1000 GB</text><br />
-                <text class="text-medium text-secondary">900GB remaining</text>
+                <text id="storageStatus" class="text-large">0/2GB</text><br />
+                <text id="storageRemaining" class="text-medium text-secondary">2GB remaining</text>
             </div>
         </div>
     <div id="PersonalNotesSection">
@@ -462,10 +462,39 @@
                         percentage = 0.00;
                     }
 
+                    if (percentage < 10) {
+                        $('#taskProgressBar').css('color', 'black');
+                    } else {
+                        $('#taskProgressBar').css('color', 'white');
+                    }
+
                     $('#taskProgressBar').html(percentage + "%");
                     $('#taskProgressBar').css('width', percentage + '%');
                     $('#taskProgressStatus').html(completed + '/' + total);
                     $('#taskProgressRemaining').html(notCompleted + ' task' + (notCompleted > 1 ? 's' : '') + ' remaining');
+
+
+                    var usedStorage = @Model.GetUsedStorage();
+                    usedStorage = usedStorage / 1000000;
+                    usedStorage = usedStorage.toFixed(2);
+                    $('#storageStatus').text(usedStorage+'/2000 MB');
+                    $('#storageRemaining').text(2000 - usedStorage + " MB remaining");
+
+                    var percentage = (usedStorage / 2000) * 100
+                    percentage = percentage.toFixed(2);
+
+                    if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
+                        percentage = 0.00;
+                    }
+
+                    if (percentage < 10) {
+                        $('#storageProgressBar').css('color', 'black');
+                    } else {
+                        $('#storageProgressBar').css('color', 'white');
+                    }
+
+                    $('#storageProgressBar').html(percentage + "%");
+                    $('#storageProgressBar').css('width', percentage + '%');
 
                     var onSchedule = 0;
                     var completedOnTime = 0;
