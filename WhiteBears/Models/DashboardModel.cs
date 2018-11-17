@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Web;
+using Whitebears.Repository;
 using WhiteBears;
 
 namespace WhiteBears.Models {
@@ -123,6 +124,12 @@ namespace WhiteBears.Models {
         public int UpdatePersonalNote(string note, int noteId) {
             DatabaseHelper dh = new DatabaseHelper();
             return dh.RunUpdateQuery($"UPDATE PersonalNote SET note='{note}' WHERE PersonalNote.noteId = '{noteId}';");
+        }
+
+        public long GetUsedStorage() {
+            BlobStorageRepository bs = new BlobStorageRepository();
+
+            return bs.BlobStorage();
         }
     }
 }
