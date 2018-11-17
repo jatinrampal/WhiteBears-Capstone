@@ -46,7 +46,7 @@ table {
     margin-left: 50px;
     margin-top: 20px;
     min-height: 300px;
-    width: 65%;
+    width: 60%;
     margin-bottom: 15px;
 }
 
@@ -150,13 +150,13 @@ textarea {
 
 .ProgressBarContainer {
     margin-left: 50px;
-    width: 600px;
+    width: 95%;
     float: left;
 }
 
 .ProgressBarContainers {
     margin-top: 20px;
-    width: 300px;
+    width: 40%;
     float:left;
 }
 

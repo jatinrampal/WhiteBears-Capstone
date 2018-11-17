@@ -1003,3 +1003,6 @@ E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\Sautin
 C:\Users\Rafael\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
 C:\Users\Rafael\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
 C:\Users\Rafael\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
+E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
+E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
+E:\Users\Yolanda\Documents\VS_Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
