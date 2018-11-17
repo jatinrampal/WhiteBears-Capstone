@@ -68,7 +68,7 @@
                 data: '{ "id": @Model.id, "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
                 success: function (data) {
                     console.log(data);
-                    $("#oldModdBy").html(data.modifiedBy1);
+                    $("#oldModBy").html(data.modifiedBy1);
                     $("#oldTimeStamp").html(data.timeStamp1);
                     $("#newModBy").html(data.modifiedBy2);
                     $("#newTimeStamp").html(data.timeStamp2);
