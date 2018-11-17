@@ -44,7 +44,6 @@ namespace Whitebears.Controllers
         public JsonResult RemoveBlob(string file, string extension)
         {
             bool isDeleted = repo.DeleteBlob(file, extension);
-
             return Json(isDeleted, JsonRequestBehavior.AllowGet);
         }
 
@@ -106,11 +105,11 @@ namespace Whitebears.Controllers
             //If filename doesn't exist INSERT and if it does UPDATE
             if (count == 0)
             {
-                InsertDocumentDB(projectId, actualFileName , uname, System.IO.Path.GetExtension(uploadFileName.FileName));
+                InsertDocumentDB(projectId, actualFileName, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
             }
             else if (count > 0)
             {
-                UpdateDocumentDB(projectId, actualFileName , actualFileName , uname, System.IO.Path.GetExtension(uploadFileName.FileName));
+                UpdateDocumentDB(projectId, actualFileName, actualFileName, uname, System.IO.Path.GetExtension(uploadFileName.FileName));
             }
 
             //Update the Database and put in the Document entry
@@ -173,6 +172,24 @@ namespace Whitebears.Controllers
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
             return dh.RunInsertQuery($"INSERT INTO DocumentRole VALUES('{role}','{documentId}', 1)");
         }
+
+        /*public static int DeleteDocumentDB(string documentId, int version, string uploaderName)
+        {
+            WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
+            return dh.RunInsertQuery($"INSERT INTO DocumentVersion VALUES('{version}','{documentId.ToString()}','{DateTime.Now}','{uploaderName}')");
+        }
+
+        public static int DeleteDocumentVersionDB(string documentId, int version, string uploaderName)
+        {
+            WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
+            return dh.RunInsertQuery($"INSERT INTO DocumentVersion VALUES('{version}','{documentId.ToString()}','{DateTime.Now}','{uploaderName}')");
+        }
+
+        public static int DeleteDocumentRoleDB(string documentId, int version, string uploaderName)
+        {
+            WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
+            return dh.RunInsertQuery($"INSERT INTO DocumentVersion VALUES('{version}','{documentId.ToString()}','{DateTime.Now}','{uploaderName}')");
+        }*/
     }
 
 
