@@ -35,8 +35,8 @@
     <!--Migrate to CSS file-->
     <div class="page-container">
         <div>
-            <h2>@Model.CurrentProject.Title</h2>
-            <h3>Team Management Settings</h3>
+            <h2 class="header-text">@Model.CurrentProject.Title</h2>
+            <h3 class="header-text">Team Management Settings</h3>
         </div>
 
         <div class="row">
@@ -56,7 +56,7 @@
                 </table>
             </div>
 
-            <div class="col-sm-3 justify-content-center">
+            <div class="col-sm-2 justify-content-center">
                 <button class="btn btn-lg btn-primary disabled glyphicon glyphicon-plus" value="add">Add</button>
                 <button class="btn btn-lg btn-danger disabled glyphicon glyphicon-minus" value="remove">Remove</button>
             </div>
@@ -185,7 +185,7 @@
                         dataType: "json",
                         data: {
                             usernames: removedUsers,
-                            excludedUsers: '@Model.ExcludedUsers',
+                            excludedUsers : '@Model.ExcludedUsers',
                             projectId: '@Model.CurrentProject.ProjectId'
                         },
                         success: function (data) {
@@ -199,7 +199,7 @@
 
                 alert("Update successful.")
 
-                window.location.href = '@Url.Action("Index", "Project", new { projectId = Model.CurrentProject.ProjectId } )';
+                window.location.href = '@Url.Action("Index", "Project", new { id = Model.CurrentProject.ProjectId } )';
             })
 
             function changeButtonState(button, state) {

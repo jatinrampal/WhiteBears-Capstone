@@ -1,7 +1,7 @@
 ﻿@using WhiteBears.Models
 @model ProjectPageViewModel
 @{
-    
+
     Layout = null;
 }
 
@@ -24,7 +24,7 @@
               <h1 id="topBarTitle">@Model.Project.Title   </h1> 
             </div>
             <div class="col-sm-6">
-                <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { projectId = Model.Project.ProjectId})'">Team Management</button>
+                <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { projectId = Model.Project.ProjectId })'">Team Management</button>
             </div>
         </div>
         <hr id="hr" />
@@ -60,7 +60,7 @@
                                 <th>Due Date</th>
                             </tr>
                         </thead>
-                            @{ Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId});}
+                            @{ Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId });}
                     </table>
 
 
@@ -179,14 +179,23 @@
                             </tr>
                         </thead>
                         <tbody id="projectDocumentTableTbody" class="projectTableTbody">
-                            @{ Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role, uName = Model.User.Username});}
+                            @{ Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role, uName = Model.User.Username });}
                         </tbody>
                     </table>
 
                     <div id="projectDocumentButtons">
-                        <button type="button" id="projectDocumentUpload" class="btn btn-info" onclick="location.href='@Url.Action("UploadBlob", "Blob", new { projectId = Model.Project.ProjectId, role = Model.User.Role})'">Upload</button>
-                        <button type="button" id="projectCompare" class="btn btn-info">Version Compare</button>
+                        <button type="button" id="projectButtonUpload" class="btn btn-info" style="float:left;margin:0px 10px 0px 10px">Download</button>
+                        <button type="button" id="projectDocumentUpload" class="btn btn-info" style="float:left;margin:0px 10px 0px 10px" onclick="location.href='@Url.Action("UploadBlob", "Blob", new { projectId = Model.Project.ProjectId, role = Model.User.Role })'">Upload</button>
+                        <button type="button" id="projectCompare" class="btn btn-info" style="float:left;margin:0px 10px 0px 10px">Version Compare</button>
                     </div>
+                    @if (Model.User.Role.Equals("Project Manager"))
+                    {
+                        @Html.Partial("_DocumentDetailPM", Model.document)
+                    }
+                    else
+                    {
+                        @Html.Partial("_DocumentDetail", Model.document)
+                    }
 
                 </div><!-- projectTableDiv ends here -->
             </div> <!-- Document Information ENDS -->
@@ -300,18 +309,100 @@
 
 
     <script>
-
+        var documentVersions;
         $(document).ready(function () {
-           
+
             // jQuery methods go here...
 
             // Double Click on ProjectTaskTable
             $("#projectTaskTable tbody tr").dblclick(function () {
                 alert("More things will go here...");
             });
+           //add a event handler if the version is changed on the document popup
+            $("#version").change(function () {
+                
+                $.each(documentVersions, function (i, val) {
+                    if ($("#version option:selected").val() == val.version) {
+                        $("#ModifiedBy").text(val.modifiedBy);
+                        $("#ModifiedOn").text(val.timeStamp);
+                    }
+                });
+            });
 
+            //download document button click handler
+            $("#projectButtonUpload").click(function () {
+                $.ajax({
+                type: "POST",
+                url: '@Url.Action("DownloadLatestVersion", "DocumentReview")',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: '{"id":' + stored + '}',
+                success: downloadBlob,
+                error: function (e) { console.log(e); }
+                });
+            });
+
+            //download document from popup page
+            $("#downloadDoc").click(function () {
+                $.ajax({
+                type: "POST",
+                url: '@Url.Action("DownloadDocument", "DocumentReview")',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: '{"id":' + $("#DocumentId").val() + ', "ver":' +$("#version option:selected").val() + '}',
+                success: downloadBlob,
+                error: function (e) { console.log(e); }
+                });
+            });
+
+            //delete document from popup page
+            $("#deleteDoc").click(function () {
+                $.ajax({
+                type: "POST",
+                url: '', //need to add proper URL
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: '{"id":' + $("#DocumentId").val() + ', "ver":' + $("#version option:selected").val() + '}',
+                success: function () { alert("Document Removed"); },
+                error: function (e) { console.log(e); }
+                });
+            });
+
+            //starts the download
+            var downloadBlob = function (data) {
+                //var jsonObj = JSON.parse(data);
+                var element = document.createElement('a');
+                element.setAttribute("href", "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64," + data.B64);
+                element.setAttribute('download', data.FileName);
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            }
+
+            //handle a double click on the document - displays the popup page
             $("#projectDocumentTable tbody tr").dblclick(function () {
-                alert("More things will go here");
+                $("#documentDetailsModal").modal().show();
+                $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetDocumentDetails", "ProjectDocument")',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: '{"id":' + $(this).attr('id') + '}',
+                    success: function (data) {
+                        console.log(data);
+                        $("#DocumentId").val(data.DocumentId);
+                        $("#FileName").text(data.FileName);
+                        $.each(data.DocVersion.docList, function (i, val) {
+                            $("#version").append("<option value="+ val.version +">" + val.version + "</option>")
+                        });
+                        $("#ModifiedBy").text(data.DocVersion.docList[0].modifiedBy);
+                        $("#ModifiedOn").text(data.DocVersion.docList[0].timeStamp);
+                        $("#Uploader").text(data.Uploader);
+                        $("#CreationTime").text(data.CreationTime);
+                        documentVersions = data.DocVersion.docList;
+                    },
+                error: function (e) { console.log(e); }
+                });
             });
 
 
@@ -327,11 +418,11 @@
             var myChecked;
             var myTaskID;
             var TaskSelectedArray = [];
-            // Click on task 
+            // Click on task
             $('#projectTaskTableTbody').on('click', 'tr', function () {
-                myTaskID = $(this).attr('id'); // table row ID 
+                myTaskID = $(this).attr('id'); // table row ID
 
-                myChecked = $('#task').prop("checked");
+                myChecked = $('#task' + myTaskID).prop("checked");
 
 
                 // Only run if checkedBox is not clicked
@@ -354,7 +445,7 @@
                 }
                 else {
                     disableSelectColor = 0;
-                    alert("Passing values " + myChecked + " TaskID " + myTaskID);
+                    //alert("Passing values " + myChecked + " TaskID " + myTaskID);
 
                     var data = JSON.stringify({
                         'taskID': myTaskID,
@@ -367,7 +458,7 @@
                         data: data,
                         contentType: 'application/json',
                         success: function (msg) {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -376,11 +467,11 @@
 
 
             var ProjectNoteSelectedArray = [];
-            // Click on Project Note 
+            // Click on Project Note
             $('#projectNoteTableTbody').on('click', 'tr', function () {
                 $(this).toggleClass('on');
 
-                myNoteID = $(this).attr('id'); // table row ID 
+                myNoteID = $(this).attr('id'); // table row ID
 
 
                 var exitsVal = false;
@@ -404,7 +495,7 @@
             fileExtension = "Empty";
             //Click on Project Document
             $('#projectDocumentTableTbody').on('click', 'tr', function () {
-                myDocumentID = $(this).attr('id'); // table row ID 
+                myDocumentID = $(this).attr('id'); // table row ID
 
                 myFileExtension = $(this).find("#fileExtension").text();
 
@@ -480,7 +571,7 @@
             });
 
 
-            // Incomplete dynamic role 
+            // Incomplete dynamic role
             $('#projectNoteAdd').click(function () {
                 $.ajax({
                     url: "@Url.Action("getRoles", "Project")",
@@ -498,8 +589,8 @@
             // Title - Description, StartDate, EndDate)
             var endDateVal = false;
             var startDateVal = false;
-            var titleVal = false; 
-            var descriptionVal = false; 
+            var titleVal = false;
+            var descriptionVal = false;
 
             $("#taskPost").on('submit', function (e) {
 
@@ -516,42 +607,42 @@
                 if (/\d/.test(myTaskTitle)) {
                     // number found
                     $('#taskErrors').text("Title cannot have numbers, try agian.");
-                    titleVal = false; 
+                    titleVal = false;
                 }
                 else if (myTaskTitle.length > 40)
                 {
                     $('#taskErrors').text("Title must be smaller, try agian.");
-                    titleVal = false; 
+                    titleVal = false;
                 }
                 else if ($.trim(myTaskTitle).length == 0)
                 {
                     $('#taskErrors').text("You have not entered a title.");
-                    titleVal = false; 
+                    titleVal = false;
                 }
                 else {
                     $('#taskErrors').empty();
-                    titleVal = true; 
-                    
+                    titleVal = true;
+
                 }
             });
 
             // Description VALIDATION
             $('#taskDescription').focusout(function () {
                 var myTaskDescription = $('#taskDescription').val();
-               
+
                 if (myTaskDescription.length > 255) {
                     $('#taskErrors').text("Description must be smaller, try agian.");
-              
+
                     descriptionVal = false;
                 }
                 else if ($.trim(myTaskDescription).length == 0) {
                     $('#taskErrors').text("Please enter a Description.");
-                  
+
                     descriptionVal = false;
                 }
                 else {
                     $('#taskErrors').empty();
-                 
+
                     descriptionVal = true;
 
                 }
@@ -566,19 +657,19 @@
                 if (myEndDate < myStartDate) {
                    // alert("Your End Date, ends before your Start Date.");
                     $('#taskErrors').text("Your End Date, ends before your Start Date.");
-                    endDateVal = false; 
+                    endDateVal = false;
                 }
                 else if (currentdateTime == myEndDate)
                 {
                     $('#taskErrors').text("Your End Date, must end after today.");
-                    endDateVal = false; 
+                    endDateVal = false;
                 }
                 else
                 {
                     $('#taskErrors').empty();
-                    endDateVal = true; 
+                    endDateVal = true;
                 }
-      
+
             });
 
             // StartDate VALIDATION
@@ -594,11 +685,11 @@
                     $('#taskErrors').empty();
                     startDateVal = true;
                 }
-               
+
             });
 
             // Message, CompletionDate)
-           
+
             var completionVal = false;
             var messageVal = false;
 
@@ -651,11 +742,11 @@
 
             if ("@Model.User.Role" == "Admin") {
                 $('#TeamManagement').removeClass('hidden');
-               
+
             }
-       
+
         });
-   
+
     </script>
 
 

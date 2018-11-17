@@ -13,7 +13,7 @@
 
 
 .header {
-    color: red;
+    color: black;
 }
 
 .noBorder {
@@ -25,9 +25,6 @@
     margin-bottom: 20px;
 }
 
-.form-group {
-    margin-bottom: 20px;
-}
 
 .formContainer {
     border: solid darkgray 2px;
@@ -36,18 +33,19 @@
 }
 
 
-#CompanyInformationContainer{
-    margin-left: 50px;
+#PersonalInformationContainer {
+    float: left;
+    width: 500px;
 }
-#PersonalInformationContainer, #CompanyInformationContainer {
+
+#CompanyInformationContainer {
     float: left;
     width: 500px;
 }
 
 #FirstProjectInformationContainer {
     margin-top: 0;
-    overflow: auto;
-    width: 100%;
+    width: 500px;
 }
 
 #container {

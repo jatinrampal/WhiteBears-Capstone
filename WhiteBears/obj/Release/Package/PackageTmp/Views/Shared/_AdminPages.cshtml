@@ -10,10 +10,10 @@
     @Scripts.Render("~/bundles/scripts/popper")
     @Scripts.Render("~/bundles/scripts/bootstrap")
     @Styles.Render("~/bundles/style/bootstrap")
-    @Styles.Render("~/bundles/style/layout")
+    @Styles.Render("~/bundles/style/styling");
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 500px">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,17 +21,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
-                @Html.ActionLink("WhiteBears", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("WhiteBears", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse" >
+            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
                     <li>@Html.ActionLink("Business", "About", "Home")</li>
                     <li>@Html.ActionLink("Features", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Pricing", "Contact", "Home")</li>
                     <li>@Html.ActionLink("About Us", "Contact", "Home")</li>
-                    
+
                 </ul>
 
                 <ul class="nav navbar-nav pull-right">
@@ -39,8 +38,8 @@
                 </ul>
             </div>
         </div>
-    </div >
-    <div class="container body-content" style="width: 100%; margin: 0px; padding: 0px">
+    </div>
+    <div class="container body-content">
         @RenderBody()
 
 

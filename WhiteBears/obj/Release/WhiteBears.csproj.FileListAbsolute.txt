@@ -222,3 +222,6 @@ C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.D
 C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
 C:\Users\Superman\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Rafael\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
+C:\Users\Rafael\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
+C:\Users\Rafael\source\repos\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
