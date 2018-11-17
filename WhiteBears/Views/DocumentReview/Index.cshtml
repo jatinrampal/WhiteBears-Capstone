@@ -8,13 +8,57 @@
     ViewBag.Title = "Document Version Comparison";
 }
 <script>
+
+    var oldScroll = 0;
+    var newScroll = 0;
     $(document).ready(function () {
         setDocumentDisplayHeight();
+        //Ajax call to download document selected on the left side
+        $("#oldDownload").click(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DownloadDocument", "DocumentReview")',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: '{"id": @Model.id, "ver":' + $("#version1").val() + '}',
+                success: downloadBlob,
+                error: function (e) { console.log(e); }
+            });
 
-        $(window).on('resize', function () {
-            setDocumentDisplayHeight();
         });
 
+        //Ajax call to download document selected on the right side
+        $("#newDownload").click(function(){
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DownloadDocument", "DocumentReview")',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: '{"id": @Model.id, "ver":' + $("#version2").val() + '}',
+                success: downloadBlob,
+                error: function (e) { console.log(e); }
+            });
+
+        });
+
+        //Set scroll lock button function
+        $("#scrollLock").click(function () {
+            if ($("#scrollLock").val() == "Unlocked") {
+                $("#scrollLock").val("Locked");
+                oldScroll = $("#oldDocument").scrollTop();
+                newScroll = $("#newDocument").scrollTop();
+                $("#oldDocument").scroll(oldScrolling);
+                $("#newDocument").scroll(newScrolling);
+            }
+            else {
+                $("#scrollLock").val("Unlocked");
+                $("#oldDocument").off("scroll");
+                $("#newDocument").off("scroll");
+            }
+
+        });
+
+        //ajax call to start review process
         $("#btnReview").click(function () {
             $.ajax({
                 type: "POST",
@@ -23,9 +67,10 @@
                 dataType: "json",
                 data: '{ "id": @Model.id, "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
                 success: function (data) {
-                    $("#oldModifiedBy").html(data.modifiedBy1);
+                    console.log(data);
+                    $("#oldModdBy").html(data.modifiedBy1);
                     $("#oldTimeStamp").html(data.timeStamp1);
-                    $("#newModifiedBy").html(data.modifiedBy2);
+                    $("#newModBy").html(data.modifiedBy2);
                     $("#newTimeStamp").html(data.timeStamp2);
                     displayDocument(data.Doc1, "oldDocument");
                     displayDocument(data.Doc2, "newDocument");
@@ -45,17 +90,55 @@
                 error: function (e) { console.log(e); }
             });
         });
+
+        //function to resize the documents container based on the window size
+        $(window).on('resize', function () {
+            setDocumentDisplayHeight();
+        });
     });
-    
+
+    var newScrolling = function () {
+        $("#oldDocument").off("scroll");
+        var newPosition = $("#newDocument").scrollTop();
+        oldScroll = oldScroll + (newPosition - newScroll);
+        $("#oldDocument").scrollTop(oldScroll);
+        newScroll = newPosition;
+        $("#oldDocument").on("scroll", oldScrolling);
+    }
+
+    var oldScrolling = function () {
+        $("#newDocument").off("scroll");
+        var newPosition = $("#oldDocument").scrollTop();
+        newScroll = newScroll + (newPosition - oldScroll);
+        $("#newDocument").scrollTop(newScroll);
+        oldScroll = newPosition;
+        $("#newDocument").on("scroll", newScrolling);
+    }
+
+    //function to download blob file
+    var downloadBlob = function (data) {
+        //var jsonObj = JSON.parse(data);
+        var element = document.createElement('a');
+        element.setAttribute("href", "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64," + data.B64);
+        element.setAttribute('download', data.FileName);
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
+    //function to set document container height
     var setDocumentDisplayHeight = function () {
         var windowHeight = $(window).height();
         var headerPosition = $("#documentHeaderContainer").offset().top;
-        var headerHeight = $('#documentHeaderContainer').height();
+        var headerHeight = $("#documentHeaderContainer").height();
         var height = windowHeight - (headerPosition + headerHeight + 20);
         console.log("window:" + windowHeight + " header top: " + headerPosition + " header height: " + headerHeight + " height: " + height);
-        $("#documentComparisonContainer").attr("style", "height:" + height + "px;overflow-y:scroll;clear:both;float:left;min-height:100px;width:100%;");
+        $("#documentComparisonContainer").attr("style", "height:" + height + "px;clear:both;float:left;min-height:100px;width:100%;");
     }
 
+    
+
+    //function to display reviewed document
     var displayDocument = function (elements, target) {
         var returnString = "";
         $("#" + target).empty();
@@ -148,6 +231,7 @@
         
     }
 
+    //search for specific document elements
     var searchArray = function (elements, order) {
         var element;
         $.each(elements, function (i, v) {
@@ -157,12 +241,14 @@
         })
         return element;
     }
+
+
 </script>
 
 
 
 <h2>@ViewBag.Title</h2>
-<div id="documentHeaderContainer">
+<div id="documentHeaderContainer" style="height:150px;margin:0px 15px 0px 15px;">
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
         @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version1" })
@@ -173,9 +259,11 @@
         <p id="oldTimeStamp" style="float:left;"></p>
         <label for="oldFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
         <p id="oldFileSize" style="float:left;"></p>
+        <input id="oldDownload" type="button" value="Download" class="btn btn-primary btn-sm" style="display:inline-block;width:100px;clear:both;float:left;" />
     </div>
     <div style="width:10%;float:left;">
-        <input id="btnReview" type="button" class="btn btn-primary btn-sm" value="Compare" />
+        <input id="btnReview" type="button" class="btn btn-primary btn-sm" value="Compare" /></br>
+        <input id="scrollLock" type="button" class="btn btn-primary btn-sm" value="Unlocked" />
     </div>
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
@@ -187,13 +275,14 @@
         <p id="newTimeStamp" style="float:left;"></p>
         <label for="newFileSize" style="display:inline-block;width:100px;clear:both;float:left;">File size:</label>
         <p id="newFileSize" style="float:left;"></p>
+        <input id="newDownload" type="button" class="btn btn-primary btn-sm" value="Download" style="display:inline-block;width:100px;clear:both;float:left;" />
     </div>
 </div>
 <div id="documentComparisonContainer" style="width:100%;min-width:100%;">
-    <div id="oldDocument" style="width:49%;margin:1% 1% 1% 0%;clear:both;float:left">
+    <div id="oldDocument" style="height:inherit;width:48%;margin:1% 1% 1% 15px;clear:both;float:left;overflow-y:scroll">
 
     </div>
-    <div id="newDocument" style="width:49%;margin:1% 0% 1% 1%;float:left">
+    <div id="newDocument" style="height:inherit;width:48%;margin:1% 0% 1% 1%;float:left;overflow-y:scroll">
 
     </div>
 </div>

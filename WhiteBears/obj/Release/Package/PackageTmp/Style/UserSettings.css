@@ -2,13 +2,19 @@
     max-width: 600px;
 }
 
+.back-button {
+    float: left;
+    margin-left: 20px;
+    margin-top: 20px
+}
+
 
 #AddHeaderContainer {
     box-shadow: 0 5px 5px 0px gray;
     border-bottom: solid black 1px;
     padding: 5px;
     margin-bottom: 50px;
-    text-align: center
+    text-align: left;
 }
 
 #tasktable{
@@ -19,8 +25,12 @@
     margin-bottom: 100px;
 }
 
+.subheader {
+    color: black;
+}
+
 .header {
-    color: red;
+    margin-left: 100px;
 }
 
 #EditUserTableContainer, #DisabledUsersTableContainer {

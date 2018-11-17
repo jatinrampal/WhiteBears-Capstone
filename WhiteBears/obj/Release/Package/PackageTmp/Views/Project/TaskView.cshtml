@@ -7,7 +7,7 @@
     {
         <tr id="@task.Task.TaskId" class="taskID">
             <td id="isCompleted">
-                @Html.CheckBox("task", @task.Task.IsCompleted)
+                @Html.CheckBox("task" + task.Task.TaskId, @task.Task.IsCompleted)
             </td>
             <td class="taskTB">
                 @task.Task.Title

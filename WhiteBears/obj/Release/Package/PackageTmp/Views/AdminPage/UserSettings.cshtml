@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<WhiteBears.Models.User>
 
 @Styles.Render("~/Style/UserSettings.css")
+
+@{
+    Layout = "~/Views/Shared/_AdminPages.cshtml";
+}
+
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script>
     function sortTable(n) {
@@ -46,53 +51,69 @@
     }
 </script>
 <div id="AddHeaderContainer">
-    <h2 class="header">User Settings</h2>
+    <button class="btn btn-secondary back-button" onclick="location.href='@Url.Action("Index", "AdminPage")'">Back</button>
+    <h2 class="header header-text">User Settings</h2>
 </div>
-<h3 class="header">New User Information</h3>
+<h3 class="subheader header-text">New User Information</h3>
 
 @Html.AntiForgeryToken()
 
 <div id="NewUserForm" class="form-horizontal">
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        <table class="table borderless">
-            <tr>
-                <td class="left-column"><h4>First Name:</h4></td>
-                <td><input name="firstname" type="text" /></td>
-            </tr>
-            <tr>
-                <td class="left-column"><h4>Last Name:</h4></td>
-                <td><input name="lastname" type="text" /></td>
-            </tr>
-            <tr>
-                <td class="left-column"><h4>Username:</h4></td>
-                <td><input name="username" type="text" /></td>
-            </tr>
-            <tr>
-                <td class="left-column"><h4>Password (temporary):</h4></td>
-                <td><input name="password" type="password" /></td>
-            </tr>
-            <tr>
-                <td class="left-column"><h4>Password (confirm):</h4></td>
-                <td><input name="passwordConfirm" type="password" /></td>
-            </tr>
-            <tr>
-                <td class="left-column"><h4>Role:</h4></td>
-                <td><input name="role" type="text" /></td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button value="create" class="btn btn-success ">Create</button>
+    <form id="NewUserForm">
+        <div class="form-group">
+            <table class="table borderless">
+                <tr>
+                    <td class="left-column"><h4>First Name:</h4></td>
+                    <td><input name="firstname" type="text" required pattern=".{2,20}" title="2 to 20 characters" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Last Name:</h4></td>
+                    <td><input name="lastname" type="text" required pattern=".{2,20}" title="2 to 20 characters" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Username:</h4></td>
+                    <td><input name="username" type="text" required pattern=".{4,20}" title="4 to 20 characters" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Password (temporary):</h4></td>
+                    <td><input name="password" type="password" required pattern=".{5,20}" title="5 to 20 characters" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Password (confirm):</h4></td>
+                    <td><input name="passwordConfirm" type="password" /></td>
+                </tr>
+                <tr>
+                    <td class="left-column"><h4>Role:</h4></td>
+                    <td>
+                        <select id="roleSelect" width="300px">
+                            <option value="Project Manager">Project Manager</option>
+                            <option value="Full Stack Developer">Full Stack Developer</option>
+                            <option value="Developer">Developer</option>
+                            <option value="Business Analyst">Business Analyst</option>
+                            <option value="Contractor">Contractor</option>
+                            <option value="Admin">Admin</option>
+                            <option value="DBA">DBA</option>
+                            <option value="Software Architect">Software Architect</option>
+                            <option value="Quality Analyst">Quality Analyst</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
         </div>
-    </div>
+        <div class="form-group">
+            <div class=" col-md-10">
+                <input type="submit" value="Create" class="btn btn-lg btn-success ">
+            </div>
+        </div>
+    </form>
+
+        
 </div>
 
 
-<h3 class="header">Edit Enabled User</h3>
+<h3 class="subheader header-text">Edit Enabled User</h3>
 <hr />
 
 <div id="EditUserTableContainer">
@@ -125,7 +146,7 @@
     </div>
 </div><br />
 
-<h3 class="header">Disabled Users</h3>
+<h3 class="subheader header-text">Disabled Users</h3>
 <hr />
 
 <div id="DisabledUsersTableContainer">
@@ -184,29 +205,68 @@
 
         passwordfield.hide();
 
-        $(document).on('click', '#DisabledUsersTable > tbody:last > tr', function () {
-            changeButtonState(enableButton, enableButton.attr('hidden') == 'true');
 
-            clickedRow = $(this);
+        $('#NewUserForm').on('submit', function (e){
+            e.preventDefault();
 
-            if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
-                clickedRow.css('background-color', 'white');
-                clickedRow.removeClass('selected');
+            var firstName = $('input[name=firstname]').val();
+            var lastName = $('input[name=lastname]').val();
+            var username = $('input[name=username]').val();
+            var password = $('input[name=password]').val();
+            var passwordConfirm = $('input[name=passwordConfirm]').val();
+            var role = $('#roleSelect').find(":selected").text();
 
-                changeButtonState(enableButton, false);
-            } else {
 
-                $('tr').each(function (i, row) {
-                    $(this).css('background-color', 'white');
-                    $(this).removeClass('selected');
-                    $(this).attr('contenteditable', 'false');
-                })
-
-                clickedRow.css('background-color', 'lightgrey');
-                clickedRow.addClass('selected');
-
-                changeButtonState(enableButton, true);
+            if (password != passwordConfirm) {
+                alert("Passwords don't match.");
+                return;
             }
+
+            $.ajax({
+                type: "post",
+                url: '/AdminPage/AddUser',
+                dataType: "json",
+                data: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    username: username,
+                    password: password,
+                    role: role
+                },
+                success: function (data) {
+                    alert('Successfully added ' + username);
+                    window.location.href = '@Url.Action("UserSettings", "AdminPage")';
+                },
+
+                error: function () {
+                    successful = false;
+                }
+            });
+        })
+
+        $(document).on('click', '#DisabledUsersTable > tbody:last > tr', function () {
+                changeButtonState(enableButton, enableButton.attr('hidden') == 'true');
+
+                clickedRow = $(this);
+
+                if (clickedRow.css('background-color') == 'rgb(211, 211, 211)') {
+                    clickedRow.css('background-color', 'white');
+                    clickedRow.removeClass('selected');
+
+                    changeButtonState(enableButton, false);
+                } else {
+
+                    $('tr').each(function (i, row) {
+                        $(this).css('background-color', 'white');
+                        $(this).removeClass('selected');
+                        $(this).attr('contenteditable', 'false');
+                    })
+
+                    clickedRow.css('background-color', 'lightgrey');
+                    clickedRow.addClass('selected');
+
+                    changeButtonState(enableButton, true);
+                }
 
         })
 
@@ -289,6 +349,8 @@
                 clickedRow.find('td:eq(0)').text(oldFirstName)
                 clickedRow.find('td:eq(1)').text(oldLastName)
                 clickedRow.find('td:eq(2)').text(oldUsername)
+            } else {
+                modifyModeOn = false;
             }
 
             clickedRow.css('background-color', 'white');
@@ -317,6 +379,7 @@
                 removeButton.text(CANCEL);
 
                 clickedRow.attr('contenteditable', 'true');
+                clickedRow.css('background-color', 'pink');
             } else {
                 modifyModeOn = false;
                 clickedRow.attr('contenteditable', 'false');
@@ -348,18 +411,23 @@
         passwordButton.on('click', function () {
             var passwordfield = $('#PasswordFieldContainer');
             if (passwordButton.text() == CHANGEPASSWORD) {
-                passwordfield.show();
+                modifyModeOn = true;
 
+                passwordfield.show();
                 $("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
                 changeButtonState(modifyButton, false);
 
                 removeButton.text(CANCEL);
                 passwordButton.text(SAVE);
             } else {
-                var newPassword = $('input[name=newpassword]').val();
+                modifyModeOn = false;
 
-                if (newPassword != "") {
-                    modifyUser(clickedRow.find('td:eq(2)').text(), newPassword, "ModifyUserPassword");
+                var newPassword = $('input[name=newpassword]')
+
+                var newPasswordText = newPassword.val();
+
+                if (newPasswordText != "") {
+                    modifyUser(clickedRow.find('td:eq(2)').text(), newPasswordText, "ModifyUserPassword");
                 }
 
                 passwordButton.text(CHANGEPASSWORD);
@@ -367,65 +435,11 @@
 
                 disableAllButtons();
 
+                newPassword.val('');
+
                 passwordfield.hide();
             }
         })
-
-        createButton.on('click', function () {
-            var firstName = $('input[name=firstname]').val();
-            var lastName = $('input[name=lastname]').val();
-            var username = $('input[name=username]').val();
-            var password = $('input[name=password]').val();
-            var passwordConfirm = $('input[name=passwordConfirm]').val();
-            var role = $('input[name=role]').val();
-
-
-            if (password != passwordConfirm) {
-                alert("Passwords don't match.");
-                return;
-            }
-
-            if (!ValidateInput(firstName, "First Name", 2, 20))
-                return;
-            if (!ValidateInput(lastName, "Last Name", 2, 20))
-                return;
-            if (!ValidateInput(username, "Username", 4, 20))
-                return;
-            if (!ValidateInput(password, "Password", 5, 20))
-                return;
-            if (!ValidateInput(role, "Role", 3, 20))
-                return;
-
-            $.ajax({
-                type: "post",
-                url: '/AdminPage/AddUser',
-                dataType: "json",
-                data: {
-                    firstName: firstName,
-                    lastName: lastName,
-                    username: username,
-                    password: password,
-                    role: role
-                },
-                success: function (data) {
-                    alert('Successfully added ' + username);
-                    window.location.href = '@Url.Action("UserSettings", "AdminPage")';
-                },
-
-                error: function () {
-                    successful = false;
-                }
-            });
-        })
-
-        function ValidateInput(input, type, min, max) {
-            if (input.length < min || input.length > max) {
-                alert(type + ' must be between ' + min + ' and ' + max + ' characters long.');
-                return false;
-            }
-
-            return true;
-        }
 
         function disableAllButtons() {
             changeButtonState(modifyButton, false);

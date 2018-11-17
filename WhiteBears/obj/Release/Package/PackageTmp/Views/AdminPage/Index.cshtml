@@ -1,23 +1,34 @@
 ﻿
-@Styles.Render("~/Style/UserSettings.css")
+@Styles.Render("~/bundles/style/usersettings")
+@{
+    Layout = "~/Views/Shared/_AdminPages.cshtml";
+}
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
-<div id="AddHeaderContainer">
-    <h2 class="header">Admin Home Page</h2>
-</div>
-<h3 class="header">Settings</h3>
 
-<div id="SettingsButtonContainer">
-    <div class="container">
-        <label>If you want to add new users, modify user's information, or purge them from the system, use this.</label><br />
-        <button class="btn btn-lg btn-primary" value="users">Users (Add/Modify/Remove)</button>
-    </div><br />
-    <div class="container">
-        <label>If you want to purge projects from the system to save space, use this.</label><br />
-        <button class="btn btn-lg btn-danger" value="projects">Projects (Remove)</button>
+
+    <div id="AddHeaderContainer">
+        <h2 class="header header-text">Admin Home Page</h2>
+    </div>
+
+<div id="MainPage">
+    <h3 class=" subheader header-text">Settings</h3>
+
+    <div id="SettingsButtonContainer">
+        <div class="container">
+            <label>If you want to add new users, modify user's information, or purge them from the system, use this.</label><br />
+            <button class="btn btn-lg btn-primary" value="users">Users (Add/Modify/Remove)</button>
+        </div><br />
+        <div class="container">
+            <label>If you want to purge projects from the system to save space, use this.</label><br />
+            <button class="btn btn-lg btn-danger" value="projects">Projects (Remove)</button>
+        </div><br />
+        <div class="container">
+            <label>If you want to download or purge any uploaded document, use this.</label><br />
+            <button class="btn btn-lg btn-success" value="documents">Documents</button>
+        </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
 
@@ -27,6 +38,10 @@
 
         $('button[value=projects]').on('click', function () {
             window.location.href = '@Url.Action("ProjectSettings", "AdminPage")';
+        })
+
+        $('button[value=documents]').on('click', function () {
+            window.location.href = '@Url.Action("Index", "Blob")';
         })
     });
 </script>

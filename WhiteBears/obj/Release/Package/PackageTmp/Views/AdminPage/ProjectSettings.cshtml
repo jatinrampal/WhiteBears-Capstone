@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<WhiteBears.Models.Project>
 
 @Styles.Render("~/Style/UserSettings.css")
+@{
+    Layout = "~/Views/Shared/_AdminPages.cshtml";
+}
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script>
@@ -51,7 +54,8 @@
 </script>
 
 <div id="AddHeaderContainer">
-    <h2 class="header">Project Settings</h2>
+    <button class="btn btn-secondary back-button" onclick="location.href='@Url.Action("Index", "AdminPage")'">Back</button>
+    <h2 class="header header-text">Project Settings</h2>
 </div>
 
 <form id="projectselection" class="text-center">
@@ -65,7 +69,7 @@
 </form>
 <div id="ProjectTableContainer">
 
-    <h3 class="header">Project Information</h3>
+    <h3 class="subheader header-text">Project Information</h3>
 
     <hr />
 
@@ -73,7 +77,7 @@
     <br />
 
     <div id="TaskInformationContainer">
-        <h3 class="header">Task Information</h3>
+        <h3 class="subheader header-text">Task Information</h3>
         <hr />
 
         <table id="tasktable"></table>
@@ -98,32 +102,34 @@
         });
 
         $(document).on('click', 'button[value=delete]', function () {
-            currentRadio.parent().remove();
-            $('input[name=optradio]:eq(0)').prop("checked", true);
+            if(confirm('Are you sure you want to delete this project?')){
+                currentRadio.parent().remove();
+                $('input[name=optradio]:eq(0)').prop("checked", true);
 
 
-            if ($('input[name=optradio]:eq(0)').length == 0) {
-                $('#TaskInformationContainer').remove();
-                $('#ProjectTableContainer').remove();
-            }
-
-            loadTables();
-
-            $.ajax({
-                type: "post",
-                url: '/AdminPage/DeleteProject',
-                dataType: "json",
-                data: {
-                    projectId: radioValue
-                },
-                success: function (data) {
-
-                },
-
-                error: function () {
-                    successful = false;
+                if ($('input[name=optradio]:eq(0)').length == 0) {
+                    $('#TaskInformationContainer').remove();
+                    $('#ProjectTableContainer').remove();
                 }
-            });
+
+                loadTables();
+
+                $.ajax({
+                    type: "post",
+                     url: '/AdminPage/DeleteProject',
+                    dataType: "json",
+                    data: {
+                        projectId: radioValue
+                    },
+                    success: function (data) {
+
+                    },
+
+                    error: function () {
+                        successful = false;
+                    }
+                });
+            }
         })
 
         function loadTables() {
