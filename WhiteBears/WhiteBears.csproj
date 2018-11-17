@@ -2239,6 +2239,8 @@
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Views\Shared\_AdminPages.cshtml" />
+    <Content Include="Views\Project\_DocumentDetail.cshtml" />
+    <Content Include="Views\Project\_DocumentDetailPM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2274,7 +2276,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49838/</IISUrl>
+          <IISUrl>http://localhost:49837/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

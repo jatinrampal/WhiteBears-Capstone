@@ -248,7 +248,7 @@
 
 
 <h2>@ViewBag.Title</h2>
-<div id="documentHeaderContainer" style="height:150px;">
+<div id="documentHeaderContainer" style="height:150px;margin:0px 15px 0px 15px;">
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
         @Html.DropDownListFor(model => model.docList, new SelectList(Model.docList, "version", "version"), new { id = "version1" })
@@ -279,10 +279,10 @@
     </div>
 </div>
 <div id="documentComparisonContainer" style="width:100%;min-width:100%;">
-    <div id="oldDocument" style="height:inherit;width:49%;margin:1% 1% 1% 0%;clear:both;float:left;overflow-y:scroll">
+    <div id="oldDocument" style="height:inherit;width:48%;margin:1% 1% 1% 15px;clear:both;float:left;overflow-y:scroll">
 
     </div>
-    <div id="newDocument" style="height:inherit;width:49%;margin:1% 0% 1% 1%;float:left;overflow-y:scroll">
+    <div id="newDocument" style="height:inherit;width:48%;margin:1% 0% 1% 1%;float:left;overflow-y:scroll">
 
     </div>
 </div>

@@ -270,20 +270,42 @@ namespace WhiteBears.Controllers
             return JsonConvert.SerializeObject(rm);
         }
         [HttpPost]
-        public string DownloadDocument(int id, int ver)
+        public string DownloadDocument(int? id, int? ver)
         {
-            BlobStorageRepository br = new BlobStorageRepository();
-            if (id != null) {
-                string[] fileName = getFileNameAndExtention(Convert.ToInt32(id));
-                MemoryStream ms = br.GetBlobAsStream(fileName[0] + "_v" + ver, fileName[1]);
-                DocumentDownload dd = new DocumentDownload()
+            if (Session["username"] != null)
+            {
+                if (id != null || ver != null)
                 {
-                    FileName = fileName[0] + fileName[1],
-                    B64 = Convert.ToBase64String(ms.ToArray())
-                }; 
-                return JsonConvert.SerializeObject(dd);
-             }
-            else return "error";
+                    BlobStorageRepository br = new BlobStorageRepository();
+                    string[] fileName = getFileNameAndExtention(Convert.ToInt32(id));
+                    MemoryStream ms = br.GetBlobAsStream(fileName[0] + "_v" + ver, fileName[1]);
+                    DocumentDownload dd = new DocumentDownload()
+                    {
+                        FileName = fileName[0] + fileName[1],
+                        B64 = Convert.ToBase64String(ms.ToArray())
+                    };
+                    return JsonConvert.SerializeObject(dd);
+                }
+                else return "{\"error\":\"no document id or version\"}";
+            }
+            else return "{\"error\":\"need to login\"}";
+        }
+        [HttpPost]
+        public string DownloadLatestVersion(int? id)
+        {
+            if (Session["username"] != null)
+            {
+                if (id != null)
+                {
+                    DatabaseHelper db = new DatabaseHelper();
+                    DataRow[] dr = db.RunSelectQuery($"SELECT MAX(Version) AS ver FROM documentversion WHERE documentId = {id};");
+                    return DownloadDocument(id, Convert.ToInt32(dr[0]["ver"]));
+                }
+                else return "{\"error\":\"no document id\"}"; 
+            }
+            else {
+                return "{\"error\":\"need to login\"}";
+            }
         }
 
         private string[] getFileNameAndExtention(int id)
