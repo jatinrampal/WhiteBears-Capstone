@@ -33,9 +33,34 @@ namespace Whitebears.Repository
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
         }
 
+        public long BlobContainerUsed()
+        {
+            _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
+            var blobs = _cloudBlobContainer.ListBlobs(); // Use ListBlobsSegmentedAsync for containers with large numbers of files
+            var blobsList = new List<IListBlobItem>(blobs);
+
+            long sizeInBytes = 0;
+
+            if (blobsList.Count == 0)
+            {
+                // Refresh enumeration after initializing
+                blobs = _cloudBlobContainer.ListBlobs();
+                blobsList.AddRange(blobs);
+            }
+
+            foreach (var item in blobs)
+            {
+                if (item is CloudBlockBlob blob)
+                {
+                    sizeInBytes += blob.Properties.Length;
+                }
+            }
+            return sizeInBytes;
+        }
+
+
         public bool DeleteBlob(string file, string fileExtension)
         {
-            //throw new NotImplementedException();
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
             CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file + "." + fileExtension);
             bool delete = blockBlob.DeleteIfExists();
@@ -69,7 +94,7 @@ namespace Whitebears.Repository
         {
             long fileSize;
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
-            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file  + fileExtension);
+            CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file + fileExtension);
             blockBlob.FetchAttributes();
             fileSize = blockBlob.Properties.Length;
             return fileSize / 1000;
@@ -120,5 +145,24 @@ namespace Whitebears.Repository
             }
             return true;
         }
+
+        public long BlobStorage() {
+            _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
+            var blobs = _cloudBlobContainer.ListBlobs(); // Use ListBlobsSegmentedAsync for containers with large numbers of files
+            var blobsList = new List<IListBlobItem>(blobs);
+            long sizeInBytes = 0;
+            if (blobsList.Count == 0) {
+                // Refresh enumeration after initializing
+                blobs = _cloudBlobContainer.ListBlobs();
+                blobsList.AddRange(blobs);
+            }
+            foreach (var item in blobs) {
+                if (item is CloudBlockBlob blob) {
+                    sizeInBytes += blob.Properties.Length;
+                }
+            }
+            return sizeInBytes;
+        }
+
     }
 }

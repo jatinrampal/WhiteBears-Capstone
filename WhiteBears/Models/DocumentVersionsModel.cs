@@ -20,5 +20,6 @@ namespace WhiteBears.Models
     {
         public int version { get; set; }
         public string timeStamp { get; set; }
+        public string modifiedBy { get; set; }
     }
 }

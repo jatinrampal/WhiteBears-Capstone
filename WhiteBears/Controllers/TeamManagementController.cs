@@ -12,18 +12,20 @@ namespace WhiteBears.Controllers
     {
         public ActionResult Index(int? id)
         {
-
-            if (Session["username"] == null)
-            {
+            string username;
+            if (Session["username"] == null) {
                 return RedirectToAction("Index", "Home");
             }
 
-            string username = Session["username"].ToString();
+            username = Session["username"].ToString();
+
+
 
             int projectId = id ?? default(int);
 
-
-            Debug.WriteLine(projectId);
+            if (!Authentication.VerifyIfProjectManager(username) || !Authentication.VerifyIfPartOfProject(username, projectId)) {
+                return RedirectToAction("Index", "Project", new { id = projectId });
+            }
 
             TeamManagementModel model = new TeamManagementModel();
             model.CurrentProject = model.GetProject(projectId);
@@ -31,9 +33,6 @@ namespace WhiteBears.Controllers
             model.IncludedUsers = model.GetIncludedUsers(projectId);
             model.Projects = model.GetProjects(username);
             model.CurrentUser = model.GetUser(username);
-            if (model.CurrentUser.Role != "Project Manager"){
-                return RedirectToAction("Index", "Project", new { id = projectId });
-            }
 
             return View(model);
         }

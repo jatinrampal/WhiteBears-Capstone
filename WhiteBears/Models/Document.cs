@@ -13,6 +13,7 @@ namespace WhiteBears.Models
         private string uploader;
         private DateTime creationTime;
         private string fileExtension;
+        public DocumentVersionsModel docVersion;
      
 
         public int ProjectId
@@ -85,6 +86,17 @@ namespace WhiteBears.Models
             set
             {
                 fileExtension = value; 
+            }
+        }
+        public DocumentVersionsModel DocVersion
+        {
+            get
+            {
+                return docVersion;
+            }
+            set
+            {
+                docVersion = value;
             }
         }
     }

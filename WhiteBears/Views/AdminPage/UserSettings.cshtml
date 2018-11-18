@@ -54,7 +54,7 @@
     <button class="btn btn-secondary back-button" onclick="location.href='@Url.Action("Index", "AdminPage")'">Back</button>
     <h2 class="header header-text">User Settings</h2>
 </div>
-<h3 class="header header-text">New User Information</h3>
+<h3 class="subheader header-text">New User Information</h3>
 
 @Html.AntiForgeryToken()
 
@@ -88,13 +88,15 @@
                     <td class="left-column"><h4>Role:</h4></td>
                     <td>
                         <select id="roleSelect" width="300px">
-                            <option value="Developer">Developer</option>
                             <option value="Project Manager">Project Manager</option>
                             <option value="Full Stack Developer">Full Stack Developer</option>
+                            <option value="Developer">Developer</option>
                             <option value="Business Analyst">Business Analyst</option>
                             <option value="Contractor">Contractor</option>
                             <option value="Admin">Admin</option>
-
+                            <option value="DBA">DBA</option>
+                            <option value="Software Architect">Software Architect</option>
+                            <option value="Quality Analyst">Quality Analyst</option>
                         </select>
                     </td>
                 </tr>
@@ -111,7 +113,7 @@
 </div>
 
 
-<h3 class="header">Edit Enabled User</h3>
+<h3 class="subheader header-text">Edit Enabled User</h3>
 <hr />
 
 <div id="EditUserTableContainer">
@@ -144,7 +146,7 @@
     </div>
 </div><br />
 
-<h3 class="header">Disabled Users</h3>
+<h3 class="subheader header-text">Disabled Users</h3>
 <hr />
 
 <div id="DisabledUsersTableContainer">

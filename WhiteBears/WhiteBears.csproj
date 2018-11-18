@@ -195,6 +195,7 @@
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DatabaseHelper.cs" />
     <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\DocumentDownload.cs" />
     <Compile Include="Models\DocumentRole.cs" />
     <Compile Include="Models\DocumentVersionsModel.cs" />
     <Compile Include="Models\ElementJSON.cs" />
@@ -230,10 +231,13 @@
     <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.dll" />
     <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.xml" />
     <Content Include="bin\Microsoft.Azure.KeyVault.Core.dll" />
+    <Content Include="bin\Microsoft.Azure.KeyVault.Core.xml" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.WindowsAzure.Storage.dll" />
+    <Content Include="bin\Microsoft.WindowsAzure.Storage.pdb" />
+    <Content Include="bin\Microsoft.WindowsAzure.Storage.xml" />
     <Content Include="bin\Newtonsoft.Json.dll" />
     <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\roslyn\csc.exe" />
@@ -2238,6 +2242,8 @@
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Views\Shared\_AdminPages.cshtml" />
+    <Content Include="Views\Project\_DocumentDetail.cshtml" />
+    <Content Include="Views\Project\_DocumentDetailPM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2273,7 +2279,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49838/</IISUrl>
+          <IISUrl>http://localhost:49837/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

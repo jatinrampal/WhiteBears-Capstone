@@ -3,13 +3,16 @@ html, body {
     font-family: "Avenir Next" !important;
 }
 
+body{
+    padding: 0;
+}
 
-#MainPage{
-    position: relative;
+
+#MainPage {
     height: 100%;
 }
 
-button{
+button {
     padding: 7px;
 }
 
@@ -23,7 +26,19 @@ table {
 #TasksSection td, th {
     border: 1px solid darkgrey;
     padding: 10px;
-    max-width: 200px;
+    max-width: 125px;
+}
+
+#TasksSection td:last-child, th:last-child {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 100px;
+}
+
+#TasksSection td:nth-child(5), th:nth-child(5) {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 100px;
 }
 
 #TasksSection {
@@ -31,11 +46,11 @@ table {
     margin-left: 50px;
     margin-top: 20px;
     min-height: 300px;
-    min-width: 550px;
-    max-width: 550px;
+    width: 60%;
+    margin-bottom: 15px;
 }
 
-.TaskPercentage{
+.TaskPercentage {
     padding: 5px;
     float: left;
     margin-top: 5px;
@@ -47,7 +62,8 @@ table {
     text-align: center;
     width: 200px;
     float: left;
-    height: 100vh;
+    height: 100%;
+
 }
 
 .ProjectButtons {
@@ -59,15 +75,15 @@ table {
     border-radius: 10px 10px 10px 10px
 }
 
-.ProjectButtons:hover {
-    background: darkgrey;
-    color: white;
-}
+    .ProjectButtons:hover {
+        background: darkgrey;
+        color: white;
+    }
 
 
 header {
-    text-align: left;
-    margin-left: 250px;
+    text-align: center;
+    margin-left: 50px;
 }
 
 .headerButtons:hover {
@@ -76,7 +92,6 @@ header {
 }
 
 .LeftPanelBorder {
-    padding: 50px;
     border: solid black 2px;
 }
 
@@ -85,32 +100,38 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 50px;
 }
 
 #ProjectListContainer {
     height: 60%;
 }
 
-#PersonalNotesSection{
-    margin-top: 30px;
+#PersonalNotesSection {
+    margin-top: 20px;
     float: right;
+    margin-right: 20px;
 }
 
-#PersonalNotesSection td, th {
-    border: 1px solid darkgrey;
-    padding: 10px;
-    max-width: 300px;
-}
+    #PersonalNotesSection td, th {
+        border: 1px solid darkgrey;
+        padding: 10px;
+        max-width: 800px;
+    }
 
 #PersonalNotesButtonsContainer {
-    margin-top: 20px;
-    margin-left: 100px;
-    min-width: 300px;
+    margin-top: 10px;
+    width: 100%;
     text-align: center;
 }
 
+textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-#Note{
+#Note {
     width: 300px;
 }
 
@@ -123,35 +144,44 @@ header {
     text-align: left;
 }
 
-.ProgressBarContainer {
+.ProgressBarContainer:last-of-type {
     margin-top: 30px;
-    margin-left: 250px;
-    width: 400px;
+}
 
+.ProgressBarContainer {
+    margin-left: 50px;
+    width: 95%;
+    float: left;
 }
 
 .ProgressBarContainers {
-    margin-top: 30px;
-    width: 300px;
+    margin-top: 20px;
+    width: 30%;
+    float:left;
 }
 
 .text-large {
     font-size: large;
 }
 
-.text-medium{
+.text-medium {
     font-size: medium;
 }
 
-.padding-5px{
+.padding-5px {
     padding: 5px;
 }
 
-#PersonalNoteText{
+#PersonalNoteText {
     width: 100%;
     resize: none;
     height: 100px;
     display: none;
+    text-align: left;
+}
+
+#PersonalNoteTextContainer {
+    margin-top: 15px;
 }
 
 .scrollable-task {
@@ -163,28 +193,45 @@ header {
 
 .scrollable-notes {
     height: auto;
-    max-height: 400px;
-    overflow: scroll;
+    max-height: 250px;
+    overflow: hidden;
+    overflow-y: scroll
 }
 
 #TaskOverviewSection {
     text-align: center;
     float: right;
-    height: 300px;
-    width: 300px;
+    height: 100px;
+    width: 30%;
     margin-top: 20px;
-    margin-right: 30px;
+    margin-right: 20px;
 }
 
-#pie-chartcanvas{
+#pie-chartcanvas {
     width: 500px;
     height: 250px;
 }
 
-.high-priority{
+#projectselection {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: inline-block;
+    width: 600px;
+    white-space: nowrap;
+}
+
+.high-priority {
     background-color: #ffb2b2
 }
 
 .med-priority {
     background-color: #ffffb2
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+#text-center {
+    text-align: center;
 }
