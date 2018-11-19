@@ -184,25 +184,22 @@
     margin-right: 0%;
 }
 
-#projectTaskDelete, #projectTaskAdd, #projectNoteAdd, #projectNoteDelete
-{
-    margin-left: 15%;
+#projectTaskDelete, #projectTaskAdd, #projectTaskEdit, #projectNoteAdd, #projectNoteDelete, #projectNotesEdit, #projectDocumentUpload {
+    margin-left: 10%;
+    margin-top: 5%;
     width: 100px;
 }
 
-#projectCompare, #projectDocumentUpload
-{
-    margin-left: 10%;
-    
+
+#projectCompare {
     width: 150px;
+    margin-left: 10%;
+    margin-top: 5%;
 }
 
-#TeamManagement
-{
-   
-    float:right; 
-    
-}
+    #TeamManagement {
+        float: right;
+    }
 
 #topBarTitle
 {

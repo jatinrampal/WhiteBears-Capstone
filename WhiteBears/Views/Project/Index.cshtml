@@ -60,22 +60,26 @@
                                 <th>Due Date</th>
                             </tr>
                         </thead>
-                            @{ Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId });}
+                        @{ Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId });}
                     </table>
 
 
                     <!-- Tasks Buttons -->
                     <div id="projectTaskButtons">
-                        <button type="button" id="projectTaskAdd" class="btn btn-info" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
-                        <button type="button" id="projectTaskDelete" class="btn btn-danger">Delete</button>
+                        <button hidden type="button" id="projectTaskAdd" class="btn btn-info" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
+                        <button hidden type="button" id="projectTaskEdit" class="btn btn-info"  >Edit</button>
+                        <button hidden type="button" id="projectTaskDelete" class="btn btn-danger">Delete</button>
 
                     </div>
+
+                    @Html.Partial("TaskEditView", Model.Task)
+
 
                     <!-- Note: Project ID, Username from Session. -->
                     <!-- Modal -->
                     <div id="projectTaskAddModal" class="modal fade" role="dialog">
                         <div class="modal-dialog" style="left:0% !important">
-                         
+
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -130,10 +134,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- CompletionDate Label -->
-                                        <div class="form-group row">
-                                            <label for="CompletionDate" class="col-sm-12 col-form-label text-center">Completion Date</label>
-                                        </div>
+                                       
 
                                         <!-- Priority -->
                                         <div class="form-group row">
@@ -162,6 +163,8 @@
                 </div> <!-- projectTableDiv ends here -->
             </div> <!-- Task Information ENDS -->
 
+            
+
             <!--Document Information goes here -->
             <div class="col-sm-4">
 
@@ -169,7 +172,7 @@
                 <h3>Documents</h3>
 
                 <!-- Document Table -->
-                <div id="projectTableDiv">
+                <div id="projectTableDiv" class="table-responsive">
                     <table id="projectDocumentTable" class="table">
                         <thead id="myThead">
                             <tr>
@@ -206,7 +209,7 @@
                 <h3>Notes</h3>
 
                 <!-- Note Table -->
-                <div id="projectTableDiv">
+                <div id="projectTableDiv" class="table-responsive">
                     <table id="projectNoteTable" class="table">
                         <thead id="myThead">
                             <tr>
@@ -223,8 +226,11 @@
                     <!-- Notes Buttons -->
                     <div id="projectNotesButtons">
                         <button type="button" id="projectNoteAdd" class="btn btn-info" data-target="#projectNoteAddModal" data-toggle="modal">Add</button>
+                        <button type="button" id="projectNotesEdit" class="btn btn-info">Edit</button>
                         <button type="button" id="projectNoteDelete" class="btn btn-danger">Delete</button>
                     </div>
+
+                    @Html.Partial("ProjectNotesEditView", Model.ProjectNotes)
 
                     <!-- Note: Project ID, Username from Session. -->
                     <!-- Modal -->
@@ -239,7 +245,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId },FormMethod.Post, new { @id = "notePost"}))
+                                    @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId }, FormMethod.Post, new { @id = "notePost" }))
                                     {
                                         <!-- Errors -->
                                         <div class="form-group row">
@@ -251,50 +257,48 @@
 
                                         <!-- Message -->
                                         <div class="form-group row">
-                                            <label for="Message" class="col-sm-2 col-form-label">Message:</label>
-                                            <div class="col-sm-8">
+                                            <label for="Message" class="col-sm-4 col-form-label text-left">Message</label>
+                                            <div class="col-sm-7">
                                                 <textarea class="form-control" name="noteMessage" id="noteMessage" rows="3" required></textarea>
                                             </div>
                                         </div>
 
                                         <!--  Completed Labels -->
                                         <div class="form-group row">
-                                           
-                                            <label for="CompletedDate" class="col-sm-12 col-form-label text-center">Completed Date</label>
 
-                                        </div>
+                                            <label for="CompletedDate" class="col-sm-4 col-form-label text-left">Completed Date</label>
 
-                                        <!-- EndDate Inputs -->
-                                        <div class="form-group row">
-                                            
-                                            <div class="col-sm-12 text-center">
+                                            <div class="col-sm-7">
                                                 <input id="noteCompletedDate" name="noteCompletedDate" type="date" required />
                                             </div>
+
                                         </div>
 
                                         <!-- To -->
                                         <div class="form-group row">
-                                            <label for="noteTo" class="col-sm-2 col-form-label text-center">To:</label>
-                                            <select class="form-control" id="noteTo" name="noteTo" required>
-                                                <option>Developer</option>
-                                                <option>Project Manager</option>
-                                                <option>Full Stack Developer</option>
-                                                <option>Business Analyst</option>
-                                                <option>Contractor</option>
-                                                <option>Admin</option>
-                                            </select>
-                                        </div>
+                                            <label for="noteTo" class="col-sm-4 col-form-label text-left">To</label>
+                                            <div class="col-sm-7">
+                                                <select class="form-control" id="noteTo" name="noteTo" required>
+                                                    <option>Developer</option>
+                                                    <option>Project Manager</option>
+                                                    <option>Full Stack Developer</option>
+                                                    <option>Business Analyst</option>
+                                                    <option>Contractor</option>
+                                                    <option>Admin</option>
+                                                </select>
+                                            </div>
+                                           </div>
 
 
-                                        <div class="modal-footer">
-                                            <!-- Add Button -->
-                                            <input id="submit1" type="submit" class="btn btn-default" name="Add" value="Add" />
+                                            <div class="modal-footer">
+                                                <!-- Add Button -->
+                                                <input id="submit1" type="submit" class="btn btn-default" name="Add" value="Add" />
 
-                                        </div>
-                                    }
-                                    <!--</form>-->
+                                            </div>
+                                            }
+                                            <!--</form>-->
 
-                                </div> <!-- Modal Body Ends here -->
+                                        </div> <!-- Modal Body Ends here -->
 
                             </div> <!-- Modal Content Ends here -->
                         </div> <!-- Modal Dialog Ends here -->
@@ -318,9 +322,9 @@
             $("#projectTaskTable tbody tr").dblclick(function () {
                 alert("More things will go here...");
             });
-           //add a event handler if the version is changed on the document popup
+            //add a event handler if the version is changed on the document popup
             $("#version").change(function () {
-                
+
                 $.each(documentVersions, function (i, val) {
                     if ($("#version option:selected").val() == val.version) {
                         $("#ModifiedBy").text(val.modifiedBy);
@@ -332,39 +336,39 @@
             //download document button click handler
             $("#projectButtonUpload").click(function () {
                 $.ajax({
-                type: "POST",
-                url: '@Url.Action("DownloadLatestVersion", "DocumentReview")',
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                data: '{"id":' + stored + '}',
-                success: downloadBlob,
-                error: function (e) { console.log(e); }
+                    type: "POST",
+                    url: '@Url.Action("DownloadLatestVersion", "DocumentReview")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: '{"id":' + stored + '}',
+                    success: downloadBlob,
+                    error: function (e) { console.log(e); }
                 });
             });
 
             //download document from popup page
             $("#downloadDoc").click(function () {
                 $.ajax({
-                type: "POST",
-                url: '@Url.Action("DownloadDocument", "DocumentReview")',
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                data: '{"id":' + $("#DocumentId").val() + ', "ver":' +$("#version option:selected").val() + '}',
-                success: downloadBlob,
-                error: function (e) { console.log(e); }
+                    type: "POST",
+                    url: '@Url.Action("DownloadDocument", "DocumentReview")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: '{"id":' + $("#DocumentId").val() + ', "ver":' + $("#version option:selected").val() + '}',
+                    success: downloadBlob,
+                    error: function (e) { console.log(e); }
                 });
             });
 
             //delete document from popup page
             $("#deleteDoc").click(function () {
                 $.ajax({
-                type: "POST",
-                url: '', //need to add proper URL
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                data: '{"id":' + $("#DocumentId").val() + ', "ver":' + $("#version option:selected").val() + '}',
-                success: function () { alert("Document Removed"); },
-                error: function (e) { console.log(e); }
+                    type: "POST",
+                    url: '', //need to add proper URL
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: '{"id":' + $("#DocumentId").val() + ', "ver":' + $("#version option:selected").val() + '}',
+                    success: function () { alert("Document Removed"); },
+                    error: function (e) { console.log(e); }
                 });
             });
 
@@ -383,17 +387,17 @@
             $("#projectDocumentTable tbody tr").dblclick(function () {
                 $("#documentDetailsModal").modal().show();
                 $.ajax({
-                type: "POST",
-                url: '@Url.Action("GetDocumentDetails", "ProjectDocument")',
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                data: '{"id":' + $(this).attr('id') + '}',
+                    type: "POST",
+                    url: '@Url.Action("GetDocumentDetails", "ProjectDocument")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: '{"id":' + $(this).attr('id') + '}',
                     success: function (data) {
                         console.log(data);
                         $("#DocumentId").val(data.DocumentId);
                         $("#FileName").text(data.FileName);
                         $.each(data.DocVersion.docList, function (i, val) {
-                            $("#version").append("<option value="+ val.version +">" + val.version + "</option>")
+                            $("#version").append("<option value=" + val.version + ">" + val.version + "</option>")
                         });
                         $("#ModifiedBy").text(data.DocVersion.docList[0].modifiedBy);
                         $("#ModifiedOn").text(data.DocVersion.docList[0].timeStamp);
@@ -401,7 +405,7 @@
                         $("#CreationTime").text(data.CreationTime);
                         documentVersions = data.DocVersion.docList;
                     },
-                error: function (e) { console.log(e); }
+                    error: function (e) { console.log(e); }
                 });
             });
 
@@ -509,7 +513,7 @@
                     stored = myDocumentID;
                     fileExtension = myFileExtension;
                     if ($(this).hasClass('on') == false) {
-                      //  alert("RESET");
+                        //  alert("RESET");
                         mnew = 0;
                         stored = 0;
                         fileExtension = "Empty";
@@ -523,13 +527,13 @@
 
                 if (fileExtension == "empty" || stored == 0 || fileExtension == null) {
 
-                   // alert("Sorry, file Extension is ");
-                   // alert("fileEx" + fileExtension);
+                    // alert("Sorry, file Extension is ");
+                    // alert("fileEx" + fileExtension);
 
 
                 }
                 else if ($.trim(String(fileExtension)) == ".docx" || $.trim(String(fileExtension)) == ".doc") {
-                   // alert("File " + fileExtension);
+                    // alert("File " + fileExtension);
                     var url = '/DocumentReview/Index/' + stored;
                     window.location = url;
                 }
@@ -554,6 +558,139 @@
                 });
             });
 
+            
+            // Editing Task Modal Button
+            $('#taskEditBtn').click(function () {
+                if (EditTaskModal == true) {
+                    editTaskId = $('#editTaskId').val();
+                    editTaskTitle = $('#editTaskTitle').val();
+                    editTaskDescription = $('#editTaskDescription').val();
+                    editTaskStartDate = $('#editTaskStartDate').val();
+                    editTaskEndDate = $('#editTaskEndDate').val();
+                    editTaskCompletionDate = $('#editTaskCompletionDate').val();
+                    editTaskPriority = $('#editTaskPriority').val();
+
+                    var editTaskArray = [editTaskId, editTaskTitle, editTaskDescription, editTaskStartDate, editTaskEndDate, editTaskCompletionDate, editTaskPriority];
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("EditTask", "Project")", // the method we are calling
+                        data:
+                            JSON.stringify({ 'editTaskArray': editTaskArray }),
+                        TaskSelectedArray,
+                        contentType: 'application/json',
+                        success: function (msg) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+            var EditTaskModal = true; 
+            // Editing Task /////////////////////////////////////////////////////
+            $('#projectTaskEdit').click(function () {
+                if (TaskSelectedArray.length < 2) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("TaskEditView", "Project")", // the method we are calling
+                        data:
+                            JSON.stringify({ 'TaskSelectedArray': TaskSelectedArray }),
+                        TaskSelectedArray,
+                        contentType: 'application/json',
+                        success: function (msg) {
+
+                            try {
+                                /// Task Due Date Conversions 
+                                var taskDueDate = new Date(parseInt(msg.DueDate.substr(6)));
+
+                                var taskDueDateDay = taskDueDate.getDate(taskDueDate);
+                                var taskDueDateMonth = taskDueDate.getMonth(taskDueDate) + 1;
+                                var taskDueDateYear = taskDueDate.getFullYear(taskDueDate);
+
+                                if (taskDueDateDay < 10) {
+                                    taskDueDateDay = '0' + taskDueDateDay;
+                                }
+                                if (taskDueDateMonth < 10) {
+                                    taskDueDateMonth = '0' + taskDueDateMonth;
+                                }
+                                var myDueDate = taskDueDateYear + "-" + taskDueDateMonth + "-" + taskDueDateDay;
+
+                                // Task Start Date Conversions 
+                                var taskStartDate = new Date(parseInt(msg.StartDate.substr(6)));
+
+                                var taskStartDateDay = taskStartDate.getDate(taskStartDate);
+                                var taskStartDateMonth = taskStartDate.getMonth(taskStartDate) + 1;
+                                var taskStartDateYear = taskStartDate.getFullYear(taskStartDate);
+
+                                if (taskStartDateDay < 10) {
+                                    taskStartDateDay = '0' + taskStartDateDay;
+                                }
+                                if (taskStartDateMonth < 10) {
+                                    taskStartDateMonth = '0' + taskStartDateMonth;
+                                }
+                                var myStartDate = taskStartDateYear + "-" + taskStartDateMonth + "-" + taskStartDateDay;
+
+                                // Task Completion Date Conversions 
+                                var taskCompletionDate = new Date(parseInt(msg.CompletedDate.substr(6)));
+
+                                var taskCompletionDateDay = taskCompletionDate.getDate(taskCompletionDate);
+                                var taskCompletionDateMonth = taskCompletionDate.getMonth(taskCompletionDate) + 1;
+                                var taskCompletionDateYear = taskCompletionDate.getFullYear(taskCompletionDate);
+
+                                if (taskCompletionDateDay < 10) {
+                                    taskCompletionDateDay = '0' + taskCompletionDateDay;
+                                }
+                                if (taskCompletionDateMonth < 10) {
+                                    taskCompletionDateMonth = '0' + taskCompletionDateMonth;
+                                }
+                                var myCompletionDate = taskCompletionDateYear + "-" + taskCompletionDateMonth + "-" + taskCompletionDateDay;
+
+
+
+                                // Task id
+                                $('input[name="editTaskId"]').val(msg.TaskId);
+
+                                // Task title 
+                                $('input[name="editTaskTitle"]').val(msg.Title);
+                                $('input[name="editTaskTitle"]').attr("placeholder", msg.Title);
+
+                                // Task Description 
+                                $('textarea[name="editTaskDescription"]').val(msg.Description);
+                                $('textarea[name="editTaskDescription"]').attr("placeholder", msg.Description);
+
+                                // Task StartDate 
+                                $('input[name="editTaskStartDate"]').val(myStartDate);
+
+                                // Task DueDate (End Date)
+                                $('input[name="editTaskEndDate"]').val(myDueDate);
+
+                                // Task CompletionDate
+                                $('input[name="editTaskCompletionDate"]').val(myCompletionDate);
+
+                                // Task Priority 
+                                $('select[name="editTaskPriority"]').val(msg.Priority);
+
+                                $('#projectTaskEditModal').modal('show');
+                                EditTaskModal = true;
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert("Select only one Task to edit")
+                   
+                    $('#projectTaskEditModal').modal('hide');
+                    EditTaskModal = false;
+                }
+            });
+
+      
+
+
             // Deleting Project Note
             $('#projectNoteDelete').click(function () {
 
@@ -569,6 +706,102 @@
 
                 });
             });
+
+
+             // Editing Project Notes Modal Button
+            $('#ProjectNotesEditBtn').click(function () {
+                if (EditProjectNotesModal == true) {
+                    editProjectNotesId = $('#editProjectNotesId').val();
+                    editProjectNotesMessage = $('#editProjectNotesMessage').val();
+                    editProjectNotesCompletionDate = $('#editProjectNotesCompletionDate').val();
+                    editProjectNotesTo = $('#editProjectNotesTo').val();
+
+                    var editProjectNotesArray = [editProjectNotesId, editProjectNotesMessage, editProjectNotesCompletionDate, editProjectNotesTo];
+                   
+                   
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("EditProjectNotes", "Project")", // the method we are calling
+                        data:
+                            JSON.stringify({ 'editProjectNotesArray': editProjectNotesArray }),
+                        ProjectNoteSelectedArray,
+                        contentType: 'application/json',
+                        success: function (msg) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+            var EditProjectNotesModal = true; 
+             // Editing Project Notes  ///////////////////////////////////////////////////////////////////////////////////////
+            $('#projectNotesEdit').click(function () {
+                if (ProjectNoteSelectedArray.length < 2) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("ProjectNotesEditView", "Project")", // the method we are calling
+                        data:
+                            JSON.stringify({ 'ProjectNoteSelectedArray': ProjectNoteSelectedArray }),
+                        TaskSelectedArray,
+                        contentType: 'application/json',
+                        success: function (msg) {
+
+                            try {
+
+                                // Project Notes  Completion Date Conversions 
+                                var projectNotesCompletedDate = new Date(parseInt(msg.CompletedDate.substr(6)));
+
+                                var projectNotesCompletedDateDay = projectNotesCompletedDate.getDate(projectNotesCompletedDate);
+                                var projectNotesCompletedDateMonth = projectNotesCompletedDate.getMonth(projectNotesCompletedDate) + 1;
+                                var projectNotesCompletedDateYear = projectNotesCompletedDate.getFullYear(projectNotesCompletedDate);
+
+                                if (projectNotesCompletedDateYear == null) {
+                                    projectNotesCompletedDateYear = '00000' + projectNotesCompletedDateYear;
+                                }
+                                if (projectNotesCompletedDateDay < 10) {
+                                    projectNotesCompletedDateDay = '0' + projectNotesCompletedDateDay;
+                                }
+                                if (projectNotesCompletedDateMonth < 10) {
+                                    projectNotesCompletedDateMonth = '0' + projectNotesCompletedDateMonth;
+                                }
+                                var myCompletionDateProject = projectNotesCompletedDateYear + "-" + projectNotesCompletedDateMonth + "-" + projectNotesCompletedDateDay;
+
+
+                                // Project Note Message
+                                $('textarea[name="editProjectNotesMessage"]').val(msg.Message);
+                                $('textarea[name="editProjectNotesMessage"]').attr("placeholder", msg.Message);
+
+
+                                // ProjectNotes ID
+                                $('input[name="editProjectNotesId"]').val(msg.ProjectNoteId);
+
+
+                                // ProjectNotes CompletionDate
+                                $('input[name="editProjectNotesCompletionDate"]').val(myCompletionDateProject);
+
+                                // ProjectNotes To
+                                $('select[name="editProjectNotesTo"]').val(msg.To);
+
+
+                                $('#projectNotesEditModal').modal('show');
+                                EditProjectNotesModal = true; 
+                            }
+                            catch (Exception) {
+
+                            }
+                         
+                        }
+                    });
+                }
+                else {
+                    alert("Select only one Project to edit")
+                    $('#projectNotesEditModal').modal('hide');
+                    EditProjectNotesModal = false; 
+                
+                }
+            });
+
 
 
             // Incomplete dynamic role
@@ -740,9 +973,11 @@
             });
 
 
-            if ("@Model.User.Role" == "Admin") {
+            if ("@Model.User.Role" == "Project Manager") {
                 $('#TeamManagement').removeClass('hidden');
-
+                $('#ProjectTaskDelete').removeClass('hidden');
+                $('#ProjectTaskAdd').removeClass('hidden');
+                $('#ProjectTaskEdit').removeClass('hidden');
             }
 
         });

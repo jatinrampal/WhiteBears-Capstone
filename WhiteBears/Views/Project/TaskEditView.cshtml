@@ -1,0 +1,100 @@
+﻿@using WhiteBears.Models
+@model Task
+
+
+
+<!-- Modal -->
+<div id="projectTaskEditModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="left:0% !important">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Task</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+               
+            <form> 
+                    <!-- Errors -->
+                    <div class="form-group row">
+                        <div class="col-sm-12" id="taskErrors">
+
+                        </div>
+                    </div>
+                    <hr />
+
+                    <!-- TaskID -->
+                    <input type="hidden" id="editTaskId" name="editTaskId" value="">
+
+                    <!-- Title -->
+                    <div class="form-group row">
+                        <label for="Title" class="col-sm-4 col-form-label">Title:</label>
+                        <div class="col-sm-6">
+                            <input id="editTaskTitle" name="editTaskTitle" class="form-control" type="text" placeholder="" required />
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group row">
+                        <label for="Description" class="col-sm-4 col-form-label">Description:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" name="editTaskDescription" placeholder="" id="editTaskDescription" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- StartDate & EndDate Labels -->
+                    <div class="form-group row">
+                        <label for="StartDate" class="col-sm-6 col-form-label text-center">Start Date</label>
+                        <label for="EndDate" class="col-sm-6 col-form-label text-center">End Date</label>
+
+                    </div>
+
+                    <!-- StartDate & EndDate Inputs -->
+                    <div class="form-group row">
+                        <div class="col-sm-6 text-center">
+                            <input id="editTaskStartDate" value="" name="editTaskStartDate" type="date" required />
+                        </div>
+                        <div class="col-sm-6 text-center">
+                            <input id="editTaskEndDate" value="" name="editTaskEndDate" type="date" required />
+                        </div>
+                    </div>
+
+                    <!-- CompletionDate Label -->
+                    <div class="form-group row">
+                        <label for="CompletionDate" class="col-sm-12 col-form-label text-center">Completion Date</label>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-center">
+                            <input id="editTaskCompletionDate" value="" name="editTaskCompletionDate" type="date" required />
+                        </div>
+                    </div>
+
+
+
+                    <!-- Priority -->
+                    <div class="form-group row">
+                        <label for="Priority" class="col-sm-3 col-form-label text-center">Priority</label>
+                        <select class="form-control" value="" id="editTaskPriority" name="editTaskPriority" required>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <!-- Add Button -->
+                        <input id="taskEditBtn" type="button" class="btn btn-default" name="Update" value="Update" />
+                    </div>
+                </form>
+
+                </div> <!-- Modal Body Ends here -->
+
+        </div> <!-- Modal Content Ends here -->
+    </div> <!-- Modal Dialog Ends here -->
+</div>
+

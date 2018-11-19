@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace WhiteBears.Models
@@ -81,6 +82,140 @@ namespace WhiteBears.Models
                 connection.Close();
             }
             return modelList;
+        }
+
+        public Task getSelectEditTask(int taskId)
+        {
+          Task modelList = new Task();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+
+                // Query with vals 
+                command.CommandText = "SELECT * FROM Task WHERE taskId = @taskId;";
+                command.Parameters.AddWithValue("@taskId", taskId);
+
+
+                // Open connection 
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Multiple rows 
+                while (reader.Read())
+                {
+                    var model = new ProjectPageViewModel();
+
+                    modelList.TaskId = model.Task.TaskId = Convert.ToInt32(reader["TaskId"]);
+                    modelList.Title = model.Task.Title = reader["Title"].ToString();
+                    modelList.CompletedDate = model.Task.CompletedDate = (DateTime)reader["completionDate"];
+                    modelList.StartDate = model.Task.StartDate = (DateTime)reader["startDate"];
+                    modelList.DueDate =  model.Task.DueDate = (DateTime)reader["dueDate"];
+                    modelList.Priority = model.Task.Priority = reader["priority"].ToString();
+                    modelList.Description = model.Task.Description = reader["description"].ToString();
+                    
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            return modelList;
+        }
+
+        public ProjectNotes getSelectEditProjectNotes(int projectNoteId)
+        {
+            ProjectNotes modelList = new ProjectNotes();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+
+                // Query with vals 
+                command.CommandText = "SELECT * FROM ProjectNote WHERE projectNoteId = @projectNoteId;";
+                command.Parameters.AddWithValue("@projectNoteId", projectNoteId);
+
+
+                // Open connection 
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Multiple rows 
+                while (reader.Read())
+                {
+                    var model = new ProjectPageViewModel();
+
+                    modelList.ProjectNoteId = Convert.ToInt32(reader["projectNoteId"]);
+                    modelList.ProjectId = Convert.ToInt32(reader["projectId"]);
+                    modelList.Message = reader["message"].ToString();
+                    modelList.SentDate = Convert.ToDateTime(reader["sentDate"]);
+                    modelList.From = reader["from"].ToString();
+                    modelList.To = reader["to"].ToString();
+
+                    if (reader["completedDate"] != DBNull.Value)
+                    {
+                        modelList.CompletedDate = Convert.ToDateTime(reader["completedDate"]);
+                    }
+                    else
+                    {
+                        modelList.CompletedDate = DateTime.MinValue;
+                    }
+
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            return modelList;
+        }
+
+
+        public bool updateTask(int taskId, Task task)
+        {
+           
+            DatabaseHelper dh = new DatabaseHelper();
+            try
+            {
+                var title = task.Title;
+                var description = task.Description;
+                var startDate = task.StartDate;
+                var dueDate = task.DueDate;
+                var completionDate = task.CompletedDate;
+                var priority = task.Priority; 
+
+                ///dh.RunUpdateQuery($"DELETE FROM ProjectNote WHERE projectNoteId='{projectNoteId}'");
+                dh.RunUpdateQuery($"UPDATE Task set Title='{title}', [description]='{description}', startDate='{startDate}', dueDate='{dueDate}', completionDate='{completionDate}', priority='{priority}' WHERE taskId = {taskId}");
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public bool updateProjectNotes(int projectNotesId, ProjectNotes projectNotes)
+        {
+
+            DatabaseHelper dh = new DatabaseHelper();
+            try
+            {
+                var message = projectNotes.Message;
+                var completionDate = projectNotes.CompletedDate;
+                var to = projectNotes.To;
+
+                ///dh.RunUpdateQuery($"DELETE FROM ProjectNote WHERE projectNoteId='{projectNoteId}'");
+                dh.RunUpdateQuery($"UPDATE ProjectNote set message='{message}', completedDate='{completionDate}', [to]='{to}' WHERE projectNoteId = '{projectNotesId}'");
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
         }
 
         public IEnumerable<ProjectPageViewModel> getTask(String username, int projectId)
