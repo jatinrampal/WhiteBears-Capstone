@@ -24,7 +24,7 @@
               <h1 id="topBarTitle">@Model.Project.Title   </h1> 
             </div>
             <div class="col-sm-6">
-                <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { projectId = Model.Project.ProjectId })'">Team Management</button>
+                <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { id = Model.Project.ProjectId })'">Team Management</button>
             </div>
         </div>
         <hr id="hr" />
@@ -67,13 +67,13 @@
                     <!-- Tasks Buttons -->
                     <div id="projectTaskButtons">
                         <button hidden type="button" id="projectTaskAdd" class="btn btn-info" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
-                        <button hidden type="button" id="projectTaskEdit" class="btn btn-info"  >Edit</button>
+                        <button hidden type="button" id="projectTaskEdit" class="btn btn-info">Edit</button>
                         <button hidden type="button" id="projectTaskDelete" class="btn btn-danger">Delete</button>
 
                     </div>
 
                     @Html.Partial("TaskEditView", Model.Task)
-
+                    @Html.Partial("TaskDetailView", Model.Task)
 
                     <!-- Note: Project ID, Username from Session. -->
                     <!-- Modal -->
@@ -134,7 +134,7 @@
                                             </div>
                                         </div>
 
-                                       
+
 
                                         <!-- Priority -->
                                         <div class="form-group row">
@@ -320,7 +320,20 @@
 
             // Double Click on ProjectTaskTable
             $("#projectTaskTable tbody tr").dblclick(function () {
-                alert("More things will go here...");
+                
+                $("#taskDetailModal").modal().show();
+
+                 $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("TaskDetail", "Project")", // the method we are calling
+                    data:
+                        JSON.stringify({ 'TaskSelectedArray': ProjectNoteSelectedArray }),
+                    contentType: 'application/json',
+                    success: function (msg) {
+                        location.reload();
+                    }
+
+                });
             });
             //add a event handler if the version is changed on the document popup
             $("#version").change(function () {

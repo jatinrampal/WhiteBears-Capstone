@@ -102,31 +102,34 @@ namespace WhiteBears.Controllers
             return RedirectToAction("Index", "Project", result);
         }
 
-        [HttpPost]
-        public ActionResult DeleteProjectNote(IEnumerable<int> ProjectNoteSelectedArray, int? id)
+     /// <summary>
+     /// /
+     /// </summary>
+     /// <param name="TaskSelectedArray"></param>
+     /// <returns></returns>
+
+        public JsonResult TaskDetail(IEnumerable<int> TaskSelectedArray)
         {
-            // Get values from session 
-            string username = Session["username"].ToString();
-
-            var result = "Tasks have been deleted";
-
-            // Will error if project note selected is nil
-            if (ProjectNoteSelectedArray == null || !ProjectNoteSelectedArray.Any())
+            ProjectPageModel taskModelSelect = new ProjectPageModel();
+            if (TaskSelectedArray == null || !TaskSelectedArray.Any())
             {
-                result = "You have not selected any tasks to delete";
-                return RedirectToAction("Index", "Project", result);
+
+                // WILL ERROR IF YOU RUN THIS CONTROLLER 
+
+
+                //return td;
+                return Json(JsonRequestBehavior.AllowGet);
+
             }
             else
             {
-                ProjectPageModel projectNote = new ProjectPageModel();
-                for (int i = 0; i < ProjectNoteSelectedArray.Count(); i++)
-                {
-                    projectNote.DeleteProjectNotes(ProjectNoteSelectedArray.ElementAt(i));
-                }
+                Debug.WriteLine("THE PROJECT NOTE ARRAY HAS " + TaskSelectedArray.ElementAt(0));
+                ProjectNotes pn = new ProjectNotes();
+                pn = taskModelSelect.getTaskDetail(TaskSelectedArray.ElementAt(0));
+                return Json(pn, JsonRequestBehavior.AllowGet);
+
             }
 
-
-            return RedirectToAction("Index", "Project", result);
         }
 
         // Gets executed on Modal AddTask POST 
