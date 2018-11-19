@@ -52,6 +52,7 @@ namespace WhiteBears
 
         public class Sentence
         {
+            public string status { get; set; }
             public string content { get; set; }
         }
 

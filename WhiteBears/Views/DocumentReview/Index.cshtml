@@ -131,7 +131,7 @@
         var windowHeight = $(window).height();
         var headerPosition = $("#documentHeaderContainer").offset().top;
         var headerHeight = $("#documentHeaderContainer").height();
-        var height = windowHeight - (headerPosition + headerHeight + 20);
+        var height = windowHeight - (headerPosition + headerHeight + 40);
         console.log("window:" + windowHeight + " header top: " + headerPosition + " header height: " + headerHeight + " height: " + height);
         $("#documentComparisonContainer").attr("style", "height:" + height + "px;clear:both;float:left;min-height:100px;width:100%;");
     }
@@ -141,6 +141,7 @@
     //function to display reviewed document
     var displayDocument = function (elements, target) {
         var returnString = "";
+        console.log(elements);
         $("#" + target).empty();
         for (i = 0; i < elements.length; i++) {
             
@@ -247,7 +248,7 @@
 
 
 
-<h2>@ViewBag.Title</h2>
+<h2 class="header-text" style="margin-left:10px;">@ViewBag.Title</h2>
 <div id="documentHeaderContainer" style="height:150px;margin:0px 15px 0px 15px;">
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
@@ -262,8 +263,8 @@
         <input id="oldDownload" type="button" value="Download" class="btn btn-primary btn-sm" style="display:inline-block;width:100px;clear:both;float:left;" />
     </div>
     <div style="width:10%;float:left;">
-        <input id="btnReview" type="button" class="btn btn-primary btn-sm" value="Compare" /></br>
-        <input id="scrollLock" type="button" class="btn btn-primary btn-sm" value="Unlocked" />
+        <input id="btnReview" type="button" class="btn btn-primary btn-sm" value="Compare" style="width:50%" /></br>
+        <input id="scrollLock" type="button" class="btn btn-primary btn-sm" value="Unlocked" style="width:50%;margin-top:10px;" />
     </div>
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
