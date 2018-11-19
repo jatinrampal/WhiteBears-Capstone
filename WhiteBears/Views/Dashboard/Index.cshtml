@@ -368,8 +368,8 @@
         }
 
         function isNoteValid() {
-            if (noteTextArea.val().length < 3) {
-                alert("Notes must be at least 3 characters long.");
+            if (noteTextArea.val().length < 3 || noteTextArea.val().length > 255) {
+                alert("Notes must be between 3 to 255 characters long.");
                 return false;
             }
 
@@ -558,7 +558,7 @@
                             display: true,
                             text: 'Task Overview',
                             position: 'top'
-                        }, responsive: false,
+                        }, responsive: true,
 
                         legend: {
                             position: 'right'
