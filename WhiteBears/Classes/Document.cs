@@ -211,7 +211,7 @@ namespace WhiteBears
                         }
                         else
                         {
-                            DocumentJSON.Sentence stc = new DocumentJSON.Sentence() {content=s};
+                            DocumentJSON.Sentence stc = new DocumentJSON.Sentence() {content=s, status="m"};
                             sentenceList.Add(stc);
                         }
                     }
@@ -223,9 +223,26 @@ namespace WhiteBears
                             mostSimilarPar = key;
                         }
                     }
+                   
                     //if the content has more than 50% of similarity the paragraph is considered as modified
                     if(mostSimilarPar.Text/((double)sentences.Count()) > paragraphSensivity)
                     {
+                        DocumentJSON.Paragraph oldPar = oldParList.Where(x => x.id == mostSimilarPar.Id).First();
+                        string[] oldSentences = oldPar.content.Split('.');
+                        foreach (string s in oldSentences)
+                        {
+                            int i = 0;
+                            foreach(string c in sentences)
+                            {
+                                sentences[i] = c.Trim();
+                                i++;
+                            }
+                            if (!sentences.Contains(s.Trim()))
+                            {
+                                sentenceList.Add(new DocumentJSON.Sentence() { content = s, status = "d" });
+                            }
+                        }
+
                         par.status = "m";
                         par.id = mostSimilarPar.Id;
                         par.sentence = sentenceList.ToArray();

@@ -140,13 +140,17 @@ namespace WhiteBears.Controllers
                                         sent.content = s;
                                         if (sJSON.Where(x => x.content.Equals(s)).Count() > 0)
                                         {
-                                            sent.status = "m";
+                                            sent.status = sJSON.Where(x => x.content.Equals(s)).First().status;
                                         }
+                                        
                                         else
                                         {
                                             sent.status = "o";
                                         }
-                                        sentencesList.Add(sent);
+                                        if (!sent.status.Equals("d"))
+                                        {
+                                            sentencesList.Add(sent);
+                                        }
                                     }
                                     paragraph.elements = sentencesList.ToArray();
                                 }
@@ -224,9 +228,34 @@ namespace WhiteBears.Controllers
                                 paragraph.content = par.Content.ToString();
                                 paragraph.type = PARAGRAPH_TYPE;
                                 paragraph.status = parJSON.status;
-                                if (!paragraph.status.Equals("d"))
+                                if (paragraph.status.Equals("n"))
                                 {
                                     paragraph.status = "o";
+                                }
+                                if(docJSON2.paragraphs.Where(x => x.id == parJSON.id).First().status.Equals("m"))
+                                {
+                                    paragraph.status = "m";
+                                    List<ElementJSON> sentencesList = new List<ElementJSON>();
+                                    string[] sentences = par.Content.ToString().Split('.');
+                                    List<DocumentJSON.Sentence> sJSON = docJSON2.paragraphs.Where(x => x.id == parJSON.id).First().sentence.Where(y => y.status.Equals("d")).ToList() ;
+                                    int sentenceOrder = 0;
+                                    foreach (string s in sentences)
+                                    {
+                                        ElementJSON sent = new ElementJSON();
+                                        sent.type = SENTENCE_TYPE;
+                                        sent.order = sentenceOrder++;
+                                        sent.content = s;
+                                        if (sJSON.Where(x => x.content.Equals(s)).Count() > 0)
+                                        {
+                                            sent.status = "m";
+                                        }
+                                        else
+                                        {
+                                            sent.status = "o";
+                                        }
+                                        sentencesList.Add(sent);
+                                    }
+                                    paragraph.elements = sentencesList.ToArray();
                                 }
                                 doc1Elements.Add(paragraph);
                             }
