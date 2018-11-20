@@ -2190,6 +2190,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Style\AddProject.css" />
     <Content Include="Style\dashboard.css" />
     <Content Include="Style\layout.css" />
     <Content Include="Style\ProjectPage.css" />
