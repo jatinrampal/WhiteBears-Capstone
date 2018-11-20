@@ -299,7 +299,7 @@ namespace WhiteBears.Controllers
             return JsonConvert.SerializeObject(rm);
         }
         [HttpPost]
-        public string DownloadDocument(int? id, int? ver)
+        public JsonResult DownloadDocument(int? id, int? ver)
         {
             if (Session["username"] != null)
             {
@@ -307,20 +307,26 @@ namespace WhiteBears.Controllers
                 {
                     BlobStorageRepository br = new BlobStorageRepository();
                     string[] fileName = getFileNameAndExtention(Convert.ToInt32(id));
-                    MemoryStream ms = br.GetBlobAsStream(fileName[0] + "_v" + ver, fileName[1]);
-                    DocumentDownload dd = new DocumentDownload()
+                    string handle = Guid.NewGuid().ToString();
+                    using (MemoryStream ms = br.GetBlobAsStream(fileName[0] + "_v" + ver, fileName[1]))
                     {
-                        FileName = fileName[0] + fileName[1],
-                        B64 = Convert.ToBase64String(ms.ToArray())
+                        ms.Position = 0;
+                        TempData[handle] = ms.ToArray();
+                    }
+                   
+
+                    return new JsonResult()
+                    {
+                        Data = new {fileGuid = handle, fileName = fileName[0]+fileName[1]}
                     };
-                    return JsonConvert.SerializeObject(dd);
+                   
                 }
-                else return "{\"error\":\"no document id or version\"}";
+                return null;
             }
-            else return "{\"error\":\"need to login\"}";
+            return null;
         }
         [HttpPost]
-        public string DownloadLatestVersion(int? id)
+        public JsonResult DownloadLatestVersion(int? id)
         {
             if (Session["username"] != null)
             {
@@ -330,10 +336,26 @@ namespace WhiteBears.Controllers
                     DataRow[] dr = db.RunSelectQuery($"SELECT MAX(Version) AS ver FROM documentversion WHERE documentId = {id};");
                     return DownloadDocument(id, Convert.ToInt32(dr[0]["ver"]));
                 }
-                else return "{\"error\":\"no document id\"}"; 
+                else return null; 
             }
             else {
-                return "{\"error\":\"need to login\"}";
+                return null;
+            }
+        }
+
+        [HttpGet]
+        public virtual ActionResult Download(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/octet-stream", fileName);
+            }
+            else
+            {
+                // Problem - Log the error, generate a blank file,
+                //           redirect to another controller action - whatever fits with your application
+                return new EmptyResult();
             }
         }
 
