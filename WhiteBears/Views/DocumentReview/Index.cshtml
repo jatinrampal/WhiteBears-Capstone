@@ -21,7 +21,11 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 data: '{"id": @Model.id, "ver":' + $("#version1").val() + '}',
-                success: downloadBlob,
+                success: function (response) {
+                    console.log(response);
+                    window.location = '/DocumentReview/Download?fileGuid=' + response.fileGuid
+                        + '&filename=' + response.fileName;
+                },
                 error: function (e) { console.log(e); }
             });
 
@@ -35,7 +39,11 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 data: '{"id": @Model.id, "ver":' + $("#version2").val() + '}',
-                success: downloadBlob,
+                success: function (response) {
+                    console.log(response);
+                    window.location = '/DocumentReview/Download?fileGuid=' + response.fileGuid
+                        + '&fileName=' + response.fileName;
+                },
                 error: function (e) { console.log(e); }
             });
 
@@ -113,17 +121,6 @@
         $("#newDocument").scrollTop(newScroll);
         oldScroll = newPosition;
         $("#newDocument").on("scroll", newScrolling);
-    }
-
-    //function to download blob file
-    var downloadBlob = function (data) {
-        //var jsonObj = JSON.parse(data);
-        var element = document.createElement('a');
-        element.setAttribute("href", "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64," + data.B64);
-        element.setAttribute('download', data.FileName);
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
     }
 
     //function to set document container height

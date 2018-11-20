@@ -246,7 +246,10 @@ namespace WhiteBears
                         par.status = "m";
                         par.id = mostSimilarPar.Id;
                         par.sentence = sentenceList.ToArray();
-                        oldParList.Remove(refPars.Where(x=>x.id == mostSimilarPar.Id).First());
+                        if (refPars.Where(x => x.id == mostSimilarPar.Id).Count() > 0)
+                        {
+                            oldParList.Remove(refPars.Where(x => x.id == mostSimilarPar.Id).First());
+                        }
                     }
                     //if the paragraph has less or equal to 50% of similarity, it is considered as new
                     else
