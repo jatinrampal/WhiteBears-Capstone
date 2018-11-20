@@ -5,6 +5,8 @@
 }
 
 <div class="container">
+    <button class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "AdminPage")'">Back</button><br />
+
     @Html.ActionLink("Upload to Azure Blob","UploadBlob", new { controller = "Blob"}, new { @class = "btn btn-link"})
 
     <div>
