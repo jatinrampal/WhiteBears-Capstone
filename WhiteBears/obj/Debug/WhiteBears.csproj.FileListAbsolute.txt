@@ -1158,3 +1158,24 @@ E:\Users\Yolanda\Documents\VS_Projects\new one\WhiteBears-Capstone\WhiteBears\ob
 E:\Users\Yolanda\Documents\VS_Projects\new one\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csproj.CoreCompileInputs.cache
 E:\Users\Yolanda\Documents\VS_Projects\new one\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
 E:\Users\Yolanda\Documents\VS_Projects\new one\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.pdb
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Win32.Primitives.dll
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.Process.dll
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Threading.Thread.dll
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.Azure.KeyVault.Core.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.pdb
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.WindowsAzure.Storage.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\SautinSoft.Document.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\System.Web.Helpers.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\System.Web.Mvc.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\System.Web.Razor.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Deployment.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Razor.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Newtonsoft.Json.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\System.Diagnostics.DiagnosticSource.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.DependencyCollector.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
+\\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
