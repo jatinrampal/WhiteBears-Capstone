@@ -245,11 +245,27 @@ namespace WhiteBears.Controllers
             DatabaseHelper dh = new DatabaseHelper();
             try
             {
-                dh.RunQuery($"DELETE FROM Project WHERE projectId = '{projectId}';");
+                DataRow[] drs = dh.RunQuery($"SELECT * FROM [Task] WHERE projectId='{projectId}'");
+                dh.RunUpdateQuery($"DELETE FROM [Milestone] WHERE projectId = '{projectId}';");
 
+                foreach (DataRow dr in drs) {
+                    int i = Convert.ToInt32(dr["taskId"].ToString());
+                    dh.RunUpdateQuery($"DELETE FROM User_Task WHERE taskId = '{i}';");
+                }
+
+                drs = dh.RunQuery($"SELECT documentId FROM Document WHERE projectId='{projectId}'");
+
+                foreach (DataRow dr in drs) {
+                    dh.RunUpdateQuery($"DELETE FROM [DocumentRole] WHERE documentId = '{dr["documentId"].ToString()}';");
+                    dh.RunUpdateQuery($"DELETE FROM [DocumentVersion] WHERE documentId = '{dr["documentId"].ToString()}';");
+                }
+                dh.RunUpdateQuery($"DELETE FROM [Document] WHERE projectId = '{projectId}'");
+
+                dh.RunUpdateQuery($"DELETE FROM [Task] WHERE projectId = '{projectId}';");
+                dh.RunUpdateQuery($"DELETE FROM [ProjectNote] WHERE projectId = '{projectId}';");
+                dh.RunUpdateQuery($"DELETE FROM [User_Project] WHERE projectId = '{projectId}';");
+                dh.RunUpdateQuery($"DELETE FROM [Project] WHERE projectId = '{projectId}';");
                 // Comment IN the line below This will delete any Tasks assigned to that project. 
-                //dh.RunQuery($"DELETE FROM User_Task WHERE projectId = '{projectId}';");
-                //dh.RunQuery($"DELETE FROM Task WHERE projectId = '{projectId}';");
                 return true;
             }
             catch (Exception e)

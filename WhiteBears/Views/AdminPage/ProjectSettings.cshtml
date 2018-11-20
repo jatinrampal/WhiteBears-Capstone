@@ -112,8 +112,7 @@
                     $('#ProjectTableContainer').remove();
                 }
 
-                loadTables();
-
+                alert(radioValue);
                 $.ajax({
                     type: "post",
                      url: '/AdminPage/DeleteProject',
@@ -129,6 +128,8 @@
                         successful = false;
                     }
                 });
+
+                loadTables();
             }
         })
 
