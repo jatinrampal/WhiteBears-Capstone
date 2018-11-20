@@ -1,4 +1,15 @@
-﻿.header-text{
+﻿/*Use this for the surrounding div*/
+#headingsContainer {
+    box-shadow: 0 5px 5px 0px gray;
+    border-bottom: solid black 1px;
+    padding: 25px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: left;
+}
+
+/*Use this on the header tags themselves*/
+.header-text{
     font-family: Corbel;
     color: black;
 }
