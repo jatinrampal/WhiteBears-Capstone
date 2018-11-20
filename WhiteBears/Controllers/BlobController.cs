@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Whitebears.Repository;
 using System.Diagnostics;
+using WhiteBears;
 
 namespace Whitebears.Controllers
 {
@@ -35,8 +36,14 @@ namespace Whitebears.Controllers
 
 
         // GET: Blob
-        public ActionResult Index()
-        {
+        public ActionResult Index(){
+            if (Session["username"] == null) {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (!Authentication.VerifyIfAdmin(Session["username"].ToString())) {
+                return RedirectToAction("Index", "Dashboard");
+            }
             var blobVM = repo.GetBlobs();
             return View(blobVM);
         }
@@ -62,6 +69,7 @@ namespace Whitebears.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+
             role = Request["role"];
             projectid = Request["projectId"];
             uname = Session["username"].ToString();
