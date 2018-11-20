@@ -108,16 +108,21 @@ header {
 
 #PersonalNotesSection {
     margin-top: 20px;
-    width: 65%;
+    width: 60%;
     float: right;
     margin-left: 20px;
+    margin-right: 45px;
 }
 
-    #PersonalNotesSection td, th {
-        border: 1px solid darkgrey;
-        padding: 10px;
-        max-width: 800px;
-    }
+
+#PersonalNotesSection td, th {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 90%;
+}
+#PersonalNotesSection td:first-child, th:first-child {
+    width: 10%;
+}
 
 #PersonalNotesButtonsContainer {
     margin-top: 10px;
@@ -243,3 +248,4 @@ textarea {
 #text-center {
     text-align: center;
 }
+
