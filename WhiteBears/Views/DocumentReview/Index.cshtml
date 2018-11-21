@@ -15,6 +15,7 @@
         setDocumentDisplayHeight();
         //Ajax call to download document selected on the left side
         $("#oldDownload").click(function () {
+            $("#LoaderModal").modal('toggle');
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("DownloadDocument", "DocumentReview")',
@@ -22,17 +23,21 @@
                 dataType: 'json',
                 data: '{"id": @Model.id, "ver":' + $("#version1").val() + '}',
                 success: function (response) {
-                    console.log(response);
+                    $("#LoaderModal").modal('toggle');
                     window.location = '/DocumentReview/Download?fileGuid=' + response.fileGuid
                         + '&filename=' + response.fileName;
                 },
-                error: function (e) { console.log(e); }
+                error: function (e) {
+                    console.log(e);
+                    $("#LoaderModal").modal('toggle');
+                }
             });
 
         });
 
         //Ajax call to download document selected on the right side
-        $("#newDownload").click(function(){
+        $("#newDownload").click(function () {
+            $("#LoaderModal").modal('toggle');
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("DownloadDocument", "DocumentReview")',
@@ -40,11 +45,14 @@
                 dataType: 'json',
                 data: '{"id": @Model.id, "ver":' + $("#version2").val() + '}',
                 success: function (response) {
-                    console.log(response);
+                    $("#LoaderModal").modal('toggle');
                     window.location = '/DocumentReview/Download?fileGuid=' + response.fileGuid
                         + '&fileName=' + response.fileName;
                 },
-                error: function (e) { console.log(e); }
+                error: function (e) {
+                    console.log(e);
+                    $("#LoaderModal").modal('toggle');
+                }
             });
 
         });
@@ -68,34 +76,73 @@
 
         //ajax call to start review process
         $("#btnReview").click(function () {
+            $("#LoaderModal").modal('toggle');
+            var version1;
+            var version2;
+            if ($("#version1").val() <= $("#version2").val()) {
+                version1 = $("#version1").val();
+                version2 = $("#version2").val();
+            }
+            else {
+                version1 = $("#version2").val();
+                version2 = $("#version1").val();
+            }
+            console.log("version1:" + version1 + "  version2:" + version2);
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ReviewDocument", "DocumentReview")',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                data: '{ "id": @Model.id, "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
+                data: '{ "id": @Model.id, "ver1":' + version1 + ', "ver2":' + version2 +'}',
                 success: function (data) {
-                    console.log(data);
-                    $("#oldModBy").html(data.modifiedBy1);
-                    $("#oldTimeStamp").html(data.timeStamp1);
-                    $("#newModBy").html(data.modifiedBy2);
-                    $("#newTimeStamp").html(data.timeStamp2);
-                    displayDocument(data.Doc1, "oldDocument");
-                    displayDocument(data.Doc2, "newDocument");
-                    if (data.fileSize1 > 1000) {
-                        $("#oldFileSize").html((data.fileSize1/1000.00).tofixed(2) + " MB");
+                    if ($("#version1").val() <= $("#version2").val()) {
+                        $("#LoaderModal").modal('toggle');
+                        $("#oldModBy").html(data.modifiedBy1);
+                        $("#oldTimeStamp").html(data.timeStamp1);
+                        $("#newModBy").html(data.modifiedBy2);
+                        $("#newTimeStamp").html(data.timeStamp2);
+                        displayDocument(data.Doc1, "oldDocument");
+                        displayDocument(data.Doc2, "newDocument");
+                        if (data.fileSize1 > 1000) {
+                            $("#oldFileSize").html((data.fileSize1 / 1000.00) + " MB");
+                        }
+                        else {
+                            $("#oldFileSize").html(data.fileSize1 + " KB");
+                        }
+                        if (data.fileSize1 > 1000) {
+                            $("#newFileSize").html((data.fileSize2 / 1000.00) + " MB");
+                        }
+                        else {
+                            $("#newFileSize").html(data.fileSize2 + " KB");
+                        }
                     }
                     else {
-                        $("#oldFileSize").html(data.fileSize1 + " KB");
+                        $("#LoaderModal").modal('toggle');
+                        $("#oldModBy").html(data.modifiedBy2);
+                        $("#oldTimeStamp").html(data.timeStamp2);
+                        $("#newModBy").html(data.modifiedBy1);
+                        $("#newTimeStamp").html(data.timeStamp1);
+                        displayDocument(data.Doc2, "oldDocument");
+                        displayDocument(data.Doc1, "newDocument");
+                        if (data.fileSize1 > 1000) {
+                            $("#oldFileSize").html((data.fileSize2 / 1000.00) + " MB");
+                        }
+                        else {
+                            $("#oldFileSize").html(data.fileSize2 + " KB");
+                        }
+                        if (data.fileSize1 > 1000) {
+                            $("#newFileSize").html((data.fileSize1 / 1000.00) + " MB");
+                        }
+                        else {
+                            $("#newFileSize").html(data.fileSize1 + " KB");
+                        }
                     }
-                    if (data.fileSize1 > 1000) {
-                        $("#newFileSize").html((data.fileSize2 / 1000.00).tofixed(2) + " MB");
-                    }
-                    else {
-                        $("#newFileSize").html(data.fileSize2 + " KB");
-                    }
+                    
                 },
-                error: function (e) { console.log(e); }
+                error: function (e) {
+                    console.log(e);
+                    $("#LoaderModal").modal('toggle');
+                }
             });
         });
 
@@ -138,7 +185,6 @@
     //function to display reviewed document
     var displayDocument = function (elements, target) {
         var returnString = "";
-        console.log(elements);
         $("#" + target).empty();
         for (i = 0; i < elements.length; i++) {
             
@@ -244,8 +290,10 @@
 </script>
 
 
-
-<h2 class="header-text" style="margin-left:10px;">@ViewBag.Title</h2>
+<div id="headings" class="header-text" style="padding-top:0px;">
+    <h2>@ViewBag.Title</h2>
+    <h3 >Compare and download document versions</h3>
+</div>
 <div id="documentHeaderContainer" style="height:150px;margin:0px 15px 0px 15px;">
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
@@ -284,5 +332,5 @@
 
     </div>
 </div>
-
+@Html.Partial("_loaderIndicator")
 

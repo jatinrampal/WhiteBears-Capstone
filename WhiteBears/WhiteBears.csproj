@@ -2193,6 +2193,7 @@
     <Content Include="Style\AddProject.css" />
     <Content Include="Style\dashboard.css" />
     <Content Include="Style\layout.css" />
+    <Content Include="Style\loader.css" />
     <Content Include="Style\ProjectPage.css" />
     <Content Include="Style\ProjectTaskPage.css" />
     <Content Include="Style\SignUp.css" />
@@ -2247,6 +2248,8 @@
     <Content Include="Views\Project\_DocumentDetailPM.cshtml" />
     <Content Include="Views\Project\TaskEditView.cshtml" />
     <Content Include="Views\Project\ProjectNotesEditView.cshtml" />
+    <Content Include="Views\Project\EditTaskView.cshtml" />
+    <Content Include="Views\Shared\_loaderIndicator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

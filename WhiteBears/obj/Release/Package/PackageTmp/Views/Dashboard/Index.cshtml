@@ -1,4 +1,4 @@
-﻿@using WhiteBears.Models
+@using WhiteBears.Models
 @model DashboardModel
 
 @Styles.Render("~/bundles/style/dashboard")
@@ -81,9 +81,9 @@
     </div>
 </nav>
 
-<div style="float: left; width: 85%">
+<div style="float: left; width: 90%">
     <header>
-        <div id="headings" class="header-text" style="margin-top: 70px;">
+        <div id="headings" class="header-text">
             <h2>Personal Dashboard</h2>
             <h3>Here's an overview of your projects</h3>
         </div>
@@ -101,8 +101,8 @@
             </span>
         </form>
     </header>
-
-    <div style="overflow: auto">
+    <div>
+        <div>
         <div id="TasksSection">
             <label>Tasks</label>
             <div class="scrollable-task">
@@ -153,7 +153,7 @@
         </div>
     </div>
 
-    <div style="overflow: auto;">
+    <div style="clear:both;float:left;width: 100%">
         <div class="ProgressBarContainers">
             <div class="ProgressBarContainer">
                 <label>Tasks Completed</label>
@@ -167,13 +167,13 @@
             <div class="ProgressBarContainer">
                 <label>Storage Used</label>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">10%</div>
+                    <div id="storageProgressBar" class="progress-bar progress-bar-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">10%</div>
                 </div>
-                <text class="text-large">100/1000 GB</text><br />
-                <text class="text-medium text-secondary">900GB remaining</text>
+                <text id="storageStatus" class="text-large">0/2GB</text><br />
+                <text id="storageRemaining" class="text-medium text-secondary">2GB remaining</text>
             </div>
         </div>
-    <div id="PersonalNotesSection">
+    <div id="PersonalNotesSection" style="float: right">
         <div>
             <label>Personal Notes</label>
             <div class="scrollable-notes" id="PersonalNotesTable">
@@ -203,6 +203,7 @@
     </div>
     
         </div>
+    </div>
 </div>
 
 <script>
@@ -367,8 +368,8 @@
         }
 
         function isNoteValid() {
-            if (noteTextArea.val().length < 3) {
-                alert("Notes must be at least 3 characters long.");
+            if (noteTextArea.val().length < 3 || noteTextArea.val().length > 255) {
+                alert("Notes must be between 3 to 255 characters long.");
                 return false;
             }
 
@@ -462,10 +463,39 @@
                         percentage = 0.00;
                     }
 
+                    if (percentage < 10) {
+                        $('#taskProgressBar').css('color', 'black');
+                    } else {
+                        $('#taskProgressBar').css('color', 'white');
+                    }
+
                     $('#taskProgressBar').html(percentage + "%");
                     $('#taskProgressBar').css('width', percentage + '%');
                     $('#taskProgressStatus').html(completed + '/' + total);
                     $('#taskProgressRemaining').html(notCompleted + ' task' + (notCompleted > 1 ? 's' : '') + ' remaining');
+
+
+                    var usedStorage = @Model.GetUsedStorage();
+                    usedStorage = usedStorage / 1000000;
+                    usedStorage = usedStorage.toFixed(2);
+                    $('#storageStatus').text(usedStorage+'/500 MB');
+                    $('#storageRemaining').text(500 - usedStorage + " MB remaining");
+
+                    var percentage = (usedStorage / 500) * 100
+                    percentage = percentage.toFixed(2);
+
+                    if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
+                        percentage = 0.00;
+                    }
+
+                    if (percentage < 10) {
+                        $('#storageProgressBar').css('color', 'black');
+                    } else {
+                        $('#storageProgressBar').css('color', 'white');
+                    }
+
+                    $('#storageProgressBar').html(percentage + "%");
+                    $('#storageProgressBar').css('width', percentage + '%');
 
                     var onSchedule = 0;
                     var completedOnTime = 0;
@@ -528,7 +558,7 @@
                             display: true,
                             text: 'Task Overview',
                             position: 'top'
-                        }, responsive: false,
+                        }, responsive: true,
 
                         legend: {
                             position: 'right'
