@@ -70,5 +70,18 @@ namespace WhiteBears
 
             return dr;
         }
+
+        internal int RunDeleteQuery(string sQuery)
+        {
+            int i = 0;
+            using (conn = new SqlConnection(connString))
+            {
+                da = new SqlDataAdapter(sQuery, conn);
+                ds = new DataSet();
+                da.Fill(ds);
+            }
+
+            return i;
+        }
     }
 }
