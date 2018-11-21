@@ -102,34 +102,28 @@ namespace WhiteBears.Controllers
             return RedirectToAction("Index", "Project", result);
         }
 
-     /// <summary>
-     /// /
-     /// </summary>
-     /// <param name="TaskSelectedArray"></param>
-     /// <returns></returns>
 
-        public JsonResult TaskDetail(IEnumerable<int> TaskSelectedArray)
+
+        public JsonResult TaskDetail(string myTaskID)
         {
-            ProjectPageModel taskModelSelect = new ProjectPageModel();
-            if (TaskSelectedArray == null || !TaskSelectedArray.Any())
-            {
 
-                // WILL ERROR IF YOU RUN THIS CONTROLLER 
-
-
-                //return td;
-                return Json(JsonRequestBehavior.AllowGet);
-
-            }
-            else
-            {
-                Debug.WriteLine("THE PROJECT NOTE ARRAY HAS " + TaskSelectedArray.ElementAt(0));
-                ProjectNotes pn = new ProjectNotes();
-                pn = taskModelSelect.getTaskDetail(TaskSelectedArray.ElementAt(0));
+                ProjectPageModel taskModelSelect = new ProjectPageModel();
+         
+               
+                Task pn = new Task();
+                pn = taskModelSelect.getTaskDetail(Convert.ToInt32(myTaskID));
                 return Json(pn, JsonRequestBehavior.AllowGet);
 
-            }
+        }
 
+        public JsonResult ProjectNotesDetail(string myNoteID)
+        {
+            ProjectPageModel taskModelSelect = new ProjectPageModel();
+
+        
+            ProjectNotes pn = new ProjectNotes();
+            pn = taskModelSelect.getProjectNotesDetails(Convert.ToInt32(myNoteID));
+            return Json(pn, JsonRequestBehavior.AllowGet);
         }
 
         // Gets executed on Modal AddTask POST 

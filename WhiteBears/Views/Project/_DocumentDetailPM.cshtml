@@ -19,47 +19,52 @@
                 </div>
                 <hr />
 
-                <!-- Document Id -->
-                @Html.HiddenFor(x => x.DocumentId)
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="Contain">
+                            <!-- Document Id -->
+                            @Html.HiddenFor(x => x.DocumentId)
 
-                <!-- Version-->
-                <div class="form-group row">
-                    <Label for="version">Version</Label>
-                    <select id="version" name="version"></select>
+
+                            <!-- Version-->
+                            <div class="form-group row">
+                                <Label for="version">Version</Label>
+                                <select id="version" name="version"></select>
+                            </div>
+
+                            <!-- Modified By -->
+                            <div class="form-group row">
+                                <label for="ModifiedBy">Modified by</label>
+                                <text id="ModifiedBy" name="ModifiedBy"></text>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="ModifiedOn">Modified on</label>
+                                <text id="ModifiedOn" name="ModifiedOn"></text>
+                            </div>
+
+                            <!-- Created By -->
+                            <div class="form-group row">
+                                <label for="Uploader">Created by</label>
+                                <text id="Uploader" name="Uploader"></text>
+                            </div>
+
+                            <!-- Creation Date -->
+                            <div class="form-group row">
+                                <label for="CreationTime">Created on</label>
+                                <text id="CreationTime" name="CreationTime"></text>
+                            </div>
+
+                            <div class="modal-footer">
+                                <!-- Add Button -->
+                                <input id="downloadDoc" type="button" class="btn btn-default" name="downloadDoc" value="Download" style="float:left;" />
+                                <input id="deleteDoc" type="button" class="btn btn-default" name="deleteDoc" value="Delete" />
+                            </div>
+
+                        </div> <!-- Modal Body Ends here -->
+                        </div>
+                    </div> <!-- Modal Content Ends here -->
+                    </div>
                 </div>
-
-                <!-- Modified By -->
-                <div class="form-group row">
-                    <label for="ModifiedBy">Modified by</label>
-                    <text id="ModifiedBy" name="ModifiedBy"></text>
-                </div>
-
-                <div class="form-group row">
-                    <label for="ModifiedOn">Modified on</label>
-                    <text id="ModifiedOn" name="ModifiedOn"></text>
-                </div>
-
-                <!-- Created By -->
-                <div class="form-group row">
-                    <label for="Uploader">Created by</label>
-                    <text id="Uploader" name="Uploader"></text>
-                </div>
-
-                <!-- Creation Date -->
-                <div class="form-group row">
-                    <label for="CreationTime">Created on</label>
-                    <text id="CreationTime" name="CreationTime"></text>
-                </div>
-
-                <div class="modal-footer">
-                    <!-- Add Button -->
-                    <input id="downloadDoc" type="button" class="btn btn-default" name="downloadDoc" value="Download" style="float:left;" />
-                    <input id="deleteDoc" type="button" class="btn btn-default" name="deleteDoc" value="Delete" />
-                </div>
-
-            </div> <!-- Modal Body Ends here -->
-
-        </div> <!-- Modal Content Ends here -->
-    </div>
-</div>
+            </div>
 

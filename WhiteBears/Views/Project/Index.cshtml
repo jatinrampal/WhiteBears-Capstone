@@ -21,25 +21,40 @@
 
         <div id="row" class="row">
             <div id="topBar" class="col-sm-6">
-              <h1 id="topBarTitle">@Model.Project.Title   </h1> 
+                <h1 id="topBarTitle">@Model.Project.Title   </h1>
             </div>
+
             <div class="col-sm-6">
                 <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { id = Model.Project.ProjectId })'">Team Management</button>
             </div>
         </div>
-        <hr id="hr" />
-        <div id="row" class="row">
-            <span id="projectId" hidden>@Model.Project.ProjectId</span>
-            <div id="backButton" class="col-sm-6">
-                <span> @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")</span>
-            </div>
-            <div id="nameDiv" class="col-sm-6">
-                <span id="name">@Model.User.FullName</span>
-            </div>
-            <!-- <p id="myResult">@ViewBag.Message</p> -->
-        </div>
 
-    </div>
+        <div id="startEnd" class="row">
+            <div class="col-sm-6">
+      
+                        <h5 id="pStartDate" class="pull-left">Start Date:   @Model.Project.StartDate.ToShortDateString() </h5>
+                    
+                </div>
+            <div class="col-sm-6">
+              
+                        <h5 class="pull-right" id="pEndDate">End Date:  @Model.Project.DueDate.ToShortDateString() </h5>
+                 
+                </div>
+
+            </div>
+            <hr id="hr" />
+            <div id="row" class="row">
+                <span id="projectId" hidden>@Model.Project.ProjectId</span>
+                <div id="backButton" class="col-sm-6">
+                    <span> @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")</span>
+                </div>
+                <div id="nameDiv" class="col-sm-6">
+                    <span id="name">@Model.User.FullName</span>
+                </div>
+                <!-- <p id="myResult">@ViewBag.Message</p> -->
+            </div>
+
+        </div>
 
     <div class="container-fluid">
         <div class="row">
@@ -66,8 +81,8 @@
 
                     <!-- Tasks Buttons -->
                     <div id="projectTaskButtons">
-                        <button hidden type="button" id="projectTaskAdd" class="btn btn-info" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
-                        <button hidden type="button" id="projectTaskEdit" class="btn btn-info">Edit</button>
+                        <button hidden type="button" id="projectTaskAdd" class="btn btn-primary" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
+                        <button hidden type="button" id="projectTaskEdit" class="btn btn-primary">Edit</button>
                         <button hidden type="button" id="projectTaskDelete" class="btn btn-danger">Delete</button>
 
                     </div>
@@ -187,9 +202,9 @@
                     </table>
 
                     <div id="projectDocumentButtons">
-                        <button type="button" id="projectButtonUpload" class="btn btn-info" style="float:left;margin:0px 10px 0px 10px">Download</button>
-                        <button type="button" id="projectDocumentUpload" class="btn btn-info" style="float:left;margin:0px 10px 0px 10px" onclick="location.href='@Url.Action("UploadBlob", "Blob", new { projectId = Model.Project.ProjectId, role = Model.User.Role })'">Upload</button>
-                        <button type="button" id="projectCompare" class="btn btn-info" style="float:left;margin:0px 10px 0px 10px">Version Compare</button>
+                        <button type="button" id="projectButtonUpload" class="btn btn-primary">Download</button>
+                        <button type="button" id="projectDocumentUpload" class="btn btn-primary" onclick="location.href='@Url.Action("UploadBlob", "Blob", new { projectId = Model.Project.ProjectId, role = Model.User.Role })'">Upload</button>
+                        <button type="button" id="projectCompare" class="btn btn-primary">Version Compare</button>
                     </div>
                     @if (Model.User.Role.Equals("Project Manager"))
                     {
@@ -225,12 +240,13 @@
 
                     <!-- Notes Buttons -->
                     <div id="projectNotesButtons">
-                        <button type="button" id="projectNoteAdd" class="btn btn-info" data-target="#projectNoteAddModal" data-toggle="modal">Add</button>
-                        <button type="button" id="projectNotesEdit" class="btn btn-info">Edit</button>
+                        <button type="button" id="projectNoteAdd" class="btn btn-primary" data-target="#projectNoteAddModal" data-toggle="modal">Add</button>
+                        <button type="button" id="projectNotesEdit" class="btn btn-primary">Edit</button>
                         <button type="button" id="projectNoteDelete" class="btn btn-danger">Delete</button>
                     </div>
 
                     @Html.Partial("ProjectNotesEditView", Model.ProjectNotes)
+                    @Html.Partial("ProjectNotesDetailView", Model.ProjectNotes)
 
                     <!-- Note: Project ID, Username from Session. -->
                     <!-- Modal -->
@@ -263,7 +279,7 @@
                                             </div>
                                         </div>
 
-                                        <!--  Completed Labels -->
+                                        <!--  Completed Labels 
                                         <div class="form-group row">
 
                                             <label for="CompletedDate" class="col-sm-4 col-form-label text-left">Completed Date</label>
@@ -273,6 +289,7 @@
                                             </div>
 
                                         </div>
+                                            -->
 
                                         <!-- To -->
                                         <div class="form-group row">
@@ -287,18 +304,18 @@
                                                     <option>Admin</option>
                                                 </select>
                                             </div>
-                                           </div>
+                                        </div>
 
 
-                                            <div class="modal-footer">
-                                                <!-- Add Button -->
-                                                <input id="submit1" type="submit" class="btn btn-default" name="Add" value="Add" />
+                                        <div class="modal-footer">
+                                            <!-- Add Button -->
+                                            <input id="submit1" type="submit" class="btn btn-default" name="Add" value="Add" />
 
-                                            </div>
-                                            }
-                                            <!--</form>-->
+                                        </div>
+                                    }
+                                    <!--</form>-->
 
-                                        </div> <!-- Modal Body Ends here -->
+                                </div> <!-- Modal Body Ends here -->
 
                             </div> <!-- Modal Content Ends here -->
                         </div> <!-- Modal Dialog Ends here -->
@@ -319,22 +336,142 @@
             // jQuery methods go here...
 
             // Double Click on ProjectTaskTable
-            $("#projectTaskTable tbody tr").dblclick(function () {
-                
+            $("#projectTaskTable tbody tr").dblclick(function ()
+            {
                 $("#taskDetailModal").modal().show();
-
+                myTaskID = $(this).attr('id'); 
                  $.ajax({
                     type: "POST",
                     url: "@Url.Action("TaskDetail", "Project")", // the method we are calling
-                    data:
-                        JSON.stringify({ 'TaskSelectedArray': ProjectNoteSelectedArray }),
+                     data:
+                         JSON.stringify({ 'myTaskID': myTaskID }),
+                     TaskSelectedArray,
                     contentType: 'application/json',
                     success: function (msg) {
-                        location.reload();
+                        
+                            /// Task Due Date Conversions 
+                            var taskDueDate = new Date(parseInt(msg.DueDate.substr(6)));
+
+                            var taskDueDateDay = taskDueDate.getDate(taskDueDate);
+                            var taskDueDateMonth = taskDueDate.getMonth(taskDueDate) + 1;
+                            var taskDueDateYear = taskDueDate.getFullYear(taskDueDate);
+
+                            if (taskDueDateDay < 10) {
+                                taskDueDateDay = '0' + taskDueDateDay;
+                            }
+                            if (taskDueDateMonth < 10) {
+                                taskDueDateMonth = '0' + taskDueDateMonth;
+                            }
+                            var myDueDate = taskDueDateYear + "-" + taskDueDateMonth + "-" + taskDueDateDay;
+
+                            // Task Start Date Conversions 
+                            var taskStartDate = new Date(parseInt(msg.StartDate.substr(6)));
+
+                            var taskStartDateDay = taskStartDate.getDate(taskStartDate);
+                            var taskStartDateMonth = taskStartDate.getMonth(taskStartDate) + 1;
+                            var taskStartDateYear = taskStartDate.getFullYear(taskStartDate);
+
+                            if (taskStartDateDay < 10) {
+                                taskStartDateDay = '0' + taskStartDateDay;
+                            }
+                            if (taskStartDateMonth < 10) {
+                                taskStartDateMonth = '0' + taskStartDateMonth;
+                            }
+                            var myStartDate = taskStartDateYear + "-" + taskStartDateMonth + "-" + taskStartDateDay;
+
+                            // Task Completion Date Conversions 
+                            var taskCompletionDate = new Date(parseInt(msg.CompletedDate.substr(6)));
+
+                            var taskCompletionDateDay = taskCompletionDate.getDate(taskCompletionDate);
+                            var taskCompletionDateMonth = taskCompletionDate.getMonth(taskCompletionDate) + 1;
+                            var taskCompletionDateYear = taskCompletionDate.getFullYear(taskCompletionDate);
+
+                            if (taskCompletionDateDay < 10) {
+                                taskCompletionDateDay = '0' + taskCompletionDateDay;
+                            }
+                            if (taskCompletionDateMonth < 10) {
+                                taskCompletionDateMonth = '0' + taskCompletionDateMonth;
+                            }
+                            var myCompletionDate = taskCompletionDateYear + "-" + taskCompletionDateMonth + "-" + taskCompletionDateDay;
+
+                            // Task id
+                          //  $('input[name="editTaskId"]').val(msg.TaskId);
+
+                            // Task title 
+                            $('#taskDetailTitle').text(msg.Title);
+                            
+                            // Task Description 
+                            $('#taskDetailDescription').text(msg.Description);
+                           
+                             // Task StartDate 
+                             $('#taskDetailStartDate').text(myStartDate);
+
+                            // Task DueDate (End Date)
+                            $('#taskDetailDueDate').text(myDueDate);
+
+                            // Task CompletionDate
+                            $('#taskDetailCompletionDate').text(myCompletionDate);
+
+                             // Task Priority 
+                             $('#taskPriority').text(msg.Priority);
+
+                            $('#taskDetailModal').modal('show');
+                            //EditTaskModal = true;
+
                     }
 
                 });
             });
+
+
+            $("#projectNoteTable tbody tr").dblclick(function () {
+                $("#projectNotesDetailModal").modal().show();
+                myNoteID = $(this).attr('id');
+
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "@Url.Action("ProjectNotesDetail", "Project")", // the method we are calling
+                        data:
+                            JSON.stringify({ 'myNoteID': myNoteID }),
+                        TaskSelectedArray,
+                        contentType: 'application/json',
+                        success: function (msg) {
+
+                            // Task Start Date Conversions 
+                            var taskSentDate = new Date(parseInt(msg.SentDate.substr(6)));
+
+                            var taskSentDateDay = taskSentDate.getDate(taskSentDate);
+                            var taskSentDateMonth = taskSentDate.getMonth(taskSentDate) + 1;
+                            var taskSentDateYear = taskSentDate.getFullYear(taskSentDate);
+
+                            if (taskSentDateDay < 10) {
+                                taskSentDateDay = '0' + taskSentDateDay;
+                            }
+                            if (taskSentDateMonth < 10) {
+                                taskSentDateMonth = '0' + taskSentDateMonth;
+                            }
+                            var mySentDate = taskSentDateYear + "-" + taskSentDateMonth + "-" + taskSentDateDay;
+
+
+                            // ProjectNotes Message
+                            $('#projectNotesDetailMessage').text(msg.Message);
+
+                            // ProjectNotes SendDate
+                            $('#projectNotesDetailSentDate').text(mySentDate);
+
+                            // ProjectNotes From 
+                            $('#projectNotesDetailFrom').text(msg.From);
+
+                            // ProjectNotes To
+                            $('#projectNotesTo').text(msg.To);
+
+                           
+                        }
+
+                    });
+            });
+
             //add a event handler if the version is changed on the document popup
             $("#version").change(function () {
 
@@ -731,7 +868,6 @@
 
                     var editProjectNotesArray = [editProjectNotesId, editProjectNotesMessage, editProjectNotesCompletionDate, editProjectNotesTo];
                    
-                   
 
                     $.ajax({
                         type: "POST",
@@ -969,7 +1105,7 @@
 
                 }
             });
-
+           /*
             // CompletionDate VALIDATION
             $('#noteCompletedDate').focusout(function () {
                 var myNoteCompletedDate = new Date($('#noteCompletedDate').val());
@@ -984,6 +1120,7 @@
                 }
 
             });
+            */
 
 
             if ("@Model.User.Role" == "Project Manager") {

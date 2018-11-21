@@ -178,24 +178,20 @@
 }
 
 .row {
-    margin-bottom: 1.5%;
+    margin-bottom: 0.5%;
     margin-top: 0%;
     margin-left: 0%;
     margin-right: 0%;
 }
 
-#projectTaskDelete, #projectTaskAdd, #projectTaskEdit, #projectNoteAdd, #projectNoteDelete, #projectNotesEdit, #projectDocumentUpload {
-    margin-left: 10%;
+#projectTaskDelete, #projectTaskAdd, #projectTaskEdit, #projectNoteAdd, #projectNoteDelete, #projectNotesEdit, #projectDocumentUpload, #projectButtonUpload, #projectCompare {
+    margin-left: 3%;
     margin-top: 5%;
-    width: 100px;
-}
-
-
-#projectCompare {
     width: 150px;
-    margin-left: 10%;
-    margin-top: 5%;
 }
+
+
+
 
     #TeamManagement {
         float: right;
@@ -206,5 +202,21 @@
     float: left;
 }
 
+.Contain
+{
+    margin-left: 33%;
+    font-size: 1em; 
+}
 
+
+#startEnd
+{
+    margin-top: 0%;
+    margin-left: 1%;
+
+}
+
+#pEndDate {
+    margin-right: 5%;
+}
 

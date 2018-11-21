@@ -3,6 +3,7 @@
 <div id="documentDetailsModal" class="modal fade" role="dialog">
     <div class="modal-dialog" style="left:0% !important">
 
+        
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -17,52 +18,57 @@
                     </div>
                 </div>
                 <hr />
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="Contain">
+                            <!-- Document Id -->
+                            @Html.HiddenFor(x => x.DocumentId)
 
-                <!-- Document Id -->
-                @Html.HiddenFor(x => x.DocumentId)
+                            <!-- File Name -->
+                            <div class="form-group row">
+                                <label for="FileName">File name</label>
+                                <text id="FileName" name="FileName"></text>
+                            </div>
 
-                <!-- File Name -->
-                <div class="form-group row">
-                    <label for="FileName">File name</label>
-                    <text id="FileName" name="FileName"></text>
+                            <!-- Version-->
+                            <div class="form-group row">
+                                <Label for="version">Version</Label>
+                                <select id="version" name="version"></select>
+                            </div>
+
+                            <!-- Modified By -->
+                            <div class="form-group row">
+                                <label for="ModifiedBy">Modified by</label>
+                                <text id="ModifiedBy" name="ModifiedBy"></text>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="ModifiedOn">Modified on</label>
+                                <text id="ModifiedOn" name="ModifiedOn"></text>
+                            </div>
+
+                            <!-- Created By -->
+                            <div class="form-group row">
+                                <label for="Uploader">Created by</label>
+                                <text id="Uploader" name="Uploader"></text>
+                            </div>
+
+                            <!-- Creation Date -->
+                            <div class="form-group row">
+                                <label for="CreationTime">Created on</label>
+                                <text id="CreationTime" name="CreationTime"></text>
+                            </div>
+
+                            <div class="modal-footer">
+                                <!-- Add Button -->
+                                <input id="downloadDoc" type="button" class="btn btn-default" name="downloadDoc" value="Download" style="float:left;" />
+                            </div>
+                            
+                        </div> <!-- Modal Body Ends here -->
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Version-->
-                <div class="form-group row">
-                    <Label for="version">Version</Label>
-                    <select id="version" name="version"></select>
-                </div>
-
-                <!-- Modified By -->
-                <div class="form-group row">
-                    <label for="ModifiedBy">Modified by</label>
-                    <text id="ModifiedBy" name="ModifiedBy"></text>
-                </div>
-
-                <div class="form-group row">
-                    <label for="ModifiedOn">Modified on</label>
-                    <text id="ModifiedOn" name="ModifiedOn"></text>
-                </div>
-
-                <!-- Created By -->
-                <div class="form-group row">
-                    <label for="Uploader">Created by</label>
-                    <text id="Uploader" name="Uploader"></text>
-                </div>
-
-                <!-- Creation Date -->
-                <div class="form-group row">
-                    <label for="CreationTime">Created on</label>
-                    <text id="CreationTime" name="CreationTime"></text>
-                </div>
-
-                <div class="modal-footer">
-                    <!-- Add Button -->
-                    <input id="downloadDoc" type="button" class="btn btn-default" name="downloadDoc" value="Download" style="float:left;" />
-                </div>
-
-            </div> <!-- Modal Body Ends here -->
-
-        </div> <!-- Modal Content Ends here -->
+            </div> <!-- Modal Content Ends here -->
     </div>
 </div>

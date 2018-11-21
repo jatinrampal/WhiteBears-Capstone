@@ -530,6 +530,89 @@ namespace WhiteBears.Models
                 return task; 
             }
         }
+
+        public Task getTaskDetail(int taskId)
+        {
+            Task modelList = new Task();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+
+                // Query with vals 
+                command.CommandText = "SELECT * FROM Task WHERE taskId = @taskId;";
+                command.Parameters.AddWithValue("@taskId", taskId);
+
+
+                // Open connection 
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Multiple rows 
+                while (reader.Read())
+                {
+                    var model = new ProjectPageViewModel();
+
+                    modelList.TaskId = model.Task.TaskId = Convert.ToInt32(reader["TaskId"]);
+                    modelList.Title = model.Task.Title = reader["Title"].ToString();
+                    modelList.CompletedDate = model.Task.CompletedDate = (DateTime)reader["completionDate"];
+                    modelList.StartDate = model.Task.StartDate = (DateTime)reader["startDate"];
+                    modelList.DueDate = model.Task.DueDate = (DateTime)reader["dueDate"];
+                    modelList.Priority = model.Task.Priority = reader["priority"].ToString();
+                    modelList.Description = model.Task.Description = reader["description"].ToString();
+
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            return modelList;
+        }
+
+        public ProjectNotes getProjectNotesDetails(int myNoteID)
+        {
+            ProjectNotes modelList = new ProjectNotes();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                try
+                {
+                    // Query with vals 
+                    command.CommandText = "SELECT * FROM ProjectNote WHERE projectNoteId = @projectNoteId;";
+                    command.Parameters.AddWithValue("@projectNoteId", myNoteID);
+
+
+                    // Open connection 
+                    connection.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    // Multiple rows 
+                    while (reader.Read())
+                    {
+                        var model = new ProjectPageViewModel();
+
+                        modelList.ProjectId = model.ProjectNotes.ProjectNoteId = Convert.ToInt32(reader["projectNoteId"]);
+                        modelList.Message = model.ProjectNotes.Message = reader["message"].ToString();
+                        modelList.SentDate = model.ProjectNotes.SentDate = (DateTime)reader["sentDate"];
+                        modelList.From = model.ProjectNotes.From = reader["from"].ToString();
+                        modelList.To = model.ProjectNotes.To = reader["to"].ToString();
+                        modelList.CompletedDate = model.ProjectNotes.CompletedDate = (DateTime)reader["completedDate"];
+
+                    }
+
+                    reader.Close();
+                    connection.Close();
+                }
+                catch (Exception e)
+                {
+                   
+                }
+            }
+            return modelList;
+        }
     }
 
 }

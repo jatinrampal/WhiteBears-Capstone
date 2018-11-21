@@ -2247,6 +2247,7 @@
     <Content Include="Views\Project\TaskEditView.cshtml" />
     <Content Include="Views\Project\ProjectNotesEditView.cshtml" />
     <Content Include="Views\Project\TaskDetailView.cshtml" />
+    <Content Include="Views\Project\ProjectNotesDetailView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
