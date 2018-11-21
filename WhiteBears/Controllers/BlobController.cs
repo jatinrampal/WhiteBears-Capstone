@@ -41,6 +41,7 @@ namespace Whitebears.Controllers
 
         public JsonResult RemoveBlob(string file, string extension)
         {
+            /*
             string[] split = file.Split('_');
             string versionV = split[split.Length - 1];
             string version = versionV.Remove(0, 1);
@@ -53,7 +54,7 @@ namespace Whitebears.Controllers
             if (count == 0)
             {
                 ClearDocument(documentID);
-            }
+            }*/
 
             bool isDeleted = repo.DeleteBlob(file, extension);
             return Json(isDeleted, JsonRequestBehavior.AllowGet);

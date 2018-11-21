@@ -4,6 +4,11 @@
 @Styles.Render("~/bundles/style/dashboard")
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 @Scripts.Render("~/bundles/scripts/chartjs")
+
+@{ 
+    ViewBag.Title = "Dashboard";
+}
+
 <script>
     function sortTable(n, isTaskTable) {
         var table, rows, switching, i, first, second, shouldSwitch, direction, switchcount = 0;
