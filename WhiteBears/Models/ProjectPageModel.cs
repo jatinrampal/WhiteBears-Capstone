@@ -405,10 +405,11 @@ namespace WhiteBears.Models
         public bool AddProjectNote(ProjectNotes note)
         {
             DatabaseHelper dh = new DatabaseHelper();
+            var CompletedDate = "0000-00-00";  
             try
             {
-                dh.RunUpdateQuery($"INSERT INTO ProjectNote (projectId, message, sentDate, [from], [to], completedDate) VALUES('{note.ProjectId}', '{note.Message}', " +
-                    $"'{note.SentDate}', '{note.From}', '{note.To}', '{note.CompletedDate}');");
+                dh.RunUpdateQuery($"INSERT INTO ProjectNote (projectId, message, sentDate, [from], [to]) VALUES('{note.ProjectId}', '{note.Message}', " +
+                    $"'{note.SentDate}', '{note.From}', '{note.To}');");
 
                 return true;
             }
@@ -599,7 +600,7 @@ namespace WhiteBears.Models
                         modelList.SentDate = model.ProjectNotes.SentDate = (DateTime)reader["sentDate"];
                         modelList.From = model.ProjectNotes.From = reader["from"].ToString();
                         modelList.To = model.ProjectNotes.To = reader["to"].ToString();
-                        modelList.CompletedDate = model.ProjectNotes.CompletedDate = (DateTime)reader["completedDate"];
+                        //modelList.CompletedDate = model.ProjectNotes.CompletedDate = (DateTime)reader["completedDate"];
 
                     }
 

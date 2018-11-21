@@ -858,9 +858,9 @@
             });
 
 
-             // Editing Project Notes Modal Button
+             /////////////////////////////////// Editing Project Notes Modal Button
             $('#ProjectNotesEditBtn').click(function () {
-                if (EditProjectNotesModal == true) {
+                if (EditProjectNotesModal == true && messageValP == true) {
                     editProjectNotesId = $('#editProjectNotesId').val();
                     editProjectNotesMessage = $('#editProjectNotesMessage').val();
                     editProjectNotesCompletionDate = $('#editProjectNotesCompletionDate').val();
@@ -886,62 +886,67 @@
             var EditProjectNotesModal = true; 
              // Editing Project Notes  ///////////////////////////////////////////////////////////////////////////////////////
             $('#projectNotesEdit').click(function () {
+                
                 if (ProjectNoteSelectedArray.length < 2) {
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("ProjectNotesEditView", "Project")", // the method we are calling
-                        data:
-                            JSON.stringify({ 'ProjectNoteSelectedArray': ProjectNoteSelectedArray }),
-                        TaskSelectedArray,
-                        contentType: 'application/json',
-                        success: function (msg) {
-
-                            try {
-
-                                // Project Notes  Completion Date Conversions 
-                                var projectNotesCompletedDate = new Date(parseInt(msg.CompletedDate.substr(6)));
-
-                                var projectNotesCompletedDateDay = projectNotesCompletedDate.getDate(projectNotesCompletedDate);
-                                var projectNotesCompletedDateMonth = projectNotesCompletedDate.getMonth(projectNotesCompletedDate) + 1;
-                                var projectNotesCompletedDateYear = projectNotesCompletedDate.getFullYear(projectNotesCompletedDate);
-
-                                if (projectNotesCompletedDateYear == null) {
-                                    projectNotesCompletedDateYear = '00000' + projectNotesCompletedDateYear;
-                                }
-                                if (projectNotesCompletedDateDay < 10) {
-                                    projectNotesCompletedDateDay = '0' + projectNotesCompletedDateDay;
-                                }
-                                if (projectNotesCompletedDateMonth < 10) {
-                                    projectNotesCompletedDateMonth = '0' + projectNotesCompletedDateMonth;
-                                }
-                                var myCompletionDateProject = projectNotesCompletedDateYear + "-" + projectNotesCompletedDateMonth + "-" + projectNotesCompletedDateDay;
-
-
-                                // Project Note Message
-                                $('textarea[name="editProjectNotesMessage"]').val(msg.Message);
-                                $('textarea[name="editProjectNotesMessage"]').attr("placeholder", msg.Message);
-
-
-                                // ProjectNotes ID
-                                $('input[name="editProjectNotesId"]').val(msg.ProjectNoteId);
-
-
-                                // ProjectNotes CompletionDate
-                                $('input[name="editProjectNotesCompletionDate"]').val(myCompletionDateProject);
-
-                                // ProjectNotes To
-                                $('select[name="editProjectNotesTo"]').val(msg.To);
-
-
+                 
+                  
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("ProjectNotesEditView", "Project")", // the method we are calling
+                            data:
+                                JSON.stringify({ 'ProjectNoteSelectedArray': ProjectNoteSelectedArray }),
+                            TaskSelectedArray,
+                            contentType: 'application/json',
+                            success: function (msg) {
                                 $('#projectNotesEditModal').modal('show');
-                                EditProjectNotesModal = true; 
-                            }
-                            catch (Exception) {
+                                try {
+
+                                    // Project Notes  Completion Date Conversions 
+                                    /*
+                                    var projectNotesCompletedDate = new Date(parseInt(msg.CompletedDate.substr(6)));
+
+                                    var projectNotesCompletedDateDay = projectNotesCompletedDate.getDate(projectNotesCompletedDate);
+                                    var projectNotesCompletedDateMonth = projectNotesCompletedDate.getMonth(projectNotesCompletedDate) + 1;
+                                    var projectNotesCompletedDateYear = projectNotesCompletedDate.getFullYear(projectNotesCompletedDate);
+
+                                    if (projectNotesCompletedDateYear == null) {
+                                        projectNotesCompletedDateYear = '00000' + projectNotesCompletedDateYear;
+                                    }
+                                    if (projectNotesCompletedDateDay < 10) {
+                                        projectNotesCompletedDateDay = '0' + projectNotesCompletedDateDay;
+                                    }
+                                    if (projectNotesCompletedDateMonth < 10) {
+                                        projectNotesCompletedDateMonth = '0' + projectNotesCompletedDateMonth;
+                                    }
+                                    var myCompletionDateProject = projectNotesCompletedDateYear + "-" + projectNotesCompletedDateMonth + "-" + projectNotesCompletedDateDay;
+                                    */
+
+                                    // Project Note Message
+                                    $('textarea[name="editProjectNotesMessage"]').val(msg.Message);
+                                    $('textarea[name="editProjectNotesMessage"]').attr("placeholder", msg.Message);
+
+
+                                    // ProjectNotes ID
+                                    $('input[name="editProjectNotesId"]').val(msg.ProjectNoteId);
+
+
+                                    // ProjectNotes CompletionDate
+                                    //$('input[name="editProjectNotesCompletionDate"]').val(myCompletionDateProject);
+
+                                    // ProjectNotes To
+                                    $('select[name="editProjectNotesTo"]').val(msg.To);
+
+
+                                  
+                                    EditProjectNotesModal = true;
+                                }
+                                catch (Exception) {
+
+                                }
 
                             }
-                         
-                        }
-                    });
+                        });
+                 
                 }
                 else {
                     alert("Select only one Project to edit")
@@ -1072,13 +1077,22 @@
 
             // Message, CompletionDate)
 
-            var completionVal = false;
+          
             var messageVal = false;
+            var messageValP = false;
+            $("#ProjectNotesEditBtn").click(function (e) {
+
+
+                if (messageValP == false) {
+                    e.preventDefault();
+                }
+
+            });
 
             $("#notePost").on('submit', function (e) {
 
 
-                if (completionVal == false || messageVal == false) {
+                if (messageVal == false) {
                     e.preventDefault();
                 }
 
@@ -1105,6 +1119,32 @@
 
                 }
             });
+
+
+            // Message VALIDATION
+            $('#editProjectNotesMessage').focusout(function () {
+                var myNoteMessage = $('#editProjectNotesMessage').val();
+
+                if (myNoteMessage.length > 255) {
+                    $('#projectNotesErrors').text("Note Message must be smaller, try agian.");
+
+                    messageValP = false;
+                }
+                else if ($.trim(myNoteMessage).length == 0) {
+                    $('#projectNotesErrors').text("Please enter a message.");
+
+                    messageValP = false;
+                }
+                else {
+                    $('#projectNotesErrors').empty();
+
+                    messageValP = true;
+
+                }
+              
+                //alert("Console Write" + messageValP);
+            });
+
            /*
             // CompletionDate VALIDATION
             $('#noteCompletedDate').focusout(function () {

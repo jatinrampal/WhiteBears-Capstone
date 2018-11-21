@@ -258,6 +258,32 @@ namespace WhiteBears.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult DeleteProjectNote(IEnumerable<int> ProjectNoteSelectedArray, int? id)
+        {
+            // Get values from session 
+            string username = Session["username"].ToString();
+
+            var result = "Tasks have been deleted";
+
+            // Will error if project note selected is nil
+            if (ProjectNoteSelectedArray == null || !ProjectNoteSelectedArray.Any())
+            {
+                result = "You have not selected any tasks to delete";
+                return RedirectToAction("Index", "Project", result);
+            }
+            else
+            {
+                ProjectPageModel projectNote = new ProjectPageModel();
+                for (int i = 0; i < ProjectNoteSelectedArray.Count(); i++)
+                {
+                    projectNote.DeleteProjectNotes(ProjectNoteSelectedArray.ElementAt(i));
+                }
+            }
+
+
+            return RedirectToAction("Index", "Project", result);
+        }
 
         [HttpPost]
         public ActionResult EditProjectNotes(string[] editProjectNotesArray)
@@ -269,19 +295,19 @@ namespace WhiteBears.Controllers
 
                 string projectNotesId = editProjectNotesArray[0];
                 string projectNotesMessage = editProjectNotesArray[1];
-                string projectNotesCompletionDate = editProjectNotesArray[2];
+                //string projectNotesCompletionDate = editProjectNotesArray[2];
                 string projectNotesTo = editProjectNotesArray[3];
                 
-                DateTime dateTimeCompletionDate = DateTime.Parse(projectNotesCompletionDate);
-                string mdateTimeCompletionDate = dateTimeCompletionDate.ToString("dd/MM/yyyy");
-                DateTime mtaskCompletionDate = DateTime.ParseExact(mdateTimeCompletionDate, "dd/MM/yyyy", null);
+               // DateTime dateTimeCompletionDate = DateTime.Parse(projectNotesCompletionDate);
+                //string mdateTimeCompletionDate = dateTimeCompletionDate.ToString("dd/MM/yyyy");
+                //DateTime mtaskCompletionDate = DateTime.ParseExact(mdateTimeCompletionDate, "dd/MM/yyyy", null);
 
                 string username = Session["username"].ToString();
                 // Get values from session 
 
                 Debug.WriteLine(projectNotesId);
                 Debug.WriteLine(projectNotesMessage);
-                Debug.WriteLine(projectNotesCompletionDate);
+               // Debug.WriteLine(projectNotesCompletionDate);
                 Debug.WriteLine(projectNotesTo);
 
                 ProjectPageModel projectNotesModel = new ProjectPageModel();
@@ -289,7 +315,7 @@ namespace WhiteBears.Controllers
                 {
                     
                     Message = projectNotesMessage,
-                    CompletedDate = mtaskCompletionDate,
+                   // CompletedDate = mtaskCompletionDate,
                     To = projectNotesTo,
                     ProjectNoteId = Convert.ToInt32(projectNotesId)
                 };
@@ -320,7 +346,7 @@ namespace WhiteBears.Controllers
             {
                 string projectNoteMessage = Request["noteMessage"];
                 string projectNoteSentDate = DateTime.Now.ToString();
-                string projectNoteCompletedDate = Request["noteCompletedDate"];
+                //string projectNoteCompletedDate = Request["noteCompletedDate"];
                 string projectNoteTo = Request["noteTo"];
 
                 DateTime dateTimeSentDate = DateTime.Parse(projectNoteSentDate);
@@ -328,9 +354,9 @@ namespace WhiteBears.Controllers
                 DateTime mprojectSentDate = DateTime.ParseExact(mdateTimeSentDate, "dd/MM/yyyy", null);
 
 
-                DateTime dateTimeCompletedDate = DateTime.Parse(projectNoteCompletedDate);
-                string mdateTimeCompletedDate = dateTimeCompletedDate.ToString("dd/MM/yyyy");
-                DateTime mprojectCompletedDate = DateTime.ParseExact(mdateTimeCompletedDate, "dd/MM/yyyy", null);
+             //   DateTime dateTimeCompletedDate = DateTime.Parse(projectNoteCompletedDate);
+             //   string mdateTimeCompletedDate = dateTimeCompletedDate.ToString("dd/MM/yyyy");
+              //  DateTime mprojectCompletedDate = DateTime.ParseExact(mdateTimeCompletedDate, "dd/MM/yyyy", null);
 
          
 
@@ -342,9 +368,14 @@ namespace WhiteBears.Controllers
                     SentDate = mprojectSentDate,
                     From = username,
                     To = projectNoteTo,
-                    CompletedDate = mprojectCompletedDate
+                   
                 };
+                Debug.WriteLine("Project ID" + projectNotes.ProjectId);
+                Debug.WriteLine("Message" + projectNotes.Message);
+                Debug.WriteLine("SentDate " + projectNotes.SentDate);
 
+                Debug.WriteLine("From " + projectNotes.From);
+                Debug.WriteLine("To " + projectNotes.To);
                result = pm.AddProjectNote(projectNotes);
             }
             catch(Exception e)
