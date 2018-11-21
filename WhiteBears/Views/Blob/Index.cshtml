@@ -13,8 +13,7 @@
                 <tr>
                     <th>Container  </th>
                     <th>Actual File Name </th>
-                    <th>Uri </th>
-                    <th>Download </th>
+                    <th>Download</th>
                     <th>Remove </th>
                 </tr>
             </thead>
@@ -27,9 +26,8 @@
                             <td>@item.BlobContainerName</td>
                             <td>@item.ActualFileName</td>
                             <td>
-                                <a href="@item.PrimaryUri">@item.PrimaryUri</a>
+                                <a href="@item.PrimaryUri">Download</a>
                             </td>
-                            <td>@Html.ActionLink("Download", "DownloadBlob", new { controller = "Blob", file = @item.FileNameWithoutExt, extension = @item.FileNameExtensionOnly}, new { @class = "btn btn-link" })</td>
                             <td>
                                 <input type="submit" href="#" class="btn btn-link" id="btndel" value="Remove" data-id="@item.ActualFileName" />
                             </td>
