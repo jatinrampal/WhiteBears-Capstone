@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Whitebears.Repository;
 using System.Diagnostics;
+using WhiteBears;
 
 namespace Whitebears.Controllers
 {
@@ -35,13 +36,21 @@ namespace Whitebears.Controllers
         // GET: Blob
         public ActionResult Index()
         {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (!Authentication.VerifyIfAdmin(Session["username"].ToString()))
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
             var blobVM = repo.GetBlobs();
             return View(blobVM);
         }
 
         public JsonResult RemoveBlob(string file, string extension)
         {
-            /*
+            
             string[] split = file.Split('_');
             string versionV = split[split.Length - 1];
             string version = versionV.Remove(0, 1);
@@ -54,7 +63,7 @@ namespace Whitebears.Controllers
             if (count == 0)
             {
                 ClearDocument(documentID);
-            }*/
+            }
 
             bool isDeleted = repo.DeleteBlob(file, extension);
             return Json(isDeleted, JsonRequestBehavior.AllowGet);
