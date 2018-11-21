@@ -145,16 +145,6 @@ textarea {
     border-radius: 120px 120px 120px 120px;
 }
 
-#headings {
-    box-shadow: 0 5px 5px 0px gray;
-    border-bottom: solid black 1px;
-    padding: 25px;
-    margin-bottom: 20px;
-    margin-top: 25px;
-    width: 100%;
-    text-align: left;
-}
-
 .ProgressBarContainer:last-of-type {
     margin-top: 30px;
 }

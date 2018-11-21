@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     @Styles.Render("~/bundles/style/teammanagement")
+    @Styles.Render("~/bundles/style/layout")
+
+
     <script src="~/Scripts/jquery-3.3.1.js"></script>
 </head>
 <body>
@@ -32,56 +35,57 @@
         </div>
     </nav>
 
-    <!--Migrate to CSS file-->
     <div class="page-container">
-        <div>
+        <div id="headingsContainer">
             <h2 class="header-text">@Model.CurrentProject.Title</h2>
             <h3 class="header-text">Team Management Settings</h3>
         </div>
 
-        <div class="row">
-            <div id="excluded-table" class="col-sm-2">
-                <table class="table table-hover border">
-                    <tr>
-                        <th>Excluded Users</th>
-                    </tr>
-                    <tbody>
-                        @foreach (var item in Model.ExcludedUsers)
-                        {
-                            <tr name="excluded-user">
-                                <td>@item.Username</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+        <div class="mainpage-container">
 
-            <div class="col-sm-2 justify-content-center">
-                <button class="btn btn-lg btn-primary disabled glyphicon glyphicon-plus" value="add">Add</button>
-                <button class="btn btn-lg btn-danger disabled glyphicon glyphicon-minus" value="remove">Remove</button>
-            </div>
+            <div class="row">
+                <div id="excluded-table" class="col-sm-2">
+                    <table class="table table-hover border">
+                        <tr>
+                            <th>Excluded Users</th>
+                        </tr>
+                        <tbody>
+                            @foreach (var item in Model.ExcludedUsers) {
+                                <tr name="excluded-user">
+                                    <td>@item.Username</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
-            <div id="included-table" class="col-sm-2">
-                <table class="table table-hover border">
-                    <tr>
-                        <th>Included Users</th>
-                    </tr>
-                    <tbody>
-                        @foreach (var item in Model.IncludedUsers)
-                        {
-                            <tr name="included-user">
-                                <td>@item.Username</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                <div class="col-sm-2 justify-content-center">
+                    <button class="btn btn-lg btn-primary disabled glyphicon glyphicon-plus" value="add">Add</button>
+                    <button class="btn btn-lg btn-danger disabled glyphicon glyphicon-minus" value="remove">Remove</button>
+                </div>
 
-            <div class="col-sm-3 justify-content-center">
-                <button class="btn btn-lg btn-success disabled glyphicon glyphicon-ok" value="submit">Submit</button>
-                <button class="btn btn-lg btn-secondary glyphicon glyphicon-remove" onclick="location.href='@Url.Action("Index", "Project", new { projectId = Model.CurrentProject.ProjectId } )'">Cancel</button>
+                <div id="included-table" class="col-sm-2">
+                    <table class="table table-hover border">
+                        <tr>
+                            <th>Included Users</th>
+                        </tr>
+                        <tbody>
+                            @foreach (var item in Model.IncludedUsers) {
+                                <tr name="included-user">
+                                    <td>@item.Username</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-sm-3 justify-content-center">
+                    <button class="btn btn-lg btn-success disabled glyphicon glyphicon-ok" value="submit">Submit</button>
+                    <button class="btn btn-lg btn-secondary glyphicon glyphicon-remove" onclick="location.href='@Url.Action("Index", "Project", new { projectId = Model.CurrentProject.ProjectId } )'">Cancel</button>
+                </div>
             </div>
         </div>
+
     </div>
 
 
