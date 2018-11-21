@@ -231,13 +231,10 @@
     <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.dll" />
     <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.xml" />
     <Content Include="bin\Microsoft.Azure.KeyVault.Core.dll" />
-    <Content Include="bin\Microsoft.Azure.KeyVault.Core.xml" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.WindowsAzure.Storage.dll" />
-    <Content Include="bin\Microsoft.WindowsAzure.Storage.pdb" />
-    <Content Include="bin\Microsoft.WindowsAzure.Storage.xml" />
     <Content Include="bin\Newtonsoft.Json.dll" />
     <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\roslyn\csc.exe" />
@@ -306,6 +303,7 @@
     <Content Include="bin\WhiteBears.dll" />
     <Content Include="bin\WhiteBears.pdb" />
     <Content Include="Content\background1.jpg" />
+    <Content Include="Content\icon.ico" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

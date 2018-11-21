@@ -59,6 +59,7 @@ namespace WhiteBears.Controllers
                     document.docList.Add(new SelectableVersions() { version = int.Parse(dr["version"].ToString()), timeStamp = dr["timestamp"].ToString() });
                 }
                 document.id = Convert.ToInt32(id);
+                ViewBag.title = "Document Review";
                 return View(document);
             }
         }
