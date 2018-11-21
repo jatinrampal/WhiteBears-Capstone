@@ -10,7 +10,9 @@
     @Styles.Render("~/bundles/style/teammanagement")
     @Styles.Render("~/bundles/style/layout")
 
-
+    @{
+        ViewBag.Title = $"{Model.CurrentProject.Title}: Team Management";
+    }
     <script src="~/Scripts/jquery-3.3.1.js"></script>
 </head>
 <body>
