@@ -66,7 +66,7 @@
 
                     <div class="col-sm-2 justify-content-center">
                         <button class="btn btn-lg btn-success disabled glyphicon glyphicon-ok col-lg-7" value="submit">Submit</button>
-                        <button class="btn btn-lg btn-secondary glyphicon glyphicon-remove col-lg-7" onclick="location.href='@Url.Action("Index", "Project", new { projectId = Model.CurrentProject.ProjectId } )'">Cancel</button>
+                        <button class="btn btn-lg btn-secondary glyphicon glyphicon-remove col-lg-7" onclick="location.href='@Url.Action("Index", "Project", new { id = Model.CurrentProject.ProjectId } )'">Cancel</button>
                     </div>
                 </div>
             </div>
