@@ -55,7 +55,7 @@ namespace Whitebears.Controllers
             string versionV = split[split.Length - 1];
             string version = versionV.Remove(0, 1);
 
-            string a = split[0].Replace("%20", " ");
+            string a = file.Replace("%20", " ").Replace("_v" + version, "");
             string documentID = CheckUploadDocumentID(a);
             DeleteDocumentVersionDB(documentID, Convert.ToInt32(version));
 
@@ -210,8 +210,9 @@ namespace Whitebears.Controllers
         public static void ClearDocument(string documentId)
         {
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
-            dh.RunDeleteQuery($"DELETE FROM Documents WHERE DocumentId = {documentId}");
             dh.RunDeleteQuery($"DELETE FROM DocumentRole WHERE DocumentId = {documentId}");
+            dh.RunDeleteQuery($"DELETE FROM Document WHERE DocumentId = {documentId}");
+           
         }
     }
 
