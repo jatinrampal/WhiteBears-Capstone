@@ -171,7 +171,14 @@ namespace Whitebears.Controllers
         {
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
             DataRow[] a = dh.RunSelectQuery($"SELECT MAX(version) FROM DocumentVersion JOIN Document ON Document.DocumentID = DocumentVersion.DocumentID  WHERE FileName ='{fileName}'");
-            return Convert.ToInt32(a[0][0]);
+            try
+            {
+                return Convert.ToInt32(a[0][0]);
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         public static string CheckUploadDocumentID(string fileName)

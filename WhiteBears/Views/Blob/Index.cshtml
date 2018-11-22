@@ -1,12 +1,13 @@
 ﻿@model IEnumerable<Whitebears.Models.BlobViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Blob Container List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
+    <br />
     <button class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "AdminPage")'">Back</button><br />
-    @Html.ActionLink("Upload to Azure Blob", "UploadBlob", new { controller = "Blob" }, new { @class = "btn btn-link" })
+    
     <div>
         <table id="tablex" class="table table-striped table-responsive">
             <thead>
