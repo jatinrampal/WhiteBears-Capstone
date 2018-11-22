@@ -464,6 +464,7 @@
                     var percentage = (completed / total) * 100
                     percentage = percentage.toFixed(2);
 
+
                     if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
                         percentage = 0.00;
                     }
@@ -483,11 +484,15 @@
                     var usedStorage = @Model.GetUsedStorage();
                     usedStorage = usedStorage / 1000000;
                     usedStorage = usedStorage.toFixed(2);
+
+                    var remaining = 500 - usedStorage;
+                    remaining = remaining.toFixed(2)
                     $('#storageStatus').text(usedStorage+'/500 MB');
-                    $('#storageRemaining').text(500 - usedStorage + " MB remaining");
+                    $('#storageRemaining').text(remaining + " MB remaining");
 
                     var percentage = (usedStorage / 500) * 100
                     percentage = percentage.toFixed(2);
+
 
                     if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
                         percentage = 0.00;
