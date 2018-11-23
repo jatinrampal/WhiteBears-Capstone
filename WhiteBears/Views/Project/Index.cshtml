@@ -33,15 +33,20 @@
             </div>
         </div>
 
-        <div id="startEnd" class="row">
+        <div id="row" class="row">
+           
 
+                 <div id="pStartDate" class="pull-left timing"><span class="pull-left">Start Date: </span><span class="pull-left"> @Model.Project.StartDate.ToShortDateString()</span> </div>
+                 
+                    
+                 <div class="pull-right pdes">@Model.Project.Description </div>
+          </div>
 
-            <h5 id="pStartDate" class="pull-left">Start Date:   @Model.Project.StartDate.ToShortDateString() </h5>
-            <h5 class="pull-right" id="pEndDate">End Date:  @Model.Project.DueDate.ToShortDateString() </h5>
-
-
-
+        <div id="row" class="row">
+            <div class="pull-left timing" id="pEndDate"><span class="pTime">End Date:</span>  @Model.Project.DueDate.ToShortDateString() </div>
+            <div class="pull-right pscope">@Model.Project.ScopeStatement </div>
         </div>
+
         <hr id="hr" />
         <div id="row" class="row">
             <span id="projectId" hidden>@Model.Project.ProjectId</span>
@@ -56,229 +61,264 @@
 
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
+        <div class="container-fluid">
+            <div class="row">
 
-            <!-- Task Information goes here -->
-            <div class="col-sm-4">
+                <!-- Task Information goes here -->
+                <div class="col-sm-4">
 
-                <!-- Task Information Header -->
-                <h3>Tasks</h3>
+                    <!-- Task Information Header -->
+                    <h3>Tasks</h3>
 
-                <!-- Task Table -->
-                <div id="projectTableDiv" class="table-responsive">
-                    <table id="projectTaskTable" class="table">
-                        <thead id="myThead">
-                            <tr>
-                                <th>Completed Date</th>
-                                <th>Tasks</th>
-                                <th>Due Date</th>
-                            </tr>
-                        </thead>
-                        @{ Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId });}
-                    </table>
-
-
-                    <!-- Tasks Buttons -->
-                    <div id="projectTaskButtons">
-                        <button hidden type="button" id="projectTaskAdd" class="btn btn-primary" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
-                        <button hidden type="button" id="projectTaskEdit" class="btn btn-primary">Edit</button>
-                        <button hidden type="button" id="projectTaskDelete" class="btn btn-danger">Delete</button>
-
-                    </div>
-
-                    @Html.Partial("TaskEditView", Model.Task)
-                    @Html.Partial("TaskDetailView", Model.Task)
-
-                    <!-- Note: Project ID, Username from Session. -->
-                    <!-- Modal -->
-                    <div id="projectTaskAddModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog" style="left:0% !important">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="form-group">
-                                        <div class="col-sm-6">
-                                            <h4 class="modal-title">Task</h4>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-body">
-
-                                    <!-- <form id="taskPost" action="/Project/AddTask" method="post"> -->
-                                    @using (Html.BeginForm("AddTask", "Project", FormMethod.Post, new { @id = "taskPost" }))
-                                    { 
-                                    <!-- Errors -->
-                                    <div class="form-group row">
-                                        <div class="col-sm-12" id="taskErrors1">
-
-                                        </div>
-                                    </div>
-
-                                    <hr class="thick" />
-
-                                    <!-- ProjectID -->
-                                    <input type="hidden" id="projectId" name="projectId" value="@Model.Project.ProjectId">
-
-                                    <!-- Title -->
-                                    <div class="form-group row">
-                                        <label for="Title" class="col-sm-2 col-form-label text-left">Title</label>
-
-                                        <input id="taskTitle" name="taskTitle" class="col-sm-10 form-control" type="text" required />
-
-                                    </div>
-
-                                    <!-- Description -->
-                                    <div class="form-group row">
-                                        <label for="Description" class="col-sm-2 col-form-label text-left">Description</label>
-
-                                        <textarea class="form-control col-sm-10" name="taskDescription" id="taskDescription" rows="3" required></textarea>
-
-                                    </div>
+                    <!-- Task Table -->
+                    <div id="projectTableDiv" class="table-responsive">
+                        <table id="projectTaskTable" class="table">
+                            <thead id="myThead">
+                                <tr>
+                                    <th>Completed Date</th>
+                                    <th>Tasks</th>
+                                    <th>Due Date</th>
+                                </tr>
+                            </thead>
+                            @if (Model.User.Role == "Project Manager")
+                            {
+                                { Html.RenderAction("TaskViewPM", "Project", new { projectId = Model.Project.ProjectId });}
+                            }
+                            else
+                            {
+                                { Html.RenderAction("TaskView", "Project", new { projectId = Model.Project.ProjectId });}
+                            }
+                        </table>
 
 
-                                    <!-- StartDate & EndDate Inputs -->
-                                    <div class="form-group row">
-                                        <label for="taskStartDate" class="col-sm-2 col-form-label text-left">Start Date</label>
-                                        <input id="taskStartDate" class="col-sm-10 form-control" name="taskStartDate" type="date" required />
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="EndDate" class="col-sm-2 col-form-label text-left">End Date</label>
-                                        <input id="taskEndDate" class="col-sm-10 form-control" name="taskEndDate" type="date" required />
+                        <!-- Tasks Buttons -->
+                        <div id="projectTaskButtons">
+                            <button hidden type="button" id="projectTaskAdd" class="btn btn-primary" data-target="#projectTaskAddModal" data-toggle="modal">Add</button>
+                            <button hidden type="button" id="projectTaskEdit" class="btn btn-primary">Edit</button>
+                            <button hidden type="button" id="projectTaskDelete" class="btn btn-danger">Delete</button>
 
-                                    </div>
+                        </div>
 
+                        @Html.Partial("TaskEditView", Model.Task)
+                        @Html.Partial("TaskDetailView", Model.Task)
 
-                                    <!-- Priority -->
-                                    <div class="form-group row">
-                                        <label for="Priority" class="col-sm-2 col-form-label text-left">Priority</label>
-                                        <select class="form-control col-sm-10" id="taskPriority" name="taskPriority" required>
-                                            <option>Low</option>
-                                            <option>Medium</option>
-                                            <option>High</option>
-                                        </select>
-                                    </div>
+                        <!-- Note: Project ID, Username from Session. -->
+                        <!-- Modal -->
+                        <div id="projectTaskAddModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog" style="left:0% !important">
 
-
-                                    <div class="modal-footer">
-                                        <!-- Add Button -->
-                                        <input id="taskAddBtn" type="submit" class="btn btn-primary" name="Add" value="Add" />
-                                        <button type="button" id="taskClose" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
-                                    } <!--form -->
-
-                                </div> <!-- Modal Body Ends here -->
-
-                            </div> <!-- Modal Content Ends here -->
-                        </div> <!-- Modal Dialog Ends here -->
-                    </div>
-
-
-                </div> <!-- projectTableDiv ends here -->
-            </div> <!-- Task Information ENDS -->
-            <!--Document Information goes here -->
-            <div class="col-sm-4">
-
-                <!-- Document Header -->
-                <h3>Documents</h3>
-
-                <!-- Document Table -->
-                <div id="projectTableDiv" class="table-responsive">
-                    <table id="projectDocumentTable" class="table">
-                        <thead id="myThead">
-                            <tr>
-                                <th>Document</th>
-
-                                <th>Type</th>
-                            </tr>
-                        </thead>
-                        <tbody id="projectDocumentTableTbody" class="projectTableTbody">
-                            @{ Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role, uName = Model.User.Username });}
-                        </tbody>
-                    </table>
-
-                    <div id="projectDocumentButtons">
-                        <button type="button" id="projectButtonUpload" class="btn btn-primary">Download</button>
-                        <button type="button" id="projectDocumentUpload" class="btn btn-primary" onclick="location.href='@Url.Action("UploadBlob", "Blob", new { projectId = Model.Project.ProjectId, role = Model.User.Role })'">Upload</button>
-                        <button type="button" id="projectCompare" class="btn btn-primary">Version Compare</button>
-                    </div>
-                    @if (Model.User.Role.Equals("Project Manager"))
-                    {
-                        @Html.Partial("_DocumentDetailPM", Model.document)
-                    }
-                    else
-                    {
-                        @Html.Partial("_DocumentDetail", Model.document)
-                    }
-
-                </div><!-- projectTableDiv ends here -->
-            </div> <!-- Document Information ENDS -->
-            <!--Notes Information goes here -->
-            <div class="col-sm-4">
-
-                <!-- Note Header -->
-                <h3>Notes</h3>
-
-                <!-- Note Table -->
-                <div id="projectTableDiv" class="table-responsive">
-                    <table id="projectNoteTable" class="table">
-                        <thead id="myThead">
-                            <tr>
-                                <th>Send Date</th>
-                                <th>For</th>
-                                <th>Message</th>
-                            </tr>
-                        </thead>
-                        <tbody id="projectNoteTableTbody" class="projectTableTbody">
-                            @{ Html.RenderAction("NoteView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role });}
-                        </tbody>
-                    </table>
-
-                    <!-- Notes Buttons -->
-                    <div id="projectNotesButtons">
-                        <button type="button" id="projectNoteAdd" class="btn btn-primary" data-target="#projectNoteAddModal" data-toggle="modal">Add</button>
-                        <button type="button" id="projectNotesEdit" class="btn btn-primary">Edit</button>
-                        <button type="button" id="projectNoteDelete" class="btn btn-danger">Delete</button>
-                    </div>
-
-                    @Html.Partial("ProjectNotesEditView", Model.ProjectNotes)
-                    @Html.Partial("ProjectNotesDetailView", Model.ProjectNotes)
-
-                    <!-- Note: Project ID, Username from Session. -->
-                    <!-- Modal -->
-                    <div id="projectNoteAddModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog" style="left:0% !important">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Project Note</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-
-                                    @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId }, FormMethod.Post, new { @id = "notePost" }))
-                                    {
-                                        <!-- Errors -->
-                                        <div class="form-group row">
-                                            <div class="col-sm-12" id="noteErrors1">
-
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <h4 class="modal-title">Task</h4>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
                                         </div>
-                                        <hr />
+                                    </div>
+                                    <div class="modal-body">
 
-                                        <!-- Message -->
-                                        <div class="form-group row">
-                                            <label for="Message" class="col-sm-2 col-form-label text-left">Message</label>
-                                            <textarea class="col-sm-10 form-control" name="noteMessage" id="noteMessage" rows="3" required></textarea>
-                                      
-                                        </div>
+                                        <!-- <form id="taskPost" action="/Project/AddTask" method="post"> -->
+                                        @using (Html.BeginForm("AddTask", "Project", FormMethod.Post, new { @id = "taskPost" }))
+                                        {
+                                            <!-- Errors -->
+                                            <div class="form-group row">
+                                                <div class="col-sm-12" id="taskErrors1">
 
-                                        <!--  Completed Labels
+                                                </div>
+                                            </div>
+
+                                            <hr class="thick" />
+
+                                            <!-- ProjectID -->
+                                            <input type="hidden" id="projectId" name="projectId" value="@Model.Project.ProjectId">
+
+                                            <!-- Title -->
+                                            <div class="form-group row">
+                                                <label for="Title" class="col-sm-2 col-form-label text-left">Title</label>
+
+                                                <input id="taskTitle" name="taskTitle" class="col-sm-10 form-control" type="text" required />
+
+                                            </div>
+
+                                            <!-- Description -->
+                                            <div class="form-group row">
+                                                <label for="Description" class="col-sm-2 col-form-label text-left">Description</label>
+
+                                                <textarea class="form-control col-sm-10" name="taskDescription" id="taskDescription" rows="3" required></textarea>
+
+                                            </div>
+
+
+                                            <!-- StartDate & EndDate Inputs -->
+                                            <div class="form-group row">
+                                                <label for="taskStartDate" class="col-sm-2 col-form-label text-left">Start Date</label>
+                                                <input id="taskStartDate" class="col-sm-10 form-control" name="taskStartDate" type="date" required />
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="EndDate" class="col-sm-2 col-form-label text-left">End Date</label>
+                                                <input id="taskEndDate" class="col-sm-10 form-control" name="taskEndDate" type="date" required />
+
+                                            </div>
+
+
+                                            <!-- Priority -->
+                                            <div class="form-group row">
+                                                <label for="Priority" class="col-sm-2 col-form-label text-left">Priority</label>
+                                                <select class="form-control col-sm-10" id="taskPriority" name="taskPriority" required>
+                                                    <option>Low</option>
+                                                    <option>Medium</option>
+                                                    <option>High</option>
+                                                </select>
+                                            </div>
+
+                                            if (Model.User.Role == "Project Manager")
+                                            {
+                                            <!-- Send to User -->
+                                            <div class="form-group row">
+                                                <label for="Assign To" class="col-sm-2 col-form-label text-left">Assign</label>
+                                                <select class="form-control col-sm-10" id="assignUser" name="assignUser" value="0">
+                                                    @foreach (string user in Model.GetUsers)
+                                                    {
+                                                        <option>@user</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            }
+
+
+                                                <div class="modal-footer">
+                                                    <!-- Add Button -->
+                                                    <input id="taskAddBtn" type="submit" class="btn btn-primary" name="Add" value="Add" />
+                                                    <button type="button" id="taskClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                </div>
+                                                } <!--form -->
+
+                                            </div> <!-- Modal Body Ends here -->
+
+                                        </div> <!-- Modal Content Ends here -->
+                            </div> <!-- Modal Dialog Ends here -->
+                        </div>
+
+
+                    </div> <!-- projectTableDiv ends here -->
+                </div> <!-- Task Information ENDS -->
+                <!--Document Information goes here -->
+                <div class="col-sm-4">
+
+                    <!-- Document Header -->
+                    <h3>Documents</h3>
+
+                    <!-- Document Table -->
+                    <div id="projectTableDiv" class="table-responsive">
+                        <table id="projectDocumentTable" class="table">
+                            <thead id="myThead">
+                                <tr>
+                                    <th>Document</th>
+
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projectDocumentTableTbody" class="projectTableTbody">
+                                @if (Model.User.Role == "Project Manager")
+                                {
+                                    { Html.RenderAction("DocumentViewPM", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role, uName = Model.User.Username }); }
+                                }
+                                else
+                                {
+                                    { Html.RenderAction("DocumentView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role, uName = Model.User.Username });}
+                                }
+                                </tbody>
+                        </table>
+
+                        <div id="projectDocumentButtons">
+                            <button type="button" id="projectButtonUpload" class="btn btn-primary">Download</button>
+                            <button type="button" id="projectDocumentUpload" class="btn btn-primary" onclick="location.href='@Url.Action("UploadBlob", "Blob", new { projectId = Model.Project.ProjectId, role = Model.User.Role })'">Upload</button>
+                            <button type="button" id="projectCompare" class="btn btn-primary">Version Compare</button>
+                        </div>
+                        @if (Model.User.Role.Equals("Project Manager"))
+                        {
+                            @Html.Partial("_DocumentDetailPM", Model.document)
+                        }
+                        else
+                        {
+                            @Html.Partial("_DocumentDetail", Model.document)
+                        }
+
+                    </div><!-- projectTableDiv ends here -->
+                </div> <!-- Document Information ENDS -->
+                <!--Notes Information goes here -->
+                <div class="col-sm-4">
+
+                    <!-- Note Header -->
+                    <h3>Notes</h3>
+
+                    <!-- Note Table -->
+                    <div id="projectTableDiv" class="table-responsive">
+                        <table id="projectNoteTable" class="table">
+                            <thead id="myThead">
+                                <tr>
+                                    <th>Send Date</th>
+                                    <th>For</th>
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projectNoteTableTbody" class="projectTableTbody">
+                                @if (Model.User.Role == "Project Manager")
+                                {
+                                    { Html.RenderAction("NoteViewPM", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role }); }
+                                }
+                                else
+                                {
+                                    { Html.RenderAction("NoteView", "Project", new { projectId = Model.Project.ProjectId, roleName = Model.User.Role }); }
+                                }
+                                </tbody>
+                        </table>
+
+                        <!-- Notes Buttons -->
+                        <div id="projectNotesButtons">
+                            <button type="button" id="projectNoteAdd" class="btn btn-primary" data-target="#projectNoteAddModal" data-toggle="modal">Add</button>
+                            <button type="button" id="projectNotesEdit" class="btn btn-primary">Edit</button>
+                            <button type="button" id="projectNoteDelete" class="btn btn-danger">Delete</button>
+                        </div>
+
+                        @Html.Partial("ProjectNotesEditView", Model.ProjectNotes)
+                        @Html.Partial("ProjectNotesDetailView", Model.ProjectNotes)
+
+                        <!-- Note: Project ID, Username from Session. -->
+                        <!-- Modal -->
+                        <div id="projectNoteAddModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog" style="left:0% !important">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Project Note</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        @using (Html.BeginForm("AddProjectNote", "Project", new { projectId = Model.Project.ProjectId }, FormMethod.Post, new { @id = "notePost" }))
+                                        {
+                                            <!-- Errors -->
+                                            <div class="form-group row">
+                                                <div class="col-sm-12" id="noteErrors1">
+
+                                                </div>
+                                            </div>
+                                            <hr />
+
+                                            <!-- Message -->
+                                            <div class="form-group row">
+                                                <label for="Message" class="col-sm-2 col-form-label text-left">Message</label>
+                                                <textarea class="col-sm-10 form-control" name="noteMessage" id="noteMessage" rows="3" required></textarea>
+
+                                            </div>
+
+                                            <!--  Completed Labels
                                         <div class="form-group row">
 
                                             <label for="CompletedDate" class="col-sm-4 col-form-label text-left">Completed Date</label>
@@ -290,42 +330,42 @@
                                         </div>
                                             -->
 
-                                        <!-- To -->
-                                        <div class="form-group row">
-                                            <label for="noteTo" class="col-sm-2 col-form-label text-left">To</label>
-                                           
+                                            <!-- To -->
+                                            <div class="form-group row">
+                                                <label for="noteTo" class="col-sm-2 col-form-label text-left">To</label>
+
                                                 <select class="form-control col-sm-10" id="noteTo" name="noteTo" required>
                                                     @foreach (string role in Model.ProjectNotes.Roles)
                                                     {
                                                         <option>@role</option>
                                                     }
                                                 </select>
-                                          
-                                        </div>
+
+                                            </div>
 
 
-                                        <div class="modal-footer">
-                                            <!-- Add Button -->
-                                            <input id="submit1" type="submit" class="btn btn-primary" name="Add" value="Add" />
-                                            <button type="button" id="taskClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            <div class="modal-footer">
+                                                <!-- Add Button -->
+                                                <input id="submit1" type="submit" class="btn btn-primary" name="Add" value="Add" />
+                                                <button type="button" id="taskClose" class="btn btn-danger" data-dismiss="modal">Close</button>
 
-                                        </div>
-                                    }
-                                    <!--</form>-->
+                                            </div>
+                                        }
+                                        <!--</form>-->
 
-                                </div> <!-- Modal Body Ends here -->
+                                    </div> <!-- Modal Body Ends here -->
 
-                            </div> <!-- Modal Content Ends here -->
-                        </div> <!-- Modal Dialog Ends here -->
-                    </div>
+                                </div> <!-- Modal Content Ends here -->
+                            </div> <!-- Modal Dialog Ends here -->
+                        </div>
 
-                </div><!-- projectTableDiv ends here -->
-            </div> <!-- Notes Information ENDS -->
-        </div> <!-- Row ends here -->
-    </div> <!-- Container-Fluid ends here-->
+                    </div><!-- projectTableDiv ends here -->
+                </div> <!-- Notes Information ENDS -->
+            </div> <!-- Row ends here -->
+        </div> <!-- Container-Fluid ends here-->
 
 
-    <script>
+        <script>
         var documentVersions;
         $(document).ready(function () {
 
@@ -410,7 +450,15 @@
                             $('#taskDetailCompletionDate').text(myCompletionDate);
 
                              // Task Priority
-                             $('#taskPriority').text(msg.Priority);
+                        $('#taskPriority').text(msg.Priority);
+
+                        if ("@Model.User.Role" == "Project Manager") {
+                            // Task User
+                            $('#taskDetailUser').text(msg.User);
+                            $('#taskDetailUser').removeClass('hidden');
+                            $('#taskUser').removeClass('hidden');
+
+                        }
 
                             $('#taskDetailModal').modal('show');
                             //EditTaskModal = true;
@@ -1010,7 +1058,7 @@
             $("#taskPost").on('submit', function (e) {
 
                 if (endDateVal == false || startDateVal == false || titleVal == false || descriptionVal == false) {
-                   
+
                    e.preventDefault();
                 }
 
@@ -1041,17 +1089,17 @@
                 }
             });
 
-           
+
             // Title VALIDATION
             $('#taskTitle').focusout(function () {
                 var myTaskTitle = $('#taskTitle').val();
-                 
-                 
+
+
                 if (/\d/.test(myTaskTitle)) {
                     // number found
                     $('#taskErrors1').html("Title cannot have numbers, try agian.");
-                    
-                    
+
+
                     titleVal = false;
                 }
                 else if (myTaskTitle.length > 40)
@@ -1062,7 +1110,7 @@
                 else if ($.trim(myTaskTitle).length == false)
                 {
                     $('#taskErrors1').text("You have not entered a title.");
-                  
+
                     titleVal = false;
                 }
                 else {
@@ -1315,7 +1363,7 @@
 
         });
 
-    </script>
+        </script>
 
 
 

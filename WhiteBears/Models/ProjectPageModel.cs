@@ -84,6 +84,76 @@ namespace WhiteBears.Models
             return modelList;
         }
 
+        public IEnumerable<ProjectPageViewModel> getDocumentsPM(String username, int projectId, string userRoleName, string uName)
+        {
+            //var model = new Task();
+            //List<ProjectDocumentViewModel> modelList = new List<ProjectDocumentViewModel>();
+            List<ProjectPageViewModel> modelList = new List<ProjectPageViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+
+                // Query with vals 
+                //command.CommandText = "select Document.documentId, Document.projectId, Document.fileName, Document.uploader, Document.creationTime, Document.fileExtension, DocumentRole.writeAccess, DocumentRole.roleName from  Document LEFT JOIN DocumentRole ON Document.documentId = DocumentRole.documentId WHERE projectId = @projectId; ";
+
+                command.CommandText = "select DISTINCT(d.filename), d.projectId, d.fileExtension, d.uploader, d.creationTime, dr.writeAccess, d.documentId, dr.roleName from Document d JOIN DocumentRole dr ON  d.documentId = dr.documentId JOIN[User] ON[User].role = dr.roleName where projectId = @projectId AND dr.writeAccess = 1;";
+
+
+                //command.CommandText = "select * from Document where projectId = @projectId";
+                command.Parameters.AddWithValue("@userRolename", userRoleName);
+                command.Parameters.AddWithValue("@projectId", projectId);
+                command.Parameters.AddWithValue("@uName", uName);
+
+                // Open connection 
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Multiple rows 
+                while (reader.Read())
+                {
+                    //var model = new ProjectDocumentViewModel();
+                    var model = new ProjectPageViewModel();
+                    var docID = Convert.ToInt32(reader["documentId"]);
+
+                    model.document.ProjectId = Convert.ToInt32(reader["projectId"]);
+                    model.document.DocumentId = Convert.ToInt32(reader["documentId"]);
+                    model.document.FileName = reader["fileName"].ToString();
+                    model.document.Uploader = reader["uploader"].ToString();
+                    model.document.CreationTime = (DateTime)reader["creationTime"];
+                    model.document.FileExtension = reader["fileExtension"].ToString();
+
+                    if (reader["roleName"] != DBNull.Value)
+                    {
+                        model.documentRole.RoleName = reader["roleName"].ToString();
+                    }
+                    else
+                    {
+                        model.documentRole.RoleName = "No Role";
+                    }
+
+                    if (reader["writeAccess"] != DBNull.Value)
+                    {
+                        model.documentRole.WriteAccess = Boolean.Parse(reader["writeAccess"].ToString());
+                    }
+                    else
+                    {
+                        model.documentRole.WriteAccess = false;
+                    }
+
+                    if (reader["roleName"].ToString() == userRoleName)
+                    {
+                        model.documentRole.WriteAccess = true;
+                    }
+                    modelList.Add(model);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return modelList;
+        }
+
         public Task getSelectEditTask(int taskId)
         {
           Task modelList = new Task();
@@ -257,7 +327,50 @@ namespace WhiteBears.Models
             }
             return modelList;
         }
-       public bool isCompleted(bool complete, int taskID)
+
+        public IEnumerable<ProjectPageViewModel> getTaskPM(int projectId)
+        {
+            //var model = new Task();
+            List<ProjectPageViewModel> modelList = new List<ProjectPageViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+
+                // Query with vals 
+                //command.CommandText = "SELECT * FROM Task t JOIN Project p on t.projectId = p.projectId JOIN User_Task ut on t.taskId = ut.taskId WHERE ut.uName = @username and p.projectId = @projectId ORDER BY cast(T.dueDate as datetime) asc";
+                command.CommandText = "select * from Task t JOIN User_Project up ON up.projectId = t.projectId where up.projectId = @projectId";
+                
+                command.Parameters.AddWithValue("@projectId", projectId);
+
+                // Open connection 
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Multiple rows 
+                while (reader.Read())
+                {
+                    var model = new ProjectPageViewModel();
+
+                    model.Task.TaskId = Convert.ToInt32(reader["TaskId"]);
+                    model.Task.Title = reader["Title"].ToString();
+                    model.Task.CompletedDate = (DateTime)reader["completionDate"];
+                    model.User.Username = reader["uName"].ToString();
+                    model.Task.DueDate = (DateTime)reader["dueDate"];
+                    model.Task.Priority = reader["priority"].ToString();
+                    model.Task.Description = reader["description"].ToString();
+                    model.User.Username = reader["uName"].ToString();
+                    modelList.Add(model);
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            return modelList;
+        }
+
+        public bool isCompleted(bool complete, int taskID)
         {
 
             DatabaseHelper dh = new DatabaseHelper();
@@ -376,6 +489,57 @@ namespace WhiteBears.Models
             return modelList;
         }
 
+        public IEnumerable<ProjectPageViewModel> getProjectNotesPM(String username, int projectId, string roleName)
+        {
+
+            List<ProjectPageViewModel> modelList = new List<ProjectPageViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+
+                // Query with vals 
+                //command.CommandText = "SELECT * FROM ProjectNote WHERE projectId = @projectId ";
+                command.CommandText = "SELECT * FROM ProjectNote pn WHERE projectId = @projectId ORDER BY sentDate; ";
+                command.Parameters.AddWithValue("@projectId", projectId);
+                command.Parameters.AddWithValue("@userRole", roleName);
+
+                // Open connection 
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Multiple rows 
+                while (reader.Read())
+                {
+                    var model = new ProjectPageViewModel();
+
+                    model.ProjectNotes.ProjectNoteId = Convert.ToInt32(reader["projectNoteId"]);
+                    model.ProjectNotes.ProjectId = Convert.ToInt32(reader["projectId"]);
+                    model.ProjectNotes.Message = reader["message"].ToString();
+                    model.ProjectNotes.SentDate = Convert.ToDateTime(reader["sentDate"]);
+                    model.ProjectNotes.From = reader["from"].ToString();
+                    model.ProjectNotes.To = reader["to"].ToString();
+
+                    if (reader["completedDate"] != DBNull.Value)
+                    {
+                        model.ProjectNotes.CompletedDate = Convert.ToDateTime(reader["completedDate"]);
+                    }
+                    else
+                    {
+                        model.ProjectNotes.CompletedDate = DateTime.MinValue;
+                    }
+                    modelList.Add(model);
+                }
+
+
+                reader.Close();
+                connection.Close();
+            }
+            return modelList;
+        }
+
+
         public string[] getRoles(int projectId)
         {
             var listOfRoles = new List<string>();
@@ -399,6 +563,33 @@ namespace WhiteBears.Models
                 }
             }
             string[] myArray = listOfRoles.ToArray();
+            return myArray;
+        }
+
+        public string[] getUsers(int projectId)
+        {
+            var listOfUsers = new List<string>();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+
+                // Query with vals 
+
+                command.CommandText = "select up.uName from User_Project up WHERE projectId = @projectId;";
+                command.Parameters.AddWithValue("@projectId", projectId);
+                // Open connection 
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string roleVal = reader["uName"].ToString();
+                    listOfUsers.Add(roleVal);
+
+                }
+            }
+            string[] myArray = listOfUsers.ToArray();
             return myArray;
         }
 
@@ -448,6 +639,7 @@ namespace WhiteBears.Models
                     ProjectId = Int32.Parse(drs[0]["projectId"].ToString()),
                     Title = drs[0]["title"].ToString(),
                     Description = drs[0]["description"].ToString(),
+                    ScopeStatement = drs[0]["scopeStatement"].ToString(),
                     StartDate = Convert.ToDateTime(drs[0]["startDate"]),
                     DueDate = Convert.ToDateTime(drs[0]["dueDate"]),
                     CompletionDate = Convert.ToDateTime(drs[0]["completionDate"])
@@ -541,7 +733,7 @@ namespace WhiteBears.Models
             {
 
                 // Query with vals 
-                command.CommandText = "SELECT * FROM Task WHERE taskId = @taskId;";
+                command.CommandText = "SELECT * FROM Task t JOIN User_Task ut ON t.taskId = ut.taskId WHERE t.taskId = @taskId;";
                 command.Parameters.AddWithValue("@taskId", taskId);
 
 
@@ -562,6 +754,7 @@ namespace WhiteBears.Models
                     modelList.DueDate = model.Task.DueDate = (DateTime)reader["dueDate"];
                     modelList.Priority = model.Task.Priority = reader["priority"].ToString();
                     modelList.Description = model.Task.Description = reader["description"].ToString();
+                    modelList.User = model.Task.User = reader["uName"].ToString();
 
                 }
 

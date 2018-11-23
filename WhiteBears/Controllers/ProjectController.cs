@@ -34,7 +34,7 @@ namespace WhiteBears.Controllers
 
                 ProjectPageModel p = new ProjectPageModel();
                 var userExists = p.userAccessProject(projectid, username);
-                Debug.WriteLine("This userExists val is: " + userExists);
+               
                 if(userExists == false)
                 {
                     return RedirectToAction("Index", "Dashboard");
@@ -61,7 +61,7 @@ namespace WhiteBears.Controllers
                   
                 }
                 pm.ProjectNotes.Roles = p.getRoles(projectid);
-
+                pm.GetUsers = p.getUsers(projectid);
                 pm.User = p.getUser(username);
                 return View(pm);
             }
@@ -133,6 +133,7 @@ namespace WhiteBears.Controllers
         {
             try
             {
+                string username = "";
                 // Retriving values from POST 
                 string taskTitle = Request["taskTitle"];
                 string taskDescription = Request["taskDescription"];
@@ -142,15 +143,26 @@ namespace WhiteBears.Controllers
                 string taskPriority = Request["taskPriority"];
                 int id = Convert.ToInt32(Request["projectId"]);
 
+                username= Request["assignUser"];
+
+
+
+
+                Debug.WriteLine("username before it is empty or noh" + username);
+                if (string.IsNullOrEmpty(username) || username == "0")
+                {
+                    Debug.WriteLine("run" + username);
+                    username = Session["username"].ToString();
+                }
 
                 // Check Results from Posted values 
-                Debug.WriteLine("Task title " + taskTitle);
-                Debug.WriteLine("Task Description " + taskDescription);
-                Debug.WriteLine("Task StartDate " + taskStartDate);
-                Debug.WriteLine("Task EndDate " + taskEndDate);
-                //Debug.WriteLine("Task CompletionDate " + taskCompletionDate);
-                Debug.WriteLine("Task Priority " + taskPriority);
-                Debug.WriteLine("Task ProjectId " + id);
+               // Debug.WriteLine("Task title " + taskTitle);
+                //Debug.WriteLine("Task Description " + taskDescription);
+                //Debug.WriteLine("Task StartDate " + taskStartDate);
+                //Debug.WriteLine("Task EndDate " + taskEndDate);
+                ////Debug.WriteLine("Task CompletionDate " + taskCompletionDate);
+                //Debug.WriteLine("Task Priority " + taskPriority);
+                //Debug.WriteLine("Task ProjectId " + id);
 
                 DateTime dateTimeStartDate = DateTime.Parse(taskStartDate);
                 string mdateTimeStartDate = dateTimeStartDate.ToString("dd/MM/yyyy");
@@ -164,9 +176,7 @@ namespace WhiteBears.Controllers
                 //string mdateTimeCompletionDate = dateTimeCompletionDate.ToString("dd-MM-yyyy");
                 //DateTime mtaskCompletionDate = DateTime.ParseExact(mdateTimeCompletionDate, "dd/MM/yyyy", null);
 
-                string username = Session["username"].ToString();
-                // Get values from session 
-
+              
 
                 ProjectPageModel taskModel = new ProjectPageModel();
                 Task task = new Task
@@ -454,7 +464,24 @@ namespace WhiteBears.Controllers
             IEnumerable<ProjectPageViewModel> td = taskModel.getTask(username, id);
             return View(td);
         }
-       
+
+        public ActionResult TaskViewPM(int? projectId)
+        {
+            if (Session["username"] == null)
+            {
+
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+            ProjectPageModel taskModel = new ProjectPageModel();
+            string username = Session["username"].ToString();
+
+            int id = Convert.ToInt32(projectId);
+            IEnumerable<ProjectPageViewModel> td = taskModel.getTaskPM(id);
+            return View(td);
+        }
+
+
         public ActionResult NoteView(int? projectId, string roleName)
         {
 
@@ -469,6 +496,23 @@ namespace WhiteBears.Controllers
 
             ProjectPageModel projectNotesModel = new ProjectPageModel();
             IEnumerable<ProjectPageViewModel> td = projectNotesModel.getProjectNotes(username, id, roleName);
+            return View(td);
+        }
+
+        public ActionResult NoteViewPM(int? projectId, string roleName)
+        {
+
+            if (Session["username"] == null)
+            {
+
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+            string username = Session["username"].ToString();
+            int id = Convert.ToInt32(projectId);
+
+            ProjectPageModel projectNotesModel = new ProjectPageModel();
+            IEnumerable<ProjectPageViewModel> td = projectNotesModel.getProjectNotesPM(username, id, roleName);
             return View(td);
         }
 
@@ -487,7 +531,7 @@ namespace WhiteBears.Controllers
             }
             else
             {
-                Debug.WriteLine("THE PROJECT NOTE ARRAY HAS " + ProjectNoteSelectedArray.ElementAt(0));
+               
                 ProjectNotes pn = new ProjectNotes();
                 pn = taskModelSelect.getSelectEditProjectNotes(ProjectNoteSelectedArray.ElementAt(0));
                 return Json(pn, JsonRequestBehavior.AllowGet);
@@ -516,7 +560,26 @@ namespace WhiteBears.Controllers
         }
 
 
+        public ActionResult DocumentViewPM(int? projectId, string roleName, string uName)
+        {
+            if (Session["username"] == null)
+            {
 
-      
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+            // Pass roleName from Main Model view to document view 
+            string username = Session["username"].ToString();
+            int id = Convert.ToInt32(projectId);
+            // Debug.WriteLine("ROLE NAME IS: " + roleName);
+            ProjectPageModel documentModel = new ProjectPageModel();
+
+            IEnumerable<ProjectPageViewModel> td = documentModel.getDocumentsPM(username, id, roleName, uName);
+            return View(td);
+        }
+
+
+
+
     }
 }

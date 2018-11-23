@@ -1,4 +1,5 @@
 ﻿body {
+   
 }
 
 #topBarTitle
@@ -130,7 +131,7 @@
     
     
     overflow-y: scroll;
-    height: 300px; 
+    height: 400px; 
     overflow-x: hidden;
     
 }
@@ -147,7 +148,7 @@
 }
 .table 
 {
-    height: 350px;
+    height: 400px;
     width: 100%;
    /* border: dashed; 
     border-color: lightgray; */
@@ -234,7 +235,7 @@ label
     margin-right: 1%; 
 }
 
-#taskPriority, #editTaskPriority, #noteTo, #editProjectNotesTo {
+#taskPriority, #editTaskPriority, #noteTo, #editProjectNotesTo, #assignUser {
     max-width: 450px !important;
 }
 
@@ -250,4 +251,26 @@ label
 .modal-title
 {
     font-size: 25px;
+}
+
+#row {
+    margin-right: 1%;
+    margin-left: 1%;
+    
+}
+
+.timing
+{
+    margin-right: 1%;
+    font-size: 1em;
+}
+
+* {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    font-size: inherit;
+}
+
+.pdes, pscope
+{
+    font-size: 1em; 
 }

@@ -1,0 +1,20 @@
+﻿
+@using WhiteBears.Models
+@model IEnumerable<ProjectPageViewModel>
+
+
+@foreach (var document in Model)
+{
+    <tr id="@document.document.DocumentId">
+        <td id="fileName">
+            @document.document.FileName
+        </td>
+
+        <td id="fileExtension">
+            @document.document.FileExtension
+        </td>
+    </tr>
+}
+
+
+
