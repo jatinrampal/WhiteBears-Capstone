@@ -376,7 +376,7 @@ namespace WhiteBears.Models
             return modelList;
         }
 
-        public List<string> getRoles()
+        public string[] getRoles(int projectId)
         {
             var listOfRoles = new List<string>();
 
@@ -385,8 +385,8 @@ namespace WhiteBears.Models
             {
 
                 // Query with vals 
-                command.CommandText = "select role from [User]; ";
-
+                command.CommandText = "select distinct u.[role] from User_Project up, [User] u WHERE up.projectId = @projectId AND up.uName = u.uName; ";
+                command.Parameters.AddWithValue("@projectId", projectId);
                 // Open connection 
                 connection.Open();
 
@@ -398,8 +398,8 @@ namespace WhiteBears.Models
 
                 }
             }
-
-            return listOfRoles;
+            string[] myArray = listOfRoles.ToArray();
+            return myArray;
         }
 
         public bool AddProjectNote(ProjectNotes note)

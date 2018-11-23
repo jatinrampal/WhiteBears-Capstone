@@ -5,14 +5,18 @@
     Layout = null;
 }
 
+
+
 <!DOCTYPE html>
 
 <html>
 
 <head>
     <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Project Page</title>
+    @Styles.Render("~/bundles/style/projectpage")
+    <link rel="shortcut icon" href="~/Content/icon.ico" />
 
-    @Styles.Render("~/bundles/style/projectpage")    
 </head>
 
 <body>
@@ -30,31 +34,27 @@
         </div>
 
         <div id="startEnd" class="row">
-            <div class="col-sm-6">
-      
-                        <h5 id="pStartDate" class="pull-left">Start Date:   @Model.Project.StartDate.ToShortDateString() </h5>
-                    
-                </div>
-            <div class="col-sm-6">
-              
-                        <h5 class="pull-right" id="pEndDate">End Date:  @Model.Project.DueDate.ToShortDateString() </h5>
-                 
-                </div>
 
-            </div>
-            <hr id="hr" />
-            <div id="row" class="row">
-                <span id="projectId" hidden>@Model.Project.ProjectId</span>
-                <div id="backButton" class="col-sm-6">
-                    <span> @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")</span>
-                </div>
-                <div id="nameDiv" class="col-sm-6">
-                    <span id="name">@Model.User.FullName</span>
-                </div>
-                <!-- <p id="myResult">@ViewBag.Message</p> -->
-            </div>
+
+            <h5 id="pStartDate" class="pull-left">Start Date:   @Model.Project.StartDate.ToShortDateString() </h5>
+            <h5 class="pull-right" id="pEndDate">End Date:  @Model.Project.DueDate.ToShortDateString() </h5>
+
+
 
         </div>
+        <hr id="hr" />
+        <div id="row" class="row">
+            <span id="projectId" hidden>@Model.Project.ProjectId</span>
+            <div id="backButton" class="col-sm-6">
+                <span> @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")</span>
+            </div>
+            <div id="nameDiv" class="col-sm-6">
+                <span id="name">@Model.User.FullName</span>
+            </div>
+            <!-- <p id="myResult">@ViewBag.Message</p> -->
+        </div>
+
+    </div>
 
     <div class="container-fluid">
         <div class="row">
@@ -98,75 +98,78 @@
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Task</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <h4 class="modal-title">Task</h4>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-body">
 
-                                    <form id="taskPost" action="/Project/AddTask" method="post">
-
-                                        <!-- Errors -->
-                                        <div class="form-group row">
-                                            <div class="col-sm-12" id="taskErrors">
-
-                                            </div>
-                                        </div>
-                                        <hr />
-
-                                        <!-- ProjectID -->
-                                        <input type="hidden" id="projectId" name="projectId" value="@Model.Project.ProjectId">
-
-                                        <!-- Title -->
-                                        <div class="form-group row">
-                                            <label for="Title" class="col-sm-4 col-form-label">Title:</label>
-                                            <div class="col-sm-6">
-                                                <input id="taskTitle" name="taskTitle" class="form-control" type="text" required />
-                                            </div>
-                                        </div>
-
-                                        <!-- Description -->
-                                        <div class="form-group row">
-                                            <label for="Description" class="col-sm-4 col-form-label">Description:</label>
-                                            <div class="col-sm-6">
-                                                <textarea class="form-control" name="taskDescription" id="taskDescription" rows="3" required></textarea>
-                                            </div>
-                                        </div>
-
-                                        <!-- StartDate & EndDate Labels -->
-                                        <div class="form-group row">
-                                            <label for="StartDate" class="col-sm-6 col-form-label text-center">Start Date</label>
-                                            <label for="EndDate" class="col-sm-6 col-form-label text-center">End Date</label>
+                                    <!-- <form id="taskPost" action="/Project/AddTask" method="post"> -->
+                                    @using (Html.BeginForm("AddTask", "Project", FormMethod.Post, new { @id = "taskPost" }))
+                                    { 
+                                    <!-- Errors -->
+                                    <div class="form-group row">
+                                        <div class="col-sm-12" id="taskErrors1">
 
                                         </div>
+                                    </div>
 
-                                        <!-- StartDate & EndDate Inputs -->
-                                        <div class="form-group row">
-                                            <div class="col-sm-6 text-center">
-                                                <input id="taskStartDate" name="taskStartDate" type="date" required />
-                                            </div>
-                                            <div class="col-sm-6 text-center">
-                                                <input id="taskEndDate" name="taskEndDate" type="date" required />
-                                            </div>
-                                        </div>
+                                    <hr class="thick" />
+
+                                    <!-- ProjectID -->
+                                    <input type="hidden" id="projectId" name="projectId" value="@Model.Project.ProjectId">
+
+                                    <!-- Title -->
+                                    <div class="form-group row">
+                                        <label for="Title" class="col-sm-2 col-form-label text-left">Title</label>
+
+                                        <input id="taskTitle" name="taskTitle" class="col-sm-10 form-control" type="text" required />
+
+                                    </div>
+
+                                    <!-- Description -->
+                                    <div class="form-group row">
+                                        <label for="Description" class="col-sm-2 col-form-label text-left">Description</label>
+
+                                        <textarea class="form-control col-sm-10" name="taskDescription" id="taskDescription" rows="3" required></textarea>
+
+                                    </div>
 
 
+                                    <!-- StartDate & EndDate Inputs -->
+                                    <div class="form-group row">
+                                        <label for="taskStartDate" class="col-sm-2 col-form-label text-left">Start Date</label>
+                                        <input id="taskStartDate" class="col-sm-10 form-control" name="taskStartDate" type="date" required />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="EndDate" class="col-sm-2 col-form-label text-left">End Date</label>
+                                        <input id="taskEndDate" class="col-sm-10 form-control" name="taskEndDate" type="date" required />
 
-                                        <!-- Priority -->
-                                        <div class="form-group row">
-                                            <label for="Priority" class="col-sm-3 col-form-label text-center">Priority</label>
-                                            <select class="form-control" id="taskPriority" name="taskPriority" required>
-                                                <option>Low</option>
-                                                <option>Medium</option>
-                                                <option>High</option>
-                                            </select>
-                                        </div>
+                                    </div>
 
 
-                                        <div class="modal-footer">
-                                            <!-- Add Button -->
-                                            <input id="taskAddbtn" type="submit" class="btn btn-default" name="Add" value="Add" />
-                                        </div>
-                                    </form>
+                                    <!-- Priority -->
+                                    <div class="form-group row">
+                                        <label for="Priority" class="col-sm-2 col-form-label text-left">Priority</label>
+                                        <select class="form-control col-sm-10" id="taskPriority" name="taskPriority" required>
+                                            <option>Low</option>
+                                            <option>Medium</option>
+                                            <option>High</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <!-- Add Button -->
+                                        <input id="taskAddBtn" type="submit" class="btn btn-primary" name="Add" value="Add" />
+                                        <button type="button" id="taskClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                    } <!--form -->
 
                                 </div> <!-- Modal Body Ends here -->
 
@@ -177,9 +180,6 @@
 
                 </div> <!-- projectTableDiv ends here -->
             </div> <!-- Task Information ENDS -->
-
-            
-
             <!--Document Information goes here -->
             <div class="col-sm-4">
 
@@ -192,7 +192,7 @@
                         <thead id="myThead">
                             <tr>
                                 <th>Document</th>
-                                <th>Access</th>
+
                                 <th>Type</th>
                             </tr>
                         </thead>
@@ -265,7 +265,7 @@
                                     {
                                         <!-- Errors -->
                                         <div class="form-group row">
-                                            <div class="col-sm-12" id="noteErrors">
+                                            <div class="col-sm-12" id="noteErrors1">
 
                                             </div>
                                         </div>
@@ -273,13 +273,12 @@
 
                                         <!-- Message -->
                                         <div class="form-group row">
-                                            <label for="Message" class="col-sm-4 col-form-label text-left">Message</label>
-                                            <div class="col-sm-7">
-                                                <textarea class="form-control" name="noteMessage" id="noteMessage" rows="3" required></textarea>
-                                            </div>
+                                            <label for="Message" class="col-sm-2 col-form-label text-left">Message</label>
+                                            <textarea class="col-sm-10 form-control" name="noteMessage" id="noteMessage" rows="3" required></textarea>
+                                      
                                         </div>
 
-                                        <!--  Completed Labels 
+                                        <!--  Completed Labels
                                         <div class="form-group row">
 
                                             <label for="CompletedDate" class="col-sm-4 col-form-label text-left">Completed Date</label>
@@ -293,23 +292,22 @@
 
                                         <!-- To -->
                                         <div class="form-group row">
-                                            <label for="noteTo" class="col-sm-4 col-form-label text-left">To</label>
-                                            <div class="col-sm-7">
-                                                <select class="form-control" id="noteTo" name="noteTo" required>
-                                                    <option>Developer</option>
-                                                    <option>Project Manager</option>
-                                                    <option>Full Stack Developer</option>
-                                                    <option>Business Analyst</option>
-                                                    <option>Contractor</option>
-                                                    <option>Admin</option>
+                                            <label for="noteTo" class="col-sm-2 col-form-label text-left">To</label>
+                                           
+                                                <select class="form-control col-sm-10" id="noteTo" name="noteTo" required>
+                                                    @foreach (string role in Model.ProjectNotes.Roles)
+                                                    {
+                                                        <option>@role</option>
+                                                    }
                                                 </select>
-                                            </div>
+                                          
                                         </div>
 
 
                                         <div class="modal-footer">
                                             <!-- Add Button -->
-                                            <input id="submit1" type="submit" class="btn btn-default" name="Add" value="Add" />
+                                            <input id="submit1" type="submit" class="btn btn-primary" name="Add" value="Add" />
+                                            <button type="button" id="taskClose" class="btn btn-danger" data-dismiss="modal">Close</button>
 
                                         </div>
                                     }
@@ -321,8 +319,6 @@
                         </div> <!-- Modal Dialog Ends here -->
                     </div>
 
-
-
                 </div><!-- projectTableDiv ends here -->
             </div> <!-- Notes Information ENDS -->
         </div> <!-- Row ends here -->
@@ -333,13 +329,14 @@
         var documentVersions;
         $(document).ready(function () {
 
+
             // jQuery methods go here...
 
             // Double Click on ProjectTaskTable
             $("#projectTaskTable tbody tr").dblclick(function ()
             {
                 $("#taskDetailModal").modal().show();
-                myTaskID = $(this).attr('id'); 
+                myTaskID = $(this).attr('id');
                  $.ajax({
                     type: "POST",
                     url: "@Url.Action("TaskDetail", "Project")", // the method we are calling
@@ -348,8 +345,8 @@
                      TaskSelectedArray,
                     contentType: 'application/json',
                     success: function (msg) {
-                        
-                            /// Task Due Date Conversions 
+
+                            /// Task Due Date Conversions
                             var taskDueDate = new Date(parseInt(msg.DueDate.substr(6)));
 
                             var taskDueDateDay = taskDueDate.getDate(taskDueDate);
@@ -364,7 +361,7 @@
                             }
                             var myDueDate = taskDueDateYear + "-" + taskDueDateMonth + "-" + taskDueDateDay;
 
-                            // Task Start Date Conversions 
+                            // Task Start Date Conversions
                             var taskStartDate = new Date(parseInt(msg.StartDate.substr(6)));
 
                             var taskStartDateDay = taskStartDate.getDate(taskStartDate);
@@ -379,7 +376,7 @@
                             }
                             var myStartDate = taskStartDateYear + "-" + taskStartDateMonth + "-" + taskStartDateDay;
 
-                            // Task Completion Date Conversions 
+                            // Task Completion Date Conversions
                             var taskCompletionDate = new Date(parseInt(msg.CompletedDate.substr(6)));
 
                             var taskCompletionDateDay = taskCompletionDate.getDate(taskCompletionDate);
@@ -397,13 +394,13 @@
                             // Task id
                           //  $('input[name="editTaskId"]').val(msg.TaskId);
 
-                            // Task title 
+                            // Task title
                             $('#taskDetailTitle').text(msg.Title);
-                            
-                            // Task Description 
+
+                            // Task Description
                             $('#taskDetailDescription').text(msg.Description);
-                           
-                             // Task StartDate 
+
+                             // Task StartDate
                              $('#taskDetailStartDate').text(myStartDate);
 
                             // Task DueDate (End Date)
@@ -412,7 +409,7 @@
                             // Task CompletionDate
                             $('#taskDetailCompletionDate').text(myCompletionDate);
 
-                             // Task Priority 
+                             // Task Priority
                              $('#taskPriority').text(msg.Priority);
 
                             $('#taskDetailModal').modal('show');
@@ -435,7 +432,7 @@
                         contentType: 'application/json',
                         success: function (msg) {
 
-                            // Task Start Date Conversions 
+                            // Task Start Date Conversions
                             var taskSentDate = new Date(parseInt(msg.SentDate.substr(6)));
 
                             var taskSentDateDay = taskSentDate.getDate(taskSentDate);
@@ -457,13 +454,13 @@
                             // ProjectNotes SendDate
                             $('#projectNotesDetailSentDate').text(mySentDate);
 
-                            // ProjectNotes From 
+                            // ProjectNotes From
                             $('#projectNotesDetailFrom').text(msg.From);
 
                             // ProjectNotes To
                             $('#projectNotesTo').text(msg.To);
 
-                           
+
                         }
                     });
             });
@@ -706,7 +703,7 @@
 
             // Editing Task Modal Button
             $('#taskEditBtn').click(function () {
-                alert("EndDate: " + endDateValP + "StartDateP: " + startDateValP + "titleValP: " + titleValP + "descriptionValP: " + descriptionValP + "CompletionValP: " + completionValP);
+                //alert("EndDate: " + endDateValP + "StartDateP: " + startDateValP + "titleValP: " + titleValP + "descriptionValP: " + descriptionValP + "CompletionValP: " + completionValP);
                 if (EditTaskModal == true && endDateValP == true && startDateValP == true && titleValP == true && descriptionValP == true && completionValP) {
                     editTaskId = $('#editTaskId').val();
                     editTaskTitle = $('#editTaskTitle').val();
@@ -732,7 +729,7 @@
                 }
             });
 
-            var EditTaskModal = true; 
+            var EditTaskModal = true;
             // Editing Task /////////////////////////////////////////////////////
             $('#projectTaskEdit').click(function () {
                 if (TaskSelectedArray.length < 2) {
@@ -748,7 +745,7 @@
                         success: function (msg) {
 
                             try {
-                                /// Task Due Date Conversions 
+                                /// Task Due Date Conversions
                                 var taskDueDate = new Date(parseInt(msg.DueDate.substr(6)));
 
                                 var taskDueDateDay = taskDueDate.getDate(taskDueDate);
@@ -763,7 +760,7 @@
                                 }
                                 var myDueDate = taskDueDateYear + "-" + taskDueDateMonth + "-" + taskDueDateDay;
 
-                                // Task Start Date Conversions 
+                                // Task Start Date Conversions
                                 var taskStartDate = new Date(parseInt(msg.StartDate.substr(6)));
 
                                 var taskStartDateDay = taskStartDate.getDate(taskStartDate);
@@ -778,7 +775,7 @@
                                 }
                                 var myStartDate = taskStartDateYear + "-" + taskStartDateMonth + "-" + taskStartDateDay;
 
-                                // Task Completion Date Conversions 
+                                // Task Completion Date Conversions
                                 var taskCompletionDate = new Date(parseInt(msg.CompletedDate.substr(6)));
 
                                 var taskCompletionDateDay = taskCompletionDate.getDate(taskCompletionDate);
@@ -798,15 +795,15 @@
                                 // Task id
                                 $('input[name="editTaskId"]').val(msg.TaskId);
 
-                                // Task title 
+                                // Task title
                                 $('input[name="editTaskTitle"]').val(msg.Title);
                                 $('input[name="editTaskTitle"]').attr("placeholder", msg.Title);
 
-                                // Task Description 
+                                // Task Description
                                 $('textarea[name="editTaskDescription"]').val(msg.Description);
                                 $('textarea[name="editTaskDescription"]').attr("placeholder", msg.Description);
 
-                                // Task StartDate 
+                                // Task StartDate
                                 $('input[name="editTaskStartDate"]').val(myStartDate);
 
                                 // Task DueDate (End Date)
@@ -815,7 +812,7 @@
                                 // Task CompletionDate
                                 $('input[name="editTaskCompletionDate"]').val(myCompletionDate);
 
-                                // Task Priority 
+                                // Task Priority
                                 $('select[name="editTaskPriority"]').val(msg.Priority);
 
                                 $('#projectTaskEditModal').modal('show');
@@ -857,13 +854,13 @@
                 }
                 else {
                     alert("Select only one Task to edit")
-                   
+
                     $('#projectTaskEditModal').modal('hide');
                     EditTaskModal = false;
                 }
             });
 
-      
+
             // Deleting Project Note
             $('#projectNoteDelete').click(function () {
                 $.ajax({
@@ -903,10 +900,10 @@
                 }
             });
 
-            var EditProjectNotesModal = true; 
+            var EditProjectNotesModal = true;
              // Editing Project Notes  ///////////////////////////////////////////////////////////////////////////////////////
-            $('#projectNotesEdit').click(function () {
-                
+            $('#projectNotesEdit').click(function ()
+            {
                 if (ProjectNoteSelectedArray.length < 2)
                 {
                     if (ProjectNoteSelectedArray.length == 1) {
@@ -922,7 +919,7 @@
                                     $('#projectNotesEditModal').modal('show');
                                     try {
 
-                                        // Project Notes  Completion Date Conversions 
+                                        // Project Notes  Completion Date Conversions
                                         /*
                                         var projectNotesCompletedDate = new Date(parseInt(msg.CompletedDate.substr(6)));
 
@@ -960,11 +957,18 @@
 
 
                                         EditProjectNotesModal = true;
+                                        var tempMessageP = $('#editProjectNotesMessage').val();
+
+                                        if (!$.trim(tempMessageP).length == 0) {
+
+                                            messageValP = true;
+
+
+                                        }
                                     }
                                     catch (Exception) {
 
                                     }
-
                                 }
                             });
                         }
@@ -979,26 +983,14 @@
                 else {
                     alert("Select only one Project to edit")
                     $('#projectNotesEditModal').modal('hide');
-                    EditProjectNotesModal = false; 
+                    EditProjectNotesModal = false;
                 }
             });
 
 
 
-            // Incomplete dynamic role
-            $('#projectNoteAdd').click(function () {
-                $.ajax({
-                    url: "@Url.Action("getRoles", "Project")",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { id: 'value' },
-                    success: function (data) {
-                    },
-                    error: function () {
-                        alert('error');
-                    }
-                });
-            });
+
+
 
             // Task Add - Title, Description, StartDate, EndDate)
             var endDateVal = false;
@@ -1006,26 +998,27 @@
             var titleVal = false;
             var descriptionVal = false;
 
-            // Task Edit 
-           
+            // Task Edit
+
             var endDateValP = false;
-            var startDateValP = false; 
-           
+            var startDateValP = false;
+
             var titleValP = false;
             var descriptionValP = false;
-            var completionValP = false; 
+            var completionValP = false;
 
             $("#taskPost").on('submit', function (e) {
 
                 if (endDateVal == false || startDateVal == false || titleVal == false || descriptionVal == false) {
-                    e.preventDefault();
+                   
+                   e.preventDefault();
                 }
-            
-               
+
+
             });
 
-         
-            // Title VALIDATION for Task Edit 
+
+            // Title VALIDATION for Task Edit
             $('#editTaskTitle').focusout(function () {
                 var myTaskTitle = $('#editTaskTitle').val();
                 if (/\d/.test(myTaskTitle)) {
@@ -1048,32 +1041,38 @@
                 }
             });
 
+           
             // Title VALIDATION
             $('#taskTitle').focusout(function () {
                 var myTaskTitle = $('#taskTitle').val();
+                 
+                 
                 if (/\d/.test(myTaskTitle)) {
                     // number found
-                    $('#taskErrors').text("Title cannot have numbers, try agian.");
+                    $('#taskErrors1').html("Title cannot have numbers, try agian.");
+                    
+                    
                     titleVal = false;
                 }
                 else if (myTaskTitle.length > 40)
                 {
-                    $('#taskErrors').text("Title must be smaller, try agian.");
+                    $('#taskErrors1').text("Title must be smaller, try agian.");
                     titleVal = false;
                 }
-                else if ($.trim(myTaskTitle).length == 0)
+                else if ($.trim(myTaskTitle).length == false)
                 {
-                    $('#taskErrors').text("You have not entered a title.");
+                    $('#taskErrors1').text("You have not entered a title.");
+                  
                     titleVal = false;
                 }
                 else {
-                    $('#taskErrors').empty();
+                    $('#taskErrors1').empty();
                     titleVal = true;
 
                 }
             });
 
-            // Description VALIDATION for Tasks Edit 
+            // Description VALIDATION for Tasks Edit
             $('#editTaskDescription').focusout(function () {
                 var myTaskDescription = $('#editTaskDescription').val();
 
@@ -1100,24 +1099,24 @@
                 var myTaskDescription = $('#taskDescription').val();
 
                 if (myTaskDescription.length > 255) {
-                    $('#taskErrors').text("Description must be smaller, try agian.");
+                    $('#taskErrors1').text("Description must be smaller, try agian.");
 
                     descriptionVal = false;
                 }
                 else if ($.trim(myTaskDescription).length == 0) {
-                    $('#taskErrors').text("Please enter a Description.");
+                    $('#taskErrors1').text("Please enter a Description.");
 
                     descriptionVal = false;
                 }
                 else {
-                    $('#taskErrors').empty();
+                    $('#taskErrors1').empty();
 
                     descriptionVal = true;
 
                 }
             });
 
-            // EndDate VALIDATION for Task Edit 
+            // EndDate VALIDATION for Task Edit
             $('#editTaskEndDate').focusout(function () {
                 var myEndDate = new Date($(this).val());
                 var myStartDate = new Date($('#editTaskStartDate').val());
@@ -1144,23 +1143,22 @@
                 var currentdateTime = new Date($.now());
                 if (myEndDate < myStartDate) {
                    // alert("Your End Date, ends before your Start Date.");
-                    $('#taskErrors').text("Your End Date, ends before your Start Date.");
+                    $('#taskErrors1').text("Your end date, finishs before your start date.");
                     endDateVal = false;
                 }
                 else if (currentdateTime == myEndDate)
                 {
-                    $('#taskErrors').text("Your End Date, must end after today.");
+                    $('#taskErrors1').text("Your End Date, must end after today.");
                     endDateVal = false;
                 }
                 else
                 {
-                    $('#taskErrors').empty();
+                    $('#taskErrors1').empty();
                     endDateVal = true;
                 }
 
             });
 
-          
             // StartDate VALIDATION For Edit Task
             $('#editTaskStartDate').focusout(function () {
                 var myStartDate = new Date($(this).val());
@@ -1183,22 +1181,29 @@
                 var myEndDate = new Date($('#taskEndDate').val());
                 if (myEndDate < myStartDate) {
                     //alert("Your Start Date, ends before your End Date.");
-                    $('#taskErrors').text("Your Start Date, ends before your End Date");
+                    $('#taskErrors1').text("Your Start Date, ends before your End Date");
                     startDateVal = false;
                 }
                 else {
-                    $('#taskErrors').empty();
+                    $('#taskErrors1').empty();
                     startDateVal = true;
                 }
 
             });
 
-            // Message, CompletionDate)
-
+            // Message, CompletionDate) //// EDIT HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!
             var messageVal = false;
             var messageValP = false;
             $("#ProjectNotesEditBtn").click(function (e) {
 
+                var tempMessageP = $('#editProjectNotesMessage').val();
+
+                if (!$.trim(tempMessageP).length == 0) {
+
+                    messageValP = true;
+
+
+                }
 
                 if (messageValP == false) {
                     e.preventDefault();
@@ -1210,8 +1215,10 @@
 
 
                 if (messageVal == false) {
-                    e.preventDefault();
+                   e.preventDefault();
                 }
+
+
 
             });
 
@@ -1220,17 +1227,17 @@
                 var myNoteMessage = $('#noteMessage').val();
 
                 if (myNoteMessage.length > 255) {
-                    $('#noteErrors').text("Note Message must be smaller, try agian.");
+                    $('#noteErrors1').text("Note Message must be smaller, try agian.");
 
                     messageVal = false;
                 }
                 else if ($.trim(myNoteMessage).length == 0) {
-                    $('#noteErrors').text("Please enter a message.");
+                    $('#noteErrors1').text("Please enter a message.");
 
                     messageVal = false;
                 }
                 else {
-                    $('#noteErrors').empty();
+                    $('#noteErrors1').empty();
 
                     messageVal = true;
 
@@ -1238,7 +1245,7 @@
             });
 
 
-            // Message VALIDATION
+            // Message VALIDATION FOR ProjectNotes Edit
             $('#editProjectNotesMessage').focusout(function () {
                 var myNoteMessage = $('#editProjectNotesMessage').val();
 
@@ -1258,11 +1265,11 @@
                     messageValP = true;
 
                 }
-              
+
                 //alert("Console Write" + messageValP);
             });
 
-     
+
             $('#editTaskCompletionDate').focusout(function () {
                 var myTaskCompletedDate = new Date($('#editTaskCompletionDate').val());
                 var currentdateTime = new Date($.now());
@@ -1276,6 +1283,8 @@
                 }
 
             });
+
+
 
            /*
             // CompletionDate VALIDATION
@@ -1293,6 +1302,8 @@
 
             });
             */
+
+
 
 
             if ("@Model.User.Role" == "Project Manager") {

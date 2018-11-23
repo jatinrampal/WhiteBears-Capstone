@@ -204,7 +204,7 @@
 
 .Contain
 {
-    margin-left: 33%;
+    margin-left: 2%;
     font-size: 1em; 
 }
 
@@ -220,3 +220,34 @@
     margin-right: 5%;
 }
 
+#taskTitle
+{
+    width: 550px;
+}
+
+input, textarea {
+    max-width: 450px !important;
+}
+
+label
+{
+    margin-right: 1%; 
+}
+
+#taskPriority, #editTaskPriority, #noteTo, #editProjectNotesTo {
+    max-width: 450px !important;
+}
+
+#taskAddbtn, #taskAddBtn, #taskClose, #taskEditBtn, #submit1, #ProjectNotesEditBtn {
+    width: 150px;
+}
+
+#downloadDoc, #deleteDoc
+{
+    width: 150px;
+}
+
+.modal-title
+{
+    font-size: 25px;
+}

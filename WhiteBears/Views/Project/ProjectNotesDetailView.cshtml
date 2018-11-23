@@ -6,9 +6,16 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-center">Project Notes</h4>
+                   
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <h4 class="modal-title text-left">Project Notes</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                    </div>
 
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
@@ -24,25 +31,25 @@
                             <div class="Contain">
                                 <!-- ProjectNotes Message -->
                                 <div class="form-group row">
-                                    <Label for="projectNotesDetailMessage">Message: </Label>
+                                    <Label for="projectNotesDetailMessage">Message </Label>
                                     <text id="projectNotesDetailMessage" name="projectMessage"></text>
                                 </div>
 
                                 <!-- ProjectNotes SendDate -->
                                 <div class="form-group row">
-                                    <Label for="projectNotesDetailSentDate">Sent Date: </Label>
+                                    <Label for="projectNotesDetailSentDate">Sent Date </Label>
                                     <text id="projectNotesDetailSentDate" name="SentDate"></text>
                                 </div>
 
                                 <!-- ProjectNotes From -->
                                 <div class="form-group row">
-                                    <Label for="projectNotesFrom">From: </Label>
+                                    <Label for="projectNotesFrom">From </Label>
                                     <text id="projectNotesDetailFrom" name="projectNotesFrom"></text>
                                 </div>
 
                                 <!-- ProjectNotes To -->
                                 <div class="form-group row">
-                                    <Label for="projectNotesTo">To: </Label>
+                                    <Label for="projectNotesTo">To </Label>
                                     <text id="projectNotesTo" name="projectNotesTo"></text>
                                 </div>
 
@@ -56,7 +63,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-
+                            <button type="button" id="taskClose" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
 
                     </div> <!-- Modal Body Ends here -->

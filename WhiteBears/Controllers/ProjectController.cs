@@ -60,6 +60,7 @@ namespace WhiteBears.Controllers
                     pm.Project = p.GetProject(username, projectid);
                   
                 }
+                pm.ProjectNotes.Roles = p.getRoles(projectid);
 
                 pm.User = p.getUser(username);
                 return View(pm);
@@ -388,13 +389,11 @@ namespace WhiteBears.Controllers
         }
 
         [HttpPost]
-        public JsonResult getRoles()
+        public JsonResult getRoles(int projectId)
         {
             ProjectPageModel projectNotesModel = new ProjectPageModel();
 
-            List<string> strList = new List<string>();
-            strList = projectNotesModel.getRoles();
-            //Debug.WriteLine("First val:" + strList[0]);
+            string[] strList = projectNotesModel.getRoles(projectId);
 
             return Json(new { strList }, JsonRequestBehavior.AllowGet); ;
         }

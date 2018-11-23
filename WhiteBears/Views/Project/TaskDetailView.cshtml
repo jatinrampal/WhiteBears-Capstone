@@ -5,10 +5,16 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title text-center">Task</h4>
+            <div class="modal-header">           
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <h4 class="modal-title text-left">Task</h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
 
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
 
@@ -24,45 +30,45 @@
                     <div class="row">
                         <div class="Contain">
                             <!-- Task Title -->
-                            <div class="form-group row">
-                                <Label for="taskTitle">Title: </Label>
+                            <div class="form-group  row">
+                                <Label for="taskTitle">Title </Label>
                                 <text id="taskDetailTitle" name="taskDetailTitle"></text>
                             </div>
 
                             <!-- Task Description -->
                             <div class="form-group row">
-                                <Label for="taskDescription">Description: </Label>
+                                <Label for="taskDescription">Description </Label>
                                 <text id="taskDetailDescription" name="taskDetailDescription"></text>
                             </div>
 
                             <!-- Task StartDate -->
                             <div class="form-group row">
-                                <Label for="taskStartDate">Start Date: </Label>
+                                <Label for="taskStartDate">Start Date </Label>
                                 <text id="taskDetailStartDate" name="taskDetailStartDate"></text>
                             </div>
 
                             <!-- Task DueDate -->
                             <div class="form-group row">
-                                <Label for="taskDueDate">Due Date: </Label>
+                                <Label for="taskDueDate">Due Date </Label>
                                 <text id="taskDetailDueDate" name="taskDetailDueDate"></text>
                             </div>
 
 
                             <!-- Task Completion Date -->
                             <div class="form-group row">
-                                <Label for="taskCompletionDate">Completion Date: </Label>
+                                <Label for="taskCompletionDate">Completion Date </Label>
                                 <text id="taskDetailCompletionDate" name="taskDetailCompletionDate"></text>
                             </div>
 
                             <!-- Task Priority -->
                             <div class="form-group row">
-                                <Label for="taskPriority">Priority: </Label>
+                                <Label for="taskPriority">Priority </Label>
                                 <text id="taskPriority" name="taskPriority"></text>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-
+                        <button type="button" id="taskClose" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
 
                 </div> <!-- Modal Body Ends here -->
