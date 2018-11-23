@@ -45,8 +45,8 @@ table {
     float: left;
     margin-left: 50px;
     margin-top: 20px;
-    min-height: 300px;
-    width: 60%;
+    min-height: 100px;
+    width: 55%;
     margin-bottom: 15px;
 }
 
@@ -60,10 +60,9 @@ table {
 #LeftPanel {
     background: lightgrey;
     text-align: center;
-    width: 200px;
+    width: 10%;
     float: left;
     height: 100%;
-
 }
 
 .ProjectButtons {
@@ -83,7 +82,6 @@ table {
 
 header {
     text-align: center;
-    margin-left: 50px;
 }
 
 .headerButtons:hover {
@@ -109,18 +107,25 @@ header {
 
 #PersonalNotesSection {
     margin-top: 20px;
+    width: 60%;
     float: right;
-    margin-right: 20px;
+    margin-left: 20px;
+    margin-right: 45px;
 }
 
-    #PersonalNotesSection td, th {
-        border: 1px solid darkgrey;
-        padding: 10px;
-        max-width: 800px;
-    }
+
+#PersonalNotesSection td, th {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 90%;
+}
+#PersonalNotesSection td:first-child, th:first-child {
+    width: 10%;
+}
 
 #PersonalNotesButtonsContainer {
     margin-top: 10px;
+    height:50px;
     width: 100%;
     text-align: center;
 }
@@ -138,10 +143,6 @@ textarea {
 #profilePic {
     width: 100px;
     border-radius: 120px 120px 120px 120px;
-}
-
-#headings {
-    text-align: left;
 }
 
 .ProgressBarContainer:last-of-type {
@@ -181,19 +182,21 @@ textarea {
 }
 
 #PersonalNoteTextContainer {
-    margin-top: 15px;
+    margin-top: 0px;
 }
 
 .scrollable-task {
-    height: 400px;
-    max-height: 300px;
+    height: 20%;
+    max-height: 200px;
+    min-height: 100px;
     overflow: scroll;
     overflow-x: hidden;
 }
 
 .scrollable-notes {
-    height: auto;
-    max-height: 250px;
+    height: 20%;
+    max-height:165px;
+    min-height: 100px;
     overflow: hidden;
     overflow-y: scroll
 }
@@ -201,15 +204,14 @@ textarea {
 #TaskOverviewSection {
     text-align: center;
     float: right;
-    height: 100px;
+    height: 100%;
     width: 30%;
     margin-top: 20px;
     margin-right: 20px;
 }
 
 #pie-chartcanvas {
-    width: 500px;
-    height: 250px;
+    width: 30%;
 }
 
 #projectselection {
@@ -235,3 +237,4 @@ textarea {
 #text-center {
     text-align: center;
 }
+

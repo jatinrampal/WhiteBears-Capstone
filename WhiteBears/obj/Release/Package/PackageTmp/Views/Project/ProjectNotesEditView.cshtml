@@ -1,0 +1,82 @@
+﻿@using WhiteBears.Models
+@model ProjectNotes
+
+
+
+<!-- Modal -->
+<div id="projectNotesEditModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="left:0% !important">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Project Notes</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+
+                <form>
+                    <!-- Errors -->
+                    <div class="form-group row">
+                        <div class="col-sm-12" id="projectNotesErrors">
+
+                        </div>
+                    </div>
+                    <hr />
+
+                    <!-- ProjectID -->
+                    <input type="hidden" id="editProjectNotesId" name="editProjectNotesId" value="">
+
+
+                    <!-- Message -->
+                    <div class="form-group row">
+                    
+                            <label for="Message" class="col-sm-4 col-form-label text-left">Message</label>
+                      
+                            <div class="col-sm-7">
+                                <textarea class="form-control" name="editProjectNotesMessage" placeholder="" id="editProjectNotesMessage" rows="3" required></textarea>
+                            </div>
+                        </div>
+
+
+
+                        <!-- CompletionDate Label -->
+                        <div class="form-group row">
+                          
+                                <label for="CompletionDate" class="col-sm-4 col-form-label text-left">Completion Date</label>
+                          
+                            <div class="col-sm-7">
+                                <input id="editProjectNotesCompletionDate" value="" name="editProjectNotesCompletionDate" type="date" required />
+                            </div>
+                        </div>
+
+                        <!-- To -->
+                        <div class="form-group row">
+
+                            <label for="To" class="col-sm-4 col-form-label text-left">To</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" value="" id="editProjectNotesTo" name="editProjectNotesTo" required>
+                                    <option>Developer</option>
+                                    <option>Project Manager</option>
+                                    <option>Full Stack Developer</option>
+                                    <option>Business Analyst</option>
+                                    <option>Contractor</option>
+                                    <option>Admin</option>
+                                </select>
+                            </div>
+                         </div>
+
+
+                            <div class="modal-footer">
+                                <!-- Add Button -->
+                                <input id="ProjectNotesEditBtn" type="button" class="btn btn-default" name="Update" value="Update" />
+                            </div>
+</form>
+
+            </div> <!-- Modal Body Ends here -->
+
+        </div> <!-- Modal Content Ends here -->
+    </div> <!-- Modal Dialog Ends here -->
+</div>
+

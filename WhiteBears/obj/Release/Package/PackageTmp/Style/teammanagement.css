@@ -102,18 +102,24 @@ table {
     font-size: medium;
 }
 
-.scrollable-task{
-    height: auto;
-    max-height: 300px;
-    overflow: scroll;
+tbody.scrollable {
+    overflow-y: scroll;
+    width: 100%;
+    max-height: 200px;
+    min-height: 200px;
+    height: 200px;
+    display: block;
 }
 
-.scrollable-notes {
-    height: auto;
-    max-height: 400px;
-    overflow: scroll;
+td{
+    width: 100vw;
 }
 
-.page-container{
-    margin-left: 225px;
+.mainpage-container {
+    margin-top: 25px;
 }
+
+tr{
+    width: 100%;
+}
+

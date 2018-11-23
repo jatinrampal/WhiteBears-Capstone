@@ -59,6 +59,7 @@ namespace WhiteBears.Controllers
                     document.docList.Add(new SelectableVersions() { version = int.Parse(dr["version"].ToString()), timeStamp = dr["timestamp"].ToString() });
                 }
                 document.id = Convert.ToInt32(id);
+                ViewBag.title = "Document Review";
                 return View(document);
             }
         }
@@ -116,41 +117,54 @@ namespace WhiteBears.Controllers
                         else
                         {
                             Paragraph par = (Paragraph)el;
-                            if (!par.Content.ToString().Equals("\r\n") && !par.Content.ToString().Equals("") && !par.Content.ToString().Contains("Created by the trial version of Document .Net 3.3.3.27!"))
+                            if (!par.Content.ToString().Equals("\r\n") && !par.Content.ToString().Equals(""))
                             {
-                                String hash = Document.CalculateHash(Encoding.UTF8.GetBytes(par.Content.ToString().Replace("trial", "")));
-                                DocumentJSON.Paragraph parJSON = docJSON2.paragraphs.Where(x => x.hash.Equals(hash)).First();
-                                ElementJSON paragraph = new ElementJSON();
-                                paragraph.id = parJSON.id;
-                                paragraph.order = order++;
-                                paragraph.content = par.Content.ToString();
-                                paragraph.type = PARAGRAPH_TYPE;
-                                paragraph.status = parJSON.status;
-                                if (paragraph.status.Equals("m"))
+                                string parContent = par.Content.ToString().Replace("trial", "");
+                                if (parContent.Contains("Created by the  version of Document .Net 3.3.3.27"))
                                 {
-                                    List<ElementJSON> sentencesList = new List<ElementJSON>();
-                                    string[] sentences = par.Content.ToString().Split('.');
-                                    List<DocumentJSON.Sentence> sJSON = parJSON.sentence.ToList();
-                                    int sentenceOrder = 0;
-                                    foreach (string s in sentences)
-                                    {
-                                        ElementJSON sent = new ElementJSON();
-                                        sent.type = SENTENCE_TYPE;
-                                        sent.order = sentenceOrder++;
-                                        sent.content = s;
-                                        if (sJSON.Where(x => x.content.Equals(s)).Count() > 0)
-                                        {
-                                            sent.status = "m";
-                                        }
-                                        else
-                                        {
-                                            sent.status = "o";
-                                        }
-                                        sentencesList.Add(sent);
-                                    }
-                                    paragraph.elements = sentencesList.ToArray();
+                                    int index = parContent.IndexOf("Created by the  version of Document .Net 3.3.3.27");
+                                    parContent = par.Content.ToString().Remove(index, par.Content.ToString().Length - index);
                                 }
-                                doc2Elements.Add(paragraph);
+                                if (!parContent.Equals(""))
+                                {
+                                    String hash = Document.CalculateHash(Encoding.UTF8.GetBytes(parContent));
+                                    DocumentJSON.Paragraph parJSON = docJSON2.paragraphs.Where(x => x.hash.Equals(hash)).First();
+                                    ElementJSON paragraph = new ElementJSON();
+                                    paragraph.id = parJSON.id;
+                                    paragraph.order = order++;
+                                    paragraph.content = parContent;
+                                    paragraph.type = PARAGRAPH_TYPE;
+                                    paragraph.status = parJSON.status;
+                                    if (paragraph.status.Equals("m"))
+                                    {
+                                        List<ElementJSON> sentencesList = new List<ElementJSON>();
+                                        string[] sentences = par.Content.ToString().Split('.');
+                                        List<DocumentJSON.Sentence> sJSON = parJSON.sentence.ToList();
+                                        int sentenceOrder = 0;
+                                        foreach (string s in sentences)
+                                        {
+                                            ElementJSON sent = new ElementJSON();
+                                            sent.type = SENTENCE_TYPE;
+                                            sent.order = sentenceOrder++;
+                                            sent.content = s;
+                                            if (sJSON.Where(x => x.content.Equals(s)).Count() > 0)
+                                            {
+                                                sent.status = sJSON.Where(x => x.content.Equals(s)).First().status;
+                                            }
+
+                                            else
+                                            {
+                                                sent.status = "o";
+                                            }
+                                            if (!sent.status.Equals("d"))
+                                            {
+                                                sentencesList.Add(sent);
+                                            }
+                                        }
+                                        paragraph.elements = sentencesList.ToArray();
+                                    }
+                                    doc2Elements.Add(paragraph);
+                                }
                             }
                         }
                     }
@@ -214,21 +228,55 @@ namespace WhiteBears.Controllers
                         else
                         {
                             Paragraph par = (Paragraph)el;
-                            if (!par.Content.ToString().Equals("\r\n") && !par.Content.ToString().Equals("") && !par.Content.ToString().Contains("Created by the trial version of Document .Net 3.3.3.27!"))
+                            if (!par.Content.ToString().Equals("\r\n") && !par.Content.ToString().Equals(""))
                             {
-                                String hash = Document.CalculateHash(Encoding.UTF8.GetBytes(par.Content.ToString().Replace("trial", "")));
-                                DocumentJSON.Paragraph parJSON = docJSON1.paragraphs.Where(x => x.hash.Equals(hash)).First();
-                                ElementJSON paragraph = new ElementJSON();
-                                paragraph.id = parJSON.id;
-                                paragraph.order = order++;
-                                paragraph.content = par.Content.ToString();
-                                paragraph.type = PARAGRAPH_TYPE;
-                                paragraph.status = parJSON.status;
-                                if (!paragraph.status.Equals("d"))
+                                string parContent = par.Content.ToString().Replace("trial", "");
+                                if (parContent.Contains("Created by the  version of Document .Net 3.3.3.27"))
                                 {
-                                    paragraph.status = "o";
+                                    int index = parContent.IndexOf("Created by the  version of Document .Net 3.3.3.27");
+                                    parContent = par.Content.ToString().Remove(index, par.Content.ToString().Length - index);
                                 }
-                                doc1Elements.Add(paragraph);
+                                if (!parContent.Equals(""))
+                                {
+                                    String hash = Document.CalculateHash(Encoding.UTF8.GetBytes(parContent));
+                                    DocumentJSON.Paragraph parJSON = docJSON1.paragraphs.Where(x => x.hash.Equals(hash)).First();
+                                    ElementJSON paragraph = new ElementJSON();
+                                    paragraph.id = parJSON.id;
+                                    paragraph.order = order++;
+                                    paragraph.content = parContent;
+                                    paragraph.type = PARAGRAPH_TYPE;
+                                    paragraph.status = parJSON.status;
+                                    if (paragraph.status.Equals("n"))
+                                    {
+                                        paragraph.status = "o";
+                                    }
+                                    if (docJSON2.paragraphs.Where(x => x.id == parJSON.id).First().status.Equals("m"))
+                                    {
+                                        paragraph.status = "m";
+                                        List<ElementJSON> sentencesList = new List<ElementJSON>();
+                                        string[] sentences = par.Content.ToString().Split('.');
+                                        List<DocumentJSON.Sentence> sJSON = docJSON2.paragraphs.Where(x => x.id == parJSON.id).First().sentence.Where(y => y.status.Equals("d")).ToList();
+                                        int sentenceOrder = 0;
+                                        foreach (string s in sentences)
+                                        {
+                                            ElementJSON sent = new ElementJSON();
+                                            sent.type = SENTENCE_TYPE;
+                                            sent.order = sentenceOrder++;
+                                            sent.content = s;
+                                            if (sJSON.Where(x => x.content.Equals(s)).Count() > 0)
+                                            {
+                                                sent.status = "m";
+                                            }
+                                            else
+                                            {
+                                                sent.status = "o";
+                                            }
+                                            sentencesList.Add(sent);
+                                        }
+                                        paragraph.elements = sentencesList.ToArray();
+                                    }
+                                    doc1Elements.Add(paragraph);
+                                }
                             }
                         }
                     }
@@ -270,7 +318,7 @@ namespace WhiteBears.Controllers
             return JsonConvert.SerializeObject(rm);
         }
         [HttpPost]
-        public string DownloadDocument(int? id, int? ver)
+        public JsonResult DownloadDocument(int? id, int? ver)
         {
             if (Session["username"] != null)
             {
@@ -278,20 +326,26 @@ namespace WhiteBears.Controllers
                 {
                     BlobStorageRepository br = new BlobStorageRepository();
                     string[] fileName = getFileNameAndExtention(Convert.ToInt32(id));
-                    MemoryStream ms = br.GetBlobAsStream(fileName[0] + "_v" + ver, fileName[1]);
-                    DocumentDownload dd = new DocumentDownload()
+                    string handle = Guid.NewGuid().ToString();
+                    using (MemoryStream ms = br.GetBlobAsStream(fileName[0] + "_v" + ver, fileName[1]))
                     {
-                        FileName = fileName[0] + fileName[1],
-                        B64 = Convert.ToBase64String(ms.ToArray())
+                        ms.Position = 0;
+                        TempData[handle] = ms.ToArray();
+                    }
+                   
+
+                    return new JsonResult()
+                    {
+                        Data = new {fileGuid = handle, fileName = fileName[0]+fileName[1]}
                     };
-                    return JsonConvert.SerializeObject(dd);
+                   
                 }
-                else return "{\"error\":\"no document id or version\"}";
+                return null;
             }
-            else return "{\"error\":\"need to login\"}";
+            return null;
         }
         [HttpPost]
-        public string DownloadLatestVersion(int? id)
+        public JsonResult DownloadLatestVersion(int? id)
         {
             if (Session["username"] != null)
             {
@@ -301,10 +355,26 @@ namespace WhiteBears.Controllers
                     DataRow[] dr = db.RunSelectQuery($"SELECT MAX(Version) AS ver FROM documentversion WHERE documentId = {id};");
                     return DownloadDocument(id, Convert.ToInt32(dr[0]["ver"]));
                 }
-                else return "{\"error\":\"no document id\"}"; 
+                else return null; 
             }
             else {
-                return "{\"error\":\"need to login\"}";
+                return null;
+            }
+        }
+
+        [HttpGet]
+        public virtual ActionResult Download(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/octet-stream", fileName);
+            }
+            else
+            {
+                // Problem - Log the error, generate a blank file,
+                //           redirect to another controller action - whatever fits with your application
+                return new EmptyResult();
             }
         }
 

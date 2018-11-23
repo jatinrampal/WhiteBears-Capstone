@@ -3,6 +3,7 @@
 @Styles.Render("~/Style/UserSettings.css")
 @{
     Layout = "~/Views/Shared/_AdminPages.cshtml";
+    ViewBag.Title = $"Admin: Project Settings";
 }
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -112,8 +113,7 @@
                     $('#ProjectTableContainer').remove();
                 }
 
-                loadTables();
-
+                alert(radioValue);
                 $.ajax({
                     type: "post",
                      url: '/AdminPage/DeleteProject',
@@ -129,6 +129,8 @@
                         successful = false;
                     }
                 });
+
+                loadTables();
             }
         })
 

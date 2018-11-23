@@ -15,28 +15,44 @@
         setDocumentDisplayHeight();
         //Ajax call to download document selected on the left side
         $("#oldDownload").click(function () {
+            $("#LoaderModal").modal('toggle');
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("DownloadDocument", "DocumentReview")',
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 data: '{"id": @Model.id, "ver":' + $("#version1").val() + '}',
-                success: downloadBlob,
-                error: function (e) { console.log(e); }
+                success: function (response) {
+                    $("#LoaderModal").modal('toggle');
+                    window.location = '/DocumentReview/Download?fileGuid=' + response.fileGuid
+                        + '&filename=' + response.fileName;
+                },
+                error: function (e) {
+                    console.log(e);
+                    $("#LoaderModal").modal('toggle');
+                }
             });
 
         });
 
         //Ajax call to download document selected on the right side
-        $("#newDownload").click(function(){
+        $("#newDownload").click(function () {
+            $("#LoaderModal").modal('toggle');
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("DownloadDocument", "DocumentReview")',
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 data: '{"id": @Model.id, "ver":' + $("#version2").val() + '}',
-                success: downloadBlob,
-                error: function (e) { console.log(e); }
+                success: function (response) {
+                    $("#LoaderModal").modal('toggle');
+                    window.location = '/DocumentReview/Download?fileGuid=' + response.fileGuid
+                        + '&fileName=' + response.fileName;
+                },
+                error: function (e) {
+                    console.log(e);
+                    $("#LoaderModal").modal('toggle');
+                }
             });
 
         });
@@ -60,34 +76,73 @@
 
         //ajax call to start review process
         $("#btnReview").click(function () {
+            $("#LoaderModal").modal('toggle');
+            var version1;
+            var version2;
+            if ($("#version1").val() <= $("#version2").val()) {
+                version1 = $("#version1").val();
+                version2 = $("#version2").val();
+            }
+            else {
+                version1 = $("#version2").val();
+                version2 = $("#version1").val();
+            }
+            console.log("version1:" + version1 + "  version2:" + version2);
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ReviewDocument", "DocumentReview")',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                data: '{ "id": @Model.id, "ver1":' + $("#version1").val() + ', "ver2":' + $("#version2").val() +'}',
+                data: '{ "id": @Model.id, "ver1":' + version1 + ', "ver2":' + version2 +'}',
                 success: function (data) {
-                    console.log(data);
-                    $("#oldModdBy").html(data.modifiedBy1);
-                    $("#oldTimeStamp").html(data.timeStamp1);
-                    $("#newModBy").html(data.modifiedBy2);
-                    $("#newTimeStamp").html(data.timeStamp2);
-                    displayDocument(data.Doc1, "oldDocument");
-                    displayDocument(data.Doc2, "newDocument");
-                    if (data.fileSize1 > 1000) {
-                        $("#oldFileSize").html((data.fileSize1/1000.00).tofixed(2) + " MB");
+                    if ($("#version1").val() <= $("#version2").val()) {
+                        $("#LoaderModal").modal('toggle');
+                        $("#oldModBy").html(data.modifiedBy1);
+                        $("#oldTimeStamp").html(data.timeStamp1);
+                        $("#newModBy").html(data.modifiedBy2);
+                        $("#newTimeStamp").html(data.timeStamp2);
+                        displayDocument(data.Doc1, "oldDocument");
+                        displayDocument(data.Doc2, "newDocument");
+                        if (data.fileSize1 > 1000) {
+                            $("#oldFileSize").html((data.fileSize1 / 1000.00) + " MB");
+                        }
+                        else {
+                            $("#oldFileSize").html(data.fileSize1 + " KB");
+                        }
+                        if (data.fileSize1 > 1000) {
+                            $("#newFileSize").html((data.fileSize2 / 1000.00) + " MB");
+                        }
+                        else {
+                            $("#newFileSize").html(data.fileSize2 + " KB");
+                        }
                     }
                     else {
-                        $("#oldFileSize").html(data.fileSize1 + " KB");
+                        $("#LoaderModal").modal('toggle');
+                        $("#oldModBy").html(data.modifiedBy2);
+                        $("#oldTimeStamp").html(data.timeStamp2);
+                        $("#newModBy").html(data.modifiedBy1);
+                        $("#newTimeStamp").html(data.timeStamp1);
+                        displayDocument(data.Doc2, "oldDocument");
+                        displayDocument(data.Doc1, "newDocument");
+                        if (data.fileSize1 > 1000) {
+                            $("#oldFileSize").html((data.fileSize2 / 1000.00) + " MB");
+                        }
+                        else {
+                            $("#oldFileSize").html(data.fileSize2 + " KB");
+                        }
+                        if (data.fileSize1 > 1000) {
+                            $("#newFileSize").html((data.fileSize1 / 1000.00) + " MB");
+                        }
+                        else {
+                            $("#newFileSize").html(data.fileSize1 + " KB");
+                        }
                     }
-                    if (data.fileSize1 > 1000) {
-                        $("#newFileSize").html((data.fileSize2 / 1000.00).tofixed(2) + " MB");
-                    }
-                    else {
-                        $("#newFileSize").html(data.fileSize2 + " KB");
-                    }
+                    
                 },
-                error: function (e) { console.log(e); }
+                error: function (e) {
+                    console.log(e);
+                    $("#LoaderModal").modal('toggle');
+                }
             });
         });
 
@@ -115,23 +170,12 @@
         $("#newDocument").on("scroll", newScrolling);
     }
 
-    //function to download blob file
-    var downloadBlob = function (data) {
-        //var jsonObj = JSON.parse(data);
-        var element = document.createElement('a');
-        element.setAttribute("href", "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64," + data.B64);
-        element.setAttribute('download', data.FileName);
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    }
-
     //function to set document container height
     var setDocumentDisplayHeight = function () {
         var windowHeight = $(window).height();
         var headerPosition = $("#documentHeaderContainer").offset().top;
         var headerHeight = $("#documentHeaderContainer").height();
-        var height = windowHeight - (headerPosition + headerHeight + 20);
+        var height = windowHeight - (headerPosition + headerHeight + 40);
         console.log("window:" + windowHeight + " header top: " + headerPosition + " header height: " + headerHeight + " height: " + height);
         $("#documentComparisonContainer").attr("style", "height:" + height + "px;clear:both;float:left;min-height:100px;width:100%;");
     }
@@ -246,8 +290,10 @@
 </script>
 
 
-
-<h2>@ViewBag.Title</h2>
+<div id="headings" class="header-text" style="padding-top:0px;">
+    <h2>@ViewBag.Title</h2>
+    <h3 >Compare and download document versions</h3>
+</div>
 <div id="documentHeaderContainer" style="height:150px;margin:0px 15px 0px 15px;">
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
@@ -262,8 +308,8 @@
         <input id="oldDownload" type="button" value="Download" class="btn btn-primary btn-sm" style="display:inline-block;width:100px;clear:both;float:left;" />
     </div>
     <div style="width:10%;float:left;">
-        <input id="btnReview" type="button" class="btn btn-primary btn-sm" value="Compare" /></br>
-        <input id="scrollLock" type="button" class="btn btn-primary btn-sm" value="Unlocked" />
+        <input id="btnReview" type="button" class="btn btn-primary btn-sm" value="Compare" style="width:50%" /></br>
+        <input id="scrollLock" type="button" class="btn btn-primary btn-sm" value="Unlocked" style="width:50%;margin-top:10px;" />
     </div>
     <div style="width:45%;float:left;">
         @Html.LabelFor(m => m.docList, "Version")
@@ -286,5 +332,5 @@
 
     </div>
 </div>
-
+@Html.Partial("_loaderIndicator")
 

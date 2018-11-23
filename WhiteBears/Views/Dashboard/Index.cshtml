@@ -4,6 +4,11 @@
 @Styles.Render("~/bundles/style/dashboard")
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 @Scripts.Render("~/bundles/scripts/chartjs")
+
+@{ 
+    ViewBag.Title = "Dashboard";
+}
+
 <script>
     function sortTable(n, isTaskTable) {
         var table, rows, switching, i, first, second, shouldSwitch, direction, switchcount = 0;
@@ -81,9 +86,9 @@
     </div>
 </nav>
 
-<div style="float: left; width: 85%">
+<div style="float: left; width: 90%">
     <header>
-        <div id="headings" class="header-text" style="margin-top: 70px;">
+        <div id="headings" class="header-text">
             <h2>Personal Dashboard</h2>
             <h3>Here's an overview of your projects</h3>
         </div>
@@ -101,8 +106,8 @@
             </span>
         </form>
     </header>
-
-    <div style="overflow: auto">
+    <div>
+        <div>
         <div id="TasksSection">
             <label>Tasks</label>
             <div class="scrollable-task">
@@ -153,7 +158,7 @@
         </div>
     </div>
 
-    <div style="overflow: auto;">
+    <div style="clear:both;float:left;width: 100%">
         <div class="ProgressBarContainers">
             <div class="ProgressBarContainer">
                 <label>Tasks Completed</label>
@@ -173,7 +178,7 @@
                 <text id="storageRemaining" class="text-medium text-secondary">2GB remaining</text>
             </div>
         </div>
-    <div id="PersonalNotesSection">
+    <div id="PersonalNotesSection" style="float: right">
         <div>
             <label>Personal Notes</label>
             <div class="scrollable-notes" id="PersonalNotesTable">
@@ -203,6 +208,7 @@
     </div>
     
         </div>
+    </div>
 </div>
 
 <script>
@@ -367,8 +373,8 @@
         }
 
         function isNoteValid() {
-            if (noteTextArea.val().length < 3) {
-                alert("Notes must be at least 3 characters long.");
+            if (noteTextArea.val().length < 3 || noteTextArea.val().length > 255) {
+                alert("Notes must be between 3 to 255 characters long.");
                 return false;
             }
 
@@ -458,6 +464,7 @@
                     var percentage = (completed / total) * 100
                     percentage = percentage.toFixed(2);
 
+
                     if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
                         percentage = 0.00;
                     }
@@ -470,6 +477,7 @@
 
                     $('#taskProgressBar').html(percentage + "%");
                     $('#taskProgressBar').css('width', percentage + '%');
+
                     $('#taskProgressStatus').html(completed + '/' + total);
                     $('#taskProgressRemaining').html(notCompleted + ' task' + (notCompleted > 1 ? 's' : '') + ' remaining');
 
@@ -477,11 +485,15 @@
                     var usedStorage = @Model.GetUsedStorage();
                     usedStorage = usedStorage / 1000000;
                     usedStorage = usedStorage.toFixed(2);
+
+                    var remaining = 500 - usedStorage;
+                    remaining = remaining.toFixed(2)
                     $('#storageStatus').text(usedStorage+'/500 MB');
-                    $('#storageRemaining').text(500 - usedStorage + " MB remaining");
+                    $('#storageRemaining').text(remaining + " MB remaining");
 
                     var percentage = (usedStorage / 500) * 100
                     percentage = percentage.toFixed(2);
+
 
                     if ((percentage == "100.00" && total < 1) || percentage == "NaN") {
                         percentage = 0.00;
@@ -557,7 +569,7 @@
                             display: true,
                             text: 'Task Overview',
                             position: 'top'
-                        }, responsive: false,
+                        }, responsive: true,
 
                         legend: {
                             position: 'right'

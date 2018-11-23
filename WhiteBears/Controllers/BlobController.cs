@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Whitebears.Repository;
 using System.Diagnostics;
+using WhiteBears;
 
 namespace Whitebears.Controllers
 {
@@ -32,17 +33,38 @@ namespace Whitebears.Controllers
             this.repo = _repo;
         }
 
-
-
         // GET: Blob
         public ActionResult Index()
         {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (!Authentication.VerifyIfAdmin(Session["username"].ToString()))
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
             var blobVM = repo.GetBlobs();
             return View(blobVM);
         }
 
         public JsonResult RemoveBlob(string file, string extension)
         {
+            
+            string[] split = file.Split('_');
+            string versionV = split[split.Length - 1];
+            string version = versionV.Remove(0, 1);
+
+            string a = file.Replace("%20", " ").Replace("_v" + version, "");
+            string documentID = CheckUploadDocumentID(a);
+            DeleteDocumentVersionDB(documentID, Convert.ToInt32(version));
+
+            int count = CheckDocumentVersionDB(a);
+            if (count == 0)
+            {
+                ClearDocument(documentID);
+            }
+
             bool isDeleted = repo.DeleteBlob(file, extension);
             return Json(isDeleted, JsonRequestBehavior.AllowGet);
         }
@@ -100,7 +122,7 @@ namespace Whitebears.Controllers
             string projectid = strArray[6];*/
 
             //Check if a file exists with the same name
-            int count = CheckDocumentVersionDB(projectId, actualFileName);
+            int count = CheckDocumentVersionDB(actualFileName);
 
             //If filename doesn't exist INSERT and if it does UPDATE
             if (count == 0)
@@ -145,12 +167,18 @@ namespace Whitebears.Controllers
             return dh.RunUpdateQuery($"UPDATE DOCUMENT SET CreationTime='{DateTime.Now}', FileName='{updatedFileName}' WHERE FileName = '{fileName}'");
         }
 
-        public static int CheckDocumentVersionDB(string pId, string fileName)
+        public static int CheckDocumentVersionDB(string fileName)
         {
-            int count;
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
-            count = dh.RunQuery($"SELECT * FROM DocumentVersion JOIN Document ON Document.DocumentID = DocumentVersion.DocumentID  WHERE FileName = '{fileName}' ").Count();
-            return count;
+            DataRow[] a = dh.RunSelectQuery($"SELECT MAX(version) FROM DocumentVersion JOIN Document ON Document.DocumentID = DocumentVersion.DocumentID  WHERE FileName ='{fileName}'");
+            try
+            {
+                return Convert.ToInt32(a[0][0]);
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         public static string CheckUploadDocumentID(string fileName)
@@ -173,23 +201,19 @@ namespace Whitebears.Controllers
             return dh.RunInsertQuery($"INSERT INTO DocumentRole VALUES('{role}','{documentId}', 1)");
         }
 
-        /*public static int DeleteDocumentDB(string documentId, int version, string uploaderName)
+        public static int DeleteDocumentVersionDB(string documentId, int version)
         {
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
-            return dh.RunInsertQuery($"INSERT INTO DocumentVersion VALUES('{version}','{documentId.ToString()}','{DateTime.Now}','{uploaderName}')");
+            return dh.RunDeleteQuery($"DELETE FROM DocumentVersion WHERE DocumentID = {documentId} AND Version = '{version}'");
         }
 
-        public static int DeleteDocumentVersionDB(string documentId, int version, string uploaderName)
+        public static void ClearDocument(string documentId)
         {
             WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
-            return dh.RunInsertQuery($"INSERT INTO DocumentVersion VALUES('{version}','{documentId.ToString()}','{DateTime.Now}','{uploaderName}')");
+            dh.RunDeleteQuery($"DELETE FROM DocumentRole WHERE DocumentId = {documentId}");
+            dh.RunDeleteQuery($"DELETE FROM Document WHERE DocumentId = {documentId}");
+           
         }
-
-        public static int DeleteDocumentRoleDB(string documentId, int version, string uploaderName)
-        {
-            WhiteBears.DatabaseHelper dh = new WhiteBears.DatabaseHelper();
-            return dh.RunInsertQuery($"INSERT INTO DocumentVersion VALUES('{version}','{documentId.ToString()}','{DateTime.Now}','{uploaderName}')");
-        }*/
     }
 
 

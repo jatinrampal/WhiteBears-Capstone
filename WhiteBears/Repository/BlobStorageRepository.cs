@@ -64,7 +64,6 @@ namespace Whitebears.Repository
             _cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
             CloudBlockBlob blockBlob = _cloudBlobContainer.GetBlockBlobReference(file + "." + fileExtension);
             bool delete = blockBlob.DeleteIfExists();
-
             return delete;
         }
 

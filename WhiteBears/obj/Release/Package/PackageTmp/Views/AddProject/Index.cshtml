@@ -1,29 +1,90 @@
 ﻿@using WhiteBears.Models
 @model AddProject
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_NotLoggedIn.cshtml";
+    ViewBag.Title = "Add New Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Add Project</h2>
-@using(Html.BeginForm("Index", "AddProject")){
-    <div id="FirstProjectInformationContainer" >
-        <h3 class="header">First Project</h3>
+@Styles.Render("~/bundles/style/addproject")
 
-        <div class="formContainer form-group" style="text-align: left;">
-            @Html.LabelFor(x => x.Title, "Project Title")
-            @Html.EditorFor(x => x.Title)<br/>
-            @Html.LabelFor(x => x.Description, "Description")
-            @Html.TextAreaFor(x => x.Description)<br/>
-            @Html.LabelFor(x => x.ScopeStatement, "Scope Statement")
-            @Html.TextAreaFor(x => x.ScopeStatement)<br/>
-            @Html.LabelFor(x => x.StartDate, "Start Date")
-            @Html.TextBoxFor(x => x.StartDate, new { @type = "date", @class = "form-control datepicker", @placeholder = "Start Date" })<br/>
-            @Html.LabelFor(x => x.DueDate, "Due Date")
-            @Html.TextBoxFor(x => x.DueDate, new { @type = "date", @class = "form-control datepicker", @placeholder = "Due Date" })<br/>
+<div id="HeaderContainer">
+    <h2 class="header-text">Add Project</h2>
+    <h3 class="header-text">Please fill out the form below</h3>
+</div>
+<div id="MainContainer">
 
+    <form id="ProjectInfoForm">
+        <div id="FirstProjectInformationContainer">
+            
+            <div class="formContainer form-group" style="text-align: left;">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td class="left-column"><h4>Title:</h4></td>
+                        <td><input name="title" type="text" required pattern=".{2,25}" title="2 to 25 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Description:</h4></td>
+                        <td><input name="description" type="text" required pattern=".{2,100}" title="2 to 100 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Scope Statement:</h4></td>
+                        <td><input name="scope" type="text" required pattern=".{2,100}" title="2 to 100 characters" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Start Date:</h4></td>
+                        <td><input name="start" type="date" required max="2099-01-01" /></td>
+                    </tr>
+                    <tr>
+                        <td class="left-column"><h4>Due Date:</h4></td>
+                        <td><input name="due" type="date" required max="2099-01-01" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="SubmitButtonContainer">
+                <input type="submit" class="btn btn-primary btn-lg" name="submitButton" value="Submit" /> @ViewBag.Error
+            </div>
         </div>
-        <button type="submit" >Add</button>
-    </div>
-}
+    </form>
+</div>
 
+<script>
+    $(document).ready(function () {
+        var startDate = $('input[name=start]');
+        var dueDate = $('input[name=due]')
+
+        $('input[name=start]').change(function () {
+            dueDate.attr('min', startDate.val());
+
+            if (dueDate.val() < startDate.val()) {
+                dueDate.val(startDate.val());
+            }
+        })
+        $("#ProjectInfoForm").submit(function (e) {
+            e.preventDefault();
+
+            var title = $('input[name=title]').val();
+            var description = $('input[name=description]').val();
+            var scope = $('input[name=scope]').val();
+            startDate = $('input[name=start]').val();
+            dueDate = $('input[name=due]').val();
+
+            $.ajax({
+                type: "post",
+                url: '/AddProject/Go',
+                dataType: "json",
+                data: {
+                    title: title,
+                    description: description,
+                    scope: scope,
+                    start: startDate,
+                    due: dueDate
+                },
+                success: function (data) {
+                    var url = '/Project/Index/' + data.id;
+                    window.location.href = url;
+                },
+                error: function () { }
+            });
+        });
+    })
+</script>

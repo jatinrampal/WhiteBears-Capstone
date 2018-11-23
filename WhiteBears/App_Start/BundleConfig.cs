@@ -1,13 +1,10 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace WhiteBears
-{
-    public class BundleConfig
-    {
+namespace WhiteBears {
+    public class BundleConfig {
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
-        public static void RegisterBundles(BundleCollection bundles)
-        {
+        public static void RegisterBundles(BundleCollection bundles) {
             bundles.Add(new ScriptBundle("~/bundles/scripts/jquery").Include(
                     "~/Scripts/jquery-{version}.js"));
 
@@ -38,6 +35,9 @@ namespace WhiteBears
             bundles.Add(new StyleBundle("~/bundles/style/styling").Include(
                 "~/Content/Styling.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/style/loader").Include(
+               "~/Style/loader.css"));
+
             bundles.Add(new StyleBundle("~/bundles/style/layout").Include(
                 "~/Style/layout.css"));
 
@@ -58,6 +58,9 @@ namespace WhiteBears
 
             bundles.Add(new StyleBundle("~/bundles/style/usersettings").Include(
                 "~/Style/UserSettings.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/style/addproject").Include(
+                "~/Style/AddProject.css"));
         }
     }
 }

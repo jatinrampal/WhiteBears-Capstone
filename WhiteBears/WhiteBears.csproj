@@ -231,13 +231,10 @@
     <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.dll" />
     <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.xml" />
     <Content Include="bin\Microsoft.Azure.KeyVault.Core.dll" />
-    <Content Include="bin\Microsoft.Azure.KeyVault.Core.xml" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.WindowsAzure.Storage.dll" />
-    <Content Include="bin\Microsoft.WindowsAzure.Storage.pdb" />
-    <Content Include="bin\Microsoft.WindowsAzure.Storage.xml" />
     <Content Include="bin\Newtonsoft.Json.dll" />
     <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\roslyn\csc.exe" />
@@ -306,6 +303,7 @@
     <Content Include="bin\WhiteBears.dll" />
     <Content Include="bin\WhiteBears.pdb" />
     <Content Include="Content\background1.jpg" />
+    <Content Include="Content\icon.ico" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2190,8 +2188,10 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Style\AddProject.css" />
     <Content Include="Style\dashboard.css" />
     <Content Include="Style\layout.css" />
+    <Content Include="Style\loader.css" />
     <Content Include="Style\ProjectPage.css" />
     <Content Include="Style\ProjectTaskPage.css" />
     <Content Include="Style\SignUp.css" />
@@ -2246,11 +2246,8 @@
     <Content Include="Views\Project\_DocumentDetailPM.cshtml" />
     <Content Include="Views\Project\TaskEditView.cshtml" />
     <Content Include="Views\Project\ProjectNotesEditView.cshtml" />
-    <Content Include="Views\Project\TaskDetailView.cshtml" />
-    <Content Include="Views\Project\ProjectNotesDetailView.cshtml" />
-    <Content Include="Views\Project\TaskViewPM.cshtml" />
-    <Content Include="Views\Project\DocumentViewPM.cshtml" />
-    <Content Include="Views\Project\NoteViewPM.cshtml" />
+    <Content Include="Views\Project\EditTaskView.cshtml" />
+    <Content Include="Views\Shared\_loaderIndicator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2286,7 +2283,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49837/</IISUrl>
+          <IISUrl>http://localhost:49838/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
