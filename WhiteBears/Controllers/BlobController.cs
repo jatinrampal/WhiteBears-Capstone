@@ -150,7 +150,8 @@ namespace Whitebears.Controllers
                 //UploaderName Required Here
                 UpdateDocumentVersionDB(documentID, count + 1, uname);
                 UpdateDocumentRoleDB(role, documentID);
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("Index", "Project", new { @id = projectId });
             }
             return View();
         }
