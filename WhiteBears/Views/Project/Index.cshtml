@@ -587,6 +587,9 @@
                         console.log(data);
                         $("#DocumentId").val(data.DocumentId);
                         $("#FileName").text(data.FileName);
+
+                        $("#version option").remove(); // Added 
+
                         $.each(data.DocVersion.docList, function (i, val) {
                             $("#version").append("<option value=" + val.version + ">" + val.version + "</option>")
                         });

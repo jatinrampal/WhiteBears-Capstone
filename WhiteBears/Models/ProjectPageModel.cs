@@ -549,7 +549,7 @@ namespace WhiteBears.Models
             {
 
                 // Query with vals 
-                command.CommandText = "select distinct u.[role] from User_Project up, [User] u WHERE up.projectId = @projectId AND up.uName = u.uName; ";
+                command.CommandText = "select distinct u.[role] from User_Project up, [User] u WHERE up.projectId = @projectId AND up.uName = u.uName AND u.role != 'Admin'; ";
                 command.Parameters.AddWithValue("@projectId", projectId);
                 // Open connection 
                 connection.Open();
@@ -576,7 +576,7 @@ namespace WhiteBears.Models
 
                 // Query with vals 
 
-                command.CommandText = "select up.uName from User_Project up WHERE projectId = @projectId;";
+                command.CommandText = "select up.uName from User_Project up JOIN [User] u ON u.uName = up.uName WHERE projectId = @projectId AND u.role != 'Admin';";
                 command.Parameters.AddWithValue("@projectId", projectId);
                 // Open connection 
                 connection.Open();
