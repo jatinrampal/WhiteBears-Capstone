@@ -755,7 +755,7 @@
             // Editing Task Modal Button
             $('#taskEditBtn').click(function () {
                 //alert("EndDate: " + endDateValP + "StartDateP: " + startDateValP + "titleValP: " + titleValP + "descriptionValP: " + descriptionValP + "CompletionValP: " + completionValP);
-                if (EditTaskModal == true && endDateValP == true && startDateValP == true && titleValP == true && descriptionValP == true && completionValP) {
+                if (EditTaskModal == true && endDateValP == true && startDateValP == true && titleValP == true && descriptionValP == true && completionValP == true) {
                     editTaskId = $('#editTaskId').val();
                     editTaskTitle = $('#editTaskTitle').val();
                     editTaskDescription = $('#editTaskDescription').val();
@@ -1056,7 +1056,7 @@
 
             var titleValP = false;
             var descriptionValP = false;
-            var completionValP = false;
+            var completionValP = true;
 
             $("#taskPost").on('submit', function (e) {
 
@@ -1330,6 +1330,7 @@
                 }
                 else {
                     $('#taskEditErrors').empty();
+                    $('#editTaskCompletionDate').text = "0001-01-01"
                     completionValP = true;
                 }
 
