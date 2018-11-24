@@ -15,7 +15,10 @@ namespace WhiteBears.Models
             this.Task = new Task();
             this.document = new Document();
             this.documentRole = new DocumentRole();
+
         }
+
+        public string[] GetUsers {get; set;}
 
         public User User { get; set; }
 
@@ -27,5 +30,7 @@ namespace WhiteBears.Models
         public Document document { get; set; }
 
         public DocumentRole documentRole { get; set; }
+
+    
     }
 }

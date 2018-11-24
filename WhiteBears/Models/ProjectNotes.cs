@@ -14,6 +14,8 @@ namespace WhiteBears.Models
         private string from;
         private string to;
         private DateTime completedDate;
+       
+        
 
         public int ProjectNoteId
         {
@@ -26,6 +28,8 @@ namespace WhiteBears.Models
                 projectNoteId = value;
             }
         }
+
+        public string[] Roles { get; set; }
 
         public int ProjectId
         {

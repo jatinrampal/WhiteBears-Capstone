@@ -30,6 +30,10 @@ namespace WhiteBears.Controllers {
             }
 
             username = Session["username"].ToString();
+            
+            if (Authentication.VerifyIfAdmin(username)){
+                return RedirectToAction("Index", "AdminPage");
+            }
 
             drs = model.GetUser(Session["username"].ToString());
 

@@ -34,7 +34,7 @@ namespace WhiteBears.Controllers
 
                 ProjectPageModel p = new ProjectPageModel();
                 var userExists = p.userAccessProject(projectid, username);
-                Debug.WriteLine("This userExists val is: " + userExists);
+               
                 if(userExists == false)
                 {
                     return RedirectToAction("Index", "Dashboard");
@@ -60,7 +60,8 @@ namespace WhiteBears.Controllers
                     pm.Project = p.GetProject(username, projectid);
                   
                 }
-
+                pm.ProjectNotes.Roles = p.getRoles(projectid);
+                pm.GetUsers = p.getUsers(projectid);
                 pm.User = p.getUser(username);
                 return View(pm);
             }
@@ -102,31 +103,28 @@ namespace WhiteBears.Controllers
             return RedirectToAction("Index", "Project", result);
         }
 
-        [HttpPost]
-        public ActionResult DeleteProjectNote(IEnumerable<int> ProjectNoteSelectedArray, int? id)
+
+
+        public JsonResult TaskDetail(string myTaskID)
         {
-            // Get values from session 
-            string username = Session["username"].ToString();
 
-            var result = "Tasks have been deleted";
+                ProjectPageModel taskModelSelect = new ProjectPageModel();
+         
+               
+                Task pn = new Task();
+                pn = taskModelSelect.getTaskDetail(Convert.ToInt32(myTaskID));
+                return Json(pn, JsonRequestBehavior.AllowGet);
 
-            // Will error if project note selected is nil
-            if (ProjectNoteSelectedArray == null || !ProjectNoteSelectedArray.Any())
-            {
-                result = "You have not selected any tasks to delete";
-                return RedirectToAction("Index", "Project", result);
-            }
-            else
-            {
-                ProjectPageModel projectNote = new ProjectPageModel();
-                for (int i = 0; i < ProjectNoteSelectedArray.Count(); i++)
-                {
-                    projectNote.DeleteProjectNotes(ProjectNoteSelectedArray.ElementAt(i));
-                }
-            }
+        }
 
+        public JsonResult ProjectNotesDetail(string myNoteID)
+        {
+            ProjectPageModel taskModelSelect = new ProjectPageModel();
 
-            return RedirectToAction("Index", "Project", result);
+        
+            ProjectNotes pn = new ProjectNotes();
+            pn = taskModelSelect.getProjectNotesDetails(Convert.ToInt32(myNoteID));
+            return Json(pn, JsonRequestBehavior.AllowGet);
         }
 
         // Gets executed on Modal AddTask POST 
@@ -135,6 +133,7 @@ namespace WhiteBears.Controllers
         {
             try
             {
+                string username = "";
                 // Retriving values from POST 
                 string taskTitle = Request["taskTitle"];
                 string taskDescription = Request["taskDescription"];
@@ -144,15 +143,26 @@ namespace WhiteBears.Controllers
                 string taskPriority = Request["taskPriority"];
                 int id = Convert.ToInt32(Request["projectId"]);
 
+                username= Request["assignUser"];
+
+
+
+
+                Debug.WriteLine("username before it is empty or noh" + username);
+                if (string.IsNullOrEmpty(username) || username == "0")
+                {
+                    Debug.WriteLine("run" + username);
+                    username = Session["username"].ToString();
+                }
 
                 // Check Results from Posted values 
-                Debug.WriteLine("Task title " + taskTitle);
-                Debug.WriteLine("Task Description " + taskDescription);
-                Debug.WriteLine("Task StartDate " + taskStartDate);
-                Debug.WriteLine("Task EndDate " + taskEndDate);
-                //Debug.WriteLine("Task CompletionDate " + taskCompletionDate);
-                Debug.WriteLine("Task Priority " + taskPriority);
-                Debug.WriteLine("Task ProjectId " + id);
+               // Debug.WriteLine("Task title " + taskTitle);
+                //Debug.WriteLine("Task Description " + taskDescription);
+                //Debug.WriteLine("Task StartDate " + taskStartDate);
+                //Debug.WriteLine("Task EndDate " + taskEndDate);
+                ////Debug.WriteLine("Task CompletionDate " + taskCompletionDate);
+                //Debug.WriteLine("Task Priority " + taskPriority);
+                //Debug.WriteLine("Task ProjectId " + id);
 
                 DateTime dateTimeStartDate = DateTime.Parse(taskStartDate);
                 string mdateTimeStartDate = dateTimeStartDate.ToString("dd/MM/yyyy");
@@ -166,9 +176,7 @@ namespace WhiteBears.Controllers
                 //string mdateTimeCompletionDate = dateTimeCompletionDate.ToString("dd-MM-yyyy");
                 //DateTime mtaskCompletionDate = DateTime.ParseExact(mdateTimeCompletionDate, "dd/MM/yyyy", null);
 
-                string username = Session["username"].ToString();
-                // Get values from session 
-
+              
 
                 ProjectPageModel taskModel = new ProjectPageModel();
                 Task task = new Task
@@ -261,6 +269,32 @@ namespace WhiteBears.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult DeleteProjectNote(IEnumerable<int> ProjectNoteSelectedArray, int? id)
+        {
+            // Get values from session 
+            string username = Session["username"].ToString();
+
+            var result = "Tasks have been deleted";
+
+            // Will error if project note selected is nil
+            if (ProjectNoteSelectedArray == null || !ProjectNoteSelectedArray.Any())
+            {
+                result = "You have not selected any tasks to delete";
+                return RedirectToAction("Index", "Project", result);
+            }
+            else
+            {
+                ProjectPageModel projectNote = new ProjectPageModel();
+                for (int i = 0; i < ProjectNoteSelectedArray.Count(); i++)
+                {
+                    projectNote.DeleteProjectNotes(ProjectNoteSelectedArray.ElementAt(i));
+                }
+            }
+
+
+            return RedirectToAction("Index", "Project", result);
+        }
 
         [HttpPost]
         public ActionResult EditProjectNotes(string[] editProjectNotesArray)
@@ -272,19 +306,19 @@ namespace WhiteBears.Controllers
 
                 string projectNotesId = editProjectNotesArray[0];
                 string projectNotesMessage = editProjectNotesArray[1];
-                string projectNotesCompletionDate = editProjectNotesArray[2];
+                //string projectNotesCompletionDate = editProjectNotesArray[2];
                 string projectNotesTo = editProjectNotesArray[3];
                 
-                DateTime dateTimeCompletionDate = DateTime.Parse(projectNotesCompletionDate);
-                string mdateTimeCompletionDate = dateTimeCompletionDate.ToString("dd/MM/yyyy");
-                DateTime mtaskCompletionDate = DateTime.ParseExact(mdateTimeCompletionDate, "dd/MM/yyyy", null);
+               // DateTime dateTimeCompletionDate = DateTime.Parse(projectNotesCompletionDate);
+                //string mdateTimeCompletionDate = dateTimeCompletionDate.ToString("dd/MM/yyyy");
+                //DateTime mtaskCompletionDate = DateTime.ParseExact(mdateTimeCompletionDate, "dd/MM/yyyy", null);
 
                 string username = Session["username"].ToString();
                 // Get values from session 
 
                 Debug.WriteLine(projectNotesId);
                 Debug.WriteLine(projectNotesMessage);
-                Debug.WriteLine(projectNotesCompletionDate);
+               // Debug.WriteLine(projectNotesCompletionDate);
                 Debug.WriteLine(projectNotesTo);
 
                 ProjectPageModel projectNotesModel = new ProjectPageModel();
@@ -292,7 +326,7 @@ namespace WhiteBears.Controllers
                 {
                     
                     Message = projectNotesMessage,
-                    CompletedDate = mtaskCompletionDate,
+                   // CompletedDate = mtaskCompletionDate,
                     To = projectNotesTo,
                     ProjectNoteId = Convert.ToInt32(projectNotesId)
                 };
@@ -323,7 +357,7 @@ namespace WhiteBears.Controllers
             {
                 string projectNoteMessage = Request["noteMessage"];
                 string projectNoteSentDate = DateTime.Now.ToString();
-                string projectNoteCompletedDate = Request["noteCompletedDate"];
+                //string projectNoteCompletedDate = Request["noteCompletedDate"];
                 string projectNoteTo = Request["noteTo"];
 
                 DateTime dateTimeSentDate = DateTime.Parse(projectNoteSentDate);
@@ -331,9 +365,9 @@ namespace WhiteBears.Controllers
                 DateTime mprojectSentDate = DateTime.ParseExact(mdateTimeSentDate, "dd/MM/yyyy", null);
 
 
-                DateTime dateTimeCompletedDate = DateTime.Parse(projectNoteCompletedDate);
-                string mdateTimeCompletedDate = dateTimeCompletedDate.ToString("dd/MM/yyyy");
-                DateTime mprojectCompletedDate = DateTime.ParseExact(mdateTimeCompletedDate, "dd/MM/yyyy", null);
+             //   DateTime dateTimeCompletedDate = DateTime.Parse(projectNoteCompletedDate);
+             //   string mdateTimeCompletedDate = dateTimeCompletedDate.ToString("dd/MM/yyyy");
+              //  DateTime mprojectCompletedDate = DateTime.ParseExact(mdateTimeCompletedDate, "dd/MM/yyyy", null);
 
          
 
@@ -345,9 +379,14 @@ namespace WhiteBears.Controllers
                     SentDate = mprojectSentDate,
                     From = username,
                     To = projectNoteTo,
-                    CompletedDate = mprojectCompletedDate
+                   
                 };
+                Debug.WriteLine("Project ID" + projectNotes.ProjectId);
+                Debug.WriteLine("Message" + projectNotes.Message);
+                Debug.WriteLine("SentDate " + projectNotes.SentDate);
 
+                Debug.WriteLine("From " + projectNotes.From);
+                Debug.WriteLine("To " + projectNotes.To);
                result = pm.AddProjectNote(projectNotes);
             }
             catch(Exception e)
@@ -360,13 +399,11 @@ namespace WhiteBears.Controllers
         }
 
         [HttpPost]
-        public JsonResult getRoles()
+        public JsonResult getRoles(int projectId)
         {
             ProjectPageModel projectNotesModel = new ProjectPageModel();
 
-            List<string> strList = new List<string>();
-            strList = projectNotesModel.getRoles();
-            //Debug.WriteLine("First val:" + strList[0]);
+            string[] strList = projectNotesModel.getRoles(projectId);
 
             return Json(new { strList }, JsonRequestBehavior.AllowGet); ;
         }
@@ -427,7 +464,24 @@ namespace WhiteBears.Controllers
             IEnumerable<ProjectPageViewModel> td = taskModel.getTask(username, id);
             return View(td);
         }
-       
+
+        public ActionResult TaskViewPM(int? projectId)
+        {
+            if (Session["username"] == null)
+            {
+
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+            ProjectPageModel taskModel = new ProjectPageModel();
+            string username = Session["username"].ToString();
+
+            int id = Convert.ToInt32(projectId);
+            IEnumerable<ProjectPageViewModel> td = taskModel.getTaskPM(id);
+            return View(td);
+        }
+
+
         public ActionResult NoteView(int? projectId, string roleName)
         {
 
@@ -442,6 +496,23 @@ namespace WhiteBears.Controllers
 
             ProjectPageModel projectNotesModel = new ProjectPageModel();
             IEnumerable<ProjectPageViewModel> td = projectNotesModel.getProjectNotes(username, id, roleName);
+            return View(td);
+        }
+
+        public ActionResult NoteViewPM(int? projectId, string roleName)
+        {
+
+            if (Session["username"] == null)
+            {
+
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+            string username = Session["username"].ToString();
+            int id = Convert.ToInt32(projectId);
+
+            ProjectPageModel projectNotesModel = new ProjectPageModel();
+            IEnumerable<ProjectPageViewModel> td = projectNotesModel.getProjectNotesPM(username, id, roleName);
             return View(td);
         }
 
@@ -460,7 +531,7 @@ namespace WhiteBears.Controllers
             }
             else
             {
-                Debug.WriteLine("THE PROJECT NOTE ARRAY HAS " + ProjectNoteSelectedArray.ElementAt(0));
+               
                 ProjectNotes pn = new ProjectNotes();
                 pn = taskModelSelect.getSelectEditProjectNotes(ProjectNoteSelectedArray.ElementAt(0));
                 return Json(pn, JsonRequestBehavior.AllowGet);
@@ -489,7 +560,26 @@ namespace WhiteBears.Controllers
         }
 
 
+        public ActionResult DocumentViewPM(int? projectId, string roleName, string uName)
+        {
+            if (Session["username"] == null)
+            {
 
-      
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+            // Pass roleName from Main Model view to document view 
+            string username = Session["username"].ToString();
+            int id = Convert.ToInt32(projectId);
+            // Debug.WriteLine("ROLE NAME IS: " + roleName);
+            ProjectPageModel documentModel = new ProjectPageModel();
+
+            IEnumerable<ProjectPageViewModel> td = documentModel.getDocumentsPM(username, id, roleName, uName);
+            return View(td);
+        }
+
+
+
+
     }
 }

@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - WhiteBears</title>
+    <link rel="shortcut icon" href="~/Content/icon.ico" />
     @Scripts.Render("~/bundles/scripts/jquery")
     @Scripts.Render("~/bundles/scripts/modernizr")
     @Scripts.Render("~/bundles/scripts/angular")
@@ -27,10 +28,10 @@
             <div class="navbar-collapse collapse" >
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
-                    <li>@Html.ActionLink("Business", "About", "Home")</li>
-                    <li>@Html.ActionLink("Features", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Pricing", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("About Us", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Business", "Index", "Dashboard")</li>
+                    <li>@Html.ActionLink("Features", "Index", "Dashboard")</li>
+                    <li>@Html.ActionLink("Pricing", "Index", "Dashboard")</li>
+                    <li>@Html.ActionLink("About Us", "Index", "Dashboard")</li>
                     
                 </ul>
 

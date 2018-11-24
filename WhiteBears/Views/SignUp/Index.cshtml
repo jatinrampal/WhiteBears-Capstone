@@ -17,6 +17,7 @@
         <!--using (Html.BeginForm("Go", "SignUp", FormMethod.Post)) {-->
         <form id="PersonalInfoForm">
             <div class="formContainer form-group" id="PersonalInformationContainer">
+                <span id="usernameError" style="color: red;" hidden>Username has already been taken.</span>
                 <h3 class="header">Your Information</h3>
 
                 <table class="table table-bordered table-striped">
@@ -127,16 +128,35 @@
             }
         })
 
+
         $("#PersonalInfoForm").submit(function (e) {
             e.preventDefault();
+            var username = $('input[name=username]').val();
 
-            $('#CompanyInformationContainer').removeAttr('hidden')
-            $('#PersonalInfoForm').attr("hidden", true)
+            $.ajax({
+                type: "post",
+                url: '/SignUp/CheckUsername',
+                dataType: "json",
+                data: {
+                    username: username,
+                },
+                success: function (data) {
+                    if (data.success) {
+                        $('#CompanyInformationContainer').removeAttr('hidden')
+                        $('#PersonalInfoForm').attr("hidden", true)
+                    } else {
+                        $('#usernameError').removeAttr('hidden')
+                    }
+                },
+
+                error: function () {
+                    successful = false;
+                }
+            });
         });
 
         $("#CompanyInfoForm").submit(function (e) {
             e.preventDefault();
-
             $('#FirstProjectInformationContainer').removeAttr('hidden')
             $('#CompanyInfoForm').attr("hidden", true)
         });
@@ -170,7 +190,7 @@
                 alert('Username must not start with a number.');
             } else {
                 $.ajax({
-                    type: "post",
+                    type: "get",
                     url: '/SignUp/Go',
                     dataType: "json",
                     data: {
@@ -188,11 +208,14 @@
                         dueDate: dueDate
                     },
                     success: function (data) {
-                        alert(data);
+                        alert()
+                        if (data.success) {
+                            window.location.href = '@Url.Action("Index", "AdminPage")';
+                        }
                     },
 
                     error: function () {
-                        successful = false;
+                        window.location.href = '@Url.Action("Index", "AdminPage")';
                     }
                 });
             }
