@@ -110,7 +110,9 @@ namespace WhiteBears.Models {
 
         public DataRow[] AddPersonalNote(string uName, string note) {
             DatabaseHelper dh = new DatabaseHelper();
-            dh.RunUpdateQuery($"INSERT INTO PersonalNote VALUES('{uName}', '{note}', '{DateTime.Now}');");
+
+            string query = $"INSERT INTO PersonalNote VALUES('{uName}', '{note}', '{DateTime.Now}');";
+            dh.RunUpdateQuery(query);
 
             return dh.RunQuery($"SELECT MAX(noteId) FROM PersonalNote");
         }

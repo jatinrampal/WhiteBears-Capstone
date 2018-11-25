@@ -211,6 +211,7 @@ namespace WhiteBears.Controllers {
         public ActionResult AddNote(string input, string username) {
             DashboardModel model = new DashboardModel();
 
+            input = input.Replace("'", "''");
             DataRow[] drs = model.AddPersonalNote(username, input);
 
             return Json(new { success = true, message = drs[0][0].ToString() });
@@ -228,6 +229,7 @@ namespace WhiteBears.Controllers {
         public ActionResult UpdateNote(string input, string noteId) {
             DashboardModel model = new DashboardModel();
 
+            input = input.Replace("'", "''");
             string results = "" + model.UpdatePersonalNote(input, Int32.Parse(noteId));
             return Json(new { success = true, message = noteId });
         }
