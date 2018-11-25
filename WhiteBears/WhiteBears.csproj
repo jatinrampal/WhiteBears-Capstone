@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>true</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -2248,6 +2249,11 @@
     <Content Include="Views\Project\ProjectNotesEditView.cshtml" />
     <Content Include="Views\Project\EditTaskView.cshtml" />
     <Content Include="Views\Shared\_loaderIndicator.cshtml" />
+    <Content Include="Views\Project\DocumentViewPM.cshtml" />
+    <Content Include="Views\Project\NoteViewPM.cshtml" />
+    <Content Include="Views\Project\ProjectNotesDetailView.cshtml" />
+    <Content Include="Views\Project\TaskDetailView.cshtml" />
+    <Content Include="Views\Project\TaskViewPM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

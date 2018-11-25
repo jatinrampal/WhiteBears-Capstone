@@ -17,6 +17,7 @@ namespace WhiteBears.Controllers
         public ActionResult Index(int? id)
         {
 
+            //hey yo
             if (Session["username"] == null)
             {
 
