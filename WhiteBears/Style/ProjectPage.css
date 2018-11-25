@@ -28,7 +28,7 @@
 #hr {
     border: none;
     width: 100%;
-    height: 40px;
+    height: 35px;
     margin-top: 0;
     border-bottom: 1px solid #1f1209;
     box-shadow: 0 15px 15px -15px #333;
@@ -131,7 +131,7 @@
     
     
     overflow-y: scroll;
-    height: 400px; 
+    height: 300px; 
     overflow-x: hidden;
     
 }
@@ -148,7 +148,7 @@
 }
 .table 
 {
-    height: 400px;
+    height: 300px;
     width: 100%;
    /* border: dashed; 
     border-color: lightgray; */
@@ -175,7 +175,7 @@
 
 .container-fluid {
         
-    margin: 1% 0% 0% 1%; 
+    margin: 0% 0% 0% 0.5%; 
 }
 
 .row {
@@ -185,18 +185,24 @@
     margin-right: 0%;
 }
 
-#projectTaskDelete, #projectTaskAdd, #projectTaskEdit, #projectNoteAdd, #projectNoteDelete, #projectNotesEdit, #projectDocumentUpload, #projectButtonUpload, #projectCompare {
+#projectTaskDelete, #projectTaskAdd, #projectTaskEdit, #projectNoteAdd, #projectNoteDelete, #projectNotesEdit, #projectDocumentUpload, #projectButtonUpload {
     margin-left: 3%;
-    margin-top: 5%;
-    width: 150px;
+    margin-top: 1%;
+    width: 125px;
+}
+
+#projectCompare {
+    margin-left: 3%;
+    margin-top: 1%;
+    width: 140px;
 }
 
 
 
 
-    #TeamManagement {
-        float: right;
-    }
+#TeamManagement {
+    float: right;
+}
 
 #topBarTitle
 {
@@ -227,7 +233,7 @@
 }
 
 input, textarea {
-    max-width: 450px !important;
+    max-width: 400px !important;
 }
 
 label
@@ -240,12 +246,12 @@ label
 }
 
 #taskAddbtn, #taskAddBtn, #taskClose, #taskEditBtn, #submit1, #ProjectNotesEditBtn {
-    width: 150px;
+    width: 100px;
 }
 
 #downloadDoc, #deleteDoc
 {
-    width: 150px;
+    width: 100px;
 }
 
 .modal-title
