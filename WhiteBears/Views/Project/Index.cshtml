@@ -526,29 +526,45 @@
 
             //download document button click handler
             $("#projectButtonUpload").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("DownloadLatestVersion", "DocumentReview")',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    data: '{"id":' + stored + '}',
-                    success: downloadBlob,
-                    error: function (e) { console.log(e); }
-                });
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DownloadLatestVersion", "DocumentReview")',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: '{"id":' + stored + '}',
+                success: function (response) {
+                    $("#LoaderModal").modal('toggle');
+                    window.location = '/DocumentReview/Download?fileGuid=' + response.fileGuid
+                        + '&fileName=' + response.fileName;
+                },
+                error: function (e) {
+                    console.log(e);
+                    $("#LoaderModal").modal('toggle');
+                }
             });
+
+        });
 
             //download document from popup page
             $("#downloadDoc").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("DownloadDocument", "DocumentReview")',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    data: '{"id":' + $("#DocumentId").val() + ', "ver":' + $("#version option:selected").val() + '}',
-                    success: downloadBlob,
-                    error: function (e) { console.log(e); }
-                });
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DownloadDocument", "DocumentReview")',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data:'{"id":' + $("#DocumentId").val() + ', "ver":' + $("#version option:selected").val() + '}',
+                success: function (response) {
+                    $("#LoaderModal").modal('toggle');
+                    window.location = '/DocumentReview/Download?fileGuid=' + response.fileGuid
+                        + '&fileName=' + response.fileName;
+                },
+                error: function (e) {
+                    console.log(e);
+                    $("#LoaderModal").modal('toggle');
+                }
             });
+
+        });
 
             //delete document from popup page
             $("#deleteDoc").click(function () {
@@ -562,17 +578,6 @@
                     error: function (e) { console.log(e); }
                 });
             });
-
-            //starts the download
-            var downloadBlob = function (data) {
-                //var jsonObj = JSON.parse(data);
-                var element = document.createElement('a');
-                element.setAttribute("href", "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64," + data.B64);
-                element.setAttribute('download', data.FileName);
-                document.body.appendChild(element);
-                element.click();
-                document.body.removeChild(element);
-            }
 
             //handle a double click on the document - displays the popup page
             $("#projectDocumentTable tbody tr").dblclick(function () {

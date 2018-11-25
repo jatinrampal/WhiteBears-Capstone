@@ -1113,26 +1113,6 @@ E:\Users\Yolanda\Documents\VS_Projects\new one\WhiteBears-Capstone\WhiteBears\ob
 E:\Users\Yolanda\Documents\VS_Projects\new one\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.dll
 E:\Users\Yolanda\Documents\VS_Projects\new one\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.pdb
 \\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\obj\Debug\WhiteBears.csprojAssemblyReference.cache
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Win32.Primitives.dll
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.Process.dll
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Threading.Thread.dll
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\SautinSoft.Document.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Helpers.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Mvc.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Razor.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Deployment.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.WebPages.Razor.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\System.Web.Optimization.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\Newtonsoft.Json.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\Antlr3.Runtime.pdb
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\System.Diagnostics.DiagnosticSource.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.DependencyCollector.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.WindowsServer.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.AI.Web.xml
-D:\Projects\WhiteBears-Capstone\WhiteBears\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 \\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\roslyn\Microsoft.Win32.Primitives.dll
 \\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.Diagnostics.Process.dll
 \\Mac\Home\Documents\GitHub\WhiteBears-Capstone\WhiteBears\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
