@@ -1,0 +1,240 @@
+html, body {
+    height: 100%;
+    font-family: "Avenir Next" !important;
+}
+
+body{
+    padding: 0;
+}
+
+
+#MainPage {
+    height: 100%;
+}
+
+button {
+    padding: 7px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+#TasksSection td, th {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 125px;
+}
+
+#TasksSection td:last-child, th:last-child {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 100px;
+}
+
+#TasksSection td:nth-child(5), th:nth-child(5) {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 100px;
+}
+
+#TasksSection {
+    float: left;
+    margin-left: 50px;
+    margin-top: 20px;
+    min-height: 100px;
+    width: 55%;
+    margin-bottom: 15px;
+}
+
+.TaskPercentage {
+    padding: 5px;
+    float: left;
+    margin-top: 5px;
+}
+
+
+#LeftPanel {
+    background: lightgrey;
+    text-align: center;
+    width: 10%;
+    float: left;
+    height: 100%;
+}
+
+.ProjectButtons {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-color: lightgrey;
+    color: black;
+    background: lightgrey;
+    border-radius: 10px 10px 10px 10px
+}
+
+    .ProjectButtons:hover {
+        background: darkgrey;
+        color: white;
+    }
+
+
+header {
+    text-align: center;
+}
+
+.headerButtons:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.LeftPanelBorder {
+    border: solid black 2px;
+}
+
+#UserInfoContainer {
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+
+#ProjectListContainer {
+    height: 60%;
+}
+
+#PersonalNotesSection {
+    margin-top: 20px;
+    width: 60%;
+    float: right;
+    margin-left: 20px;
+    margin-right: 45px;
+}
+
+
+#PersonalNotesSection td, th {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 90%;
+}
+#PersonalNotesSection td:first-child, th:first-child {
+    width: 10%;
+}
+
+#PersonalNotesButtonsContainer {
+    margin-top: 10px;
+    height:50px;
+    width: 100%;
+    text-align: center;
+}
+
+textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#Note {
+    width: 300px;
+}
+
+#profilePic {
+    width: 100px;
+    border-radius: 120px 120px 120px 120px;
+}
+
+.ProgressBarContainer:last-of-type {
+    margin-top: 30px;
+}
+
+.ProgressBarContainer {
+    margin-left: 50px;
+    width: 95%;
+    float: left;
+}
+
+.ProgressBarContainers {
+    margin-top: 20px;
+    width: 30%;
+    float:left;
+}
+
+.text-large {
+    font-size: large;
+}
+
+.text-medium {
+    font-size: medium;
+}
+
+.padding-5px {
+    padding: 5px;
+}
+
+#PersonalNoteText {
+    width: 100%;
+    resize: none;
+    height: 100px;
+    display: none;
+    text-align: left;
+}
+
+#PersonalNoteTextContainer {
+    margin-top: 0px;
+}
+
+.scrollable-task {
+    height: 20%;
+    max-height: 200px;
+    min-height: 100px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.scrollable-notes {
+    height: 20%;
+    max-height:165px;
+    min-height: 100px;
+    overflow: hidden;
+    overflow-y: scroll
+}
+
+#TaskOverviewSection {
+    text-align: center;
+    float: right;
+    height: 100%;
+    width: 30%;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+#pie-chartcanvas {
+    width: 30%;
+}
+
+#projectselection {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: inline-block;
+    width: 600px;
+    white-space: nowrap;
+}
+
+.high-priority {
+    background-color: #ffb2b2
+}
+
+.med-priority {
+    background-color: #ffffb2
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+#text-center {
+    text-align: center;
+}
+

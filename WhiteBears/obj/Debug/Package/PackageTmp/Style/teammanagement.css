@@ -1,0 +1,125 @@
+html, body {
+    height: 100%;
+    font-family: "Avenir Next" !important;
+}
+
+
+#MainPage{
+    position: relative;
+    height: 100%;
+}
+
+button{
+    padding: 7px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+#TasksSection td, th {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    max-width: 200px;
+}
+
+#TasksSection {
+    float: left;
+    margin-left: 50px;
+    margin-top: 20px;
+    min-height: 200px;
+}
+
+#TaskOverviewSection{
+    text-align: center;
+    float: right;
+}
+
+.TaskPercentage{
+    padding: 5px;
+    float: left;
+    margin-top: 5px;
+}
+
+
+#LeftPanel {
+    background: lightgrey;
+    text-align: center;
+    width: 200px;
+    float: left;
+    height: 100vh;
+}
+
+.ProjectButtons {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-color: lightgrey;
+    color: black;
+    background: lightgrey;
+    border-radius: 10px 10px 10px 10px
+}
+
+.ProjectButtons:hover {
+    background: darkgrey;
+    color: white;
+}
+
+.LeftPanelBorder {
+    padding: 50px;
+    border: solid black 2px;
+}
+
+#UserInfoContainer {
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ProjectListContainer {
+    height: 60%;
+}
+
+#PersonalNotesSection{
+    margin-top: 30px;
+    float: right;
+}
+
+
+#profilePic {
+    width: 100px;
+    border-radius: 120px 120px 120px 120px;
+}
+
+.text-large {
+    font-size: large;
+}
+
+.text-medium{
+    font-size: medium;
+}
+
+tbody.scrollable {
+    overflow-y: scroll;
+    width: 100%;
+    max-height: 200px;
+    min-height: 200px;
+    height: 200px;
+    display: block;
+}
+
+td{
+    width: 100vw;
+}
+
+.mainpage-container {
+    margin-top: 25px;
+}
+
+tr{
+    width: 100%;
+}
+

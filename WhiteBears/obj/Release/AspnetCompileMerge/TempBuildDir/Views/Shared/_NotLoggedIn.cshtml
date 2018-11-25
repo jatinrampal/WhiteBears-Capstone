@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - WhiteBears</title>
+    <link rel="shortcut icon" href="~/Content/icon.ico" />
+    @Scripts.Render("~/bundles/scripts/jquery")
+    @Scripts.Render("~/bundles/scripts/modernizr")
+    @Scripts.Render("~/bundles/scripts/angular")
+    @Scripts.Render("~/bundles/scripts/popper")
+    @Scripts.Render("~/bundles/scripts/bootstrap")
+    @Styles.Render("~/bundles/style/bootstrap")
+    @Styles.Render("~/bundles/style/styling");
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("WhiteBears", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Business", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Features", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Pricing", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About Us", "Index", "Home")</li>
+                </ul>
+
+                <ul class="nav navbar-nav pull-right">
+                    <li class="pull-right">@Html.ActionLink("Sign Up", "Index", "SignUp")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+
+
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

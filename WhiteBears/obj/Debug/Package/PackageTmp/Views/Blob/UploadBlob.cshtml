@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Upload Blob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<h2 style="margin-left:5%">Upload File to Project</h2>
+@Styles.Render("~/bundles/style/projectpage")
+<hr id="hr" />
+@using (Html.BeginForm("UploadBlob", "Blob", FormMethod.Post, new { encType = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="form-group">
+            <br />
+            <label>Upload File to Storage</label>
+            <input type="file" name="uploadFileName" value="Browse" class="btn-primary" />
+            @Html.Hidden("projectId", (string)@ViewBag.projectId.ToString())
+            @Html.Hidden("role", (string)@ViewBag.role.ToString())
+            <br />
+            <button type="submit" id="buttonSubmit" class="btn btn-success">Upload</button>
+        </div>
+    </div>
+
+}

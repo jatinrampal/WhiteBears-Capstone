@@ -1,0 +1,64 @@
+﻿table#EditUserTable {
+    max-width: 600px;
+}
+
+
+#HeaderContainer {
+    box-shadow: 0 5px 5px 0px gray;
+    border-bottom: solid black 1px;
+    padding: 5px;
+    margin-bottom: 50px;
+    text-align: center
+}
+
+
+.header {
+    color: black;
+}
+
+.noBorder {
+    border: 0;
+}
+
+
+#projectselection {
+    margin-bottom: 20px;
+}
+
+
+.formContainer {
+    border: solid darkgray 2px;
+    border-radius: 20px 20px 20px 20px;
+    padding: 25px;
+}
+
+
+#PersonalInformationContainer {
+    float: left;
+    width: 500px;
+}
+
+#CompanyInformationContainer {
+    float: left;
+    width: 500px;
+}
+
+#FirstProjectInformationContainer {
+    margin-top: 0;
+    width: 500px;
+}
+
+#container {
+    overflow: auto;
+}
+
+input{
+    width: inherit
+}
+
+.login-background {
+    background-image: url('~/Content/background1.jpg');
+    opacity: 0.8;
+
+    background-repeat: no-repeat;
+}

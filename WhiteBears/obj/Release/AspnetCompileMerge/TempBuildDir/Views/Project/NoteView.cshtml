@@ -1,0 +1,20 @@
+﻿@using WhiteBears.Models
+@model IEnumerable<ProjectPageViewModel>
+
+
+@foreach (var projectNotes in Model)
+{
+    <tr id="@projectNotes.ProjectNotes.ProjectNoteId">
+        <td>
+            @projectNotes.ProjectNotes.SentDate.ToShortDateString()
+        </td>
+        <td>
+            @projectNotes.ProjectNotes.To
+        </td>
+        <td>
+            @projectNotes.ProjectNotes.Message
+        </td>
+    </tr>
+}
+
+

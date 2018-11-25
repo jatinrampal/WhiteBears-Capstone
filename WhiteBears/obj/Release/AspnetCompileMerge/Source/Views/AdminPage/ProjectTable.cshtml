@@ -1,0 +1,32 @@
+﻿@model WhiteBears.Models.Project
+
+<tbody>
+    <tr>
+        <th>Project ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Scope Statement</th>
+        <th>Start Date</th>
+        <th>Due Date</th>
+        <th>Completion Date</th>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <td>@Model.ProjectId</td>
+        <td>@Model.Title</td>
+        <td>@Model.Description</td>
+        <td>@Model.ScopeStatement</td>
+        <td>@Model.StartDate.ToString("yyyy/MM/dd")</td>
+        <td>@Model.DueDate.ToString("yyyy/MM/dd")</td>
+        @{ if (Model.CompletionDate.ToString("yyyy/MM/dd") == "0001-01-01")
+            {
+                <td>Not completed yet</td>
+            }
+            else
+            {
+                <td>@Model.CompletionDate.ToString("yyyy/MM/dd")</td>
+            }
+        }
+    </tr>
+</tbody>
