@@ -35,6 +35,12 @@ table {
     max-width: 100px;
 }
 
+#TasksSection td:first-child, th:first-child{
+    border: 1px solid darkgrey;
+    padding: 10px;
+    min-width: 300px;
+}
+
 #TasksSection td:nth-child(5), th:nth-child(5) {
     border: 1px solid darkgrey;
     padding: 10px;
