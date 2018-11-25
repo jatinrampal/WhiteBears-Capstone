@@ -339,8 +339,8 @@ namespace WhiteBears.Models
 
                 // Query with vals 
                 //command.CommandText = "SELECT * FROM Task t JOIN Project p on t.projectId = p.projectId JOIN User_Task ut on t.taskId = ut.taskId WHERE ut.uName = @username and p.projectId = @projectId ORDER BY cast(T.dueDate as datetime) asc";
-                command.CommandText = "select * from Task t JOIN User_Project up ON up.projectId = t.projectId where up.projectId = @projectId";
-                
+                //command.CommandText = "select * from Task t JOIN User_Project up ON up.projectId = t.projectId where up.projectId = @projectId";
+                command.CommandText= "select * from Task t INNER JOIN User_Task ut ON ut.taskId = t.taskId where projectId = @projectId";
                 command.Parameters.AddWithValue("@projectId", projectId);
 
                 // Open connection 
@@ -360,7 +360,7 @@ namespace WhiteBears.Models
                     model.Task.DueDate = (DateTime)reader["dueDate"];
                     model.Task.Priority = reader["priority"].ToString();
                     model.Task.Description = reader["description"].ToString();
-                    model.User.Username = reader["uName"].ToString();
+                    //model.User.Username = reader["uName"].ToString();
                     modelList.Add(model);
                 }
 

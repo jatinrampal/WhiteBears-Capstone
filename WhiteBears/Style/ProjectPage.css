@@ -16,7 +16,7 @@
 {
     text-align: right;
     color: black;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 #name
@@ -87,7 +87,7 @@
 
 .container-fluid
 {
-    margin-top: 1%;
+    margin-top: 0.5%;
     margin-left: 1%;
     margin-right: 0%;
     margin-bottom: 0%;
@@ -95,7 +95,7 @@
 
 .row
 {
-    margin-bottom: 1.5%;
+    margin-bottom: 1%;
     margin-top: 0%; 
     margin-left: 0%; 
     margin-right: 0%;
@@ -202,6 +202,7 @@
 
 #TeamManagement {
     float: right;
+    
 }
 
 #topBarTitle
@@ -262,7 +263,12 @@ label
 #row {
     margin-right: 1%;
     margin-left: 1%;
+  
     
+}
+
+#rowed {
+    margin-top: 1%;
 }
 
 .timing

@@ -23,13 +23,13 @@
 
     <div class="container-fluid">
 
-        <div id="row" class="row">
+        <div id="rowed" class="row">
             <div id="topBar" class="col-sm-6">
                 <h1 id="topBarTitle">@Model.Project.Title   </h1>
             </div>
 
             <div class="col-sm-6">
-                <button hidden type="button" id="TeamManagement" class="btn btn-info hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { id = Model.Project.ProjectId })'">Team Management</button>
+                <button hidden type="button" id="TeamManagement" class="btn btn-primary hidden" onclick="location.href='@Url.Action("Index", "TeamManagement", new { id = Model.Project.ProjectId })'">Team Management</button>
             </div>
         </div>
 
