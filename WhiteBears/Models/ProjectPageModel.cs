@@ -255,7 +255,7 @@ namespace WhiteBears.Models
                 var priority = task.Priority; 
 
                 ///dh.RunUpdateQuery($"DELETE FROM ProjectNote WHERE projectNoteId='{projectNoteId}'");
-                dh.RunUpdateQuery($"UPDATE Task set Title='{title}', [description]='{description}', startDate='{startDate}', dueDate='{dueDate}', completionDate='{completionDate}', priority='{priority}' WHERE taskId = {taskId}");
+                dh.RunUpdateQuery($"UPDATE Task set Title='{title.Replace("'", "''")}', [description]='{description.Replace("'", "''")}', startDate='{startDate}', dueDate='{dueDate}', completionDate='{completionDate}', priority='{priority}' WHERE taskId = {taskId}");
 
                 return true;
             }
@@ -277,7 +277,7 @@ namespace WhiteBears.Models
                 var to = projectNotes.To;
 
                 ///dh.RunUpdateQuery($"DELETE FROM ProjectNote WHERE projectNoteId='{projectNoteId}'");
-                dh.RunUpdateQuery($"UPDATE ProjectNote set message='{message}', completedDate='{completionDate}', [to]='{to}' WHERE projectNoteId = '{projectNotesId}'");
+                dh.RunUpdateQuery($"UPDATE ProjectNote set message='{message.Replace("'", "''")}', completedDate='{completionDate}', [to]='{to}' WHERE projectNoteId = '{projectNotesId}'");
 
                 return true;
             }
@@ -424,7 +424,7 @@ namespace WhiteBears.Models
             {
                 // Keeps the database not NULL (As it will effect Dashboard tasks)
                 DateTime completionDate = DateTime.ParseExact("0001-01-01", "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                dh.RunUpdateQuery($"INSERT INTO Task (title, description, startDate, dueDate, completionDate, projectId, priority) VALUES('{task.Title}', '{task.Description}', '{task.StartDate}'," +
+                dh.RunUpdateQuery($"INSERT INTO Task (title, description, startDate, dueDate, completionDate, projectId, priority) VALUES('{task.Title.Replace("'", "''")}', '{task.Description.Replace("'", "''")}', '{task.StartDate}'," +
                     $"'{task.DueDate}', '{completionDate}', '{task.ProjectId}', '{task.Priority}');");
 
                 DataRow[] drs = dh.RunQuery($"SELECT MAX(taskId) FROM Task;");
@@ -599,7 +599,7 @@ namespace WhiteBears.Models
             var CompletedDate = "0000-00-00";  
             try
             {
-                dh.RunUpdateQuery($"INSERT INTO ProjectNote (projectId, message, sentDate, [from], [to]) VALUES('{note.ProjectId}', '{note.Message}', " +
+                dh.RunUpdateQuery($"INSERT INTO ProjectNote (projectId, message, sentDate, [from], [to]) VALUES('{note.ProjectId}', '{note.Message.Replace("'", "''")}', " +
                     $"'{note.SentDate}', '{note.From}', '{note.To}');");
 
                 return true;
