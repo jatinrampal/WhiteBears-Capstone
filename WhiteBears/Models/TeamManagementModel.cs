@@ -59,7 +59,7 @@ namespace WhiteBears.Models
 
                 foreach (DataRow dr in drs)
                 {
-                    if(Convert.ToBoolean(dr["enabled".ToString()]))
+                    if(Convert.ToBoolean(dr["enabled".ToString()]) && !Authentication.VerifyIfAdmin(dr["uName"].ToString()))
                         users.Add(new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), $"{dr["firstName"].ToString()}@email.com", dr["password"].ToString(), dr["role"].ToString()));
                 }
 
@@ -88,7 +88,7 @@ namespace WhiteBears.Models
                 foreach (DataRow dr in drs)
                 {
                     //TODO: refactor email to dr["email"]
-                    if (Convert.ToBoolean(dr["enabled".ToString()]))
+                    if (Convert.ToBoolean(dr["enabled".ToString()]) && !Authentication.VerifyIfAdmin(dr["uName"].ToString()))
                         users.Add(new User(dr["firstName"].ToString(), dr["lastName"].ToString(), dr["uName"].ToString(), $"{dr["firstName"].ToString()}@email", dr["password"].ToString(), dr["role"].ToString()));
                 }
 
