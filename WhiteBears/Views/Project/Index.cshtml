@@ -832,20 +832,32 @@
                                 var myStartDate = taskStartDateYear + "-" + taskStartDateMonth + "-" + taskStartDateDay;
 
                                 // Task Completion Date Conversions
-                                var taskCompletionDate = new Date(parseInt(msg.CompletedDate.substr(6)));
+                          
+                                    var taskCompletionDate = new Date(parseInt(msg.CompletedDate.substr(6)));
 
-                                var taskCompletionDateDay = taskCompletionDate.getDate(taskCompletionDate);
-                                var taskCompletionDateMonth = taskCompletionDate.getMonth(taskCompletionDate) + 1;
-                                var taskCompletionDateYear = taskCompletionDate.getFullYear(taskCompletionDate);
+                                    var taskCompletionDateDay = taskCompletionDate.getDate(taskCompletionDate);
+                                    var taskCompletionDateMonth = taskCompletionDate.getMonth(taskCompletionDate) + 1;
+                                    var taskCompletionDateYear = taskCompletionDate.getFullYear(taskCompletionDate);
 
-                                if (taskCompletionDateDay < 10) {
-                                    taskCompletionDateDay = '0' + taskCompletionDateDay;
+                                    if (taskCompletionDateDay < 10) {
+                                        taskCompletionDateDay = '0' + taskCompletionDateDay;
+                                    }
+                                    if (taskCompletionDateMonth < 10) {
+                                        taskCompletionDateMonth = '0' + taskCompletionDateMonth;
+                                    }
+                                    var myCompletionDate = taskCompletionDateYear + "-" + taskCompletionDateMonth + "-" + taskCompletionDateDay;
+
+                                if (taskCompletionDateYear == "0" && taskCompletionDateMonth == "12" && taskCompletionDateDay == "31") {
+                                    taskCompletionDateYear = "0001";                            
+                                    taskCompletionDateMonth = "01";
+                                    taskCompletionDateDay = "01";
+
+                                    var myCompletionDate = taskCompletionDateYear + "-" + taskCompletionDateMonth + "-" + taskCompletionDateDay;
+                                    
                                 }
-                                if (taskCompletionDateMonth < 10) {
-                                    taskCompletionDateMonth = '0' + taskCompletionDateMonth;
-                                }
-                                var myCompletionDate = taskCompletionDateYear + "-" + taskCompletionDateMonth + "-" + taskCompletionDateDay;
 
+                                
+                             
 
 
                                 // Task id
@@ -1077,12 +1089,8 @@
             // Title VALIDATION for Task Edit
             $('#editTaskTitle').focusout(function () {
                 var myTaskTitle = $('#editTaskTitle').val();
-                if (/\d/.test(myTaskTitle)) {
-                    // number found
-                    $('#taskEditErrors').text("Title cannot have numbers, try agian.");
-                    titleValP = false;
-                }
-                else if (myTaskTitle.length > 40) {
+               
+                if (myTaskTitle.length > 40) {
                     $('#taskEditErrors').text("Title must be smaller, try agian.");
                     titleValP = false;
                 }
@@ -1103,14 +1111,7 @@
                 var myTaskTitle = $('#taskTitle').val();
 
 
-                if (/\d/.test(myTaskTitle)) {
-                    // number found
-                    $('#taskErrors1').html("Title cannot have numbers, try agian.");
-
-
-                    titleVal = false;
-                }
-                else if (myTaskTitle.length > 40)
+                if (myTaskTitle.length > 40)
                 {
                     $('#taskErrors1').text("Title must be smaller, try agian.");
                     titleVal = false;
@@ -1333,9 +1334,10 @@
                     $('#taskEditErrors').text("Enter a completion date after today.");
                     completionValP = false;
                 }
-                else {
+                else
+                {
                     $('#taskEditErrors').empty();
-                    $('#editTaskCompletionDate').text = "0001-01-01"
+                    
                     completionValP = true;
                 }
 
