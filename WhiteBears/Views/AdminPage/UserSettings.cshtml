@@ -218,27 +218,44 @@
             var role = $('#roleSelect').find(":selected").text();
 
 
-            if (password != passwordConfirm) {
-                alert("Passwords don't match.");
-                return;
-            }
-
             $.ajax({
                 type: "post",
-                url: '/AdminPage/AddUser',
+                url: '/SignUp/CheckUsername',
                 dataType: "json",
                 data: {
-                    firstName: firstName,
-                    lastName: lastName,
                     username: username,
-                    password: password,
-                    role: role
                 },
                 success: function (data) {
-                    alert('Successfully added ' + username);
-                    window.location.href = '@Url.Action("UserSettings", "AdminPage")';
-                },
+                    if (!data.success) {
+                        alert("Username already taken");
+                    } else {
+                        if (password != passwordConfirm) {
+                        alert("Passwords don't match.");
+                        return;
+                        }
 
+                        $.ajax({
+                            type: "post",
+                            url: '/AdminPage/AddUser',
+                            dataType: "json",
+                            data: {
+                                firstName: firstName,
+                                lastName: lastName,
+                                username: username,
+                                password: password,
+                                role: role
+                            },
+                            success: function (data) {
+                                alert('Successfully added ' + username);
+                                window.location.href = '@Url.Action("UserSettings", "AdminPage")';
+                            },
+
+                            error: function () {
+                                successful = false;
+                            }
+                        });
+                    }
+                },
                 error: function () {
                     successful = false;
                 }
