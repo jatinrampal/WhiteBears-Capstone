@@ -33,12 +33,33 @@ namespace WhiteBears.Controllers
             }
            
            ViewBag.Error = "Username or Password Incorrect.";
-           return View();
-            
-            
-
+           return View(); 
         }
-      
+
+        [HttpPost]
+        public string Login(string username, string password)
+        {
+            if (Authentication.VerifyCredentials(username, password))
+            {
+                if (!Authentication.VerifyIfEnabled(username))
+                {
+                    ViewBag.Error = "Your account is disabled.  Please contact your administrator";
+                    return "failed";
+                }
+
+                Session["username"] = username;
+
+                if (Authentication.VerifyIfAdmin(username))
+                {
+                    return "success";
+                }
+                return "failed";
+            }
+
+            ViewBag.Error = "Username or Password Incorrect.";
+            return "failed";
+        }
+
         [HttpGet]
         public ActionResult LogOut() {
             Session["username"] = null;

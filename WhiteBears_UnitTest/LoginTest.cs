@@ -4,6 +4,8 @@ using WhiteBears.Controllers;
 using System.Web.Mvc;
 using MvcContrib.TestHelper;
 using Microsoft.CSharp.RuntimeBinder;
+using Newtonsoft.Json;
+using WhiteBears.Models;
 
 namespace WhiteBears_UnitTest
 {
@@ -47,6 +49,44 @@ namespace WhiteBears_UnitTest
             //Assert
             Assert.AreEqual(ar.ViewBag.Error, expectedValue);
         }
+
+        [TestMethod]
+        public void Add_New_Project()
+        {
+            TestControllerBuilder builder = new TestControllerBuilder();
+            //Arrange
+            AddProjectController hc = new AddProjectController();
+            builder.InitializeController(hc);
+            builder.Session["username"] = "Kalen";
+
+            //Act
+            JsonResult ar = hc.Go("testProject", "description", "scope", new DateTime(1999, 12, 12), new DateTime(2000, 12, 12)) as JsonResult;
+            string result = ar.Data.ToString();
+            result = result.Substring(12, 4);
+           
+
+            //Assert
+            Assert.IsTrue(bool.Parse(result));
+        }
+
+        [TestMethod]
+        public void Load_Project()
+        {
+            TestControllerBuilder builder = new TestControllerBuilder();
+            //Arrange
+            ProjectController hc = new ProjectController();
+            builder.InitializeController(hc);
+            builder.Session["username"] = "Kalen";
+            string expectedValue = "The Apple Initiative ";
+
+            //Act
+            ViewResult ar = hc.Index(1) as ViewResult;
+            ProjectPageViewModel pm = ar.Model as ProjectPageViewModel;
+            
+            //Assert
+            Assert.AreEqual(pm.Project.Title, expectedValue);
+        }
+
 
 
     }
